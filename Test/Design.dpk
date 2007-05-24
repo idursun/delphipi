@@ -1,0 +1,39 @@
+package Design;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'Design Test Package'}
+{$RUNONLY OFF}
+{$IMPLICITBUILD OFF}
+{$SUFFIX D10}
+
+requires
+  rtl,
+  vcl;
+
+contains
+  Design1 '..\..\src\Design1.pas',
+  Design2 '..\..\src\Design2.pas',
+  Design3 '..\..\src\Design3.pas';
+
+end.

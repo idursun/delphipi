@@ -1,0 +1,40 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{8fa1ff98-ce73-4829-91c3-550d209aa3ca}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup />
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="AutoInstaller">
+    <MSBuild Projects="AutoInstaller.dproj" Targets="" />
+  </Target>
+  <Target Name="AutoInstaller:Clean">
+    <MSBuild Projects="AutoInstaller.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="AutoInstaller:Make">
+    <MSBuild Projects="AutoInstaller.dproj" Targets="Make" />
+  </Target>
+  <Target Name="AutoInstallerTests">
+    <MSBuild Projects="Test\AutoInstallerTests.dproj" Targets="" />
+  </Target>
+  <Target Name="AutoInstallerTests:Clean">
+    <MSBuild Projects="Test\AutoInstallerTests.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="AutoInstallerTests:Make">
+    <MSBuild Projects="Test\AutoInstallerTests.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="AutoInstaller;AutoInstallerTests" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="AutoInstaller:Clean;AutoInstallerTests:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="AutoInstaller:Make;AutoInstallerTests:Make" />
+  </Target>
+</Project>
