@@ -1,4 +1,4 @@
-program AutoInstaller;
+program DelphiPI;
 
 uses
   Forms,
@@ -11,6 +11,7 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  Application.Title := 'Delphi PI';
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmAbout, frmAbout);
   Application.Run;

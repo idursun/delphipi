@@ -1,4 +1,4 @@
-program AutoInstallerTests;
+program DelphiPITests;
 {
 
   Delphi DUnit Test Project

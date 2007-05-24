@@ -10,31 +10,31 @@
     <BorlandProject>
 <BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
   </ProjectExtensions>
-  <Target Name="AutoInstaller">
-    <MSBuild Projects="AutoInstaller.dproj" Targets="" />
+  <Target Name="DelphiPI">
+    <MSBuild Projects="DelphiPI.dproj" Targets="" />
   </Target>
-  <Target Name="AutoInstaller:Clean">
-    <MSBuild Projects="AutoInstaller.dproj" Targets="Clean" />
+  <Target Name="DelphiPI:Clean">
+    <MSBuild Projects="DelphiPI.dproj" Targets="Clean" />
   </Target>
-  <Target Name="AutoInstaller:Make">
-    <MSBuild Projects="AutoInstaller.dproj" Targets="Make" />
+  <Target Name="DelphiPI:Make">
+    <MSBuild Projects="DelphiPI.dproj" Targets="Make" />
   </Target>
-  <Target Name="AutoInstallerTests">
-    <MSBuild Projects="Test\AutoInstallerTests.dproj" Targets="" />
+  <Target Name="DelphiPITests">
+    <MSBuild Projects="Test\DelphiPITests.dproj" Targets="" />
   </Target>
-  <Target Name="AutoInstallerTests:Clean">
-    <MSBuild Projects="Test\AutoInstallerTests.dproj" Targets="Clean" />
+  <Target Name="DelphiPITests:Clean">
+    <MSBuild Projects="Test\DelphiPITests.dproj" Targets="Clean" />
   </Target>
-  <Target Name="AutoInstallerTests:Make">
-    <MSBuild Projects="Test\AutoInstallerTests.dproj" Targets="Make" />
+  <Target Name="DelphiPITests:Make">
+    <MSBuild Projects="Test\DelphiPITests.dproj" Targets="Make" />
   </Target>
   <Target Name="Build">
-    <CallTarget Targets="AutoInstaller;AutoInstallerTests" />
+    <CallTarget Targets="DelphiPI;DelphiPITests" />
   </Target>
   <Target Name="Clean">
-    <CallTarget Targets="AutoInstaller:Clean;AutoInstallerTests:Clean" />
+    <CallTarget Targets="DelphiPI:Clean;DelphiPITests:Clean" />
   </Target>
   <Target Name="Make">
-    <CallTarget Targets="AutoInstaller:Make;AutoInstallerTests:Make" />
+    <CallTarget Targets="DelphiPI:Make;DelphiPITests:Make" />
   </Target>
 </Project>

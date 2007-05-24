@@ -2,7 +2,7 @@ object frmAbout: TfrmAbout
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'About AutoInstaller'
+  Caption = 'About Delphi PI'
   ClientHeight = 189
   ClientWidth = 342
   Color = clBtnFace
@@ -19,10 +19,10 @@ object frmAbout: TfrmAbout
     Left = 8
     Top = 8
     Width = 326
-    Height = 81
+    Height = 111
     Alignment = taCenter
     AutoSize = False
-    Caption = 'AutoInstaller 0.1 '#13#10'developed by '#13#10'ibrahim dursun'
+    Caption = 'Delphi PI'#13#10'0.1 '#13#10'ibrahim dursun'#13#10'2007'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -21
@@ -40,8 +40,8 @@ object frmAbout: TfrmAbout
   end
   object Label2: TLabel
     Left = 104
-    Top = 112
-    Width = 129
+    Top = 125
+    Width = 118
     Height = 13
     Cursor = crHandPoint
     Caption = 'http://www.thexpot.net'

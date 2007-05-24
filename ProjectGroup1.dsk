@@ -1,41 +1,48 @@
 [Closed Files]
-File_0=TSourceModule,'C:\COMPON~1\Src\jcl\source\common\JclBorlandTools.pas',0,1,2578,1,2619,0,0,,
-File_1=TSourceModule,'c:\program files\codegear\rad studio\5.0\SOURCE\WIN32\RTL\SYS\system.pas',0,1,12249,1,12269,0,0,,
-File_2=TSourceModule,'C:\Projelerim\AutoInstaller\Test\TestPackageList.pas',0,1,90,20,61,0,0,,
-File_3=TSourceModule,'C:\Projelerim\AutoInstaller\Test\TestPackageInfo.pas',0,1,1,13,31,0,0,,
-File_4=TSourceModule,'C:\Projelerim\AutoInstaller\PackageSorter.pas',0,1,1,1,3,0,0,,
-File_5=TSourceModule,'C:\COMPON~1\Src\jcl\source\common\JclFileUtils.pas',0,1,5024,10,4972,0,0,,
-File_6=TSourceModule,'c:\Projelerim\AutoInstaller\Test\testing\source\p3\p2u2.pas',0,1,1,1,1,0,0,,
-File_7=TSourceModule,'c:\program files\codegear\rad studio\5.0\Source\DUnit\src\TestFramework.pas',0,1,2270,1,2293,0,0,,
-File_8=TSourceModule,'C:\Projelerim\AutoInstaller\FormAbout.pas',0,1,35,35,37,0,0,,
-File_9=TSourceModule,'c:\program files\codegear\rad studio\5.0\SOURCE\WIN32\RTL\SYS\Types.pas',0,1,34,14,48,0,0,,
+File_0=TTogetherDocModule,'C:\Projelerim\delphipi\ModelSupport_AutoInstaller\default.txaPackage',0
+File_1=TSourceModule,'C:\COMPON~1\Src\jcl\source\common\JclBorlandTools.pas',0,1,2578,1,2619,0,0,,
+File_2=TSourceModule,'c:\program files\codegear\rad studio\5.0\SOURCE\WIN32\RTL\SYS\system.pas',0,1,12249,1,12269,0,0,,
+File_3=TSourceModule,'C:\Projelerim\AutoInstaller\Test\TestPackageList.pas',0,1,90,20,61,0,0,,
+File_4=TSourceModule,'C:\Projelerim\AutoInstaller\Test\TestPackageInfo.pas',0,1,1,13,31,0,0,,
+File_5=TSourceModule,'C:\Projelerim\AutoInstaller\PackageSorter.pas',0,1,1,1,3,0,0,,
+File_6=TSourceModule,'C:\COMPON~1\Src\jcl\source\common\JclFileUtils.pas',0,1,5024,10,4972,0,0,,
+File_7=TSourceModule,'c:\Projelerim\AutoInstaller\Test\testing\source\p3\p2u2.pas',0,1,1,1,1,0,0,,
+File_8=TSourceModule,'c:\program files\codegear\rad studio\5.0\Source\DUnit\src\TestFramework.pas',0,1,2270,1,2293,0,0,,
+File_9=TSourceModule,'C:\Projelerim\AutoInstaller\FormAbout.pas',0,1,35,35,37,0,0,,
 
 [Modules]
-Module0=C:\Projelerim\AutoInstaller\PackageInfo.pas
-Module1=C:\Projelerim\AutoInstaller\FormMain.pas
-Module2=C:\Projelerim\AutoInstaller\AutoInstaller.dproj
-Count=3
+Module0=C:\Projelerim\AutoInstaller\FormMain.pas
+Module1=C:\Projelerim\delphipi\DelphiPI.dproj
+Module2=C:\Projelerim\delphipi\FormAbout.pas
+Module3=C:\Projelerim\AutoInstaller\PackageInfo.pas
+Count=4
 EditWindowCount=1
-
-[C:\Projelerim\AutoInstaller\PackageInfo.pas]
-ModuleType=TSourceModule
-FormState=0
-FormOnTop=0
 
 [C:\Projelerim\AutoInstaller\FormMain.pas]
 ModuleType=TSourceModule
 FormState=1
 FormOnTop=0
 
-[C:\Projelerim\AutoInstaller\AutoInstaller.dproj]
+[C:\Projelerim\delphipi\DelphiPI.dproj]
 ModuleType=TBaseProject
 
+[C:\Projelerim\delphipi\FormAbout.pas]
+ModuleType=TSourceModule
+FormState=1
+FormOnTop=1
+
+[C:\Projelerim\AutoInstaller\PackageInfo.pas]
+ModuleType=TSourceModule
+FormState=0
+FormOnTop=0
+
 [EditWindow0]
-ViewCount=3
-CurrentEditView=C:\Projelerim\AutoInstaller\PackageInfo.pas
+ViewCount=4
+CurrentEditView=C:\Projelerim\AutoInstaller\FormMain.pas
 View0=0
 View1=1
 View2=2
+View3=3
 PercentageSizes=1
 Create=1
 Visible=1
@@ -69,9 +76,9 @@ BottomMiddelPanelData=0000080001000100000009000000446F636B5369746530321900000000
 [View0]
 CustomEditViewType=TEditView
 Module=C:\Projelerim\AutoInstaller\FormMain.pas
-CursorX=5
-CursorY=108
-TopLine=14
+CursorX=7
+CursorY=70
+TopLine=59
 LeftCol=1
 Elisions=
 Bookmarks=
@@ -79,14 +86,14 @@ EditViewName=C:\Projelerim\AutoInstaller\FormMain.pas
 
 [View1]
 CustomEditViewType=TEditView
-Module=C:\Projelerim\AutoInstaller\AutoInstaller.dpr
+Module=C:\Projelerim\delphipi\DelphiPI.dpr
 CursorX=1
-CursorY=11
+CursorY=1
 TopLine=1
 LeftCol=1
 Elisions=
 Bookmarks=
-EditViewName=C:\Projelerim\AutoInstaller\AutoInstaller.dpr
+EditViewName=C:\Projelerim\delphipi\DelphiPI.dpr
 
 [View2]
 CustomEditViewType=TEditView
@@ -98,6 +105,17 @@ LeftCol=1
 Elisions=
 Bookmarks=
 EditViewName=C:\Projelerim\AutoInstaller\PackageInfo.pas
+
+[View3]
+CustomEditViewType=TEditView
+Module=C:\Projelerim\delphipi\FormAbout.pas
+CursorX=1
+CursorY=1
+TopLine=1
+LeftCol=1
+Elisions=
+Bookmarks=
+EditViewName=Borland.FormDesignerView
 
 [Watches]
 Count=1
@@ -159,11 +177,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6662
+Height=6390
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6662
+ClientHeight=6390
 TBDockHeight=5896
 LRDockWidth=2352
 Dockable=1
@@ -178,11 +196,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6390
+Height=6338
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6390
+ClientHeight=6338
 TBDockHeight=7156
 LRDockWidth=2000
 Dockable=1
@@ -653,7 +671,7 @@ Dockable=1
 StayOnTop=0
 TabPosition=1
 ActiveTabID=RefactoringForm
-TabDockClients=RefactoringForm,FindReferencsForm,ToDo List,RefactoringsView,UsagesView,QAView,MetricsView
+TabDockClients=RefactoringForm,FindReferencsForm,ToDo List,QAView,MetricsView,RefactoringsView,UsagesView
 
 [DockSite1]
 HostDockSite=DockBottomPanel
@@ -700,7 +718,7 @@ LRDockWidth=2000
 Dockable=1
 StayOnTop=0
 TabPosition=1
-ActiveTabID=ToolForm
+ActiveTabID=ProjectManager
 TabDockClients=ProjectManager,ToolForm,ModelViewTool,DataExplorer
 
 [DockSite3]
