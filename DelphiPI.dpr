@@ -4,7 +4,8 @@ uses
   Forms,
   FormMain in 'FormMain.pas' {frmMain},
   PackageInfo in 'PackageInfo.pas',
-  FormAbout in 'FormAbout.pas' {frmAbout};
+  FormAbout in 'FormAbout.pas' {frmAbout},
+  FormOptions in 'FormOptions.pas' {frmOptions};
 
 {$R *.res}
 
@@ -14,5 +15,6 @@ begin
   Application.Title := 'Delphi PI';
   Application.CreateForm(TfrmMain, frmMain);
   Application.CreateForm(TfrmAbout, frmAbout);
+  Application.CreateForm(TfrmOptions, frmOptions);
   Application.Run;
 end.

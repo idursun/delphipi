@@ -28,7 +28,6 @@ type
     procedure ReadInfo;
     function ClearStr(Str: string):string;
   public
-    weight : integer;
     constructor Create(const packagefile: String);overload;
     constructor Create;overload;
     destructor Destroy; override;
@@ -342,17 +341,6 @@ begin
   finally
     packageList.Free;
   end;
-end;
-
-function WeightedSorter(item1: pointer; item2: pointer):Integer;
-var
-  p1,p2 : TPackageInfo;
-begin
-  p1 := TPackageInfo(item1);
-  p2 := TPackageInfo(item2);
-  Result := p2.weight - p1.weight;
-  if p1.DoesRequire(p2) then
-    Result := 1
 end;
 
 procedure TPackageList.SortList();

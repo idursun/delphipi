@@ -11,17 +11,10 @@ File_8=TSourceModule,'c:\program files\codegear\rad studio\5.0\Source\DUnit\src\
 File_9=TSourceModule,'C:\Projelerim\AutoInstaller\FormAbout.pas',0,1,35,35,37,0,0,,
 
 [Modules]
-Module0=C:\Projelerim\AutoInstaller\FormMain.pas
-Module1=C:\Projelerim\delphipi\DelphiPI.dproj
-Module2=C:\Projelerim\delphipi\FormAbout.pas
-Module3=C:\Projelerim\AutoInstaller\PackageInfo.pas
-Count=4
+Module0=C:\Projelerim\delphipi\DelphiPI.dproj
+Module1=C:\Projelerim\delphipi\FormAbout.pas
+Count=2
 EditWindowCount=1
-
-[C:\Projelerim\AutoInstaller\FormMain.pas]
-ModuleType=TSourceModule
-FormState=1
-FormOnTop=0
 
 [C:\Projelerim\delphipi\DelphiPI.dproj]
 ModuleType=TBaseProject
@@ -29,20 +22,13 @@ ModuleType=TBaseProject
 [C:\Projelerim\delphipi\FormAbout.pas]
 ModuleType=TSourceModule
 FormState=1
-FormOnTop=1
-
-[C:\Projelerim\AutoInstaller\PackageInfo.pas]
-ModuleType=TSourceModule
-FormState=0
 FormOnTop=0
 
 [EditWindow0]
-ViewCount=4
-CurrentEditView=C:\Projelerim\AutoInstaller\FormMain.pas
+ViewCount=2
+CurrentView=-1
 View0=0
 View1=1
-View2=2
-View3=3
 PercentageSizes=1
 Create=1
 Visible=1
@@ -75,17 +61,6 @@ BottomMiddelPanelData=0000080001000100000009000000446F636B5369746530321900000000
 
 [View0]
 CustomEditViewType=TEditView
-Module=C:\Projelerim\AutoInstaller\FormMain.pas
-CursorX=7
-CursorY=70
-TopLine=59
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Projelerim\AutoInstaller\FormMain.pas
-
-[View1]
-CustomEditViewType=TEditView
 Module=C:\Projelerim\delphipi\DelphiPI.dpr
 CursorX=1
 CursorY=1
@@ -95,18 +70,7 @@ Elisions=
 Bookmarks=
 EditViewName=C:\Projelerim\delphipi\DelphiPI.dpr
 
-[View2]
-CustomEditViewType=TEditView
-Module=C:\Projelerim\AutoInstaller\PackageInfo.pas
-CursorX=1
-CursorY=250
-TopLine=236
-LeftCol=1
-Elisions=
-Bookmarks=
-EditViewName=C:\Projelerim\AutoInstaller\PackageInfo.pas
-
-[View3]
+[View1]
 CustomEditViewType=TEditView
 Module=C:\Projelerim\delphipi\FormAbout.pas
 CursorX=1
@@ -177,11 +141,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6390
+Height=8688
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6390
+ClientHeight=8688
 TBDockHeight=5896
 LRDockWidth=2352
 Dockable=1
@@ -196,11 +160,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6338
+Height=6390
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6338
+ClientHeight=6390
 TBDockHeight=7156
 LRDockWidth=2000
 Dockable=1
@@ -336,11 +300,11 @@ State=0
 Left=0
 Top=0
 Width=2336
-Height=922
+Height=1156
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2336
-ClientHeight=922
+ClientHeight=1156
 TBDockHeight=2312
 LRDockWidth=2828
 Dockable=1
@@ -401,11 +365,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6338
+Height=8364
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6338
+ClientHeight=8364
 TBDockHeight=4870
 LRDockWidth=7148
 Dockable=1
@@ -440,11 +404,11 @@ State=0
 Left=0
 Top=0
 Width=2000
-Height=6338
+Height=8364
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=2000
-ClientHeight=6338
+ClientHeight=8364
 TBDockHeight=4870
 LRDockWidth=5305
 Dockable=1
@@ -560,11 +524,11 @@ State=0
 Left=0
 Top=0
 Width=1891
-Height=6338
+Height=8364
 MaxLeft=-1
 MaxTop=-1
 ClientWidth=1891
-ClientHeight=6338
+ClientHeight=8364
 TBDockHeight=3675
 LRDockWidth=1891
 Dockable=1
@@ -681,8 +645,8 @@ Create=1
 Visible=0
 Docked=1
 State=0
-Left=640
-Top=23
+Left=0
+Top=0
 Width=3828
 Height=1636
 MaxLeft=-1
@@ -718,7 +682,7 @@ LRDockWidth=2000
 Dockable=1
 StayOnTop=0
 TabPosition=1
-ActiveTabID=ProjectManager
+ActiveTabID=ToolForm
 TabDockClients=ProjectManager,ToolForm,ModelViewTool,DataExplorer
 
 [DockSite3]

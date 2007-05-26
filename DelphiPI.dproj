@@ -40,6 +40,9 @@
     <DCCReference Include="FormMain.pas">
       <Form>frmMain</Form>
     </DCCReference>
+    <DCCReference Include="FormOptions.pas">
+      <Form>frmOptions</Form>
+    </DCCReference>
     <DCCReference Include="PackageInfo.pas" />
     <None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage" />
     <None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage" />
@@ -52,6 +55,7 @@
     <None Include="ModelSupport_DelphiPI\FormAbout\default.txvpck" />
     <None Include="ModelSupport_DelphiPI\FormMain\default.txaPackage" />
     <None Include="ModelSupport_DelphiPI\FormMain\default.txvpck" />
+    <None Include="ModelSupport_DelphiPI\FormOptions\default.txaPackage" />
     <None Include="ModelSupport_DelphiPI\PackageInfo\default.txaPackage" />
     <None Include="ModelSupport_DelphiPI\PackageInfo\default.txvpck" />
   </ItemGroup>

@@ -12,9 +12,9 @@ type
     ListView1: TListView;
     ToolBar1: TToolBar;
     ToolButton1: TToolButton;
-    ImageList1: TImageList;
+    ImageList: TImageList;
     ToolButton2: TToolButton;
-    ActionList1: TActionList;
+    ActionList: TActionList;
     actSelectFolder: TAction;
     actCompile: TAction;
     actExit: TAction;
@@ -24,6 +24,8 @@ type
     ToolButton4: TToolButton;
     Memo: TMemo;
     Splitter1: TSplitter;
+    ToolButton5: TToolButton;
+    actInstall: TAction;
     procedure actSelectFolderExecute(Sender: TObject);
     procedure actExitExecute(Sender: TObject);
     procedure ListView1InfoTip(Sender: TObject; Item: TListItem;
@@ -45,7 +47,7 @@ var
 
 implementation
 {$R *.dfm}
-uses  JclSysUtils, FileCtrl, FormAbout;
+uses  JclSysUtils, FileCtrl, FormAbout, FormOptions;
 
 procedure TfrmMain.actAboutExecute(Sender: TObject);
 begin
@@ -102,13 +104,16 @@ var
 begin
   if SelectDirectory('Select the folder where packages are','C:\',directory) then begin
     mask := '*D11.dpk';
-    if InputQuery('Please specify package mask','Mask',mask) then begin
-      FPackageList := TPackageList.LoadFromFolder(directory+'\'+mask);
+    Application.CreateForm(TfrmOptions, frmOptions);
+    try
+      frmOptions.ShowModal;
+      FPackageList := TPackageList.LoadFromFolder(directory+'\'+frmOptions.Pattern);
       FPackageList.SortList;
       DisplayPackageList(FPackageList);
+    finally
+      frmOptions.Free;
     end;
   end;
-
 end;
 
 procedure TfrmMain.DisplayPackageList(const PackageList: TPackageList);
@@ -123,7 +128,7 @@ begin
       info := PackageList[i];
       with ListView1.Items.Add do begin
         Caption := info.Description;
-        SubItems.Add(info.PackageName + ' ('+inttostr(info.weight)+')');
+        SubItems.Add(info.PackageName);
         if info.RunOnly then
           SubItems.Add('runtime')
         else
