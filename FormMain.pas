@@ -100,14 +100,12 @@ var
   directory: string;
   mask : string;
 begin
-  if SelectDirectory('Select the folder where packages are','C:\',directory) then begin
-    //mask := '*D11.dpk';
+  if SelectDirectory('Select the folder where packages are','',directory) then begin
     Application.CreateForm(TfrmOptions, frmOptions);
     try
       if frmOptions.ShowModal = mrOk then begin
         inst := frmOptions.Installer;
         directory := directory +'\' + frmOptions.Pattern;
-      //  directory := 'C:\Components\Src\DevExpress\ExpressSpreadSheet\*D11.dpk';
         FPackageList := TPackageList.LoadFromFolder(directory);
         FPackageList.SortList;
         DisplayPackageList(FPackageList);
@@ -130,6 +128,8 @@ begin
       info := PackageList[i];
       with ListView1.Items.Add do begin
         Caption := info.Description;
+        if Caption = '' then Caption := '<No Description>';
+        
         SubItems.Add(info.PackageName);
         if info.RunOnly then
           SubItems.Add('runtime')

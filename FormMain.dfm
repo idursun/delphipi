@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
   Left = 0
   Top = 0
-  Caption = 'Delphi PI 0.1'
+  Caption = 'Delphi PI 0.11'
   ClientHeight = 406
   ClientWidth = 621
   Color = clBtnFace
@@ -53,7 +53,6 @@ object frmMain: TfrmMain
     TabOrder = 0
     ViewStyle = vsReport
     OnInfoTip = ListView1InfoTip
-    ExplicitTop = 45
   end
   object ToolBar1: TToolBar
     Left = 0

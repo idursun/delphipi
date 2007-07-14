@@ -51,7 +51,7 @@ object frmAbout: TfrmAbout
     Width = 331
     Height = 123
     Lines.Strings = (
-      '(Delphi PI 0.1)'
+      '(Delphi PI 0.11)'
       'Author: ibrahim dursun ( thex@thexpot.net )'
       '2007'
       ''
@@ -61,10 +61,10 @@ object frmAbout: TfrmAbout
         ' '
       'Delphi PI:'
       '* automatically resolves any dependency between packages, '
-      '* finds required source paths and adds to library path.'
+      '* finds required source paths and adds to library path,'
       '* registers design packages.'
       ''
-      'All you have to is selecting a folder that contains both '
+      'All you have to do is selecting a folder that contains both '
       'packages and files.'
       'If the directory structure is like:'
       ''
@@ -74,17 +74,15 @@ object frmAbout: TfrmAbout
       'then just select SynEdit folder.'
       ''
       'If package folder contains packages for many Delphi versions '
-      'then use a pattern'
-      
-        'to match packages files suitable for your Delphi installation or' +
-        ' '
-      'just unselect the ones '
-      'that are not suitable for yours.'
+      'then use a pattern to match packages files suitable for your '
+      'Delphi installation or just unselect the ones that are not '
+      'suitable '
+      'for yours.'
       ''
-      'Delphi PI will work those directories and '
-      'will come up with a list of packages. After than click Compile.'
+      'Delphi PI will work those directories and will come up with '
+      'a list of packages. After then click Compile.'
       ''
-      'Version 0.1 is only tested with CodeGear Delphi 2007.')
+      'Currently only tested with CodeGear Delphi 2007.')
     ScrollBars = ssVertical
     TabOrder = 1
   end
