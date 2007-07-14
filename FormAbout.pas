@@ -8,10 +8,10 @@ uses
 
 type
   TfrmAbout = class(TForm)
-    Label1: TLabel;
     Bevel1: TBevel;
     Button1: TButton;
-    Label2: TLabel;
+    Memo1: TMemo;
+    Label1: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure Label2Click(Sender: TObject);
   private

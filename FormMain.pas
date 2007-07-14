@@ -80,7 +80,7 @@ begin
     compiled := inst.DCC32.MakePackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath,ExtraOptions);
     if (compiled) and (not info.RunOnly) then begin
       BPLFileName := PathAddSeparator(inst.BPLOutputPath) + PathExtractFileNameNoExt(info.FileName) + '.bpl';
-      inst.RegisterIDEPackage(BPLFileName, info.Description);
+      inst.RegisterPackage(BPLFileName, info.Description);
     end;
   end;
 end;
@@ -107,7 +107,7 @@ begin
       if frmOptions.ShowModal = mrOk then begin
         inst := frmOptions.Installer;
         directory := directory +'\' + frmOptions.Pattern;
-        directory := 'C:\Components\Src\DevExpress\ExpressSpreadSheet\*D11.dpk';
+      //  directory := 'C:\Components\Src\DevExpress\ExpressSpreadSheet\*D11.dpk';
         FPackageList := TPackageList.LoadFromFolder(directory);
         FPackageList.SortList;
         DisplayPackageList(FPackageList);

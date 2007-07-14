@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
   Left = 0
   Top = 0
-  Caption = 'AutoInstaller'
+  Caption = 'Delphi PI 0.1'
   ClientHeight = 406
   ClientWidth = 621
   Color = clBtnFace
@@ -53,6 +53,7 @@ object frmMain: TfrmMain
     TabOrder = 0
     ViewStyle = vsReport
     OnInfoTip = ListView1InfoTip
+    ExplicitTop = 45
   end
   object ToolBar1: TToolBar
     Left = 0
@@ -82,6 +83,7 @@ object frmMain: TfrmMain
       Left = 138
       Top = 0
       Action = actInstall
+      Visible = False
     end
     object ToolButton3: TToolButton
       Left = 207
