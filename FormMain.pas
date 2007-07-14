@@ -47,7 +47,7 @@ var
 
 implementation
 {$R *.dfm}
-uses  JclSysUtils, FileCtrl, FormAbout, FormOptions;
+uses  JclSysUtils, JclFileUtils, FileCtrl, FormAbout, FormOptions;
 
 procedure TfrmMain.actAboutExecute(Sender: TObject);
 begin
@@ -63,6 +63,8 @@ var
   includes: String;
   j: Integer;
   ExtraOptions : String;
+  BPLFileName: String;
+  compiled : boolean;
 begin
   AddSourcePaths;
 
@@ -70,17 +72,16 @@ begin
   for i := 0 to ListView1.Items.Count - 1 do begin
     if not ListView1.Items[i].Checked then continue;
     info := TPackageInfo(ListView1.Items[i].Data);
-    ChDir(ExtractFilePath(info.FileName));
-    if info.RunOnly then begin
-      ExtraOptions := '-B';
-      ExtraOptions := ExtraOptions + #13#10 +'-I"'+inst.LibrarySearchPath+'"';
-      ExtraOptions := ExtraOptions + #13#10+ '-U"'+inst.LibrarySearchPath+'"';
-      ExtraOptions := ExtraOptions + #13#10+ '-O"'+inst.LibrarySearchPath+'"';
-      ExtraOptions := ExtraOptions + #13#10+ '-R"'+inst.LibrarySearchPath+'"';
-      inst.DCC32.MakePackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath,ExtraOptions);
+    ExtraOptions := '-B';
+    ExtraOptions := ExtraOptions + #13#10 +'-I"'+inst.LibrarySearchPath+'"';
+    ExtraOptions := ExtraOptions + #13#10+ '-U"'+inst.LibrarySearchPath+'"';
+    ExtraOptions := ExtraOptions + #13#10+ '-O"'+inst.LibrarySearchPath+'"';
+    ExtraOptions := ExtraOptions + #13#10+ '-R"'+inst.LibrarySearchPath+'"';
+    compiled := inst.DCC32.MakePackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath,ExtraOptions);
+    if (compiled) and (not info.RunOnly) then begin
+      BPLFileName := PathAddSeparator(inst.BPLOutputPath) + PathExtractFileNameNoExt(info.FileName) + '.bpl';
+      inst.RegisterIDEPackage(BPLFileName, info.Description);
     end;
-    if not info.RunOnly then
-      inst.CompilePackage(info.filename, 'UU');
   end;
 end;
 
