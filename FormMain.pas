@@ -35,10 +35,10 @@ type
     procedure actAboutExecute(Sender: TObject);
   private
     FPackageList: PackageInfo.TPackageList;
-    inst : TJclDelphiInstallation;
+    inst : TJclBorRADToolInstallation;
     procedure DisplayPackageList(const PackageList: TPackageList);
+    procedure AddSourcePaths;
   protected
-    procedure DoCreate; override;
     procedure handletext(const text:string);
   end;
 
@@ -60,30 +60,27 @@ procedure TfrmMain.actCompileExecute(Sender: TObject);
 var
   i: Integer;
   info : TPackageInfo;
-  SourcePaths : TStringList;
   includes: String;
   j: Integer;
+  ExtraOptions : String;
 begin
-  SourcePaths := TStringList.Create;
-  try
-    FPackageList.GetSourceList(SourcePaths);
-    memo.Lines.Assign(SourcePaths);
-    for I := 0 to SourcePaths.Count - 1 do begin
-      //inst.AddToLibrarySearchPath(SourcePaths[i]);
-    end;
-  finally
-    SourcePaths.Free;
-  end;
+  AddSourcePaths;
 
   inst.OutputCallback := self.handletext;
   for i := 0 to ListView1.Items.Count - 1 do begin
     if not ListView1.Items[i].Checked then continue;
     info := TPackageInfo(ListView1.Items[i].Data);
+    ChDir(ExtractFilePath(info.FileName));
     if info.RunOnly then begin
-      inst.DCC32.MakePackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath);
-    end
-    else
-      inst.InstallIDEPackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath);
+      ExtraOptions := '-B';
+      ExtraOptions := ExtraOptions + #13#10 +'-I"'+inst.LibrarySearchPath+'"';
+      ExtraOptions := ExtraOptions + #13#10+ '-U"'+inst.LibrarySearchPath+'"';
+      ExtraOptions := ExtraOptions + #13#10+ '-O"'+inst.LibrarySearchPath+'"';
+      ExtraOptions := ExtraOptions + #13#10+ '-R"'+inst.LibrarySearchPath+'"';
+      inst.DCC32.MakePackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath,ExtraOptions);
+    end;
+    if not info.RunOnly then
+      inst.CompilePackage(info.filename, 'UU');
   end;
 end;
 
@@ -103,13 +100,17 @@ var
   mask : string;
 begin
   if SelectDirectory('Select the folder where packages are','C:\',directory) then begin
-    mask := '*D11.dpk';
+    //mask := '*D11.dpk';
     Application.CreateForm(TfrmOptions, frmOptions);
     try
-      frmOptions.ShowModal;
-      FPackageList := TPackageList.LoadFromFolder(directory+'\'+frmOptions.Pattern);
-      FPackageList.SortList;
-      DisplayPackageList(FPackageList);
+      if frmOptions.ShowModal = mrOk then begin
+        inst := frmOptions.Installer;
+        directory := directory +'\' + frmOptions.Pattern;
+        directory := 'C:\Components\Src\DevExpress\ExpressSpreadSheet\*D11.dpk';
+        FPackageList := TPackageList.LoadFromFolder(directory);
+        FPackageList.SortList;
+        DisplayPackageList(FPackageList);
+      end;
     finally
       frmOptions.Free;
     end;
@@ -142,19 +143,28 @@ begin
   end;
 end;
 
-procedure TfrmMain.DoCreate;
-var
-  insts : TJclBorRADToolInstallations;
-begin
-  inherited;
-  insts := TJclBorRADToolInstallations.Create;
-  inst := TJclDelphiInstallation(insts.Installations[0]);
-end;
-
 procedure TfrmMain.handletext(const text: string);
 begin
   memo.lines.add(text);
   Application.ProcessMessages;
+end;
+
+procedure TfrmMain.AddSourcePaths;
+var
+  SourcePaths: TStringList;
+  i: Integer;
+begin
+  SourcePaths := TStringList.Create;
+  try
+    FPackageList.GetSourceList(SourcePaths);
+    memo.Lines.Assign(SourcePaths);
+    for I := 0 to SourcePaths.Count - 1 do
+    begin
+      inst.AddToLibrarySearchPath(SourcePaths[i]);
+    end;
+  finally
+    SourcePaths.Free;
+  end;
 end;
 
 procedure TfrmMain.ListView1InfoTip(Sender: TObject; Item: TListItem;
@@ -163,7 +173,7 @@ var
   info : TPackageInfo;
 begin
   info := TPackageInfo(Item.Data);
-  InfoTip := 'Requires:'+ info.Requires.Text;
+  InfoTip := 'Requires:'#13#10 + info.Requires.Text;
 end;
 
 end.

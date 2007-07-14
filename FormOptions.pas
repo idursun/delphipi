@@ -64,7 +64,7 @@ end;
 function TfrmOptions.GetInstaller: TJclBorRADToolInstallation;
 begin
   Result := nil;
-  if rgDelphiVersions.ItemIndex = -1 then
+  if rgDelphiVersions.ItemIndex <> -1 then
     Result := installations.Installations[rgDelphiVersions.ItemIndex];
 end;
 

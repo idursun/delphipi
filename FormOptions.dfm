@@ -64,7 +64,7 @@ object frmOptions: TfrmOptions
       Top = 24
       Width = 221
       Height = 21
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 0
       Text = '*.dpk'
     end

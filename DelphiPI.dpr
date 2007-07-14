@@ -14,7 +14,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Delphi PI';
   Application.CreateForm(TfrmMain, frmMain);
-  Application.CreateForm(TfrmAbout, frmAbout);
-  Application.CreateForm(TfrmOptions, frmOptions);
   Application.Run;
 end.
