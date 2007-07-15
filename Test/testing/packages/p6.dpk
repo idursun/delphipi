@@ -25,7 +25,7 @@ package p6;
 {$DESCRIPTION 'Package3'}
 {$RUNONLY ON}
 {$IMPLICITBUILD OFF}
-{$SUFFIX D10}
+{$LIBSUFFIX 'D10'}
 
 requires
   rtl,

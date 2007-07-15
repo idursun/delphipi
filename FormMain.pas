@@ -18,7 +18,6 @@ type
     actSelectFolder: TAction;
     actCompile: TAction;
     actExit: TAction;
-    StatusBar1: TStatusBar;
     ToolButton3: TToolButton;
     actAbout: TAction;
     ToolButton4: TToolButton;
@@ -26,6 +25,10 @@ type
     Splitter1: TSplitter;
     ToolButton5: TToolButton;
     actInstall: TAction;
+    Panel1: TPanel;
+    lblPackage: TLabel;
+    lblFile: TLabel;
+    ProgressBar: TProgressBar;
     procedure actSelectFolderExecute(Sender: TObject);
     procedure actExitExecute(Sender: TObject);
     procedure ListView1InfoTip(Sender: TObject; Item: TListItem;
@@ -40,6 +43,8 @@ type
     procedure AddSourcePaths;
   protected
     procedure handletext(const text:string);
+    procedure BeginCompile;
+    procedure EndCompile;
   end;
 
 var
@@ -47,7 +52,7 @@ var
 
 implementation
 {$R *.dfm}
-uses  JclSysUtils, JclFileUtils, FileCtrl, FormAbout, FormOptions;
+uses  JclSysUtils, JclFileUtils, StrUtils, FileCtrl, FormAbout, FormOptions;
 
 procedure TfrmMain.actAboutExecute(Sender: TObject);
 begin
@@ -69,19 +74,26 @@ begin
   AddSourcePaths;
 
   inst.OutputCallback := self.handletext;
-  for i := 0 to ListView1.Items.Count - 1 do begin
-    if not ListView1.Items[i].Checked then continue;
-    info := TPackageInfo(ListView1.Items[i].Data);
-    ExtraOptions := '-B';
-    ExtraOptions := ExtraOptions + #13#10 +'-I"'+inst.LibrarySearchPath+'"';
-    ExtraOptions := ExtraOptions + #13#10+ '-U"'+inst.LibrarySearchPath+'"';
-    ExtraOptions := ExtraOptions + #13#10+ '-O"'+inst.LibrarySearchPath+'"';
-    ExtraOptions := ExtraOptions + #13#10+ '-R"'+inst.LibrarySearchPath+'"';
-    compiled := inst.DCC32.MakePackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath,ExtraOptions);
-    if (compiled) and (not info.RunOnly) then begin
-      BPLFileName := PathAddSeparator(inst.BPLOutputPath) + PathExtractFileNameNoExt(info.FileName) + '.bpl';
-      inst.RegisterPackage(BPLFileName, info.Description);
+  BeginCompile;
+  try
+    for i := 0 to ListView1.Items.Count - 1 do begin
+      if not ListView1.Items[i].Checked then continue;
+      ProgressBar.StepIt;
+      info := TPackageInfo(ListView1.Items[i].Data);
+      lblPackage.Caption := info.PackageName;
+      ExtraOptions := '-B';
+      ExtraOptions := ExtraOptions + #13#10 +'-I"'+inst.LibrarySearchPath+'"';
+      ExtraOptions := ExtraOptions + #13#10+ '-U"'+inst.LibrarySearchPath+'"';
+      ExtraOptions := ExtraOptions + #13#10+ '-O"'+inst.LibrarySearchPath+'"';
+      ExtraOptions := ExtraOptions + #13#10+ '-R"'+inst.LibrarySearchPath+'"';
+      compiled := inst.DCC32.MakePackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath,ExtraOptions);
+      if (compiled) and (not info.RunOnly) then begin
+        BPLFileName := PathAddSeparator(inst.BPLOutputPath) + PathExtractFileNameNoExt(info.FileName) + info.Suffix + '.bpl';
+        inst.RegisterPackage(BPLFileName, info.Description);
+      end;
     end;
+  finally
+    EndCompile;
   end;
 end;
 
@@ -144,9 +156,36 @@ begin
   end;
 end;
 
-procedure TfrmMain.handletext(const text: string);
+
+procedure TfrmMain.BeginCompile;
+var
+  total : integer;
+  i : integer;
 begin
-  memo.lines.add(text);
+  total := 0;
+  for I := 0 to ListView1.Items.Count - 1 do
+    if ListView1.Items[i].Checked then inc(total);
+  ProgressBar.Max := total;
+  ProgressBar.Visible := true;
+end;
+
+procedure TfrmMain.EndCompile;
+begin
+  lblPackage.Caption :='';
+  lblFile.Caption :='';
+  ProgressBar.Visible := false;
+end;
+
+procedure TfrmMain.handletext(const text: string);
+var
+  i: Integer;
+  S : String;
+begin
+ S := Trim(Text);
+  if S[Length(S)] =')' then begin
+     lblFile.Caption := ExtractFileName(S);
+  end else
+    memo.lines.add(text);
   Application.ProcessMessages;
 end;
 

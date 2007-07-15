@@ -1,9 +1,9 @@
 object frmMain: TfrmMain
   Left = 0
   Top = 0
-  Caption = 'Delphi PI 0.11'
-  ClientHeight = 406
-  ClientWidth = 621
+  Caption = 'Delphi PI 0.15'
+  ClientHeight = 402
+  ClientWidth = 631
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,8 +16,8 @@ object frmMain: TfrmMain
   TextHeight = 13
   object Splitter1: TSplitter
     Left = 0
-    Top = 295
-    Width = 621
+    Top = 291
+    Width = 631
     Height = 3
     Cursor = crVSplit
     Align = alBottom
@@ -27,8 +27,8 @@ object frmMain: TfrmMain
   object ListView1: TListView
     Left = 0
     Top = 44
-    Width = 621
-    Height = 251
+    Width = 631
+    Height = 247
     Align = alClient
     Checkboxes = True
     Columns = <
@@ -57,7 +57,7 @@ object frmMain: TfrmMain
   object ToolBar1: TToolBar
     Left = 0
     Top = 0
-    Width = 621
+    Width = 631
     Height = 44
     AutoSize = True
     ButtonHeight = 44
@@ -95,21 +95,47 @@ object frmMain: TfrmMain
       Action = actExit
     end
   end
-  object StatusBar1: TStatusBar
-    Left = 0
-    Top = 387
-    Width = 621
-    Height = 19
-    Panels = <>
-  end
   object Memo: TMemo
     Left = 0
-    Top = 298
-    Width = 621
+    Top = 294
+    Width = 631
     Height = 89
     Align = alBottom
     ScrollBars = ssBoth
+    TabOrder = 2
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 383
+    Width = 631
+    Height = 19
+    Align = alBottom
     TabOrder = 3
+    DesignSize = (
+      631
+      19)
+    object lblPackage: TLabel
+      Left = 0
+      Top = 4
+      Width = 3
+      Height = 13
+    end
+    object lblFile: TLabel
+      Left = 221
+      Top = 4
+      Width = 3
+      Height = 13
+    end
+    object ProgressBar: TProgressBar
+      Left = 432
+      Top = 0
+      Width = 200
+      Height = 18
+      Anchors = [akLeft, akTop, akRight]
+      Step = 1
+      TabOrder = 0
+      Visible = False
+    end
   end
   object ImageList: TImageList
     Height = 24

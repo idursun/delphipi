@@ -69,7 +69,7 @@ uses  SysUtils, JclFileUtils, contnrs;
 resourcestring
   StrRUNONLY = '{$RUNONLY';
   StrDESCRIPTION = '{$DESCRIPTION ';
-  StrSUFFIX = '{$SUFFIX ';
+  StrSUFFIX = '{$LIBSUFFIX ';
   StrPackage = 'package';
   StrRequires = 'requires';
   StrContains = 'contains';
@@ -171,7 +171,7 @@ begin
     if Pos(StrDESCRIPTION,str) > 0 then
       FDescription := Copy(Str,Length(StrDescription)+2,Pos('}',str)-Length(StrDescription)-3);
     if Pos(StrSUFFIX,str) > 0 then
-      FSuffix := Copy(Str,Length(StrSUFFIX)+1,Pos('}',str)-Length(StrSUFFIX)-1);
+      FSuffix := Copy(Str,Length(StrSUFFIX)+2,Pos('}',str)-Length(StrSUFFIX)-3);
 
     if Pos(StrPackage,str) = 1 then
       FPackageName := Trim(Copy(Str,Length(strPackage)+2,Length(Str)- Length(strPackage) -2));
@@ -254,11 +254,7 @@ end;
 procedure TPackageList.GetSourceList(var sourceList: TStringList);
 var
   i : integer;
-//  path: string;
-//  filename : string;
   j: Integer;
-//  info : TPackageInfo;
-//  searchPath: String;
   files, containedFiles  : TStringList;
 begin
   Assert(assigned(sourceList));
@@ -285,18 +281,6 @@ begin
     if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
       sourceList.Add(ExtractFilePath(files[i]));
   end;
-
-//  for I := 0 to Count - 1 do begin
-//    info := Self[i];
-//    for j := 0 to info.Contains.Count - 1 do begin
-//      path := IncludeTrailingBackslash(ExtractFilePath(info.FileName));
-//      path := path + ExtractFilePath(info.Contains[j]);
-//      path := SimplifyPath(path);
-//      filename := ExtractFileName(info.Contains[j]);
-//      if FileExists(path + '\' + filename) then
-//        sourceList.Add(path);
-//    end;
-//  end;
 end;
 
 function TPackageList.IndexOf(const PackageName: String): Integer;
