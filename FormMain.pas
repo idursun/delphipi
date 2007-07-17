@@ -1,3 +1,8 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit FormMain;
 
 interface
@@ -9,7 +14,7 @@ uses
 
 type
   TfrmMain = class(TForm)
-    ListView1: TListView;
+    packageListView: TListView;
     ToolBar1: TToolBar;
     ToolButton1: TToolButton;
     ImageList: TImageList;
@@ -31,7 +36,7 @@ type
     ProgressBar: TProgressBar;
     procedure actSelectFolderExecute(Sender: TObject);
     procedure actExitExecute(Sender: TObject);
-    procedure ListView1InfoTip(Sender: TObject; Item: TListItem;
+    procedure packageListViewInfoTip(Sender: TObject; Item: TListItem;
       var InfoTip: string);
     procedure actCompileUpdate(Sender: TObject);
     procedure actCompileExecute(Sender: TObject);
@@ -76,10 +81,10 @@ begin
   inst.OutputCallback := self.handletext;
   BeginCompile;
   try
-    for i := 0 to ListView1.Items.Count - 1 do begin
-      if not ListView1.Items[i].Checked then continue;
+    for i := 0 to packageListView.Items.Count - 1 do begin
+      if not packageListView.Items[i].Checked then continue;
       ProgressBar.StepIt;
-      info := TPackageInfo(ListView1.Items[i].Data);
+      info := TPackageInfo(packageListView.Items[i].Data);
       lblPackage.Caption := info.PackageName;
       ExtraOptions := '-B';
       ExtraOptions := ExtraOptions + #13#10 +'-I"'+inst.LibrarySearchPath+'"';
@@ -90,6 +95,7 @@ begin
       if (compiled) and (not info.RunOnly) then begin
         BPLFileName := PathAddSeparator(inst.BPLOutputPath) + PathExtractFileNameNoExt(info.FileName) + info.Suffix + '.bpl';
         inst.RegisterPackage(BPLFileName, info.Description);
+        inst.PackageSourceFileExtension
       end;
     end;
   finally
@@ -99,7 +105,7 @@ end;
 
 procedure TfrmMain.actCompileUpdate(Sender: TObject);
 begin
-  TAction(Sender).Enabled := ListView1.Items.Count > 0;
+  TAction(Sender).Enabled := packageListView.Items.Count > 0;
 end;
 
 procedure TfrmMain.actExitExecute(Sender: TObject);
@@ -133,12 +139,12 @@ var
   info : TPackageInfo;
   I: Integer;
 begin
-  ListView1.Clear;
-  ListView1.Items.BeginUpdate;
+  packageListView.Clear;
+  packageListView.Items.BeginUpdate;
   try
     for I := 0 to PackageList.Count - 1 do begin
       info := PackageList[i];
-      with ListView1.Items.Add do begin
+      with packageListView.Items.Add do begin
         Caption := info.Description;
         if Caption = '' then Caption := '<No Description>';
         
@@ -152,7 +158,7 @@ begin
       end;
     end;
   finally
-    ListView1.Items.EndUpdate;
+    packageListView.Items.EndUpdate;
   end;
 end;
 
@@ -163,8 +169,8 @@ var
   i : integer;
 begin
   total := 0;
-  for I := 0 to ListView1.Items.Count - 1 do
-    if ListView1.Items[i].Checked then inc(total);
+  for I := 0 to packageListView.Items.Count - 1 do
+    if packageListView.Items[i].Checked then inc(total);
   ProgressBar.Max := total;
   ProgressBar.Visible := true;
 end;
@@ -207,7 +213,7 @@ begin
   end;
 end;
 
-procedure TfrmMain.ListView1InfoTip(Sender: TObject; Item: TListItem;
+procedure TfrmMain.packageListViewInfoTip(Sender: TObject; Item: TListItem;
   var InfoTip: string);
 var
   info : TPackageInfo;

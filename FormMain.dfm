@@ -24,7 +24,7 @@ object frmMain: TfrmMain
     ExplicitTop = 44
     ExplicitWidth = 254
   end
-  object ListView1: TListView
+  object packageListView: TListView
     Left = 0
     Top = 44
     Width = 631
@@ -52,7 +52,7 @@ object frmMain: TfrmMain
     ShowHint = True
     TabOrder = 0
     ViewStyle = vsReport
-    OnInfoTip = ListView1InfoTip
+    OnInfoTip = packageListViewInfoTip
   end
   object ToolBar1: TToolBar
     Left = 0
