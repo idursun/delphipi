@@ -5,7 +5,8 @@ uses
   FormMain in 'FormMain.pas' {frmMain},
   PackageInfo in 'PackageInfo.pas',
   FormAbout in 'FormAbout.pas' {frmAbout},
-  FormOptions in 'FormOptions.pas' {frmOptions};
+  FormOptions in 'FormOptions.pas' {frmOptions},
+  PackageCompiler in 'PackageCompiler.pas';
 
 {$R *.res}
 

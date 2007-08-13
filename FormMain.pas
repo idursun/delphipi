@@ -57,7 +57,8 @@ var
 
 implementation
 {$R *.dfm}
-uses  JclSysUtils, JclFileUtils, StrUtils, FileCtrl, FormAbout, FormOptions;
+uses  JclSysUtils,  StrUtils, FileCtrl, FormAbout, FormOptions,
+      PackageCompiler;
 
 procedure TfrmMain.actAboutExecute(Sender: TObject);
 begin
@@ -71,35 +72,24 @@ var
   i: Integer;
   info : TPackageInfo;
   includes: String;
-  j: Integer;
-  ExtraOptions : String;
-  BPLFileName: String;
-  compiled : boolean;
+  compiler: TPackageCompiler;
 begin
   AddSourcePaths;
-
   inst.OutputCallback := self.handletext;
   BeginCompile;
+  compiler := TPackageCompiler.Create(inst);
   try
     for i := 0 to packageListView.Items.Count - 1 do begin
       if not packageListView.Items[i].Checked then continue;
       ProgressBar.StepIt;
       info := TPackageInfo(packageListView.Items[i].Data);
       lblPackage.Caption := info.PackageName;
-      ExtraOptions := '-B';
-      ExtraOptions := ExtraOptions + #13#10 +'-I"'+inst.LibrarySearchPath+'"';
-      ExtraOptions := ExtraOptions + #13#10+ '-U"'+inst.LibrarySearchPath+'"';
-      ExtraOptions := ExtraOptions + #13#10+ '-O"'+inst.LibrarySearchPath+'"';
-      ExtraOptions := ExtraOptions + #13#10+ '-R"'+inst.LibrarySearchPath+'"';
-      compiled := inst.DCC32.MakePackage(info.filename, inst.BPLOutputPath,inst.DCPOutputPath,ExtraOptions);
-      if (compiled) and (not info.RunOnly) then begin
-        BPLFileName := PathAddSeparator(inst.BPLOutputPath) + PathExtractFileNameNoExt(info.FileName) + info.Suffix + '.bpl';
-        inst.RegisterPackage(BPLFileName, info.Description);
-        inst.PackageSourceFileExtension
-      end;
+      if compiler.CompilePackage(info) and (not info.RunOnly) then
+        compiler.InstallPackage(info);
     end;
   finally
     EndCompile;
+    compiler.Free;
   end;
 end;
 
@@ -116,7 +106,6 @@ end;
 procedure TfrmMain.actSelectFolderExecute(Sender: TObject);
 var
   directory: string;
-  mask : string;
 begin
   if SelectDirectory('Select the folder where packages are','',directory) then begin
     Application.CreateForm(TfrmOptions, frmOptions);
@@ -146,7 +135,8 @@ begin
       info := PackageList[i];
       with packageListView.Items.Add do begin
         Caption := info.Description;
-        if Caption = '' then Caption := '<No Description>';
+        if Caption = '' then
+          Caption := '<No Description>';
         
         SubItems.Add(info.PackageName);
         if info.RunOnly then
@@ -184,7 +174,6 @@ end;
 
 procedure TfrmMain.handletext(const text: string);
 var
-  i: Integer;
   S : String;
 begin
  S := Trim(Text);

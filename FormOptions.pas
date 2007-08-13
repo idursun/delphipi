@@ -9,7 +9,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, JclBorlandTools;
+  Dialogs, StdCtrls, ExtCtrls, JclBorlandTools, dxGDIPlusClasses;
 
 type
   TfrmOptions = class(TForm)
@@ -19,6 +19,8 @@ type
     GroupBox1: TGroupBox;
     Label1: TLabel;
     ComboBox1: TComboBox;
+    Label2: TLabel;
+    Image1: TImage;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
