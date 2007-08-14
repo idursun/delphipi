@@ -64,7 +64,7 @@ type
     function IndexOf(const PackageName: String):Integer; overload;
     class function LoadFromFolder(const Folder: String):TPackageList;
     procedure SortList();
-    procedure GetSourceList(var sourceList: TStringList);
+    procedure GetSourcePaths(var sourceList: TStringList);
     property InitialFolder: String read FInitialFolder; 
   end;
 
@@ -256,7 +256,7 @@ begin
   Result := TPackageInfo(inherited get(i));
 end;
 
-procedure TPackageList.GetSourceList(var sourceList: TStringList);
+procedure TPackageList.GetSourcePaths(var sourceList: TStringList);
 var
   i : integer;
   j: Integer;

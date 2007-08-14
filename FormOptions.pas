@@ -21,6 +21,8 @@ type
     ComboBox1: TComboBox;
     Label2: TLabel;
     Image1: TImage;
+    GroupBox2: TGroupBox;
+    cbInstallHelp: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private

@@ -41,11 +41,12 @@ type
     procedure actCompileUpdate(Sender: TObject);
     procedure actCompileExecute(Sender: TObject);
     procedure actAboutExecute(Sender: TObject);
+//    procedure btnInstallHelpClick(Sender: TObject);
   private
     FPackageList: PackageInfo.TPackageList;
+    FHelpFileList : TStringList;
     inst : TJclBorRADToolInstallation;
     procedure DisplayPackageList(const PackageList: TPackageList);
-    procedure AddSourcePaths;
   protected
     procedure handletext(const text:string);
     procedure BeginCompile;
@@ -58,7 +59,7 @@ var
 implementation
 {$R *.dfm}
 uses  JclSysUtils,  StrUtils, FileCtrl, FormAbout, FormOptions,
-      PackageCompiler;
+      PackageCompiler, JclFileUtils;
 
 procedure TfrmMain.actAboutExecute(Sender: TObject);
 begin
@@ -71,14 +72,18 @@ procedure TfrmMain.actCompileExecute(Sender: TObject);
 var
   i: Integer;
   info : TPackageInfo;
-  includes: String;
   compiler: TPackageCompiler;
+  sourceList: TStringList;
 begin
-  AddSourcePaths;
   inst.OutputCallback := self.handletext;
   BeginCompile;
+
+  sourceList := TStringList.Create;
   compiler := TPackageCompiler.Create(inst);
   try
+    FPackageList.GetSourcePaths(sourceList);
+    compiler.AddSourcePaths(sourceList);
+
     for i := 0 to packageListView.Items.Count - 1 do begin
       if not packageListView.Items[i].Checked then continue;
       ProgressBar.StepIt;
@@ -90,6 +95,7 @@ begin
   finally
     EndCompile;
     compiler.Free;
+    sourceList.Free;
   end;
 end;
 
@@ -165,6 +171,35 @@ begin
   ProgressBar.Visible := true;
 end;
 
+//procedure TfrmMain.btnInstallHelpClick(Sender: TObject);
+//var
+//  directory : string;
+//  help2 : TJclHelp2Manager;
+//  openhelp : TJclBorlandOpenHelp;
+//  helpfilelist: TStringList;
+//  helpfile : string;
+//begin
+//  Assert(assigned(FPackageList));
+//  Assert(assigned(inst));
+//  if inst is TJclBDSInstallation then begin
+//    help2 := (inst as TJclBDSInstallation).Help2Manager;
+//    help2.CreateTransaction;
+//    
+//    directory := FPackageList.InitialFolder + '\' + '*.HxS';
+//    helpfilelist := TStringList.Create;
+//    try
+//      AdvBuildFileList(directory, faAnyFile, helpfilelist, amAny, [flFullnames, flRecursive], '', nil);
+//      for helpfile in helpfilelist do
+//      begin
+//         help2.RegisterHelpFile('','',0,helpfile,'');
+//      end;
+//    finally
+//      helpfilelist.Free;
+//      help2.CommitTransaction;
+//    end;
+//  end;
+//end;
+
 procedure TfrmMain.EndCompile;
 begin
   lblPackage.Caption :='';
@@ -182,24 +217,6 @@ begin
   end else
     memo.lines.add(text);
   Application.ProcessMessages;
-end;
-
-procedure TfrmMain.AddSourcePaths;
-var
-  SourcePaths: TStringList;
-  i: Integer;
-begin
-  SourcePaths := TStringList.Create;
-  try
-    FPackageList.GetSourceList(SourcePaths);
-    memo.Lines.Assign(SourcePaths);
-    for I := 0 to SourcePaths.Count - 1 do
-    begin
-      inst.AddToLibrarySearchPath(SourcePaths[i]);
-    end;
-  finally
-    SourcePaths.Free;
-  end;
 end;
 
 procedure TfrmMain.packageListViewInfoTip(Sender: TObject; Item: TListItem;

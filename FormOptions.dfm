@@ -3,7 +3,7 @@ object frmOptions: TfrmOptions
   Top = 0
   BorderStyle = bsDialog
   Caption = 'Options'
-  ClientHeight = 268
+  ClientHeight = 320
   ClientWidth = 333
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -70,7 +70,7 @@ object frmOptions: TfrmOptions
   end
   object btnOK: TButton
     Left = 169
-    Top = 226
+    Top = 287
     Width = 75
     Height = 25
     Caption = 'OK'
@@ -80,7 +80,7 @@ object frmOptions: TfrmOptions
   end
   object btnCancel: TButton
     Left = 250
-    Top = 226
+    Top = 287
     Width = 75
     Height = 25
     Cancel = True
@@ -110,6 +110,23 @@ object frmOptions: TfrmOptions
       ItemHeight = 13
       TabOrder = 0
       Text = '*.dpk'
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 8
+    Top = 226
+    Width = 317
+    Height = 46
+    Caption = 'Help Files'
+    Enabled = False
+    TabOrder = 4
+    object cbInstallHelp: TCheckBox
+      Left = 22
+      Top = 20
+      Width = 263
+      Height = 17
+      Caption = 'Install Help Files, if you can'
+      TabOrder = 0
     end
   end
 end

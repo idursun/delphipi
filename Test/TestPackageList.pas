@@ -1,3 +1,8 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit TestPackageList;
 {
 
@@ -98,7 +103,7 @@ var
 begin
   list := TStringList.Create;
   try
-    FPackageList.GetSourceList(list);
+    FPackageList.GetSourcePaths(list);
     CheckEquals(FPackageList.InitialFolder + 'source\',list[0]);
     CheckEquals(FPackageList.InitialFolder + 'source\p3\',list[1]);
     CheckEquals(2,list.Count,'count check');

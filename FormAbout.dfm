@@ -607,7 +607,6 @@ object frmAbout: TfrmAbout
     Width = 331
     Height = 123
     Lines.Strings = (
-      '(Delphi PI 0.15)'
       'Author: ibrahim dursun ( thex@thexpot.net )'
       '2007'
       ''
@@ -637,7 +636,12 @@ object frmAbout: TfrmAbout
       'Delphi PI will work those directories and will come up with '
       'a list of packages. After then click Compile.'
       ''
-      'Currently only tested with CodeGear Delphi 2007.')
+      'NOTE: If you encounter any problem, any malfunctioning or a '
+      'bug '
+      'just fill an issue or drop an e-mail.'
+      ''
+      'NOTE: If dcc32.exe -belongs to Delphi 7 or previous versions- '
+      'raises AccessViolation exception then shorten folder names.')
     ScrollBars = ssVertical
     TabOrder = 1
   end

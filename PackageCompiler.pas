@@ -1,7 +1,12 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit PackageCompiler;
 
 interface
-uses JclBorlandTools, PackageInfo;
+uses JclBorlandTools, PackageInfo, SysUtils, Classes;
 
 type
    TPackageCompiler = class
@@ -14,12 +19,24 @@ type
      constructor Create(const inst: TJclBorRadToolInstallation);
      function CompilePackage(const packageInfo : TPackageInfo): Boolean; virtual;
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
+     procedure AddSourcePaths(const aSourcePaths: TStringList);
    end;
-   
+
 implementation
 
-uses JclFileUtils, Classes;
+uses JclFileUtils, JclStrings;
 { TPackageCompiler }
+
+procedure TPackageCompiler.AddSourcePaths(const aSourcePaths: TStringList);
+var
+  path : string;
+begin
+  Assert(assigned(aSourcePaths));
+  for path in aSourcePaths do
+  begin
+    installation.AddToLibrarySearchPath(path);
+  end;
+end;
 
 function TPackageCompiler.CompilePackage(
   const packageInfo: TPackageInfo): Boolean;
@@ -40,13 +57,15 @@ begin
 end;
 
 function TPackageCompiler.GetExtraOptions: String;
+var
+  paths : string;
 begin
       Result := '-B';
-      //paths := GetShortPaths(inst.LibrarySearchPath);
-      Result := Result + #13#10 +'-I"'+installation.LibrarySearchPath+'"';
-      Result := Result + #13#10+ '-U"'+installation.LibrarySearchPath+'"';
-      Result := Result + #13#10+ '-O"'+installation.LibrarySearchPath+'"';
-      Result := Result + #13#10+ '-R"'+installation.LibrarySearchPath+'"';
+      paths := GetShortPaths(installation.LibrarySearchPath);
+      Result := Result + #13#10 +'-I"'+paths+'"';
+      Result := Result + #13#10+ '-U"'+paths+'"';
+      Result := Result + #13#10+ '-O"'+paths+'"';
+      Result := Result + #13#10+ '-R"'+paths+'"';
 
 end;
 
@@ -61,7 +80,7 @@ begin
     ExtractStrings([';'],[' '],PAnsiChar(paths),PathList);
     for path in PathList do
     begin
-       Result := Result + PathGetShortName(path) + ';';
+      Result := Result + StrDoubleQuote(PathGetShortName(StrTrimQuotes(path))) + ';';
     end;
   finally
     PathList.Free;
