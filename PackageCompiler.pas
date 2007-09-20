@@ -19,7 +19,7 @@ type
      constructor Create(const inst: TJclBorRadToolInstallation);
      function CompilePackage(const packageInfo : TPackageInfo): Boolean; virtual;
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
-     procedure AddSourcePaths(const aSourcePaths: TStringList);
+     procedure AddSourcePathsToIDE(const sourcePaths: TStringList);
    end;
 
 implementation
@@ -27,12 +27,12 @@ implementation
 uses JclFileUtils, JclStrings;
 { TPackageCompiler }
 
-procedure TPackageCompiler.AddSourcePaths(const aSourcePaths: TStringList);
+procedure TPackageCompiler.AddSourcePathsToIDE(const sourcePaths: TStringList);
 var
   path : string;
 begin
-  Assert(assigned(aSourcePaths));
-  for path in aSourcePaths do
+  Assert(assigned(sourcePaths));
+  for path in sourcePaths do
   begin
     installation.AddToLibrarySearchPath(path);
   end;

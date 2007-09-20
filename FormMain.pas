@@ -82,7 +82,7 @@ begin
   compiler := TPackageCompiler.Create(inst);
   try
     FPackageList.GetSourcePaths(sourceList);
-    compiler.AddSourcePaths(sourceList);
+    compiler.AddSourcePathsToIDE(sourceList);
 
     for i := 0 to packageListView.Items.Count - 1 do begin
       if not packageListView.Items[i].Checked then continue;

@@ -6,7 +6,8 @@ uses
   PackageInfo in 'PackageInfo.pas',
   FormAbout in 'FormAbout.pas' {frmAbout},
   FormOptions in 'FormOptions.pas' {frmOptions},
-  PackageCompiler in 'PackageCompiler.pas';
+  PackageCompiler in 'PackageCompiler.pas',
+  CompileInfo in 'CompileInfo.pas';
 
 {$R *.res}
 

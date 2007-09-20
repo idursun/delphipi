@@ -621,6 +621,7 @@ object frmAbout: TfrmAbout
       ''
       'All you have to do is selecting a folder that contains both '
       'packages and files.'
+      ''
       'If the directory structure is like:'
       ''
       'SynEdit\packages'
@@ -633,15 +634,14 @@ object frmAbout: TfrmAbout
       'Delphi installation or just unselect the ones that are not '
       'suitable for yours.'
       ''
-      'Delphi PI will work those directories and will come up with '
-      'a list of packages. After then click Compile.'
+      
+        'Delphi PI will work those directories and will come up with a li' +
+        'st '
+      'of packages. After then click Compile.'
       ''
       'NOTE: If you encounter any problem, any malfunctioning or a '
       'bug '
-      'just fill an issue or drop an e-mail.'
-      ''
-      'NOTE: If dcc32.exe -belongs to Delphi 7 or previous versions- '
-      'raises AccessViolation exception then shorten folder names.')
+      'just fill an issue or drop an e-mail.')
     ScrollBars = ssVertical
     TabOrder = 1
   end

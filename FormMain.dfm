@@ -1,7 +1,7 @@
 object frmMain: TfrmMain
   Left = 0
   Top = 0
-  Caption = 'Delphi PI 0.16'
+  Caption = 'Delphi PI 0.17'
   ClientHeight = 402
   ClientWidth = 631
   Color = clBtnFace

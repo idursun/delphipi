@@ -34,6 +34,7 @@
     <DelphiCompile Include="DelphiPI.dpr">
       <MainSource>MainSource</MainSource>
     </DelphiCompile>
+    <DCCReference Include="CompileInfo.pas" />
     <DCCReference Include="FormAbout.pas">
       <Form>frmAbout</Form>
     </DCCReference>
