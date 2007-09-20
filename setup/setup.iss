@@ -19,26 +19,25 @@ DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=C:\Projelerim\delphipi\setup\LICENSE.txt
 OutputBaseFilename=delphipi_setup
-Compression=lzma
+Compression=lzma/ultra
 SolidCompression=yes
 
 [Languages]
-Name: "eng"; MessagesFile: "compiler:Default.isl"
+Name: eng; MessagesFile: compiler:Default.isl
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
 
 [Files]
-Source: "..\DelphiPI.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "LICENSE.txt"; DestDir: "{app}"; Flags: ignoreversion
-Source: "README.TXT"; DestDir: "{app}"; Flags: ignoreversion
+Source: ..\DelphiPI.exe; DestDir: {app}; Flags: ignoreversion
+Source: LICENSE.txt; DestDir: {app}; Flags: ignoreversion
+Source: README.TXT; DestDir: {app}; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
-Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{userdesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: {group}\{#MyAppName}; Filename: {app}\{#MyAppExeName}
+Name: {group}\{cm:UninstallProgram,{#MyAppName}}; Filename: {uninstallexe}
+Name: {userdesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#MyAppName}}"; Flags: nowait postinstall skipifsilent
-
+Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#MyAppName}}; Flags: nowait postinstall skipifsilent
