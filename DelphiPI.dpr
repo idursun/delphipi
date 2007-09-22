@@ -2,12 +2,19 @@ program DelphiPI;
 
 uses
   Forms,
-  FormMain in 'FormMain.pas' {frmMain},
   PackageInfo in 'PackageInfo.pas',
   FormAbout in 'FormAbout.pas' {frmAbout},
-  FormOptions in 'FormOptions.pas' {frmOptions},
   PackageCompiler in 'PackageCompiler.pas',
-  CompileInfo in 'CompileInfo.pas';
+  CompileInfo in 'CompileInfo.pas',
+  FormWizard in 'FormWizard.pas' {frmWizard},
+  PageBase in 'PageBase.pas' {WizardPage},
+  PageSelectFolders in 'PageSelectFolders.pas' {SelectFoldersPage},
+  PageSelectDelphiInstallation in 'PageSelectDelphiInstallation.pas' {SelectDelphiInstallationPage},
+  PageProgress in 'PageProgress.pas' {ProgressPage},
+  WizardIntfs in 'WizardIntfs.pas',
+  PageShowPackageList in 'PageShowPackageList.pas' {ShowPackageListPage},
+  WizardData in 'WizardData.pas',
+  PageInstallHelpFiles in 'PageInstallHelpFiles.pas' {InstallHelpFilesPage};
 
 {$R *.res}
 
@@ -15,6 +22,7 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Delphi PI';
-  Application.CreateForm(TfrmMain, frmMain);
+  Application.CreateForm(TfrmWizard, frmWizard);
+  Application.CreateForm(TInstallHelpFilesPage, InstallHelpFilesPage);
   Application.Run;
 end.

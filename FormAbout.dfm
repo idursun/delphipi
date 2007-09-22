@@ -3,8 +3,8 @@ object frmAbout: TfrmAbout
   Top = 0
   BorderStyle = bsDialog
   Caption = 'About Delphi PI'
-  ClientHeight = 224
-  ClientWidth = 342
+  ClientHeight = 297
+  ClientWidth = 409
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,14 +17,14 @@ object frmAbout: TfrmAbout
   TextHeight = 13
   object Bevel1: TBevel
     Left = 8
-    Top = 174
-    Width = 329
+    Top = 249
+    Width = 393
     Height = 9
     Shape = bsTopLine
   end
   object Label1: TLabel
     Left = 52
-    Top = 8
+    Top = 6
     Width = 232
     Height = 23
     Caption = 'Delphi Package Installer'
@@ -37,7 +37,7 @@ object frmAbout: TfrmAbout
   end
   object Image1: TImage
     Left = 11
-    Top = 4
+    Top = 8
     Width = 35
     Height = 35
     Picture.Data = {
@@ -591,9 +591,22 @@ object frmAbout: TfrmAbout
       000F0000060F0000020F0000020F0000060F0000000F0000001F0000003F0000
       807F0000FFFF0000FFFF0000}
   end
+  object Label2: TLabel
+    Left = 52
+    Top = 27
+    Width = 28
+    Height = 16
+    Caption = '0.20'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
   object Button1: TButton
-    Left = 259
-    Top = 187
+    Left = 326
+    Top = 264
     Width = 75
     Height = 25
     Cancel = True
@@ -603,9 +616,9 @@ object frmAbout: TfrmAbout
   end
   object Memo1: TMemo
     Left = 7
-    Top = 45
-    Width = 331
-    Height = 123
+    Top = 49
+    Width = 394
+    Height = 194
     Lines.Strings = (
       'Author: ibrahim dursun ( thex@thexpot.net )'
       '2007'
@@ -619,8 +632,10 @@ object frmAbout: TfrmAbout
       '* finds required source paths and adds to library path,'
       '* registers design packages.'
       ''
-      'All you have to do is selecting a folder that contains both '
-      'packages and files.'
+      
+        'All you have to do is selecting a folder that contains both pack' +
+        'ages and '
+      'files.'
       ''
       'If the directory structure is like:'
       ''
@@ -629,20 +644,25 @@ object frmAbout: TfrmAbout
       ''
       'then just select SynEdit folder.'
       ''
-      'If package folder contains packages for many Delphi versions '
-      'then use a pattern to match packages files suitable for your '
-      'Delphi installation or just unselect the ones that are not '
-      'suitable for yours.'
+      
+        'If package folder contains packages for many Delphi versions the' +
+        'n use a '
+      
+        'pattern to match packages files suitable for your Delphi install' +
+        'ation or just '
+      'unselect the ones that are not suitable for yours.'
       ''
       
         'Delphi PI will work those directories and will come up with a li' +
-        'st '
-      'of packages. After then click Compile.'
+        'st of packages. '
+      'After then click Compile.'
       ''
-      'NOTE: If you encounter any problem, any malfunctioning or a '
-      'bug '
-      'just fill an issue or drop an e-mail.')
+      
+        'NOTE: If you encounter any problem, any malfunctioning or a bug ' +
+        'just fill '
+      'an issue or drop an e-mail.')
     ScrollBars = ssVertical
     TabOrder = 1
+    WantReturns = False
   end
 end

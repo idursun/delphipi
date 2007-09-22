@@ -18,6 +18,7 @@ type
     Memo1: TMemo;
     Label1: TLabel;
     Image1: TImage;
+    Label2: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure Label2Click(Sender: TObject);
   private

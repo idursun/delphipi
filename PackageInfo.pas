@@ -16,8 +16,6 @@ type
     function PackageName: String;
     function Description: String;
     function FileName: String;
-    procedure SetPackageName(const packageName: String);
-    procedure SetDescription(const description: String);
   end;
 
   TPackageInfo = class(TInterfacedObject, IPackageInfo)
@@ -43,10 +41,6 @@ type
     function Requires: TStringList; overload;
     function DoesRequire(const package: TPackageInfo): Boolean; overload;
     function Contains: TStringList;
-    procedure SetDescription(const description: string);
-    procedure SetPackageName(const packageName: string);
-    procedure SetFileName(const filename:string);
-
     function FileName: string;
   end;
 
@@ -61,11 +55,28 @@ type
   public
     property Item[I : Integer]: TPackageInfo read get write put;default;
     procedure Add(const item : TPackageInfo); overload;
+    procedure Remove(const item: TPackageInfo); overload;
     function IndexOf(const PackageName: String):Integer; overload;
     class function LoadFromFolder(const Folder: String):TPackageList;
     procedure SortList();
     procedure GetSourcePaths(var sourceList: TStringList);
-    property InitialFolder: String read FInitialFolder; 
+    property InitialFolder: String read FInitialFolder;
+  end;
+
+  TFolderSearch = class
+  private
+    FHelpFiles: TStringList;
+    FPackageFiles: TStringList;
+    procedure SetHelpFiles(const Value: TStringList);
+    procedure SetPackageFiles(const Value: TStringList);
+  published
+  public
+    Constructor Create(const baseFolder: String);
+
+    procedure Search(const patterns: string);
+    destructor Destroy; override;
+    property HelpFiles: TStringList read FHelpFiles write SetHelpFiles;
+    property PackageFiles: TStringList read FPackageFiles write SetPackageFiles;
   end;
 
 implementation
@@ -146,7 +157,7 @@ end;
 
 function TPackageInfo.PackageName: string;
 begin
-  Result := FPackageName;
+  Result := Trim(FPackageName);
 end;
 
 function TPackageInfo.ClearStr(Str: string):String;
@@ -224,21 +235,6 @@ begin
   Result := FRunOnly;
 end;
 
-procedure TPackageInfo.SetDescription(const description: string);
-begin
-  FDescription := description;
-end;
-
-procedure TPackageInfo.SetFileName(const filename: string);
-begin
-  FFileName := filename;
-end;
-
-procedure TPackageInfo.SetPackageName(const packageName: string);
-begin
-  FPackageName := packageName;
-end;
-
 function TPackageInfo.Suffix: string;
 begin
   Result := FSuffix;
@@ -313,6 +309,13 @@ begin
   inherited put(i,value);
 end;
 
+procedure TPackageList.Remove(const item: TPackageInfo);
+var i :integer;
+begin
+  i := IndexOf(item.PackageName);
+  Delete(i);
+end;
+
 class procedure TPackageList.SearchFolder(var Result: TPackageList; const Folder: string);
 var
   str: string;
@@ -359,5 +362,54 @@ begin
   end;
 end;
 
+
+{ TFolderSearch }
+
+constructor TFolderSearch.Create(const baseFolder: String);
+begin
+  FHelpFiles := TStringList.Create;
+  FPackageFiles := TStringList.Create;
+end;
+
+destructor TFolderSearch.Destroy;
+begin
+  FHelpFiles.Free;
+  FPackageFiles.Free;
+  inherited;
+end;
+
+procedure TFolderSearch.Search(const patterns: string);
+var
+  searcher: IJclFileEnumerator;
+  foundFiles: TStringList;
+  entry: string;
+begin
+  searcher := TJclFileEnumerator.Create;
+  searcher.FileMask := patterns;
+  foundFiles := TStringList.Create;
+  try
+    searcher.FillList(foundFiles);
+    for entry in foundFiles do begin
+      if ExtractFileExt(entry) = '.dpk' then
+        PackageFiles.Add(entry);
+      if ExtractFileExt(entry) = '.hlp' then
+        HelpFiles.Add(entry);
+    end;
+
+  finally
+    foundFiles.Free;
+    searcher := nil;
+  end;
+end;
+
+procedure TFolderSearch.SetHelpFiles(const Value: TStringList);
+begin
+  FHelpFiles := Value;
+end;
+
+procedure TFolderSearch.SetPackageFiles(const Value: TStringList);
+begin
+  FPackageFiles := Value;
+end;
 
 end.

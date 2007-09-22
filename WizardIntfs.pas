@@ -1,0 +1,18 @@
+unit WizardIntfs;
+
+interface
+uses Classes, StdCtrls;
+type
+   TWizardButtonType = (wbtNone, wbtNext, wbtPrevious, wbtHelp);
+   IWizard = interface
+     ['{82A45FE8-CCA1-4DED-91DB-67F1D2989D56}']
+     procedure UpdateInterface;
+     function GetButton(buttonType: TWizardButtonType):TButton;
+     function GetData: TInterfacedObject;
+     procedure SetHeader(const header:String);
+     procedure SetDescription(const desc: String);
+   end;
+
+implementation
+
+end.
