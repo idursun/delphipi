@@ -16,7 +16,7 @@ type
   protected
   public
     constructor Create(const baseFolder:String);
-    destructor Destroy;
+    destructor Destroy; override;
     function BuildPackageList(pattern: string): TPackageList;
     property BaseFolder: String read FBaseFolder;
     property PackageFolders: TStringList read getPackageFolders;
@@ -51,6 +51,7 @@ begin
   FPackageFolders.Free;
   FSourceFolders.Free;
   FHelpFolders.Free;
+  inherited;
 end;
 
 function TCompileInfo.getHelpFolders: TStringList;

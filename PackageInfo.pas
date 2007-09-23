@@ -46,37 +46,17 @@ type
 
   TPackageList = class(TList)
   private
-
     FInitialFolder : String;
     function get(I: Integer): TPackageInfo;
     procedure put(I: Integer; const Value: TPackageInfo);
-    class procedure SearchFolder(var Result: TPackageList; const Folder: string);
-
   public
     property Item[I : Integer]: TPackageInfo read get write put;default;
     procedure Add(const item : TPackageInfo); overload;
     procedure Remove(const item: TPackageInfo); overload;
     function IndexOf(const PackageName: String):Integer; overload;
-    class function LoadFromFolder(const Folder: String):TPackageList;
     procedure SortList();
     procedure GetSourcePaths(var sourceList: TStringList);
-    property InitialFolder: String read FInitialFolder;
-  end;
-
-  TFolderSearch = class
-  private
-    FHelpFiles: TStringList;
-    FPackageFiles: TStringList;
-    procedure SetHelpFiles(const Value: TStringList);
-    procedure SetPackageFiles(const Value: TStringList);
-  published
-  public
-    Constructor Create(const baseFolder: String);
-
-    procedure Search(const patterns: string);
-    destructor Destroy; override;
-    property HelpFiles: TStringList read FHelpFiles write SetHelpFiles;
-    property PackageFiles: TStringList read FPackageFiles write SetPackageFiles;
+    property InitialFolder: String read FInitialFolder write FInitialFolder;
   end;
 
 implementation
@@ -276,7 +256,7 @@ begin
     for j := 0 to self[i].Contains.Count - 1 do
       containedFiles.Add(ExtractFileName(Self[i].Contains[j]));
 
-  AdvBuildFileList(FInitialFolder+'*.pas',faAnyFile,files,amAny, [flFullnames, flRecursive], '', nil);
+  AdvBuildFileList(FInitialFolder+'\*.pas',faAnyFile,files,amAny, [flFullnames, flRecursive], '', nil);
   
   for I := 0 to files.count - 1 do begin
     if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
@@ -297,13 +277,6 @@ begin
   end;
 end;
 
-class function TPackageList.LoadFromFolder(const Folder: String):TPackageList;
-begin
-  Result := TPackageList.Create;
-  SearchFolder(Result, Folder);
-  Result.FInitialFolder := ExtractFilePath(Folder);
-end;
-
 procedure TPackageList.put(I: Integer; const Value: TPackageInfo);
 begin
   inherited put(i,value);
@@ -316,28 +289,9 @@ begin
   Delete(i);
 end;
 
-class procedure TPackageList.SearchFolder(var Result: TPackageList; const Folder: string);
-var
-  str: string;
-  packageList: TStringList;
-  info: TPackageInfo;
-begin
-  packageList := TStringList.Create;
-  try
-    AdvBuildFileList(Folder, faAnyFile, packageList, amAny, [flFullnames, flRecursive], '', nil);
-    for str in packageList do
-    begin
-      info := TPackageInfo.Create(str);
-      Result.Add(info);
-    end;
-  finally
-    packageList.Free;
-  end;
-end;
-
 procedure TPackageList.SortList();
 var
-  tmp1,tmp2 : TPackageInfo;
+  tmp1 : TPackageInfo;
   i: Integer;
   j: Integer;
   packagename: string;
@@ -360,56 +314,6 @@ begin
       end;
     end;
   end;
-end;
-
-
-{ TFolderSearch }
-
-constructor TFolderSearch.Create(const baseFolder: String);
-begin
-  FHelpFiles := TStringList.Create;
-  FPackageFiles := TStringList.Create;
-end;
-
-destructor TFolderSearch.Destroy;
-begin
-  FHelpFiles.Free;
-  FPackageFiles.Free;
-  inherited;
-end;
-
-procedure TFolderSearch.Search(const patterns: string);
-var
-  searcher: IJclFileEnumerator;
-  foundFiles: TStringList;
-  entry: string;
-begin
-  searcher := TJclFileEnumerator.Create;
-  searcher.FileMask := patterns;
-  foundFiles := TStringList.Create;
-  try
-    searcher.FillList(foundFiles);
-    for entry in foundFiles do begin
-      if ExtractFileExt(entry) = '.dpk' then
-        PackageFiles.Add(entry);
-      if ExtractFileExt(entry) = '.hlp' then
-        HelpFiles.Add(entry);
-    end;
-
-  finally
-    foundFiles.Free;
-    searcher := nil;
-  end;
-end;
-
-procedure TFolderSearch.SetHelpFiles(const Value: TStringList);
-begin
-  FHelpFiles := Value;
-end;
-
-procedure TFolderSearch.SetPackageFiles(const Value: TStringList);
-begin
-  FPackageFiles := Value;
 end;
 
 end.

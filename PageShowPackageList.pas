@@ -14,6 +14,7 @@ type
       var InfoTip: string);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
+    packageLoadThread: TThread;
     procedure DisplayPackageList(const PackageList: TPackageList);
     procedure PackageLoadCompleted(Sender: TObject);
   public
@@ -22,8 +23,9 @@ type
 
 var
   ShowPackageListPage: TShowPackageListPage;
+  threadWorking : Boolean;
 implementation
-uses WizardData;
+uses WizardData, JclFileUtils;
 {$R *.dfm}
 type
   TPackageLoadThread = class(TThread)
@@ -38,16 +40,15 @@ var
 { TShowPackageListPage }
 
 procedure TShowPackageListPage.FormCreate(Sender: TObject);
-var
-  directory : string;
 begin
   inherited;
   data := TWizardData(wizard.GetData);
-
-  with TPackageLoadThread.Create(true) do begin
+  packageLoadThread := TPackageLoadThread.Create(true);
+  with packageLoadThread do begin
     FreeOnTerminate := true;
     OnTerminate := packageLoadCompleted;
-    packageListView.AddItem('Parsing Packages...',nil);
+    packageListView.AddItem('Looking for packages in folders...',nil);
+    threadWorking := true;
     Resume;
   end;
 end;
@@ -58,12 +59,9 @@ var
 begin
   inherited;
   wizard.SetHeader('Select Packages');
-  wizard.SetDescription('Runtime packages will be compiled, runtime packages will be installed.');
-  if data.PackageList = nil then
-     exit;
-     
+  wizard.SetDescription('Select packages that you want to compile.');
   button := wizard.GetButton(wbtNext);
-  button.Enabled := data.PackageList.Count > 0;
+  button.Enabled := (not threadWorking) and ((data.PackageList <> nil) and (data.PackageList.Count > 0));
 end;
 
 procedure TShowPackageListPage.packageListViewInfoTip(Sender: TObject;
@@ -84,7 +82,9 @@ end;
 
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
 begin
+  threadWorking := false;
   DisplayPackageList(data.PackageList);
+  wizard.UpdateInterface;
 end;
 
 procedure TShowPackageListPage.FormClose(Sender: TObject;
@@ -94,13 +94,19 @@ var
   info : TPackageInfo;
 begin
   inherited;
-    for i := 0 to packageListView.Items.Count - 1 do begin
-      if packageListView.Items[i].Checked then continue;
-      info := TPackageInfo(packageListView.Items[i].Data);
-      info.Free;
-      data.PackageList[i] := nil;
-    end;
-    data.PackageList.Pack;
+  if threadWorking then begin
+    packageLoadThread.Suspend;
+    packageLoadThread.Terminate;
+    exit;
+  end;
+
+  for i := 0 to packageListView.Items.Count - 1 do begin
+    if packageListView.Items[i].Checked then continue;
+    info := TPackageInfo(packageListView.Items[i].Data);
+    info.Free;
+    data.PackageList[i] := nil;
+  end;
+  data.PackageList.Pack;
 end;
 
 procedure TShowPackageListPage.DisplayPackageList(const PackageList: TPackageList);
@@ -108,6 +114,7 @@ var
   info : TPackageInfo;
   I: Integer;
 begin
+  if PackageList = nil then exit;
   packageListView.Clear;
   packageListView.Items.BeginUpdate;
   try
@@ -136,12 +143,41 @@ end;
 
 procedure TPackageLoadThread.Execute;
 var
-  directory: string;
+  packageList: TPackageList;
+  searcher: IJclFileEnumerator;
+  fileName: string;
+  info: TPackageInfo;
+  foundFiles : TStringList;
+  helpFiles : TStringList;
 begin
   inherited;
-  directory := data.BaseFolder +'\' + data.Pattern;
-  data.SetPackageList(TPackageList.LoadFromFolder(directory));
-  data.PackageList.SortList;
+  foundFiles := TStringList.Create;
+  helpFiles := TStringList.Create;
+  packageList := TPackageList.Create;
+  
+  packageList.InitialFolder := data.BaseFolder;
+  searcher := TJclFileEnumerator.Create;
+  try
+    searcher.RootDirectory := data.BaseFolder;
+    searcher.FileMask := data.Pattern + ';*.hlp';
+    searcher.FillList(foundFiles);
+    while searcher.RunningTasks > 0 do
+      Sleep(100);
+    for fileName in foundFiles do begin
+      if ExtractFileExt(fileName) = '.dpk' then begin
+        info := TPackageInfo.Create(fileName);
+        packageList.Add(info);
+      end;
+      if ExtractFileExt(fileName) = '.hlp' then
+        helpFiles.Add(fileName);
+    end;
+    data.SetPackageList(packageList);
+    data.PackageList.SortList;
+    data.HelpFiles.Assign(helpFiles);
+  finally
+    foundFiles.Free;
+    helpFiles.Free;
+  end;
 end;
 
 end.

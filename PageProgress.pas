@@ -17,8 +17,10 @@ type
     GroupBox2: TGroupBox;
     Memo: TMemo;
     procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
-    isCompiling: Boolean;
+    compileThreadWorking: Boolean;
+    compileThread: TThread;
     procedure handleText(const text: string);
     procedure compileCompleted(sender: TObject);
   public
@@ -43,11 +45,21 @@ type
   public
     constructor Create(page: TProgressPage);
   end;
+  
 var
   data: TWizardData;
 {$R *.dfm}
 
 { TProgressPage }
+
+procedure TProgressPage.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  inherited;
+  if compileThreadWorking then begin
+    compileThread.Suspend;
+    compileThread.Terminate;
+  end;
+end;
 
 procedure TProgressPage.FormCreate(Sender: TObject);
 begin
@@ -55,30 +67,31 @@ begin
   data := TWizardData(wizard.GetData);
   lblPackage.Caption := '';
   lblFileName.Caption := '';
-  isCompiling := false;
+  compileThreadWorking := false;
   Compile;
 end;
 
 procedure TProgressPage.UpdateWizardState(const wizard: IWizard);
 begin
   inherited;
-  wizard.SetHeader('Compiling Packages');
-  wizard.SetDescription('Compiling...');
+  wizard.SetHeader('Compile and Install Packages');
+  wizard.SetDescription('Compiling packages that you have selected. Design time packages are going to be installed.');
   with wizard.GetButton(wbtNext) do
-    Enabled := not isCompiling;
+    Enabled := not compileThreadWorking;
 
   with wizard.GetButton(wbtPrevious) do
-    Enabled := not isCompiling;
+    Enabled := not compileThreadWorking;
 end;
 
 procedure TProgressPage.Compile;
 begin
   data.Installation.OutputCallback := self.handletext;
   ProgressBar.Max := data.PackageList.Count;
-  with TCompileThread.Create(self) do begin
+  compileThread := TCompileThread.Create(self);
+  with compileThread do begin
     OnTerminate := compileCompleted;
     FreeOnTerminate := true;
-    isCompiling := true;
+    compileThreadWorking := true;
     Resume;
   end;
 end;
@@ -89,7 +102,8 @@ var
 begin
  S := Trim(Text);
   if S[Length(S)] =')' then begin
-     lblFileName.Caption := ExtractFileName(S);
+    //lblFileName.Caption := ExtractFileName(S);
+    //Sleep(1);
   end else
     memo.lines.add(text);
 end;
@@ -99,7 +113,7 @@ begin
   lblPackage.Caption :='';
   lblFileName.Caption := '';
   ProgressBar.Position := 0;
-  isCompiling := false;
+  compileThreadWorking := false;
   wizard.UpdateInterface;
   memo.Lines.Add('*** Completed');
 end;
@@ -130,7 +144,7 @@ begin
       fStepNo := fStepNo + 1;
       fPackageName := info.PackageName;
       Synchronize(UpdatePage);
-      
+
       if compiler.CompilePackage(info) and (not info.RunOnly) then
         compiler.InstallPackage(info);
     end;

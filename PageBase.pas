@@ -12,8 +12,9 @@ type
   protected
     wizard: IWizard;
   public
-    constructor Create(Owner: TComponent; const wizard: IWizard); virtual;
+    constructor Create(Owner: TComponent; const wizard: IWizard); reintroduce; virtual;
     procedure UpdateWizardState(const wizard: IWizard); virtual;
+    function CanShowPage: Boolean; virtual;
   end;
   
   TPageClass = class of TWizardPage;
@@ -24,6 +25,11 @@ var
 implementation
 
 {$R *.dfm}
+
+function TWizardPage.CanShowPage: Boolean;
+begin
+  Result := true;
+end;
 
 constructor TWizardPage.Create(Owner: TComponent; const wizard: IWizard);
 begin

@@ -67,7 +67,10 @@ end;
 
 procedure TfrmWizard.btnNextClick(Sender: TObject);
 begin
-  SelectPage(CurPage+1);
+  if CurPage + 1 = Length(Pages) then
+    Close
+  else
+    SelectPage(CurPage+1);
 end;
 
 procedure TfrmWizard.btnPreviousClick(Sender: TObject);
@@ -92,7 +95,9 @@ end;
 procedure TfrmWizard.SelectPage(const pageNo: Integer);
 begin
   if (pageNo < 0) then exit;
-  if (pageNo > Length(Pages)) then exit;
+  if (pageNo > Length(Pages)) then
+    Close;
+    
   if(Assigned(ActivePage)) then begin
     ActivePage.Close;
     FreeAndNil(ActivePage);
@@ -100,6 +105,11 @@ begin
 
   CurPage := pageNo;
   ActivePage := Pages[pageNo].Create(self,self as IWizard);
+  if not ActivePage.CanShowPage then begin
+     SelectPage(pageNo+1);
+     exit;
+  end;
+  
   UpdateInterface;
 
   ActivePage.ManualDock(DockPanel);
@@ -135,7 +145,7 @@ begin
   ActivePage.UpdateWizardState(self as IWizard);
 
   btnPrevious.Enabled := btnPrevious.Enabled and (CurPage > 0);
-  btnNext.Enabled := btnNext.Enabled and (CurPage < length(Pages)-1);
+//  btnNext.Enabled := btnNext.Enabled; //and (CurPage < length(Pages)-1);
 end;
 
 initialization
@@ -143,6 +153,6 @@ initialization
    Pages[0] := TSelectFoldersPage;
    Pages[1] := TShowPackageListPage;
    Pages[2] := TSelectDelphiInstallationPage;
-   Pages[3] := TInstallHelpFilesPage;
-   Pages[4] := TProgressPage;
+   Pages[4] := TInstallHelpFilesPage;
+   Pages[3] := TProgressPage;
 end.

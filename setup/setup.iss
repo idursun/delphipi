@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "DelphiPI"
-#define MyAppVerName "DelphiPI 0.16"
+#define MyAppVerName "DelphiPI 0.21"
 #define MyAppPublisher "http://www.thexpot.net"
-#define MyAppURL "http://www.thexpot.net"
+#define MyAppURL "http://delphipi.googlecode.com"
 #define MyAppExeName "DelphiPI.exe"
 
 [Setup]
@@ -18,7 +18,7 @@ DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=C:\Projelerim\delphipi\setup\LICENSE.txt
-OutputBaseFilename=delphipi_setup
+OutputBaseFilename=delphipi.0.21.setup
 Compression=lzma/ultra
 SolidCompression=yes
 

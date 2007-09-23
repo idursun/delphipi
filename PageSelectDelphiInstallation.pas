@@ -14,6 +14,8 @@ type
   private
   public
     procedure UpdateWizardState(const wizard: IWizard); override;
+    function CanShowPage: Boolean; override;
+    
   end;
 
 var
@@ -23,7 +25,8 @@ implementation
 uses WizardData,JclBorlandTools;
 
 var
-    installations : TJclBorRADToolInstallations;
+  installations : TJclBorRADToolInstallations;
+  data : TWizardData;
 {$R *.dfm}
 
 { TSelectDelphiInstallationPage }
@@ -31,7 +34,6 @@ var
 procedure TSelectDelphiInstallationPage.FormCreate(Sender: TObject);
 var
   i:integer;
-  data : TWizardData;
 begin
   inherited;
   installations := TJclBorRADToolInstallations.Create;
@@ -40,9 +42,11 @@ begin
     rgDelphiVersions.Items.Add(installations.Installations[i].Description);
   end;
   rgDelphiVersions.ItemIndex := 0;
+  
   data := TWizardData(wizard.GetData);
   if data.Installation = nil then
     exit;
+    
   for I := 0 to installations.Count - 1 do begin
     if (installations.Installations[i].VersionNumber = data.Installation.VersionNumber) then begin
       rgDelphiVersions.ItemIndex := i;
@@ -51,15 +55,19 @@ begin
   end;
 end;
 
+function TSelectDelphiInstallationPage.CanShowPage: Boolean;
+begin
+  Result := installations.Count > 1;
+  if installations.Count = 1 then begin
+    data.SetInstallation(installations[0]);
+  end;
+end;
+
 procedure TSelectDelphiInstallationPage.FormClose(Sender: TObject;
   var Action: TCloseAction);
-var
-  data : TWizardData;
 begin
   inherited;
-  data := TWizardData(wizard.GetData);
   data.SetInstallation(installations.Installations[rgDelphiVersions.ItemIndex]);
-
 end;
 
 procedure TSelectDelphiInstallationPage.UpdateWizardState(

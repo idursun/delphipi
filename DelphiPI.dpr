@@ -14,7 +14,8 @@ uses
   WizardIntfs in 'WizardIntfs.pas',
   PageShowPackageList in 'PageShowPackageList.pas' {ShowPackageListPage},
   WizardData in 'WizardData.pas',
-  PageInstallHelpFiles in 'PageInstallHelpFiles.pas' {InstallHelpFilesPage};
+  PageInstallHelpFiles in 'PageInstallHelpFiles.pas' {InstallHelpFilesPage},
+  PageFinished in 'PageFinished.pas' {FinishedPage};
 
 {$R *.res}
 
@@ -23,6 +24,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Delphi PI';
   Application.CreateForm(TfrmWizard, frmWizard);
-  Application.CreateForm(TInstallHelpFilesPage, InstallHelpFilesPage);
   Application.Run;
 end.

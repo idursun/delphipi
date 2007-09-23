@@ -93,7 +93,7 @@ var
   BPLFileName : String;  
 begin
   BPLFileName := PathAddSeparator(installation.BPLOutputPath) + PathExtractFileNameNoExt(packageInfo.FileName) + packageInfo.Suffix + '.bpl';
-  installation.RegisterPackage(BPLFileName, packageInfo.Description);
+  Result := installation.RegisterPackage(BPLFileName, packageInfo.Description);
 end;
 
 end.
