@@ -16,13 +16,17 @@ type
     lblFileName: TLabel;
     GroupBox2: TGroupBox;
     Memo: TMemo;
+    lblCurrentPackageNo: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     compileThreadWorking: Boolean;
     compileThread: TThread;
+    fCurrPackageNo: Integer;
     procedure handleText(const text: string);
     procedure compileCompleted(sender: TObject);
+    procedure SetCurrentPackageNo(const Value: Integer);
+    property CurrectPackageNo: Integer read fCurrPackageNo write SetCurrentPackageNo;
   public
     procedure Compile;
     procedure UpdateWizardState(const wizard: IWizard); override;
@@ -67,6 +71,7 @@ begin
   data := TWizardData(wizard.GetData);
   lblPackage.Caption := '';
   lblFileName.Caption := '';
+  CurrectPackageNo := 1;
   compileThreadWorking := false;
   Compile;
 end;
@@ -108,6 +113,15 @@ begin
     memo.lines.add(text);
 end;
 
+procedure TProgressPage.SetCurrentPackageNo(const Value: Integer);
+begin
+  if fCurrPackageNo = Value then
+    exit;
+
+  fCurrPackageNo := Value;
+  lblCurrentPackageNo.Caption := Format('%d/%d',[fCurrPackageNo,data.PackageList.Count]);
+end;
+
 procedure TProgressPage.compileCompleted(sender: TObject);
 begin
   lblPackage.Caption :='';
@@ -132,6 +146,7 @@ var
   compiler: TPackageCompiler;
   sourceList: TStringList;
   i : integer;
+  compileSuccessful : Boolean;
 begin
   inherited;
   sourceList := TStringList.Create;
@@ -144,9 +159,13 @@ begin
       fStepNo := fStepNo + 1;
       fPackageName := info.PackageName;
       Synchronize(UpdatePage);
-
-      if compiler.CompilePackage(info) and (not info.RunOnly) then
+      compileSuccessful := compiler.CompilePackage(info);
+      if compileSuccessful and (not info.RunOnly) then
         compiler.InstallPackage(info);
+      if not compileSuccessful then
+      begin
+      
+      end; 
     end;
   finally
     compiler.Free;
@@ -158,6 +177,7 @@ procedure TCompileThread.UpdatePage;
 begin
   fPage.lblPackage.Caption := fPackageName;
   fPage.ProgressBar.Position := fStepNo;
+  fPage.CurrectPackageNo := fPage.CurrectPackageNo + 1;
 end;
 
 end.

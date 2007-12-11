@@ -662,7 +662,7 @@ object frmAbout: TfrmAbout
       Top = 52
       Width = 28
       Height = 16
-      Caption = '0.21'
+      Caption = '0.22'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13

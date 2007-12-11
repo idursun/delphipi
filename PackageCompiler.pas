@@ -60,13 +60,12 @@ function TPackageCompiler.GetExtraOptions: String;
 var
   paths : string;
 begin
-      Result := '-B';
-      paths := GetShortPaths(installation.LibrarySearchPath);
-      Result := Result + #13#10 +'-I"'+paths+'"';
-      Result := Result + #13#10+ '-U"'+paths+'"';
-      Result := Result + #13#10+ '-O"'+paths+'"';
-      Result := Result + #13#10+ '-R"'+paths+'"';
-
+  paths := GetShortPaths(installation.LibrarySearchPath);
+  Result := '-B';
+  Result := Result + #13#10 +'-I"'+paths+'"';
+  Result := Result + #13#10+ '-U"'+paths+'"';
+  Result := Result + #13#10+ '-O"'+paths+'"';
+  Result := Result + #13#10+ '-R"'+paths+'"';
 end;
 
 function TPackageCompiler.GetShortPaths(paths : string):string;
