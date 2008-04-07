@@ -22,13 +22,8 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
   private
-    //function IsNextButtonEnabled: Boolean;
   public
-//    function Header:String; override;
-//    function Description:String; override;
     procedure UpdateWizardState(const wizard: IWizard); override;
-
-    //function IsNextButtonEnabled: Boolean; override;
   end;
 
 var

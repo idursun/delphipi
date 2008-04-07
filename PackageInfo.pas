@@ -250,13 +250,17 @@ begin
 
   sourceList.Sorted := true;
   sourceList.Duplicates := dupIgnore;
-
-  
+     
   for I := 0 to Count - 1 do
     for j := 0 to self[i].Contains.Count - 1 do
       containedFiles.Add(ExtractFileName(Self[i].Contains[j]));
 
-  AdvBuildFileList(FInitialFolder+'\*.pas',faAnyFile,files,amAny, [flFullnames, flRecursive], '', nil);
+  AdvBuildFileList(FInitialFolder+'\*.pas',
+           faAnyFile,
+           files,
+           amAny,
+           [flFullnames, flRecursive],
+           '', nil);
   
   for I := 0 to files.count - 1 do begin
     if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
@@ -292,15 +296,14 @@ end;
 procedure TPackageList.SortList();
 var
   tmp1 : TPackageInfo;
-  i: Integer;
-  j: Integer;
+  i,j: Integer;
   packagename: string;
   changed : boolean;
 begin
   changed := true;
   while changed do begin
     changed := false;
-    for I := 0 to Count - 1 do
+    for i := 0 to Count - 1 do
     begin
       tmp1 := Self[i];
       for packagename in tmp1.Requires do

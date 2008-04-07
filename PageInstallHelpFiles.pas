@@ -67,18 +67,18 @@ procedure TInstallHelpFilesPage.btnInstallHelpFilesClick(Sender: TObject);
 var
   openHelp : TJclBorlandOpenHelp;
   helpFileName: string;
-  success: integer;
+  successCount: integer;
 begin
   inherited;
-  success := 0;
+  successCount := 0;
   if data.Installation is TJclBorRADToolInstallation then begin
     openHelp := Data.Installation.OpenHelp;
     for helpFileName in data.HelpFiles do begin
       if openHelp.AddHelpFile(helpFileName,PathExtractFileNameNoExt(helpFileName)) then
-        inc(success);
+        inc(successCount);
     end;
   end;
-  ShowMessage(Format('%d help file(s) registered successfully',[success]));
+  ShowMessage(Format('%d help file(s) are registered successfully',[successCount]));
 end;
 
 end.

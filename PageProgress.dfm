@@ -2,8 +2,6 @@ inherited ProgressPage: TProgressPage
   Caption = 'ProgressPage'
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitWidth = 500
-  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -44,7 +42,7 @@ inherited ProgressPage: TProgressPage
     object lblFileName: TLabel
       Left = 390
       Top = 18
-      Width = 75
+      Width = 64
       Height = 13
       Caption = 'lblFileName'
       Font.Charset = DEFAULT_CHARSET
@@ -58,7 +56,7 @@ inherited ProgressPage: TProgressPage
     object lblCurrentPackageNo: TLabel
       Left = 450
       Top = 37
-      Width = 31
+      Width = 15
       Height = 13
       Caption = '     '
     end

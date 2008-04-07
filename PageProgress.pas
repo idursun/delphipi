@@ -71,7 +71,7 @@ begin
   data := TWizardData(wizard.GetData);
   lblPackage.Caption := '';
   lblFileName.Caption := '';
-  CurrectPackageNo := 1;
+  CurrectPackageNo := 0;
   compileThreadWorking := false;
   Compile;
 end;

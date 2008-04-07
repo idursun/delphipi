@@ -33,7 +33,7 @@ type
     procedure Execute; override;
   end;
 var
-  //NOTE WizardData.pas'ý interface kýsmýnda tanýmlamak isemtiyorum o yüzden
+  //NOTE WizardData.pas'ý interface kýsmýnda tanýmlamak istemiyorum o yüzden
   //encapsulation'ý deliyorum burada.
   data : TWizardData;
 
@@ -69,15 +69,17 @@ procedure TShowPackageListPage.packageListViewInfoTip(Sender: TObject;
 var
   info : TPackageInfo;
   _type : string;
+const
+  CRLF = #13#10;  
 begin
   inherited;
   info := TPackageInfo(Item.Data);
   _type := 'Designtime Package';
   if (info.RunOnly) then
     _type := 'Runtime Package';
-  InfoTip := 'FullPath:'+info.FileName+#13#10+
-             'Type    :'+ _type +#13#10+
-             'Requires:'#13#10 + info.Requires.Text;
+  InfoTip := 'FullPath:'+info.FileName+CRLF+
+             'Type    :'+ _type +CRLF+
+             'Requires:'+ CRLF + info.Requires.Text;
 end;
 
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);

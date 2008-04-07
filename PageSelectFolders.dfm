@@ -25,7 +25,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
     object Label2: TLabel
       Left = 36
       Top = 16
-      Width = 449
+      Width = 408
       Height = 26
       Anchors = [akLeft, akTop, akRight]
       Caption = 
@@ -71,7 +71,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Top = 57
       Width = 221
       Height = 21
-      ItemHeight = 13
+      ItemHeight = 0
       TabOrder = 0
       Text = '*.dpk'
     end

@@ -153,6 +153,6 @@ initialization
    Pages[0] := TSelectFoldersPage;
    Pages[1] := TShowPackageListPage;
    Pages[2] := TSelectDelphiInstallationPage;
-   Pages[4] := TInstallHelpFilesPage;
    Pages[3] := TProgressPage;
+   Pages[4] := TInstallHelpFilesPage;
 end.
