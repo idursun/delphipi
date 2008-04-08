@@ -251,9 +251,11 @@ begin
   sourceList.Sorted := true;
   sourceList.Duplicates := dupIgnore;
      
-  for I := 0 to Count - 1 do
+  for i := 0 to Count - 1 do begin
+    sourceList.Add(ExtractFilePath(self[i].FileName));
     for j := 0 to self[i].Contains.Count - 1 do
       containedFiles.Add(ExtractFileName(Self[i].Contains[j]));
+  end;
 
   AdvBuildFileList(FInitialFolder+'\*.pas',
            faAnyFile,
@@ -261,7 +263,7 @@ begin
            amAny,
            [flFullnames, flRecursive],
            '', nil);
-  
+
   for I := 0 to files.count - 1 do begin
     if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
       sourceList.Add(ExtractFilePath(files[i]));
