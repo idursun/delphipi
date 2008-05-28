@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, dxGDIPlusClasses, ExtCtrls, WizardIntfs;
+  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs;
 
 type
   TSelectFoldersPage = class(TWizardPage)
