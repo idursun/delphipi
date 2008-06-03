@@ -1,18 +1,31 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit PageShowPackageList;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
-  Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs;
+  Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus;
 
 type
   TShowPackageListPage = class(TWizardPage)
     packageListView: TListView;
+    PopupMenu: TPopupMenu;
+    miSelectAll: TMenuItem;
+    miUnselectAll: TMenuItem;
+    miSelectUsing: TMenuItem;
+    N1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure packageListViewInfoTip(Sender: TObject; Item: TListItem;
       var InfoTip: string);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure miSelectAllClick(Sender: TObject);
+    procedure miUnselectAllClick(Sender: TObject);
+    procedure miSelectUsingClick(Sender: TObject);
   private
     packageLoadThread: TThread;
     procedure DisplayPackageList(const PackageList: TPackageList);
@@ -25,7 +38,7 @@ var
   ShowPackageListPage: TShowPackageListPage;
   threadWorking : Boolean;
 implementation
-uses WizardData, JclFileUtils;
+uses WizardData, JclFileUtils, gnugettext;
 {$R *.dfm}
 type
   TPackageLoadThread = class(TThread)
@@ -42,14 +55,43 @@ var
 procedure TShowPackageListPage.FormCreate(Sender: TObject);
 begin
   inherited;
+  TranslateComponent(self);
   data := TWizardData(wizard.GetData);
   packageLoadThread := TPackageLoadThread.Create(true);
   with packageLoadThread do begin
     FreeOnTerminate := true;
     OnTerminate := packageLoadCompleted;
-    packageListView.AddItem('Looking for packages in folders...',nil);
+    packageListView.AddItem(_('Looking for packages in folders...'),nil);
     threadWorking := true;
     Resume;
+  end;
+end;
+
+procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
+var
+  I: Integer;
+begin
+  inherited;
+  for I := 0 to packageListView.Items.Count - 1 do
+  begin
+    packageListView.Items[I].Checked := true;
+  end;
+end;
+
+procedure TShowPackageListPage.miSelectUsingClick(Sender: TObject);
+begin
+  inherited;
+  ShowMessage('Not Implemented');
+end;
+
+procedure TShowPackageListPage.miUnselectAllClick(Sender: TObject);
+var
+  i: Integer;
+begin
+  inherited;
+ for I := 0 to packageListView.Items.Count - 1 do
+  begin
+    packageListView.Items[I].Checked := false;
   end;
 end;
 
@@ -58,8 +100,8 @@ var
   button: TButton;
 begin
   inherited;
-  wizard.SetHeader('Select Packages');
-  wizard.SetDescription('Select packages that you want to compile.');
+  wizard.SetHeader(_('Select Packages'));
+  wizard.SetDescription(_('Select packages that you want to compile.'));
   button := wizard.GetButton(wbtNext);
   button.Enabled := (not threadWorking) and ((data.PackageList <> nil) and (data.PackageList.Count > 0));
 end;
@@ -74,12 +116,12 @@ const
 begin
   inherited;
   info := TPackageInfo(Item.Data);
-  _type := 'Designtime Package';
+  _type := _('Designtime Package');
   if (info.RunOnly) then
-    _type := 'Runtime Package';
-  InfoTip := 'FullPath:'+info.FileName+CRLF+
-             'Type    :'+ _type +CRLF+
-             'Requires:'+ CRLF + info.Requires.Text;
+    _type := _('Runtime Package');
+  InfoTip := _('FullPath:')+info.FileName+CRLF+
+             _('Type    :')+ _type +CRLF+
+             _('Requires:')+ CRLF + info.Requires.Text;
 end;
 
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
@@ -125,13 +167,13 @@ begin
       with packageListView.Items.Add do begin
         Caption := info.Description;
         if Caption = '' then
-          Caption := '<No Description>';
+          Caption := _('<No Description>');
 
         SubItems.Add(info.PackageName);
         if info.RunOnly then
-          SubItems.Add('runtime')
+          SubItems.Add(_('runtime'))
         else
-          SubItems.Add('design');
+          SubItems.Add(_('design'));
         Checked := True;
         Data := info;
       end;

@@ -71,7 +71,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Top = 57
       Width = 221
       Height = 21
-      ItemHeight = 0
+      ItemHeight = 13
       TabOrder = 0
       Text = '*.dpk'
     end

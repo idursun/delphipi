@@ -382,15 +382,15 @@ object frmWizard: TfrmWizard
     TabOrder = 2
     OnClick = btnNextClick
   end
-  object btnPrevious: TButton
+  object btnBack: TButton
     Left = 355
     Top = 339
     Width = 75
     Height = 25
     Anchors = [akRight, akBottom]
-    Caption = '<< &Previous'
+    Caption = '<< &Back'
     TabOrder = 3
-    OnClick = btnPreviousClick
+    OnClick = btnBackClick
   end
   object DockPanel: TPanel
     Left = 8

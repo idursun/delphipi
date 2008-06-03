@@ -1,3 +1,8 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit WizardData;
 
 interface
@@ -9,6 +14,7 @@ type
     inst: TJclBorRADToolInstallation;
     fPackageList: TPackageList;
     fHelpFiles: TStringList;
+    fSourceFilePaths: TStringList;
     fPattern: String;
   public
     constructor Create;
@@ -17,11 +23,13 @@ type
     function PackageList: TPackageList;
     function Pattern: string;
     function HelpFiles: TStringList;
+    function SourceFilePaths: TStringList;
 
     procedure SetBaseFolder(const folder: string);
     procedure SetInstallation(const anInstallation: TJclBorRADToolInstallation);
     procedure SetPattern(const pattern: string);
     procedure SetPackageList(const aPackageList: TPackageList);
+    procedure SetSourceFilePaths(const aPathList: TStringList);
   end;
   
 implementation
@@ -80,6 +88,16 @@ end;
 procedure TWizardData.SetPattern(const pattern: string);
 begin
   fPattern := pattern;
+end;
+
+procedure TWizardData.SetSourceFilePaths(const aPathList: TStringList);
+begin
+  fSourceFilePaths := aPathList;
+end;
+
+function TWizardData.SourceFilePaths: TStringList;
+begin
+  Result := fSourceFilePaths;
 end;
 
 end.

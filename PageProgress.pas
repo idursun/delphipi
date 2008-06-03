@@ -1,10 +1,15 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit PageProgress;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, ComCtrls, WizardIntfs;
+  Dialogs, PageBase, StdCtrls, ComCtrls, WizardIntfs, CompileThread;
 
 type
   TProgressPage = class(TWizardPage)
@@ -21,8 +26,9 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     compileThreadWorking: Boolean;
-    compileThread: TThread;
+    compileThread: TCompileThread;
     fCurrPackageNo: Integer;
+
     procedure handleText(const text: string);
     procedure compileCompleted(sender: TObject);
     procedure SetCurrentPackageNo(const Value: Integer);
@@ -36,22 +42,27 @@ var
   ProgressPage: TProgressPage;
 
 implementation
-uses PackageInfo, WizardData, PackageCompiler;
+uses PackageInfo, WizardData, gnugettext;
 type
-  TCompileThread = class(TThread)
+
+  TPageProgressMonitor = class(TInterfacedObject, IProgressMonitor )
   private
-    fStepNo: Integer;
-    fPackageName: String;
-    fPage : TProgressPage;
-  protected
-    procedure Execute; override;
-    procedure UpdatePage;
+    FStepNo: Integer;
+    FPackageName: String;
+    FPage: TProgressPage;
+    procedure SetPackageName(const Value: String);
+    procedure SetStepNo(const Value: Integer);
+    function GetStepNo: Integer;
+    function GetPackageName: String;
   public
-    constructor Create(page: TProgressPage);
+    constructor Create(const page: TProgressPage);  
+    property StepNo: Integer read FStepNo write SetStepNo;
+    property PackageName: String read FPackageName write SetPackageName;
   end;
-  
 var
   data: TWizardData;
+  pageProgressMonitor : TPageProgressMonitor;
+
 {$R *.dfm}
 
 { TProgressPage }
@@ -63,11 +74,13 @@ begin
     compileThread.Suspend;
     compileThread.Terminate;
   end;
+  pageProgressMonitor := nil;
 end;
 
 procedure TProgressPage.FormCreate(Sender: TObject);
 begin
   inherited;
+  TranslateComponent(self);
   data := TWizardData(wizard.GetData);
   lblPackage.Caption := '';
   lblFileName.Caption := '';
@@ -79,20 +92,22 @@ end;
 procedure TProgressPage.UpdateWizardState(const wizard: IWizard);
 begin
   inherited;
-  wizard.SetHeader('Compile and Install Packages');
-  wizard.SetDescription('Compiling packages that you have selected. Design time packages are going to be installed.');
+  wizard.SetHeader(_('Compile and Install Packages'));
+  wizard.SetDescription(_('Compiling packages that you have selected. Design time packages are going to be installed.'));
   with wizard.GetButton(wbtNext) do
     Enabled := not compileThreadWorking;
 
-  with wizard.GetButton(wbtPrevious) do
+  with wizard.GetButton(wbtBack) do
     Enabled := not compileThreadWorking;
 end;
 
 procedure TProgressPage.Compile;
 begin
+  pageProgressMonitor := TPageProgressMonitor.Create(self);
   data.Installation.OutputCallback := self.handletext;
   ProgressBar.Max := data.PackageList.Count;
-  compileThread := TCompileThread.Create(self);
+  compileThread := TCompileThread.Create(data.PackageList, data.Installation);
+  compileThread.Monitor := pageProgressMonitor;
   with compileThread do begin
     OnTerminate := compileCompleted;
     FreeOnTerminate := true;
@@ -105,7 +120,7 @@ procedure TProgressPage.handleText(const text: string);
 var
   S : String;
 begin
- S := Trim(Text);
+  S := Trim(Text);
   if S[Length(S)] =')' then begin
     //lblFileName.Caption := ExtractFileName(S);
     //Sleep(1);
@@ -122,62 +137,48 @@ begin
   lblCurrentPackageNo.Caption := Format('%d/%d',[fCurrPackageNo,data.PackageList.Count]);
 end;
 
-procedure TProgressPage.compileCompleted(sender: TObject);
+procedure TProgressPage.CompileCompleted(sender: TObject);
 begin
   lblPackage.Caption :='';
   lblFileName.Caption := '';
   ProgressBar.Position := 0;
   compileThreadWorking := false;
   wizard.UpdateInterface;
-  memo.Lines.Add('*** Completed');
+  memo.Lines.Add(_('*** Completed'));
 end;
 
-{ TCompileThread }
-
-constructor TCompileThread.Create(page: TProgressPage);
+constructor TPageProgressMonitor.Create(const page: TProgressPage);
 begin
-  inherited Create(true);
-  fPage := page;
+  FPage := page;
 end;
 
-procedure TCompileThread.Execute;
-var
-  info : TPackageInfo;
-  compiler: TPackageCompiler;
-  sourceList: TStringList;
-  i : integer;
-  compileSuccessful : Boolean;
+function TPageProgressMonitor.GetPackageName: String;
 begin
-  inherited;
-  sourceList := TStringList.Create;
-  compiler := TPackageCompiler.Create(data.Installation);
-  try
-    data.PackageList.GetSourcePaths(sourceList);
-    compiler.AddSourcePathsToIDE(sourceList);
-    for i := 0 to data.PackageList.Count - 1 do begin
-      info := data.PackageList[i];
-      fStepNo := fStepNo + 1;
-      fPackageName := info.PackageName;
-      Synchronize(UpdatePage);
-      compileSuccessful := compiler.CompilePackage(info);
-      if compileSuccessful and (not info.RunOnly) then
-        compiler.InstallPackage(info);
-      if not compileSuccessful then
-      begin
-      
-      end; 
-    end;
-  finally
-    compiler.Free;
-    sourceList.Free;
+  Result := FPackageName;
+end;
+
+function TPageProgressMonitor.GetStepNo: Integer;
+begin
+  Result := FStepNo;
+end;
+
+procedure TPageProgressMonitor.SetPackageName(const Value: String);
+begin
+  if FPackageName <> Value then
+  begin
+    FPackageName := Value;
+    fPage.lblPackage.Caption := FPackageName;
   end;
 end;
 
-procedure TCompileThread.UpdatePage;
+procedure TPageProgressMonitor.SetStepNo(const Value: Integer);
 begin
-  fPage.lblPackage.Caption := fPackageName;
-  fPage.ProgressBar.Position := fStepNo;
-  fPage.CurrectPackageNo := fPage.CurrectPackageNo + 1;
+  if FStepNo <> Value then
+  begin
+    FStepNo := Value;
+    fPage.ProgressBar.Position := FStepNo;
+    fPage.CurrectPackageNo := fPage.CurrectPackageNo + 1;
+  end;
 end;
 
 end.

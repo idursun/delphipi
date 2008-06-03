@@ -1,10 +1,15 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit PageSelectDelphiInstallation;
 
 interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, ExtCtrls,  dxGDIPlusClasses, WizardIntfs;
+  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs;
 
 type
   TSelectDelphiInstallationPage = class(TWizardPage)
@@ -15,14 +20,13 @@ type
   public
     procedure UpdateWizardState(const wizard: IWizard); override;
     function CanShowPage: Boolean; override;
-    
   end;
 
 var
   SelectDelphiInstallationPage: TSelectDelphiInstallationPage;
 
 implementation
-uses WizardData,JclBorlandTools;
+uses WizardData,JclBorlandTools,gnugettext;
 
 var
   installations : TJclBorRADToolInstallations;
@@ -36,6 +40,7 @@ var
   i:integer;
 begin
   inherited;
+  TranslateComponent(self);
   installations := TJclBorRADToolInstallations.Create;
 
   for I := 0 to installations.Count - 1 do begin
@@ -76,10 +81,10 @@ var
   button: TButton;
 begin
   inherited;
-  wizard.SetHeader('Select Delphi Installation');
-  wizard.SetDescription('Please select delphi installation that you want to compile with');
+  wizard.SetHeader(_('Select Delphi Installation'));
+  wizard.SetDescription(_('Please select delphi installation that you want to compile with'));
   button := wizard.GetButton(wbtNext);
-  button.Caption := 'Compile';
+  button.Caption := _('Compile');
 end;
 
 end.

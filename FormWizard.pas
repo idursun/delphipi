@@ -1,3 +1,8 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit FormWizard;
 
 interface
@@ -11,7 +16,7 @@ type
     HeaderPanel: TPanel;
     Bevel: TBevel;
     btnNext: TButton;
-    btnPrevious: TButton;
+    btnBack: TButton;
     Image1: TImage;
     lblHeader: TLabel;
     lblDescription: TLabel;
@@ -20,7 +25,7 @@ type
 
     procedure FormCreate(Sender: TObject);
     procedure btnNextClick(Sender: TObject);
-    procedure btnPreviousClick(Sender: TObject);
+    procedure btnBackClick(Sender: TObject);
     procedure btnAboutClick(Sender: TObject);
   private
     FWizardData :TInterfacedObject;
@@ -41,7 +46,8 @@ var
 
 implementation
 uses FormAbout, PageBase, PageSelectFolders, PageSelectDelphiInstallation,
-    PageProgress, PageShowPackageList, PageInstallHelpFiles, WizardData;
+    PageProgress, PageShowPackageList, PageInstallHelpFiles, WizardData,
+    gnugettext;
 var
   Pages: array of TPageClass;
   CurPage: Byte;
@@ -56,6 +62,7 @@ begin
   if (ParamCount > 0) then
     TWizardData(FWizardData).SetBaseFolder(ParamStr(1));
   SelectPage(0);
+  TranslateComponent(self);
 end;
 
 procedure TfrmWizard.btnAboutClick(Sender: TObject);
@@ -73,7 +80,7 @@ begin
     SelectPage(CurPage+1);
 end;
 
-procedure TfrmWizard.btnPreviousClick(Sender: TObject);
+procedure TfrmWizard.btnBackClick(Sender: TObject);
 begin
   SelectPage(CurPage-1);
 end;
@@ -83,7 +90,7 @@ begin
   Result := nil;
   case buttonType of
     wbtNext: Result := btnNext;
-    wbtPrevious: Result := btnPrevious;
+    wbtBack: Result := btnBack;
   end;
 end;
 
@@ -138,13 +145,13 @@ begin
   if not assigned(ActivePage) then
      exit;
   btnNext.Enabled := true;
-  btnPrevious.Enabled := true;
-  btnNext.Caption := '&Next >>';
-  btnPrevious.Caption := '<< &Previous';
+  btnBack.Enabled := true;
+  btnNext.Caption := _('&Next >>');
+  btnBack.Caption := _('<< &Back');
 
   ActivePage.UpdateWizardState(self as IWizard);
 
-  btnPrevious.Enabled := btnPrevious.Enabled and (CurPage > 0);
+  btnBack.Enabled := btnBack.Enabled and (CurPage > 0);
 //  btnNext.Enabled := btnNext.Enabled; //and (CurPage < length(Pages)-1);
 end;
 

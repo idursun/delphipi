@@ -2,9 +2,9 @@ object frmAbout: TfrmAbout
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = 'About Delphi PI'
-  ClientHeight = 297
-  ClientWidth = 409
+  Caption = 'About DelphiPI'
+  ClientHeight = 206
+  ClientWidth = 325
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,18 +13,19 @@ object frmAbout: TfrmAbout
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Bevel1: TBevel
     Left = 8
-    Top = 249
-    Width = 393
+    Top = 161
+    Width = 309
     Height = 9
     Shape = bsTopLine
   end
   object Button1: TButton
-    Left = 326
-    Top = 264
+    Left = 242
+    Top = 176
     Width = 75
     Height = 25
     Cancel = True
@@ -32,62 +33,13 @@ object frmAbout: TfrmAbout
     TabOrder = 0
     OnClick = Button1Click
   end
-  object Memo1: TMemo
-    Left = 8
-    Top = 128
-    Width = 393
-    Height = 115
-    Lines.Strings = (
-      'Author: ibrahim dursun (thex@thexpot.net) 2007'
-      ''
-      'DelphiPI helps you to compile & install delphi packages to IDE.'
-      '* automatically resolves any dependency between packages, '
-      '* finds required source paths and adds to library path,'
-      '* registers design packages,'
-      
-        '* registers help files (*.hlp) for Openhelp (Delphi 7 and previo' +
-        'us versions)'
-      ''
-      
-        'All you have to do is selecting a folder that contains both pack' +
-        'ages and '
-      'files.'
-      ''
-      'If the directory structure is like:'
-      ''
-      'SynEdit\packages'
-      'SynEdit\source '
-      ''
-      'then just select SynEdit folder.'
-      ''
-      
-        'If package folder contains packages for many Delphi versions the' +
-        'n use a '
-      
-        'pattern to match packages files suitable for your Delphi install' +
-        'ation.'
-      ''
-      
-        'Delphi PI will search those directories and will come up with a ' +
-        'list of '
-      'packages. '
-      'Unselect packages that you dont want to compile.'
-      ''
-      
-        'NOTE: If you encounter any problem, any malfunctioning or a bug ' +
-        'just fill '
-      'an issue or drop an e-mail.')
-    ScrollBars = ssVertical
-    TabOrder = 1
-    WantReturns = False
-  end
   object GroupBox2: TGroupBox
     Left = 8
     Top = 8
-    Width = 393
-    Height = 113
+    Width = 309
+    Height = 147
     Caption = 'Information'
-    TabOrder = 2
+    TabOrder = 1
     object Label7: TLabel
       Left = 52
       Top = 23
@@ -658,11 +610,11 @@ object frmAbout: TfrmAbout
         807F0000FFFF0000FFFF0000}
     end
     object Label8: TLabel
-      Left = 97
-      Top = 52
-      Width = 28
+      Left = 101
+      Top = 62
+      Width = 91
       Height = 16
-      Caption = '0.22'
+      Caption = '0.23 '#39'Dainese'#39
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -672,28 +624,28 @@ object frmAbout: TfrmAbout
     end
     object Label9: TLabel
       Left = 11
-      Top = 55
+      Top = 64
       Width = 39
       Height = 13
       Caption = 'Version:'
     end
     object Label10: TLabel
       Left = 11
-      Top = 74
+      Top = 83
       Width = 80
       Height = 13
       Caption = 'Project Website:'
     end
     object Label11: TLabel
       Left = 11
-      Top = 93
-      Width = 84
+      Top = 102
+      Width = 73
       Height = 13
-      Caption = 'Author'#39's website:'
+      Caption = 'Author'#39's name:'
     end
     object Label13: TLabel
-      Left = 97
-      Top = 93
+      Left = 101
+      Top = 121
       Width = 118
       Height = 13
       Cursor = crHandPoint
@@ -707,8 +659,8 @@ object frmAbout: TfrmAbout
       OnClick = Label13Click
     end
     object Label1: TLabel
-      Left = 97
-      Top = 74
+      Left = 101
+      Top = 83
       Width = 150
       Height = 13
       Cursor = crHandPoint
@@ -720,6 +672,20 @@ object frmAbout: TfrmAbout
       Font.Style = []
       ParentFont = False
       OnClick = Label1Click
+    end
+    object Label2: TLabel
+      Left = 11
+      Top = 121
+      Width = 84
+      Height = 13
+      Caption = 'Author'#39's website:'
+    end
+    object Label3: TLabel
+      Left = 101
+      Top = 102
+      Width = 80
+      Height = 13
+      Caption = #304'brahim DURSUN'
     end
   end
 end

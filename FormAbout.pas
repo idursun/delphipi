@@ -15,7 +15,6 @@ type
   TfrmAbout = class(TForm)
     Bevel1: TBevel;
     Button1: TButton;
-    Memo1: TMemo;
     GroupBox2: TGroupBox;
     Label7: TLabel;
     Image2: TImage;
@@ -25,10 +24,13 @@ type
     Label11: TLabel;
     Label13: TLabel;
     Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure Label2Click(Sender: TObject);
     procedure Label13Click(Sender: TObject);
     procedure Label1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,12 +41,17 @@ var
   frmAbout: TfrmAbout;
 
 implementation
-uses ShellApi;
+uses ShellApi, gnugettext;
 {$R *.dfm}
 
 procedure TfrmAbout.Button1Click(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmAbout.FormCreate(Sender: TObject);
+begin
+  TranslateComponent(self);
 end;
 
 procedure TfrmAbout.Label13Click(Sender: TObject);

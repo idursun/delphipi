@@ -47,9 +47,11 @@ type
   TPackageList = class(TList)
   private
     FInitialFolder : String;
+    FSourcePaths : TStringList;
     function get(I: Integer): TPackageInfo;
     procedure put(I: Integer; const Value: TPackageInfo);
   public
+    destructor Destroy; override;
     property Item[I : Integer]: TPackageInfo read get write put;default;
     procedure Add(const item : TPackageInfo); overload;
     procedure Remove(const item: TPackageInfo); overload;
@@ -70,7 +72,7 @@ resourcestring
   StrRequires = 'requires';
   StrContains = 'contains';
 
-Function SimplifyPath(const Str: String):String;
+function SimplifyPath(const Str: string):string;
 var
   Strs : TStringList;
   Stack : TStack;
@@ -225,6 +227,12 @@ end;
 procedure TPackageList.Add(const item: TPackageInfo);
 begin
   inherited add(item);
+end;
+
+destructor TPackageList.Destroy;
+begin
+
+  inherited;
 end;
 
 function TPackageList.get(I: Integer): TPackageInfo;

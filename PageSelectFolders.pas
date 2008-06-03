@@ -1,3 +1,8 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit PageSelectFolders;
 
 interface
@@ -30,7 +35,7 @@ var
   SelectFoldersPage: TSelectFoldersPage;
 
 implementation
-uses FileCtrl, WizardData;
+uses FileCtrl, WizardData, gnugettext;
 {$R *.dfm}
 
 { TSelectFoldersPage }
@@ -40,8 +45,8 @@ var
   button: TButton;
 begin
   inherited;
-  wizard.SetHeader('Select Folders');
-  wizard.SetDescription('Please select folders which contains the packages that you want to install');
+  wizard.SetHeader(_('Select Folders'));
+  wizard.SetDescription(_('Please select folders which contains the packages that you want to install'));
 
   button := wizard.GetButton(wbtNext);
   button.Enabled := edtBaseFolder.Text <> '';
@@ -53,7 +58,7 @@ var
 begin
   inherited;
   directory := edtBaseFolder.Text;
-  if SelectDirectory('Select the folder where packages are','',directory) then begin
+  if SelectDirectory(_('Select the folder where packages are'),'',directory) then begin
     edtBaseFolder.Text := directory;
     wizard.UpdateInterface;
   end;
@@ -87,6 +92,7 @@ var
   data : TWizardData;
 begin
   inherited;
+  TranslateComponent(self);
   data := TWizardData(wizard.GetData);
   if (data = nil) then exit;
   edtBaseFolder.Text := data.BaseFolder;

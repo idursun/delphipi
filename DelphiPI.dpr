@@ -15,7 +15,10 @@ uses
   PageShowPackageList in 'PageShowPackageList.pas' {ShowPackageListPage},
   WizardData in 'WizardData.pas',
   PageInstallHelpFiles in 'PageInstallHelpFiles.pas' {InstallHelpFilesPage},
-  PageFinished in 'PageFinished.pas' {FinishedPage};
+  PageFinished in 'PageFinished.pas' {FinishedPage},
+  gnugettext in 'gnugettext.pas',
+  ConsoleRunner in 'ConsoleRunner.pas',
+  CompileThread in 'CompileThread.pas';
 
 {$R *.res}
 

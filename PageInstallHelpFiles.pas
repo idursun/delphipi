@@ -1,3 +1,8 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit PageInstallHelpFiles;
 
 interface
@@ -24,7 +29,7 @@ var
 implementation
 {$R *.dfm}
 
-uses WizardData, JclFileUtils, JclBorlandTools;
+uses WizardData, JclFileUtils, JclBorlandTools, gnugettext;
 var
   Data: TWizardData;
 
@@ -36,9 +41,10 @@ var
   item: TListItem;
 begin
   inherited;
+  TranslateComponent(self);
   data := TWizardData(wizard.GetData);
   if data.HelpFiles.Count = 0 then begin
-    label1.Caption := 'No help files are found.';
+    label1.Caption := _('No help files are found.');
     helpFileList.Enabled := false;
     btnInstallHelpFiles.Enabled := false;
     exit;
@@ -50,16 +56,17 @@ begin
       item.Caption := data.HelpFiles[i];
       item.Checked := true;
     end;
+    TranslateComponent(self);
 end;
 
 procedure TInstallHelpFilesPage.UpdateWizardState(const wizard: IWizard);
 begin
   inherited;
-  wizard.SetHeader('Help Files');
-  wizard.SetDescription('Select the help files that you want to register, if there are any.');
+  wizard.SetHeader(_('Help Files'));
+  wizard.SetDescription(_('Select the help files that you want to register, if there are any.'));
   with wizard.GetButton(wbtNext) do
-    Caption := '&Finish';
-  with wizard.GetButton(wbtPrevious) do
+    Caption := _('&Finish');
+  with wizard.GetButton(wbtBack) do
     Visible := False;
 end;
 
@@ -78,7 +85,7 @@ begin
         inc(successCount);
     end;
   end;
-  ShowMessage(Format('%d help file(s) are registered successfully',[successCount]));
+  ShowMessage(Format(_('%d help file(s) are registered successfully'),[successCount]));
 end;
 
 end.
