@@ -83,8 +83,6 @@ begin
     FCompilationData.Installation := installations[0]
   else
     FCompilationData.Installation := installations.Installations[rgDelphiVersions.ItemIndex];
-    
-  FreeAndNil(installations);  
 end;
 
 procedure TSelectDelphiInstallationPage.FormCreate(Sender: TObject);
