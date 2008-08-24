@@ -18,7 +18,8 @@ type
     function IsSectionHeader(line: string):boolean;
     function GetSectionHeader(line: string):string;
     function ReadNextLine: string;
-    procedure ReadPackageList(compilationData: TCompilationData);
+    procedure SetPackageList(compilationData: TCompilationData);
+    procedure SetDelphiVersion(compilationData: TCompilationData);
     function HasNextLine: boolean;
   public
     constructor Create();
@@ -26,10 +27,17 @@ type
     
     function Load(const scriptFilePath: string):TCompilationData;
     procedure Save(const compilationData: TCompilationData; const scriptFilePath: string);
+  private
+   class var
+     const Header_BaseFolder = 'basefolder';
+     const Header_DelphiVersion = 'delphi-version';
+     const Header_BPLOutputFolder = 'bpl-output-folder';
+     const Header_DCPOutputFolder = 'dcp-output-folder';
+     const Header_Packages = 'packages';
   end;
 
 implementation
-uses JclStrings, PackageInfo;
+uses JclStrings, PackageInfo, JclBorlandTools;
 type
 
   TScriptWriter = class(TStringList)
@@ -83,17 +91,23 @@ begin
       if IsSectionHeader(fLine) then
       begin
         header := GetSectionHeader(fLine);
-        if header = 'basefolder' then Result.BaseFolder := ReadNextLine;
-        if header = 'bpl-output-folder' then Result.BPLOutputFolder := ReadNextLine;
-        if header = 'dcp-output-folder' then Result.DCPOutputFolder := ReadNextLine;
-        if header = 'packages' then ReadPackageList(Result);
+
+        if header = Header_BaseFolder then
+          Result.BaseFolder := ReadNextLine;
+        if header = Header_DelphiVersion then
+          SetDelphiVersion(Result);
+        if header = Header_BPLOutputFolder then
+          Result.BPLOutputFolder := ReadNextLine;
+        if header = Header_DCPOutputFolder then
+          Result.DCPOutputFolder := ReadNextLine;
+        if header = Header_Packages then
+          SetPackageList(Result);
       end;
     end;
   finally
     FreeAndNil(fLines);
   end;
 end;
-
 function TScriptPersister.ReadNextLine: string;
 begin
   if not HasNextLine then begin
@@ -107,7 +121,30 @@ begin
   Result := fLine;
 end;
 
-procedure TScriptPersister.ReadPackageList(compilationData: TCompilationData);
+procedure TScriptPersister.SetDelphiVersion(compilationData: TCompilationData);
+var
+  installations: TJclBorRADToolInstallations;
+  installation: TJclBorRADToolInstallation;
+  i : integer;
+begin
+  ReadNextLine;
+  installations := TJclBorRADToolInstallations.Create;
+  try
+    for i := 0 to installations.Count - 1 do begin
+      installation := installations.Installations[i];
+      if StrLower(Trim(installation.VersionNumberStr)) = StrLower(Trim(fLine)) then
+      begin
+        compilationData.Installation := installation;
+        break;
+      end;
+    end;
+  finally
+    installations.Free;
+  end;
+
+end;
+
+procedure TScriptPersister.SetPackageList(compilationData: TCompilationData);
 begin
 
 end;
@@ -115,7 +152,6 @@ end;
 procedure TScriptPersister.Save(const compilationData: TCompilationData; const scriptFilePath: string);
 var
   script: TScriptWriter;
-  package: TPackageInfo;
   i: Integer;
 begin
   if compilationData = nil then exit;
@@ -123,18 +159,22 @@ begin
   try
     with compilationData, script do begin
       //basefolder
-      WriteHeader('basefolder');
+      WriteHeader(Header_BaseFolder);
         WriteDetail(compilationData.BaseFolder);
-        
-      WriteHeader('dcp-output-folder');
-        WriteDetail(compilationData.DCPOutputFolder);
 
-      WriteHeader('bpl-output-folder');
+      WriteHeader(Header_DelphiVersion);
+        WriteDetail(compilationData.Installation.VersionNumberStr);
+
+      WriteHeader(Header_BPLOutputFolder);
         WriteDetail(compilationData.BPLOutputFolder);
 
-      WriteHeader('packages');
+      WriteHeader(Header_DCPOutputFolder);
+        WriteDetail(compilationData.DCPOutputFolder);
+
+      WriteHeader(Header_Packages);
       for i := 0 to compilationData.PackageList.Count-1 do
           WriteDetail(compilationData.PackageList[i].FileName);
+          
     end;
     script.SaveToFile(scriptFilePath);
   finally

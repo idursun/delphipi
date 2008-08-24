@@ -27,6 +27,7 @@ type
     procedure btnBPLBrowseClick(Sender: TObject);
     procedure btnDCPBrowseClick(Sender: TObject);
   private
+   installations : TJclBorRADToolInstallations;
     procedure DisposeCustomObjects;
     procedure AddDephiInstallation(const installation: TJclBorRADToolInstallation);
     procedure SaveInstallationOutputFolders(const versionIndex: integer);
@@ -49,7 +50,7 @@ type
      DCP: string;
   end;
 var
-  installations : TJclBorRADToolInstallations;
+
   lastSelectedIndex : Integer;
 {$R *.dfm}
 
@@ -82,6 +83,8 @@ begin
     FCompilationData.Installation := installations[0]
   else
     FCompilationData.Installation := installations.Installations[rgDelphiVersions.ItemIndex];
+    
+  FreeAndNil(installations);  
 end;
 
 procedure TSelectDelphiInstallationPage.FormCreate(Sender: TObject);
