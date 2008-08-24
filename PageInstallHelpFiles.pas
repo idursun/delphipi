@@ -18,9 +18,11 @@ type
     btnInstallHelpFiles: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnInstallHelpFilesClick(Sender: TObject);
+
   private
   public
     procedure UpdateWizardState; override;
+    function CanShowPage: Boolean; override;
   end;
 
 var
@@ -32,6 +34,11 @@ implementation
 uses JclFileUtils, JclBorlandTools, gnugettext;
 
 { TInstallHelpFilesPage }
+
+function TInstallHelpFilesPage.CanShowPage: Boolean;
+begin
+  Result := fCompilationData.HelpFiles.Count > 0;
+end;
 
 procedure TInstallHelpFilesPage.FormCreate(Sender: TObject);
 var

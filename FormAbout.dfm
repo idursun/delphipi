@@ -614,7 +614,7 @@ object frmAbout: TfrmAbout
       Top = 62
       Width = 91
       Height = 16
-      Caption = '0.23 '#39'Dainese'#39
+      Caption = '0.32 '#39'Dainese'#39
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -643,7 +643,7 @@ object frmAbout: TfrmAbout
       Height = 13
       Caption = 'Author'#39's name:'
     end
-    object Label13: TLabel
+    object lblAuthorsWebsite: TLabel
       Left = 101
       Top = 121
       Width = 118
@@ -656,9 +656,9 @@ object frmAbout: TfrmAbout
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      OnClick = Label13Click
+      OnClick = lblAuthorsWebsiteClick
     end
-    object Label1: TLabel
+    object lblProjectWebsite: TLabel
       Left = 101
       Top = 83
       Width = 150
@@ -671,7 +671,7 @@ object frmAbout: TfrmAbout
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentFont = False
-      OnClick = Label1Click
+      OnClick = lblProjectWebsiteClick
     end
     object Label2: TLabel
       Left = 11
@@ -687,5 +687,14 @@ object frmAbout: TfrmAbout
       Height = 13
       Caption = #304'brahim DURSUN'
     end
+  end
+  object btnDonate: TButton
+    Left = 8
+    Top = 173
+    Width = 120
+    Height = 25
+    Caption = 'Donate to DelphiPI'
+    TabOrder = 2
+    OnClick = btnDonateClick
   end
 end
