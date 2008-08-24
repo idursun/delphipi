@@ -6,26 +6,41 @@
 unit PackageCompiler;
 
 interface
-uses JclBorlandTools, PackageInfo, SysUtils, Classes;
+uses JclBorlandTools, PackageInfo, SysUtils, Classes, CompilationData;
 
 type
+   TPackageCompileEvent = procedure(const package: TPackageInfo; status: TPackageStatus) of object;
    TPackageCompiler = class
    private
-     installation : TJclBorRADToolInstallation;
+     fInstallation : TJclBorRADToolInstallation;
+     fCompilationData: TCompilationData;
+     fPackageList: TPackageList;
+     fPackageCompileEvent: TPackageCompileEvent;
    protected
      function GetExtraOptions: String; virtual;
      function GetShortPaths(paths: string): string;
+     procedure RaiseEvent(const packageInfo: TPackageInfo; status: TPackageStatus);virtual;
    public
-     constructor Create(const inst: TJclBorRadToolInstallation);
+     constructor Create(const compilationData: TCompilationData);
+     procedure Compile;
      function CompilePackage(const packageInfo : TPackageInfo): Boolean; virtual;
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
      procedure AddSourcePathsToIDE(const sourcePaths: TStringList);
+     //Events
+     property OnPackageEvent: TPackageCompileEvent read fPackageCompileEvent write fPackageCompileEvent;
    end;
 
 implementation
 
 uses JclFileUtils, JclStrings;
 { TPackageCompiler }
+
+constructor TPackageCompiler.Create(const compilationData: TCompilationData);
+begin
+  fCompilationData := compilationData;
+  fInstallation := fCompilationData.Installation;
+  fPackageList := fCompilationData.PackageList;
+end;
 
 procedure TPackageCompiler.AddSourcePathsToIDE(const sourcePaths: TStringList);
 var
@@ -34,7 +49,38 @@ begin
   Assert(assigned(sourcePaths));
   for path in sourcePaths do
   begin
-    installation.AddToLibrarySearchPath(path);
+    fInstallation.AddToLibrarySearchPath(path);
+  end;
+end;
+
+procedure TPackageCompiler.Compile;
+var
+  sourceList: TStringList;
+  i: integer;
+  info: TPackageInfo;
+  compileSuccessful: boolean;
+begin
+  sourceList := TStringList.Create;
+  try
+    fPackageList.GetSourcePaths(sourceList);
+    AddSourcePathsToIDE(sourceList);
+    for i := 0 to fPackageList.Count - 1 do begin
+      info := fPackageList[i];
+      RaiseEvent(info, psCompiling);
+      compileSuccessful := CompilePackage(info);
+
+      if compileSuccessful and (not info.RunOnly) then
+      begin
+        RaiseEvent(info, psInstalling);
+        InstallPackage(info);
+      end;
+      if compileSuccessful then
+        RaiseEvent(info, psSuccess)
+      else
+        RaiseEvent(info, psError);
+    end;
+  finally
+    sourceList.Free;
   end;
 end;
 
@@ -44,23 +90,19 @@ var
   ExtraOptions : String;
 begin
   ExtraOptions := GetExtraOptions;
-  Result := installation.DCC32.MakePackage(
+  Result := fInstallation.DCC32.MakePackage(
                 packageInfo.filename,
-                installation.BPLOutputPath,
-                installation.DCPOutputPath,
+                fCompilationData.BPLOutputFolder,
+                fCompilationData.DCPOutputFolder,
                 ExtraOptions);
 end;
 
-constructor TPackageCompiler.Create(const inst: TJclBorRadToolInstallation);
-begin
-  self.installation := inst; 
-end;
 
 function TPackageCompiler.GetExtraOptions: String;
 var
   paths : string;
 begin
-  paths := GetShortPaths(installation.LibrarySearchPath);
+  paths := GetShortPaths(fInstallation.LibrarySearchPath);
   Result := '-B';
   Result := Result + #13#10 +'-I"'+paths+'"';
   Result := Result + #13#10+ '-U"'+paths+'"';
@@ -70,19 +112,19 @@ end;
 
 function TPackageCompiler.GetShortPaths(paths : string):string;
 var
-  PathList : TStringList;
+  pathList : TStringList;
   path : string;
 begin
   Result := '';
-  PathList := TStringList.Create;
+  pathList := TStringList.Create;
   try
-    ExtractStrings([';'],[' '],PAnsiChar(paths),PathList);
-    for path in PathList do
+    ExtractStrings([';'],[' '],PAnsiChar(paths),pathList);
+    for path in pathList do
     begin
       Result := Result + StrDoubleQuote(PathGetShortName(StrTrimQuotes(path))) + ';';
     end;
   finally
-    PathList.Free;
+    pathList.Free;
   end;
 end;
 
@@ -91,8 +133,20 @@ function TPackageCompiler.InstallPackage(
 var
   BPLFileName : String;  
 begin
-  BPLFileName := PathAddSeparator(installation.BPLOutputPath) + PathExtractFileNameNoExt(packageInfo.FileName) + packageInfo.Suffix + '.bpl';
-  Result := installation.RegisterPackage(BPLFileName, packageInfo.Description);
+  BPLFileName := PathAddSeparator(fInstallation.BPLOutputPath) + PathExtractFileNameNoExt(packageInfo.FileName) + packageInfo.Suffix + '.bpl';
+  Result := fInstallation.RegisterPackage(BPLFileName, packageInfo.Description);
+end;
+
+procedure TPackageCompiler.RaiseEvent(const packageInfo: TPackageInfo;
+  status: TPackageStatus);
+begin
+   if Assigned(fPackageCompileEvent) then
+   begin
+     if (status = psSuccess) or (status = psError) then
+        packageInfo.Status := status;
+        
+     fPackageCompileEvent(packageInfo, status);
+   end;
 end;
 
 end.

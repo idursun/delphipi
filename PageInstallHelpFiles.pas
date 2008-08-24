@@ -20,7 +20,7 @@ type
     procedure btnInstallHelpFilesClick(Sender: TObject);
   private
   public
-    procedure UpdateWizardState(const wizard: IWizard); override;
+    procedure UpdateWizardState; override;
   end;
 
 var
@@ -29,9 +29,7 @@ var
 implementation
 {$R *.dfm}
 
-uses WizardData, JclFileUtils, JclBorlandTools, gnugettext;
-var
-  Data: TWizardData;
+uses JclFileUtils, JclBorlandTools, gnugettext;
 
 { TInstallHelpFilesPage }
 
@@ -42,30 +40,27 @@ var
 begin
   inherited;
   TranslateComponent(self);
-  data := TWizardData(wizard.GetData);
-  if data.HelpFiles.Count = 0 then begin
+  if fCompilationData.HelpFiles.Count = 0 then begin
     label1.Caption := _('No help files are found.');
     helpFileList.Enabled := false;
     btnInstallHelpFiles.Enabled := false;
     exit;
-  end; 
+  end;
 
-  if (data.Installation.VersionNumber <= 7) then
-    for I := 0 to data.HelpFiles.Count - 1 do begin
+  if (fCompilationData.Installation.VersionNumber <= 7) then
+    for I := 0 to fCompilationData.HelpFiles.Count - 1 do begin
       item :=helpFileList.Items.Add;
-      item.Caption := data.HelpFiles[i];
+      item.Caption := fCompilationData.HelpFiles[i];
       item.Checked := true;
     end;
     TranslateComponent(self);
 end;
 
-procedure TInstallHelpFilesPage.UpdateWizardState(const wizard: IWizard);
+procedure TInstallHelpFilesPage.UpdateWizardState;
 begin
   inherited;
   wizard.SetHeader(_('Help Files'));
   wizard.SetDescription(_('Select the help files that you want to register, if there are any.'));
-  with wizard.GetButton(wbtNext) do
-    Caption := _('&Finish');
   with wizard.GetButton(wbtBack) do
     Visible := False;
 end;
@@ -78,9 +73,9 @@ var
 begin
   inherited;
   successCount := 0;
-  if data.Installation is TJclBorRADToolInstallation then begin
-    openHelp := Data.Installation.OpenHelp;
-    for helpFileName in data.HelpFiles do begin
+  if fCompilationData.Installation is TJclBorRADToolInstallation then begin
+    openHelp := fCompilationData.Installation.OpenHelp;
+    for helpFileName in fCompilationData.HelpFiles do begin
       if openHelp.AddHelpFile(helpFileName,PathExtractFileNameNoExt(helpFileName)) then
         inc(successCount);
     end;

@@ -8,7 +8,7 @@ unit PageSelectFolders;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs;
 
 type
@@ -28,19 +28,20 @@ type
     procedure FormCreate(Sender: TObject);
   private
   public
-    procedure UpdateWizardState(const wizard: IWizard); override;
+    constructor Create(Owner: TComponent; const compilationData: TCompilationData); override; 
+    procedure UpdateWizardState; override;
   end;
 
 var
   SelectFoldersPage: TSelectFoldersPage;
 
 implementation
-uses FileCtrl, WizardData, gnugettext;
+uses FileCtrl, gnugettext, FormWizard;
 {$R *.dfm}
 
 { TSelectFoldersPage }
 
-procedure TSelectFoldersPage.UpdateWizardState(const wizard: IWizard);
+procedure TSelectFoldersPage.UpdateWizardState;
 var
   button: TButton;
 begin
@@ -60,43 +61,43 @@ begin
   directory := edtBaseFolder.Text;
   if SelectDirectory(_('Select the folder where packages are'),'',directory) then begin
     edtBaseFolder.Text := directory;
-    wizard.UpdateInterface;
+    UpdateWizardState;
   end;
+end;
+
+constructor TSelectFoldersPage.Create(Owner: TComponent;
+  const compilationData: TCompilationData);
+begin
+  inherited;
+  fCompilationData := compilationData;
 end;
 
 procedure TSelectFoldersPage.edtBaseFolderChange(Sender: TObject);
 begin
   inherited;
-  wizard.UpdateInterface;
+  UpdateWizardState;
 end;
 
 procedure TSelectFoldersPage.FormClose(Sender: TObject;
   var Action: TCloseAction);
-var
-  data : TWizardData;
 begin
   inherited;
-  data := TWizardData(wizard.GetData);// as IWizardData;
-  if (data = nil) then exit;
-  data.SetBaseFolder(edtBaseFolder.Text);
-  data.SetPattern(cbPattern.Text);
-
   if cbPattern.Items.IndexOf(cbPattern.Text) = -1 then
     cbPattern.Items.Add(cbPattern.Text);
+
+  FCompilationData.BaseFolder := edtBaseFolder.Text;
+  FCompilationData.Pattern := cbPattern.Text;
 
   cbPattern.Items.SaveToFile('patterns.txt');
 end;
 
 procedure TSelectFoldersPage.FormCreate(Sender: TObject);
-var
-  data : TWizardData;
 begin
   inherited;
   TranslateComponent(self);
-  data := TWizardData(wizard.GetData);
-  if (data = nil) then exit;
-  edtBaseFolder.Text := data.BaseFolder;
-  cbPattern.Text := data.Pattern;
+
+  edtBaseFolder.Text := FCompilationData.BaseFolder;
+  cbPattern.Text := FCompilationData.Pattern;
 
   if (FileExists('patterns.txt')) then
     cbPattern.Items.LoadFromFile('patterns.txt');

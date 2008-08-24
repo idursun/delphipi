@@ -40,7 +40,7 @@ object frmWizard: TfrmWizard
     Color = clWhite
     ParentBackground = False
     TabOrder = 1
-    object Image1: TImage
+    object LogoImage: TImage
       Left = 4
       Top = 4
       Width = 48

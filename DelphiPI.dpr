@@ -13,16 +13,19 @@ uses
   PageProgress in 'PageProgress.pas' {ProgressPage},
   WizardIntfs in 'WizardIntfs.pas',
   PageShowPackageList in 'PageShowPackageList.pas' {ShowPackageListPage},
-  WizardData in 'WizardData.pas',
   PageInstallHelpFiles in 'PageInstallHelpFiles.pas' {InstallHelpFilesPage},
   PageFinished in 'PageFinished.pas' {FinishedPage},
-  gnugettext in 'gnugettext.pas',
   ConsoleRunner in 'ConsoleRunner.pas',
-  CompileThread in 'CompileThread.pas';
+  CompileThread in 'CompileThread.pas',
+  CompilationData in 'CompilationData.pas',
+  ScriptPersister in 'ScriptPersister.pas',
+  RegExpr in 'libs\RegExpr.pas',
+  gnugettext in 'libs\gnugettext.pas';
 
 {$R *.res}
 
 begin
+
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Delphi PI';

@@ -7,20 +7,23 @@ unit ConsoleRunner;
 
 interface
 type
+
   TConsoleRunner = class
   private
   protected
   public
-  constructor Create(const params:array of string);
+    constructor Create(const params:array of string);
   end;
+  
 implementation
-
+uses CompilationData, ScriptPersister;
 { TConsoleRunner }
 
 constructor TConsoleRunner.Create(const params:array of string);
+var
+  compilationData: TCompilationData;
 begin
-
-
+ // compilationData:= TScriptPersister.Load(params[1]);
 end;
 
 end.

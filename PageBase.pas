@@ -8,27 +8,29 @@ unit PageBase;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, WizardIntfs;
 
 type
   TWizardPage = class(TForm)
   private
+    function GetWizardController: IWizard;
+    procedure SetWizardController(const Value: IWizard);
   protected
-    wizard: IWizard;
+    FWizard: IWizard;
+    fCompilationData: TCompilationData;
   public
-    constructor Create(Owner: TComponent; const wizard: IWizard); reintroduce; virtual;
-    procedure UpdateWizardState(const wizard: IWizard); virtual;
+    constructor Create(Owner: TComponent; const compilationData: TCompilationData); reintroduce; virtual;
+    procedure UpdateWizardState; virtual; 
     function CanShowPage: Boolean; virtual;
+    property Wizard: IWizard read GetWizardController write SetWizardController;
   end;
-  
-  TPageClass = class of TWizardPage;
 
-var
-  WizardPage: TWizardPage;
+  TPageClass = class of TWizardPage;
 
 implementation
 
+uses FormWizard;
 {$R *.dfm}
 
 function TWizardPage.CanShowPage: Boolean;
@@ -36,15 +38,24 @@ begin
   Result := true;
 end;
 
-constructor TWizardPage.Create(Owner: TComponent; const wizard: IWizard);
+constructor TWizardPage.Create(Owner: TComponent; const compilationData: TCompilationData);
 begin
   inherited Create(Owner);
-  self.wizard := wizard;
+  fCompilationData := compilationData;
 end;
 
-procedure TWizardPage.UpdateWizardState(const wizard: IWizard);
+function TWizardPage.GetWizardController: IWizard;
 begin
+  Result := TFrmWizard.Wizard;
+end;
 
+procedure TWizardPage.SetWizardController(const Value: IWizard);
+begin
+  FWizard := Value;
+end;
+procedure TWizardPage.UpdateWizardState;
+begin
+  Assert(Assigned(Wizard));
 end;
 
 end.

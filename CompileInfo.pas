@@ -74,26 +74,4 @@ begin
   Result := FSourceFolders;
 end;
 
-//procedure TCompileInfo.ProcessBaseFolder;
-//var
-//  stack: TStack;
-//  path: string;
-//  sr : TSearchRec;
-//begin
-//  stack := TStack.Create;
-//  stack.Push(PAnsiChar(baseFolder));
-//  try
-//    while(stack.Count > 0) do begin
-//      path := string(stack.Pop);
-//      while(FindFirst(path,0,sr) <> 0) do begin
-//
-//        FindNext(sr);
-//      end;
-//    end;
-//  finally
-//    FindClose(sr);
-//    stack.Free;
-//  end;
-//end;
-
 end.

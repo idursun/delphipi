@@ -35,14 +35,14 @@ type
     property CurrectPackageNo: Integer read fCurrPackageNo write SetCurrentPackageNo;
   public
     procedure Compile;
-    procedure UpdateWizardState(const wizard: IWizard); override;
+    procedure UpdateWizardState; override;
   end;
 
 var
   ProgressPage: TProgressPage;
 
 implementation
-uses PackageInfo, WizardData, gnugettext;
+uses PackageInfo, gnugettext;
 type
 
   TPageProgressMonitor = class(TInterfacedObject, IProgressMonitor )
@@ -60,7 +60,6 @@ type
     property PackageName: String read FPackageName write SetPackageName;
   end;
 var
-  data: TWizardData;
   pageProgressMonitor : TPageProgressMonitor;
 
 {$R *.dfm}
@@ -81,7 +80,6 @@ procedure TProgressPage.FormCreate(Sender: TObject);
 begin
   inherited;
   TranslateComponent(self);
-  data := TWizardData(wizard.GetData);
   lblPackage.Caption := '';
   lblFileName.Caption := '';
   CurrectPackageNo := 0;
@@ -89,7 +87,7 @@ begin
   Compile;
 end;
 
-procedure TProgressPage.UpdateWizardState(const wizard: IWizard);
+procedure TProgressPage.UpdateWizardState;
 begin
   inherited;
   wizard.SetHeader(_('Compile and Install Packages'));
@@ -104,9 +102,9 @@ end;
 procedure TProgressPage.Compile;
 begin
   pageProgressMonitor := TPageProgressMonitor.Create(self);
-  data.Installation.OutputCallback := self.handletext;
-  ProgressBar.Max := data.PackageList.Count;
-  compileThread := TCompileThread.Create(data.PackageList, data.Installation);
+  fCompilationData.Installation.OutputCallback := self.handletext;
+  ProgressBar.Max := fCompilationData.PackageList.Count;
+  compileThread := TCompileThread.Create(fCompilationData);
   compileThread.Monitor := pageProgressMonitor;
   with compileThread do begin
     OnTerminate := compileCompleted;
@@ -134,7 +132,7 @@ begin
     exit;
 
   fCurrPackageNo := Value;
-  lblCurrentPackageNo.Caption := Format('%d/%d',[fCurrPackageNo,data.PackageList.Count]);
+  lblCurrentPackageNo.Caption := Format('%d/%d',[fCurrPackageNo,fCompilationData.PackageList.Count]);
 end;
 
 procedure TProgressPage.CompileCompleted(sender: TObject);
@@ -143,8 +141,8 @@ begin
   lblFileName.Caption := '';
   ProgressBar.Position := 0;
   compileThreadWorking := false;
-  wizard.UpdateInterface;
   memo.Lines.Add(_('*** Completed'));
+  Wizard.UpdateInterface;
 end;
 
 constructor TPageProgressMonitor.Create(const page: TProgressPage);

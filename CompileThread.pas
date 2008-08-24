@@ -1,6 +1,6 @@
 unit CompileThread;
 interface
-uses WizardData, PackageInfo, PackageCompiler, Classes, JclBorlandTools;
+uses PackageInfo, PackageCompiler, Classes, JclBorlandTools, CompilationData;
 
 type
  IProgressMonitor = interface
@@ -18,61 +18,51 @@ type
     fStepNo: Integer;
     fPackageName: String;
     fMonitor : IProgressMonitor;
-    fPackageList: TPackageList;
-    fInstallation: TJclBorRADToolInstallation;
+    fCompilationData: TCompilationData;
     procedure SetMonitor(const Value: IProgressMonitor);
   protected
     procedure Execute; override;
     procedure UpdateMonitor;
+    procedure PackageEventHandler(const package: TPackageInfo; status: TPackageStatus);
   public
-    constructor Create(const packageList : TPackageList; const installation: TJclBorRADToolInstallation);
+    constructor Create(const compilationData: TCompilationData);
     property Monitor: IProgressMonitor read FMonitor write SetMonitor;
   end;
 
 implementation
 
-constructor TCompileThread.Create(const packageList : TPackageList; const installation: TJclBorRADToolInstallation);
+
+constructor TCompileThread.Create(const compilationData: TCompilationData);
 begin
   inherited Create(true);
-  Assert(packageList <> nil);
-  Assert(installation <> nil);
-
-  fPackageList := packageList;
-  fInstallation := installation;
+  Assert(compilationData <> nil);
+  fCompilationData := compilationData;
 end;
 
 procedure TCompileThread.Execute;
 var
-  info : TPackageInfo;
   compiler: TPackageCompiler;
-  sourceList: TStringList;
-  i : integer;
-  compileSuccessful : Boolean;
 begin
   inherited;
-  sourceList := TStringList.Create;
-  compiler := TPackageCompiler.Create(fInstallation);
+  compiler := TPackageCompiler.Create(fCompilationData);
   try
-    fPackageList.GetSourcePaths(sourceList);
-    compiler.AddSourcePathsToIDE(sourceList);
-    for i := 0 to fPackageList.Count - 1 do begin
-      info := fPackageList[i];
-      fStepNo := fStepNo + 1;
-      fPackageName := info.PackageName;
-      Synchronize(UpdateMonitor);
-      compileSuccessful := compiler.CompilePackage(info);
-      if compileSuccessful and (not info.RunOnly) then
-        compiler.InstallPackage(info);
-        
-      if not compileSuccessful then
-      begin
-         // count & report errors
-      end; 
-    end;
+    compiler.OnPackageEvent := self.PackageEventHandler;
+    compiler.Compile;
   finally
     compiler.Free;
-    sourceList.Free;
   end;
+end;
+
+procedure TCompileThread.PackageEventHandler(const package: TPackageInfo;
+  status: TPackageStatus);
+begin
+   if status = psCompiling then
+     fPackageName := package.PackageName;
+
+   if (status = psSuccess) or (status = psError) then
+     fStepNo := fStepNo + 1;
+
+   Synchronize(UpdateMonitor);
 end;
 
 procedure TCompileThread.SetMonitor(const Value: IProgressMonitor);

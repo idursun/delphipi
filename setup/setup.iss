@@ -20,10 +20,11 @@ AllowNoIcons=yes
 LicenseFile=C:\Projelerim\delphipi\setup\LICENSE.txt
 OutputBaseFilename=delphipi.0.22.setup
 Compression=lzma/ultra
-SolidCompression=yes
+SolidCompression=true
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl
+Name: tr; MessagesFile: compiler:Languages\Turkish.isl
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked

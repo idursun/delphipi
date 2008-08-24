@@ -8,17 +8,9 @@ interface
 uses  Classes, StrUtils;
 
 type
-  IPackageInfo = interface
-    ['{2AAFEE24-4BAB-4193-AD5D-3080CD4A47FB}']
-    function Requires: TStringList;
-    function Contains: TStringList;
-    function RunOnly: Boolean;
-    function PackageName: String;
-    function Description: String;
-    function FileName: String;
-  end;
 
-  TPackageInfo = class(TInterfacedObject, IPackageInfo)
+  TPackageStatus = (psNone, psCompiling, psInstalling, psSuccess, psError);
+  TPackageInfo = class(TInterfacedObject)
   private
     pfile : TStringList;
     FRequires: TStringList;
@@ -28,20 +20,25 @@ type
     FRunOnly : Boolean;
     FPackageName : String;
     FFileName: String;
+    fStatus: TPackageStatus;
     procedure ReadInfo;
     function ClearStr(Str: string):string;
+    function GetContainedFileList: TStringList;
+    function GetRequiredPackageList: TStringList; overload;
   public
     constructor Create(const packagefile: String);overload;
     constructor Create;overload;
     destructor Destroy; override;
-    function Description: string;
-    function PackageName: string;
-    function RunOnly: Boolean;
-    function Suffix: string;
-    function Requires: TStringList; overload;
-    function DoesRequire(const package: TPackageInfo): Boolean; overload;
-    function Contains: TStringList;
-    function FileName: string;
+    function DependsOn(const package: TPackageInfo): Boolean; overload;
+    
+    property Description: string read FDescription;
+    property PackageName: string read FPackageName;
+    property RunOnly: Boolean read FRunOnly;
+    property Suffix: string read FSuffix;
+    property RequiredPackageList: TStringList read GetRequiredPackageList;
+    property ContainedFileList: TStringList read GetContainedFileList;
+    property FileName: string read FFileName;
+    property Status: TPackageStatus read fStatus write fStatus;
   end;
 
   TPackageList = class(TList)
@@ -106,7 +103,7 @@ begin
   ReadInfo;
 end;
 
-function TPackageInfo.Contains: TStringList;
+function TPackageInfo.GetContainedFileList: TStringList;
 begin
   if not assigned(FContains) then
     FContains := TStringList.Create;
@@ -119,27 +116,12 @@ begin
   FContains := TStringList.Create;
 end;
 
-function TPackageInfo.Description: string;
-begin
-  Result := FDescription;
-end;
-
 destructor TPackageInfo.Destroy;
 begin
   pfile.clear;
-  Requires.free;
-  Contains.Free;
+  RequiredPackageList.free;
+  ContainedFileList.Free;
   inherited;
-end;
-
-function TPackageInfo.FileName: string;
-begin
-  Result := FFileName;
-end;
-
-function TPackageInfo.PackageName: string;
-begin
-  Result := Trim(FPackageName);
 end;
 
 function TPackageInfo.ClearStr(Str: string):String;
@@ -176,50 +158,40 @@ begin
 
     if Pos(StrRequires,str) = 1 then RequiresBlock := True;
     if RequiresBlock then begin
-      Requires.Add(ClearStr(Str));
+      RequiredPackageList.Add(ClearStr(Str));
     end;
     if (RequiresBlock) and (pos(';',str) > 0) then
       RequiresBlock := False;
 
     if Pos(StrContains,str) = 1 then ContainsBlock := True;
-    
+
     if ContainsBlock then
       if Pos(' in ',Str) > 0 then
-        Contains.Add(Copy(Str,Pos('''',Str)+1,Length(Str) - Pos('''',Str)-2))
+        ContainedFileList.Add(Copy(Str,Pos('''',Str)+1,Length(Str) - Pos('''',Str)-2))
       else
-        Contains.Add(ClearStr(str)+ '.pas');
+        ContainedFileList.Add(ClearStr(str)+ '.pas');
 
     if (ContainsBlock) and (pos(';',str) > 0) then
       ContainsBlock := False;
   end;
-  
-  if Requires.Count > 0 then
-    Requires.Delete(0);
-  if Contains.Count > 0 then
-    Contains.Delete(0);
+
+  if RequiredPackageList.Count > 0 then
+    RequiredPackageList.Delete(0);
+  if ContainedFileList.Count > 0 then
+    ContainedFileList.Delete(0);
 end;
 
-function TPackageInfo.DoesRequire(const package: TPackageInfo): Boolean;
+function TPackageInfo.DependsOn(const package: TPackageInfo): Boolean;
 begin
   assert(package <> nil);
-  Result := Requires.IndexOf(package.packageName) > -1;
+  Result := RequiredPackageList.IndexOf(package.packageName) > -1;
 end;
 
-function TPackageInfo.Requires: TStringList;
+function TPackageInfo.GetRequiredPackageList: TStringList;
 begin
   if not assigned(FRequires) then
     FRequires := TStringList.Create;
   Result := FRequires;
-end;
-
-function TPackageInfo.RunOnly: Boolean;
-begin
-  Result := FRunOnly;
-end;
-
-function TPackageInfo.Suffix: string;
-begin
-  Result := FSuffix;
 end;
 
 { TPackageList }
@@ -261,8 +233,8 @@ begin
      
   for i := 0 to Count - 1 do begin
     sourceList.Add(ExtractFilePath(self[i].FileName));
-    for j := 0 to self[i].Contains.Count - 1 do
-      containedFiles.Add(ExtractFileName(Self[i].Contains[j]));
+    for j := 0 to self[i].ContainedFileList.Count - 1 do
+      containedFiles.Add(ExtractFileName(Self[i].ContainedFileList[j]));
   end;
 
   AdvBuildFileList(FInitialFolder+'\*.pas',
@@ -301,7 +273,7 @@ var i :integer;
 begin
   i := IndexOf(item.PackageName);
   Delete(i);
-end;
+end;  
 
 procedure TPackageList.SortList();
 var
@@ -316,7 +288,7 @@ begin
     for i := 0 to Count - 1 do
     begin
       tmp1 := Self[i];
-      for packagename in tmp1.Requires do
+      for packagename in tmp1.RequiredPackageList do
       begin
         j := indexOf(packagename);
         if (j > i) then

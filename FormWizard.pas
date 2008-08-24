@@ -8,16 +8,16 @@ unit FormWizard;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, WizardIntfs;
 
 type
-  TfrmWizard = class(TForm, IWizard)
+  TFrmWizard = class(TForm, IWizard)
     HeaderPanel: TPanel;
     Bevel: TBevel;
     btnNext: TButton;
     btnBack: TButton;
-    Image1: TImage;
+    LogoImage: TImage;
     lblHeader: TLabel;
     lblDescription: TLabel;
     DockPanel: TPanel;
@@ -28,14 +28,14 @@ type
     procedure btnBackClick(Sender: TObject);
     procedure btnAboutClick(Sender: TObject);
   private
-    FWizardData :TInterfacedObject;
+    FCompilationData : TCompilationData;
     FBaseFolder: String;
     procedure SetBaseFolder(const Value: String);
   protected
     procedure SelectPage(const pageNo: Integer);
   public
+    class var Wizard: IWizard;  
     procedure UpdateInterface;
-    function GetData: TInterfacedObject;
     function GetButton(buttonType: TWizardButtonType): TButton;
     procedure SetDescription(const desc: string);
     procedure SetHeader(const header: string);
@@ -46,8 +46,8 @@ var
 
 implementation
 uses FormAbout, PageBase, PageSelectFolders, PageSelectDelphiInstallation,
-    PageProgress, PageShowPackageList, PageInstallHelpFiles, WizardData,
-    gnugettext;
+     PageProgress, PageShowPackageList, PageInstallHelpFiles, PageFinished,
+     gnugettext;
 var
   Pages: array of TPageClass;
   CurPage: Byte;
@@ -58,21 +58,23 @@ var
 
 procedure TfrmWizard.FormCreate(Sender: TObject);
 begin
-  FWizardData := TWizardData.Create;
+  FCompilationData := TCompilationData.Create;
+  TFrmWizard.Wizard := self as IWizard;
+
   if (ParamCount > 0) then
-    TWizardData(FWizardData).SetBaseFolder(ParamStr(1));
+    FCompilationData.BaseFolder := ParamStr(1);
   SelectPage(0);
   TranslateComponent(self);
 end;
 
-procedure TfrmWizard.btnAboutClick(Sender: TObject);
+procedure TFrmWizard.btnAboutClick(Sender: TObject);
 begin
   Application.CreateForm(TfrmAbout,frmAbout);
   frmAbout.ShowModal;
   frmAbout.Free;
 end;
 
-procedure TfrmWizard.btnNextClick(Sender: TObject);
+procedure TFrmWizard.btnNextClick(Sender: TObject);
 begin
   if CurPage + 1 = Length(Pages) then
     Close
@@ -80,12 +82,12 @@ begin
     SelectPage(CurPage+1);
 end;
 
-procedure TfrmWizard.btnBackClick(Sender: TObject);
+procedure TFrmWizard.btnBackClick(Sender: TObject);
 begin
   SelectPage(CurPage-1);
 end;
 
-function TfrmWizard.GetButton(buttonType: TWizardButtonType): TButton;
+function TFrmWizard.GetButton(buttonType: TWizardButtonType): TButton;
 begin
   Result := nil;
   case buttonType of
@@ -94,12 +96,7 @@ begin
   end;
 end;
 
-function TfrmWizard.GetData: TInterfacedObject;
-begin
-  Result := self.fwizardData;
-end;
-
-procedure TfrmWizard.SelectPage(const pageNo: Integer);
+procedure TFrmWizard.SelectPage(const pageNo: Integer);
 begin
   if (pageNo < 0) then exit;
   if (pageNo > Length(Pages)) then
@@ -111,12 +108,12 @@ begin
   end;
 
   CurPage := pageNo;
-  ActivePage := Pages[pageNo].Create(self,self as IWizard);
+  ActivePage := Pages[pageNo].Create(self,FCompilationData);
   if not ActivePage.CanShowPage then begin
      SelectPage(pageNo+1);
      exit;
   end;
-  
+  ActivePage.Wizard := self;
   UpdateInterface;
 
   ActivePage.ManualDock(DockPanel);
@@ -124,42 +121,46 @@ begin
   ActivePage.SetFocus;
 end;
 
-procedure TfrmWizard.SetBaseFolder(const Value: String);
+procedure TFrmWizard.SetBaseFolder(const Value: String);
 begin
   FBaseFolder := Value;
   UpdateInterface;
 end;
 
-procedure TfrmWizard.SetDescription(const desc: string);
+procedure TFrmWizard.SetDescription(const desc: string);
 begin
   lblDescription.Caption := desc;
 end;
 
-procedure TfrmWizard.SetHeader(const header: string);
+procedure TFrmWizard.SetHeader(const header: string);
 begin
   lblHeader.Caption := header;
 end;
 
-procedure TfrmWizard.UpdateInterface;
+procedure TFrmWizard.UpdateInterface;
 begin
   if not assigned(ActivePage) then
      exit;
   btnNext.Enabled := true;
-  btnBack.Enabled := true;
+  btnNext.Visible := true;
   btnNext.Caption := _('&Next >>');
+
+  btnBack.Enabled := true;
+  btnBack.Visible := true;
   btnBack.Caption := _('<< &Back');
 
-  ActivePage.UpdateWizardState(self as IWizard);
+  ActivePage.UpdateWizardState;
 
   btnBack.Enabled := btnBack.Enabled and (CurPage > 0);
 //  btnNext.Enabled := btnNext.Enabled; //and (CurPage < length(Pages)-1);
 end;
 
 initialization
-   SetLength(Pages,5);
+   SetLength(Pages,6);
    Pages[0] := TSelectFoldersPage;
-   Pages[1] := TShowPackageListPage;
-   Pages[2] := TSelectDelphiInstallationPage;
+   Pages[1] := TSelectDelphiInstallationPage;
+   Pages[2] := TShowPackageListPage;
    Pages[3] := TProgressPage;
    Pages[4] := TInstallHelpFilesPage;
+   Pages[5] := TFinishedPage;
 end.

@@ -8,7 +8,7 @@ unit PageShowPackageList;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
+  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
   Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus;
 
 type
@@ -20,8 +20,7 @@ type
     miSelectUsing: TMenuItem;
     N1: TMenuItem;
     procedure FormCreate(Sender: TObject);
-    procedure packageListViewInfoTip(Sender: TObject; Item: TListItem;
-      var InfoTip: string);
+    procedure packageListViewInfoTip(Sender: TObject; Item: TListItem; var InfoTip: string);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure miSelectAllClick(Sender: TObject);
     procedure miUnselectAllClick(Sender: TObject);
@@ -31,41 +30,50 @@ type
     procedure DisplayPackageList(const PackageList: TPackageList);
     procedure PackageLoadCompleted(Sender: TObject);
   public
-    procedure UpdateWizardState(const wizard: IWizard); override;
+    constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
+    procedure UpdateWizardState; override;
   end;
 
-var
-  ShowPackageListPage: TShowPackageListPage;
-  threadWorking : Boolean;
 implementation
-uses WizardData, JclFileUtils, gnugettext;
+
+uses JclFileUtils, gnugettext;
 {$R *.dfm}
+var
+  threadWorking : Boolean;
 type
+
   TPackageLoadThread = class(TThread)
+  private
+    fCompilationData: TCompilationData;
   protected
     procedure Execute; override;
+  public
+   constructor Create(data: TCompilationData);
   end;
-var
-  //NOTE WizardData.pas'ý interface kýsmýnda tanýmlamak istemiyorum o yüzden
-  //encapsulation'ý deliyorum burada.
-  data : TWizardData;
 
 { TShowPackageListPage }
 
-procedure TShowPackageListPage.FormCreate(Sender: TObject);
+constructor TShowPackageListPage.Create(Owner: TComponent;
+  const compilationData: TCompilationData);
 begin
   inherited;
-  TranslateComponent(self);
-  data := TWizardData(wizard.GetData);
-  packageLoadThread := TPackageLoadThread.Create(true);
-  with packageLoadThread do begin
-    FreeOnTerminate := true;
-    OnTerminate := packageLoadCompleted;
-    packageListView.AddItem(_('Looking for packages in folders...'),nil);
-    threadWorking := true;
-    Resume;
+  fCompilationData := compilationData;
+    // If there is no source file path in the list then load
+  if FCompilationData.SourceFilePaths.Count = 0 then
+  begin
+    packageLoadThread := TPackageLoadThread.Create(FCompilationData);
+    with packageLoadThread do begin
+      FreeOnTerminate := true;
+      OnTerminate := packageLoadCompleted;
+      packageListView.AddItem(_('Looking for packages in folders...'),nil);
+      threadWorking := true;
+      Resume;
+    end;
+  end else begin
+    DisplayPackageList(fCompilationData.PackageList);
   end;
 end;
+
 
 procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
 var
@@ -89,13 +97,13 @@ var
   i: Integer;
 begin
   inherited;
- for I := 0 to packageListView.Items.Count - 1 do
+  for I := 0 to packageListView.Items.Count - 1 do
   begin
     packageListView.Items[I].Checked := false;
   end;
 end;
 
-procedure TShowPackageListPage.UpdateWizardState(const wizard: IWizard);
+procedure TShowPackageListPage.UpdateWizardState;
 var
   button: TButton;
 begin
@@ -103,7 +111,12 @@ begin
   wizard.SetHeader(_('Select Packages'));
   wizard.SetDescription(_('Select packages that you want to compile.'));
   button := wizard.GetButton(wbtNext);
-  button.Enabled := (not threadWorking) and ((data.PackageList <> nil) and (data.PackageList.Count > 0));
+  button.Enabled := (not threadWorking) and (fCompilationData.PackageList <> nil) and (fCompilationData.PackageList.Count > 0);
+  if not threadWorking then
+  begin
+    button := wizard.GetButton(wbtNext);
+    button.Caption := _('Compile');
+  end;
 end;
 
 procedure TShowPackageListPage.packageListViewInfoTip(Sender: TObject;
@@ -112,7 +125,7 @@ var
   info : TPackageInfo;
   _type : string;
 const
-  CRLF = #13#10;  
+  CRLF = #13#10;
 begin
   inherited;
   info := TPackageInfo(Item.Data);
@@ -121,13 +134,13 @@ begin
     _type := _('Runtime Package');
   InfoTip := _('FullPath:')+info.FileName+CRLF+
              _('Type    :')+ _type +CRLF+
-             _('Requires:')+ CRLF + info.Requires.Text;
+             _('Requires:')+ CRLF + info.RequiredPackageList.Text;
 end;
 
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
 begin
   threadWorking := false;
-  DisplayPackageList(data.PackageList);
+  DisplayPackageList(fCompilationData.PackageList);
   wizard.UpdateInterface;
 end;
 
@@ -145,12 +158,19 @@ begin
   end;
 
   for i := 0 to packageListView.Items.Count - 1 do begin
-    if packageListView.Items[i].Checked then continue;
     info := TPackageInfo(packageListView.Items[i].Data);
-    info.Free;
-    data.PackageList[i] := nil;
+    if not packageListView.Items[i].Checked then
+    begin
+      fCompilationData.PackageList.Remove(info);
+      FreeAndNil(info);
+    end;
   end;
-  data.PackageList.Pack;
+  fCompilationData.PackageList.Pack;
+end;
+
+procedure TShowPackageListPage.FormCreate(Sender: TObject);
+begin
+  TranslateComponent(self);
 end;
 
 procedure TShowPackageListPage.DisplayPackageList(const PackageList: TPackageList);
@@ -185,42 +205,38 @@ end;
 
 { TPackageLoadThread }
 
+constructor TPackageLoadThread.Create(data: TCompilationData);
+begin
+  inherited Create(true);
+  fCompilationData := data;
+end;
+
 procedure TPackageLoadThread.Execute;
 var
-  packageList: TPackageList;
   searcher: IJclFileEnumerator;
   fileName: string;
   info: TPackageInfo;
-  foundFiles : TStringList;
-  helpFiles : TStringList;
 begin
   inherited;
-  foundFiles := TStringList.Create;
-  helpFiles := TStringList.Create;
-  packageList := TPackageList.Create;
-  
-  packageList.InitialFolder := data.BaseFolder;
+
+  fCompilationData.PackageList.InitialFolder := fCompilationData.BaseFolder;
   searcher := TJclFileEnumerator.Create;
   try
-    searcher.RootDirectory := data.BaseFolder;
-    searcher.FileMask := data.Pattern + ';*.hlp';
-    searcher.FillList(foundFiles);
+    searcher.RootDirectory := fCompilationData.BaseFolder;
+    searcher.FileMask := fCompilationData.Pattern + ';*.hlp';
+    searcher.FillList(fCompilationData.SourceFilePaths);
     while searcher.RunningTasks > 0 do
       Sleep(100);
-    for fileName in foundFiles do begin
+    for fileName in fCompilationData.SourceFilePaths do begin
       if ExtractFileExt(fileName) = '.dpk' then begin
         info := TPackageInfo.Create(fileName);
-        packageList.Add(info);
+        fCompilationData.PackageList.Add(info);
       end;
       if ExtractFileExt(fileName) = '.hlp' then
-        helpFiles.Add(fileName);
+        fCompilationData.HelpFiles.Add(fileName);
     end;
-    data.SetPackageList(packageList);
-    data.PackageList.SortList;
-    data.HelpFiles.Assign(helpFiles);
+    fCompilationData.PackageList.SortList;
   finally
-    foundFiles.Free;
-    helpFiles.Free;
   end;
 end;
 
