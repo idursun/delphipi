@@ -44,7 +44,6 @@ type
   TPackageList = class(TList)
   private
     FInitialFolder : String;
-    FSourcePaths : TStringList;
     function get(I: Integer): TPackageInfo;
     procedure put(I: Integer; const Value: TPackageInfo);
   public
@@ -54,12 +53,11 @@ type
     procedure Remove(const item: TPackageInfo); overload;
     function IndexOf(const PackageName: String):Integer; overload;
     procedure SortList();
-    procedure GetSourcePaths(var sourceList: TStringList);
     property InitialFolder: String read FInitialFolder write FInitialFolder;
   end;
 
 implementation
-uses  SysUtils, JclFileUtils, contnrs;
+uses  SysUtils, contnrs;
 
 resourcestring
   StrRUNONLY = '{$RUNONLY';
@@ -131,6 +129,7 @@ begin
   Result := ReplaceStr(Result, ';', '');
 end;
 
+// ugly code, but implementing a full blown parser here is like nailing with a sledge hammer
 procedure TPackageInfo.ReadInfo;
 var
   I: Integer;
@@ -212,44 +211,6 @@ begin
   Result := TPackageInfo(inherited get(i));
 end;
 
-procedure TPackageList.GetSourcePaths(var sourceList: TStringList);
-var
-  i : integer;
-  j: Integer;
-  files, containedFiles  : TStringList;
-begin
-  Assert(assigned(sourceList));
-
-  files := TStringList.Create;
-  files.Sorted := true;
-  files.Duplicates := dupIgnore;
-
-  containedFiles := TStringList.Create;
-  containedFiles.Sorted := true;
-  containedFiles.Duplicates := dupIgnore;
-
-  sourceList.Sorted := true;
-  sourceList.Duplicates := dupIgnore;
-     
-  for i := 0 to Count - 1 do begin
-    sourceList.Add(ExtractFilePath(self[i].FileName));
-    for j := 0 to self[i].ContainedFileList.Count - 1 do
-      containedFiles.Add(ExtractFileName(Self[i].ContainedFileList[j]));
-  end;
-
-  AdvBuildFileList(FInitialFolder+'\*.pas',
-           faAnyFile,
-           files,
-           amAny,
-           [flFullnames, flRecursive],
-           '', nil);
-
-  for I := 0 to files.count - 1 do begin
-    if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
-      sourceList.Add(ExtractFilePath(files[i]));
-  end;
-end;
-
 function TPackageList.IndexOf(const PackageName: String): Integer;
 var
   I: Integer;
@@ -277,7 +238,7 @@ end;
 
 procedure TPackageList.SortList();
 var
-  tmp1 : TPackageInfo;
+  tmp : TPackageInfo;
   i,j: Integer;
   packagename: string;
   changed : boolean;
@@ -287,8 +248,8 @@ begin
     changed := false;
     for i := 0 to Count - 1 do
     begin
-      tmp1 := Self[i];
-      for packagename in tmp1.RequiredPackageList do
+      tmp := Self[i];
+      for packagename in tmp.RequiredPackageList do
       begin
         j := indexOf(packagename);
         if (j > i) then

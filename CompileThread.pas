@@ -15,7 +15,7 @@ type
   
   TCompileThread = class(TThread)
   private
-    fStepNo: Integer;
+    fStepNo, fSuccededs, fErroreds: Integer;
     fPackageName: String;
     fMonitor : IProgressMonitor;
     fCompilationData: TCompilationData;
@@ -61,6 +61,9 @@ begin
 
    if (status = psSuccess) or (status = psError) then
      fStepNo := fStepNo + 1;
+     
+   if status = psError then inc(fErroreds);
+   if status = psSuccess then inc(fSuccededs);
 
    Synchronize(UpdateMonitor);
 end;

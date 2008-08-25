@@ -145,8 +145,18 @@ begin
 end;
 
 procedure TScriptPersister.SetPackageList(compilationData: TCompilationData);
+var
+  line : string;
 begin
-
+   while HasNextLine do
+   begin
+     line := ReadNextLine;
+     if IsSectionHeader(line) then begin
+       Dec(fCurrentLine);
+       break;
+     end;
+     compilationData.PackageList.Add(TPackageInfo.Create(line));
+   end;
 end;
 
 procedure TScriptPersister.Save(const compilationData: TCompilationData; const scriptFilePath: string);
@@ -158,7 +168,6 @@ begin
   script := TScriptWriter.Create;
   try
     with compilationData, script do begin
-      //basefolder
       WriteHeader(Header_BaseFolder);
         WriteDetail(compilationData.BaseFolder);
 
@@ -174,7 +183,6 @@ begin
       WriteHeader(Header_Packages);
       for i := 0 to compilationData.PackageList.Count-1 do
           WriteDetail(compilationData.PackageList[i].FileName);
-          
     end;
     script.SaveToFile(scriptFilePath);
   finally

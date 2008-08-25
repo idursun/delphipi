@@ -25,7 +25,6 @@ type
      procedure Compile;
      function CompilePackage(const packageInfo : TPackageInfo): Boolean; virtual;
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
-     procedure AddSourcePathsToIDE(const sourcePaths: TStringList);
      //Events
      property OnPackageEvent: TPackageCompileEvent read fPackageCompileEvent write fPackageCompileEvent;
    end;
@@ -42,28 +41,18 @@ begin
   fPackageList := fCompilationData.PackageList;
 end;
 
-procedure TPackageCompiler.AddSourcePathsToIDE(const sourcePaths: TStringList);
-var
-  path : string;
-begin
-  Assert(assigned(sourcePaths));
-  for path in sourcePaths do
-  begin
-    fInstallation.AddToLibrarySearchPath(path);
-  end;
-end;
-
 procedure TPackageCompiler.Compile;
 var
-  sourceList: TStringList;
   i: integer;
   info: TPackageInfo;
   compileSuccessful: boolean;
 begin
-  sourceList := TStringList.Create;
   try
-    fPackageList.GetSourcePaths(sourceList);
-    AddSourcePathsToIDE(sourceList);
+    if fCompilationData.SourceFilePaths.Count = 0 then
+      fCompilationData.ResolveSourcePaths;
+
+    fCompilationData.AddSourcePathsToIDE;  
+      
     for i := 0 to fPackageList.Count - 1 do begin
       info := fPackageList[i];
       RaiseEvent(info, psCompiling);
@@ -80,7 +69,7 @@ begin
         RaiseEvent(info, psError);
     end;
   finally
-    sourceList.Free;
+    
   end;
 end;
 
