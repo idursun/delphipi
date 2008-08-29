@@ -40,6 +40,7 @@ inherited ProgressPage: TProgressPage
       Top = 20
       Width = 25
       Height = 13
+      Anchors = [akTop, akRight, akBottom]
       Caption = '     '
     end
     object ProgressBar: TProgressBar

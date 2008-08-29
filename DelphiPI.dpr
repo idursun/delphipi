@@ -28,7 +28,7 @@ begin
 
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.Title := 'Delphi PI';
+  Application.Title := 'Delphi Package Installer';
   Application.CreateForm(TfrmWizard, frmWizard);
   Application.Run;
 end.

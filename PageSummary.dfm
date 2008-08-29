@@ -1,14 +1,14 @@
 inherited SummaryPage: TSummaryPage
   Caption = 'SummaryPage'
   OnCreate = FormCreate
-  ExplicitWidth = 320
-  ExplicitHeight = 240
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 8
     Top = 208
-    Width = 418
+    Width = 398
     Height = 34
     Anchors = [akLeft, akRight, akBottom]
     AutoSize = False
@@ -18,22 +18,21 @@ inherited SummaryPage: TSummaryPage
     WordWrap = True
   end
   object Label2: TLabel
-    Left = 13
-    Top = 9
+    Left = 8
+    Top = 8
     Width = 48
     Height = 13
     Caption = 'Summary:'
   end
   object btnSave: TButton
-    Left = 432
-    Top = 205
-    Width = 60
+    Left = 412
+    Top = 203
+    Width = 80
     Height = 25
     Anchors = [akRight, akBottom]
     Caption = 'Save'
     TabOrder = 0
     OnClick = btnSaveClick
-    ExplicitLeft = 453
   end
   object edtSummary: TMemo
     Left = 8

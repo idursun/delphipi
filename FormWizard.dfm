@@ -366,7 +366,6 @@ object frmWizard: TfrmWizard
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitHeight = 319
   end
   object pBottom: TPanel
     Left = 0
@@ -386,7 +385,6 @@ object frmWizard: TfrmWizard
       Caption = '<< &Back'
       TabOrder = 0
       OnClick = btnBackClick
-      ExplicitHeight = 31
     end
     object btnNext: TButton
       AlignWithMargins = True
@@ -399,7 +397,6 @@ object frmWizard: TfrmWizard
       Default = True
       TabOrder = 1
       OnClick = btnNextClick
-      ExplicitHeight = 29
     end
     object btnAbout: TButton
       AlignWithMargins = True
@@ -411,7 +408,6 @@ object frmWizard: TfrmWizard
       Caption = 'About...'
       TabOrder = 2
       OnClick = btnAboutClick
-      ExplicitHeight = 31
     end
   end
 end

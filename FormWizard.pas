@@ -60,7 +60,7 @@ procedure TfrmWizard.FormCreate(Sender: TObject);
 begin
   FCompilationData := TCompilationData.Create;
   TFrmWizard.Wizard := self as IWizard;
-
+  self.Caption := Application.Title;
   if (ParamCount > 0) then
     FCompilationData.BaseFolder := ParamStr(1);
   SelectPage(0);
