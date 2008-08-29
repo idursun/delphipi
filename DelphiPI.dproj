@@ -53,9 +53,6 @@
     <DCCReference Include="PageBase.pas">
       <Form>WizardPage</Form>
     </DCCReference>
-    <DCCReference Include="PageFinished.pas">
-      <Form>FinishedPage</Form>
-    </DCCReference>
     <DCCReference Include="PageInstallHelpFiles.pas">
       <Form>InstallHelpFilesPage</Form>
     </DCCReference>
@@ -70,6 +67,9 @@
     </DCCReference>
     <DCCReference Include="PageShowPackageList.pas">
       <Form>ShowPackageListPage</Form>
+    </DCCReference>
+    <DCCReference Include="PageSummary.pas">
+      <Form>SummaryPage</Form>
     </DCCReference>
     <DCCReference Include="ScriptPersister.pas" />
     <DCCReference Include="WizardIntfs.pas" />

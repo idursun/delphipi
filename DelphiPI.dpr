@@ -14,7 +14,7 @@ uses
   WizardIntfs in 'WizardIntfs.pas',
   PageShowPackageList in 'PageShowPackageList.pas' {ShowPackageListPage},
   PageInstallHelpFiles in 'PageInstallHelpFiles.pas' {InstallHelpFilesPage},
-  PageFinished in 'PageFinished.pas' {FinishedPage},
+  PageSummary in 'PageSummary.pas' {SummaryPage},
   ConsoleRunner in 'ConsoleRunner.pas',
   CompileThread in 'CompileThread.pas',
   CompilationData in 'CompilationData.pas',

@@ -27,7 +27,6 @@ object frmWizard: TfrmWizard
     Color = clWhite
     ParentBackground = False
     TabOrder = 1
-    ExplicitWidth = 644
     object LogoImage: TImage
       Left = 4
       Top = 4
@@ -367,8 +366,6 @@ object frmWizard: TfrmWizard
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 644
-    ExplicitHeight = 368
   end
   object pBottom: TPanel
     Left = 0
@@ -378,8 +375,6 @@ object frmWizard: TfrmWizard
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
-    ExplicitTop = 434
-    ExplicitWidth = 644
     object btnBack: TButton
       AlignWithMargins = True
       Left = 423
@@ -390,7 +385,6 @@ object frmWizard: TfrmWizard
       Caption = '<< &Back'
       TabOrder = 0
       OnClick = btnBackClick
-      ExplicitLeft = 475
     end
     object btnNext: TButton
       AlignWithMargins = True
@@ -403,7 +397,6 @@ object frmWizard: TfrmWizard
       Default = True
       TabOrder = 1
       OnClick = btnNextClick
-      ExplicitLeft = 561
     end
     object btnAbout: TButton
       AlignWithMargins = True

@@ -1,5 +1,5 @@
-inherited FinishedPage: TFinishedPage
-  Caption = 'FinishedPage'
+inherited SummaryPage: TSummaryPage
+  Caption = 'SummaryPage'
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13

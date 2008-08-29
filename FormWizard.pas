@@ -46,7 +46,7 @@ var
 
 implementation
 uses FormAbout, PageBase, PageSelectFolders, PageSelectDelphiInstallation,
-     PageProgress, PageShowPackageList, PageInstallHelpFiles, PageFinished,
+     PageProgress, PageShowPackageList, PageInstallHelpFiles, PageSummary,
      gnugettext;
 var
   Pages: array of TPageClass;
@@ -162,5 +162,5 @@ initialization
    Pages[2] := TShowPackageListPage;
    Pages[3] := TProgressPage;
    Pages[4] := TInstallHelpFilesPage;
-   Pages[5] := TFinishedPage;
+   Pages[5] := TSummaryPage;
 end.

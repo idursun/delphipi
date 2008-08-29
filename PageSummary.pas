@@ -3,7 +3,7 @@
  Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
  License : GNU General Public License 2.0
 **}
-unit PageFinished;
+unit PageSummary;
 
 interface
 
@@ -12,7 +12,7 @@ uses
   Dialogs, PageBase, StdCtrls;
 
 type
-  TFinishedPage = class(TWizardPage)
+  TSummaryPage = class(TWizardPage)
     Label1: TLabel;
     btnSave: TButton;
     edtSummary: TMemo;
@@ -32,7 +32,7 @@ type
   end;
 
 var
-  FinishedPage: TFinishedPage;
+  SummaryPage: TSummaryPage;
 
 implementation
 uses ScriptPersister,WizardIntfs, PackageInfo, gnugettext;
@@ -41,19 +41,19 @@ uses ScriptPersister,WizardIntfs, PackageInfo, gnugettext;
 { TFinishedPage }
 
 
-procedure TFinishedPage.AddBaseFolder(const summary: TStringList);
+procedure TSummaryPage.AddBaseFolder(const summary: TStringList);
 begin
    summary.Add(_('Base Folder:'));
    summary.Add(Indented(fCompilationData.BaseFolder));
 end;
 
-procedure TFinishedPage.AddDelphiVersion(const summary: TStringList);
+procedure TSummaryPage.AddDelphiVersion(const summary: TStringList);
 begin
   summary.Add(_('Delphi Version:'));
   summary.Add(Indented(fCompilationData.Installation.IDEVersionNumberStr));
 end;
 
-procedure TFinishedPage.AddHelpFileList(const summary: TStringList);
+procedure TSummaryPage.AddHelpFileList(const summary: TStringList);
 var
   helpfile: string;
 begin
@@ -62,7 +62,7 @@ begin
     summary.Add(Indented(helpfile));
 end;
 
-procedure TFinishedPage.AddPackageList(const summary: TStringList);
+procedure TSummaryPage.AddPackageList(const summary: TStringList);
 var
   I: Integer;
   erroredPackages: TStringList;
@@ -90,7 +90,7 @@ begin
   end;
 end;
 
-procedure TFinishedPage.AddSourcePathList(const summary: TStringList);
+procedure TSummaryPage.AddSourcePathList(const summary: TStringList);
 var
   path: string;
 begin
@@ -99,7 +99,7 @@ begin
     summary.Add(Indented(path));
 end;
 
-procedure TFinishedPage.btnSaveClick(Sender: TObject);
+procedure TSummaryPage.btnSaveClick(Sender: TObject);
 var
   dialog: TSaveDialog;
   scripter: TScriptPersister;
@@ -119,7 +119,7 @@ begin
   end;
 end;
 
-procedure TFinishedPage.FormCreate(Sender: TObject);
+procedure TSummaryPage.FormCreate(Sender: TObject);
 var
   summary: TStringList;
 begin
@@ -138,12 +138,12 @@ begin
   end;
 end;
 
-function TFinishedPage.Indented(const line: string): string;
+function TSummaryPage.Indented(const line: string): string;
 begin
   Result := '  ' + line;
 end;
 
-procedure TFinishedPage.UpdateWizardState;
+procedure TSummaryPage.UpdateWizardState;
 begin
   inherited;
   FWizard.SetHeader(_('Finished'));
