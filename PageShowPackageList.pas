@@ -216,18 +216,20 @@ var
   searcher: IJclFileEnumerator;
   fileName: string;
   info: TPackageInfo;
+  fileList :TStringList;
 begin
   inherited;
 
   fCompilationData.PackageList.InitialFolder := fCompilationData.BaseFolder;
   searcher := TJclFileEnumerator.Create;
+  fileList := TStringList.Create;
   try
     searcher.RootDirectory := fCompilationData.BaseFolder;
     searcher.FileMask := fCompilationData.Pattern + ';*.hlp';
-    searcher.FillList(fCompilationData.SourceFilePaths);
+    searcher.FillList(fileList);
     while searcher.RunningTasks > 0 do
       Sleep(100);
-    for fileName in fCompilationData.SourceFilePaths do begin
+    for fileName in fileList do begin
       if ExtractFileExt(fileName) = '.dpk' then begin
         info := TPackageInfo.Create(fileName);
         fCompilationData.PackageList.Add(info);
@@ -237,6 +239,8 @@ begin
     end;
     fCompilationData.PackageList.SortList;
   finally
+    searcher := nil;
+    fileList.Free;
   end;
 end;
 

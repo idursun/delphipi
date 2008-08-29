@@ -17,8 +17,6 @@ type
     ProgressBar: TProgressBar;
     Label1: TLabel;
     lblPackage: TLabel;
-    Label2: TLabel;
-    lblFileName: TLabel;
     GroupBox2: TGroupBox;
     Memo: TMemo;
     lblCurrentPackageNo: TLabel;
@@ -81,7 +79,7 @@ begin
   inherited;
   TranslateComponent(self);
   lblPackage.Caption := '';
-  lblFileName.Caption := '';
+ // lblFileName.Caption := '';
   CurrectPackageNo := 0;
   compileThreadWorking := false;
   Compile;
@@ -138,7 +136,7 @@ end;
 procedure TProgressPage.CompileCompleted(sender: TObject);
 begin
   lblPackage.Caption :='';
-  lblFileName.Caption := '';
+ // lblFileName.Caption := '';
   ProgressBar.Position := 0;
   compileThreadWorking := false;
   memo.Lines.Add(_('*** Completed'));

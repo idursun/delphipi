@@ -35,39 +35,15 @@ inherited ProgressPage: TProgressPage
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label2: TLabel
-      Left = 364
-      Top = 18
-      Width = 20
-      Height = 13
-      Anchors = [akTop, akRight]
-      Caption = 'File:'
-      Visible = False
-    end
-    object lblFileName: TLabel
-      Left = 390
-      Top = 18
-      Width = 64
-      Height = 13
-      Anchors = [akTop, akRight]
-      Caption = 'lblFileName'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Tahoma'
-      Font.Style = [fsBold]
-      ParentFont = False
-      Visible = False
-    end
     object lblCurrentPackageNo: TLabel
-      Left = 450
-      Top = 37
-      Width = 15
+      Left = 440
+      Top = 20
+      Width = 25
       Height = 13
       Caption = '     '
     end
     object ProgressBar: TProgressBar
-      Left = 12
+      Left = 3
       Top = 37
       Width = 465
       Height = 20
