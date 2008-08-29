@@ -87,7 +87,8 @@ begin
 
   FCompilationData.BaseFolder := edtBaseFolder.Text;
   FCompilationData.Pattern := cbPattern.Text;
-
+  fCompilationData.SourceFilePaths.Clear;
+  fCompilationData.PackageList.Clear; //TODO: memory leak?
   cbPattern.Items.SaveToFile('patterns.txt');
 end;
 
