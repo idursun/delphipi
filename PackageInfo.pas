@@ -48,11 +48,13 @@ type
     procedure put(I: Integer; const Value: TPackageInfo);
   public
     destructor Destroy; override;
+    procedure Clear; override;
     property Item[I : Integer]: TPackageInfo read get write put;default;
     procedure Add(const item : TPackageInfo); overload;
     procedure Remove(const item: TPackageInfo); overload;
     function IndexOf(const PackageName: String):Integer; overload;
     procedure SortList();
+    
     property InitialFolder: String read FInitialFolder write FInitialFolder;
   end;
 
@@ -198,6 +200,20 @@ end;
 procedure TPackageList.Add(const item: TPackageInfo);
 begin
   inherited add(item);
+end;
+
+procedure TPackageList.Clear;
+var
+  I: Integer;
+  package: TPackageInfo;
+begin
+  inherited;
+  for I := 0 to self.Count - 1 do
+  begin
+    package := self[i] as TPackageInfo;
+    if package <> nil then
+       package.Free;
+  end;
 end;
 
 destructor TPackageList.Destroy;

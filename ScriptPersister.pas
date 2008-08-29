@@ -8,7 +8,7 @@ unit ScriptPersister;
 interface
 uses SysUtils, Classes, CompilationData;
 type
-  //TODO: refactor: this class has more than one responsibility = scanner + script loader
+  //TODO: refactor: this class has more than one responsibility = scanner + script persister
   TScriptPersister = class
   private
     fLines: TStringList;
