@@ -3,7 +3,7 @@ object frmAbout: TfrmAbout
   Top = 0
   BorderStyle = bsDialog
   Caption = 'About DelphiPI'
-  ClientHeight = 221
+  ClientHeight = 211
   ClientWidth = 325
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -23,15 +23,15 @@ object frmAbout: TfrmAbout
     Height = 9
     Shape = bsTopLine
   end
-  object Button1: TButton
-    Left = 257
-    Top = 176
-    Width = 60
-    Height = 37
+  object btnClose: TButton
+    Left = 247
+    Top = 175
+    Width = 70
+    Height = 28
     Cancel = True
     Caption = 'Close'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnCloseClick
   end
   object GroupBox2: TGroupBox
     Left = 8
@@ -685,14 +685,14 @@ object frmAbout: TfrmAbout
       Top = 102
       Width = 80
       Height = 13
-      Caption = 'Ibrahim DURSUN'
+      Caption = #304'brahim DURSUN'
     end
   end
   object btnDonate: TButton
     Left = 8
-    Top = 173
+    Top = 175
     Width = 120
-    Height = 37
+    Height = 28
     Caption = 'Donate to DelphiPI'
     TabOrder = 2
     OnClick = btnDonateClick

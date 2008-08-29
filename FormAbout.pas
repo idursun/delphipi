@@ -14,7 +14,7 @@ uses
 type
   TfrmAbout = class(TForm)
     Bevel1: TBevel;
-    Button1: TButton;
+    btnClose: TButton;
     GroupBox2: TGroupBox;
     Label7: TLabel;
     Image2: TImage;
@@ -27,7 +27,7 @@ type
     Label2: TLabel;
     Label3: TLabel;
     btnDonate: TButton;
-    procedure Button1Click(Sender: TObject);
+    procedure btnCloseClick(Sender: TObject);
     procedure lblAuthorsWebsiteClick(Sender: TObject);
     procedure lblProjectWebsiteClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -52,10 +52,10 @@ const
 
 procedure TfrmAbout.btnDonateClick(Sender: TObject);
 begin
- ShellExecute(0,'open',PAnsiChar(donationAddress), NIL, NIL, SW_SHOWNORMAL);
+  ShellExecute(0,'open',PAnsiChar(donationAddress), NIL, NIL, SW_SHOWNORMAL);
 end;
 
-procedure TfrmAbout.Button1Click(Sender: TObject);
+procedure TfrmAbout.btnCloseClick(Sender: TObject);
 begin
   Close;
 end;
