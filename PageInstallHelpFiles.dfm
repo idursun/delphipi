@@ -8,6 +8,7 @@ inherited InstallHelpFilesPage: TInstallHelpFilesPage
     Top = 8
     Width = 484
     Height = 26
+    Anchors = [akLeft, akTop, akRight]
     Caption = 
       'DelphiPI has found some help files in the folder that you have s' +
       'elected. Would you like to install them as well?'
@@ -37,6 +38,7 @@ inherited InstallHelpFilesPage: TInstallHelpFilesPage
     Top = 217
     Width = 114
     Height = 25
+    Anchors = [akTop, akRight]
     Caption = 'Install Help Files'
     TabOrder = 1
     OnClick = btnInstallHelpFilesClick

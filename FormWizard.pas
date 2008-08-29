@@ -14,13 +14,13 @@ uses
 type
   TFrmWizard = class(TForm, IWizard)
     HeaderPanel: TPanel;
-    Bevel: TBevel;
-    btnNext: TButton;
-    btnBack: TButton;
     LogoImage: TImage;
     lblHeader: TLabel;
     lblDescription: TLabel;
     DockPanel: TPanel;
+    pBottom: TPanel;
+    btnBack: TButton;
+    btnNext: TButton;
     btnAbout: TButton;
 
     procedure FormCreate(Sender: TObject);

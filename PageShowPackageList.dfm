@@ -2,15 +2,14 @@ inherited ShowPackageListPage: TShowPackageListPage
   Caption = 'ShowPackageListPage'
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitWidth = 500
-  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object packageListView: TListView
-    Left = 0
-    Top = 0
-    Width = 500
-    Height = 250
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 494
+    Height = 244
     Align = alClient
     Checkboxes = True
     Columns = <
@@ -36,6 +35,10 @@ inherited ShowPackageListPage: TShowPackageListPage
     TabOrder = 0
     ViewStyle = vsReport
     OnInfoTip = packageListViewInfoTip
+    ExplicitLeft = 0
+    ExplicitTop = 0
+    ExplicitWidth = 500
+    ExplicitHeight = 250
   end
   object PopupMenu: TPopupMenu
     Left = 236

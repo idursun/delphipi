@@ -3,8 +3,6 @@ inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
   Caption = 'SelectDelphiInstallationPage'
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitWidth = 500
-  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object rgDelphiVersions: TRadioGroup
@@ -23,8 +21,12 @@ inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
     Top = 122
     Width = 484
     Height = 120
+    Anchors = [akLeft, akTop, akRight]
     Caption = 'Output Folders'
     TabOrder = 1
+    DesignSize = (
+      484
+      120)
     object lblBPLOutputFolder: TLabel
       Left = 15
       Top = 29
@@ -44,6 +46,7 @@ inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
       Top = 24
       Width = 378
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
     end
     object btnBPLBrowse: TButton
@@ -51,6 +54,7 @@ inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
       Top = 22
       Width = 28
       Height = 25
+      Anchors = [akTop, akRight]
       Caption = '...'
       TabOrder = 1
       OnClick = btnBPLBrowseClick
@@ -60,6 +64,7 @@ inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
       Top = 53
       Width = 378
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 2
     end
     object btnDCPBrowse: TButton
@@ -67,6 +72,7 @@ inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
       Top = 51
       Width = 28
       Height = 25
+      Anchors = [akTop, akRight]
       Caption = '...'
       TabOrder = 3
       OnClick = btnDCPBrowseClick

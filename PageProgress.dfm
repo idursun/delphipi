@@ -9,8 +9,12 @@ inherited ProgressPage: TProgressPage
     Top = 8
     Width = 484
     Height = 68
+    Anchors = [akLeft, akTop, akRight]
     Caption = 'Overall Progress'
     TabOrder = 0
+    DesignSize = (
+      484
+      68)
     object Label1: TLabel
       Left = 12
       Top = 18
@@ -36,6 +40,7 @@ inherited ProgressPage: TProgressPage
       Top = 18
       Width = 20
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'File:'
       Visible = False
     end
@@ -44,6 +49,7 @@ inherited ProgressPage: TProgressPage
       Top = 18
       Width = 64
       Height = 13
+      Anchors = [akTop, akRight]
       Caption = 'lblFileName'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -63,8 +69,9 @@ inherited ProgressPage: TProgressPage
     object ProgressBar: TProgressBar
       Left = 12
       Top = 37
-      Width = 432
-      Height = 17
+      Width = 465
+      Height = 20
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
     end
   end
@@ -73,14 +80,17 @@ inherited ProgressPage: TProgressPage
     Top = 82
     Width = 484
     Height = 160
+    Anchors = [akLeft, akTop, akRight, akBottom]
     Caption = 'Compiler Output'
     TabOrder = 1
     object Memo: TMemo
-      Left = 3
-      Top = 14
-      Width = 478
-      Height = 143
+      AlignWithMargins = True
+      Left = 5
+      Top = 18
+      Width = 474
+      Height = 137
       TabStop = False
+      Align = alClient
       Font.Charset = TURKISH_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

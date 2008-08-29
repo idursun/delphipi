@@ -1,6 +1,7 @@
 object WizardPage: TWizardPage
   Left = 0
   Top = 0
+  Align = alClient
   BorderStyle = bsNone
   Caption = 'WizardPage'
   ClientHeight = 250

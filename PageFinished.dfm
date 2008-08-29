@@ -7,16 +7,17 @@ inherited FinishedPage: TFinishedPage
     Top = 21
     Width = 442
     Height = 58
+    Anchors = [akLeft, akTop, akRight]
     AutoSize = False
     Caption = 
       'Would you like to save this installation as a script so that you' +
       ' can '#13#10'automate installation of these packages?'
   end
   object btnSave: TButton
-    Left = 389
-    Top = 85
-    Width = 75
-    Height = 25
+    Left = 22
+    Top = 82
+    Width = 60
+    Height = 37
     Caption = 'Save'
     TabOrder = 0
     OnClick = btnSaveClick

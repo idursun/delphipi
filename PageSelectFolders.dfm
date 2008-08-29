@@ -42,8 +42,9 @@ inherited SelectFoldersPage: TSelectFoldersPage
     object cbPattern: TComboBox
       Left = 116
       Top = 57
-      Width = 221
+      Width = 358
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       ItemHeight = 13
       TabOrder = 0
       Text = '*.dpk'
@@ -54,8 +55,12 @@ inherited SelectFoldersPage: TSelectFoldersPage
     Top = 8
     Width = 484
     Height = 76
+    Anchors = [akLeft, akTop, akRight]
     Caption = 'Select Base Folder contains both Package and Source files'
     TabOrder = 0
+    DesignSize = (
+      484
+      76)
     object Label1: TLabel
       Left = 8
       Top = 14
@@ -64,19 +69,22 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Caption = 'Base Folder'
     end
     object btnSelectFolder: TButton
-      Left = 391
-      Top = 32
-      Width = 90
-      Height = 23
-      Caption = '&Select Folder...'
+      Left = 433
+      Top = 33
+      Width = 41
+      Height = 21
+      Anchors = [akTop, akRight]
+      Caption = '...'
       TabOrder = 0
+      WordWrap = True
       OnClick = btnSelectFolderClick
     end
     object edtBaseFolder: TEdit
       Left = 8
       Top = 33
-      Width = 380
+      Width = 419
       Height = 21
+      Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
       OnChange = edtBaseFolderChange
     end

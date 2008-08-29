@@ -1,12 +1,12 @@
 object frmWizard: TfrmWizard
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSingle
   Caption = 'Delphi PI'
-  ClientHeight = 372
-  ClientWidth = 519
+  ClientHeight = 416
+  ClientWidth = 592
   Color = clBtnFace
+  Constraints.MinHeight = 450
+  Constraints.MinWidth = 600
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
@@ -15,31 +15,19 @@ object frmWizard: TfrmWizard
   OldCreateOrder = False
   Position = poScreenCenter
   OnCreate = FormCreate
-  DesignSize = (
-    519
-    372)
   PixelsPerInch = 96
   TextHeight = 13
-  object Bevel: TBevel
-    Left = 0
-    Top = 327
-    Width = 519
-    Height = 45
-    Align = alBottom
-    Shape = bsTopLine
-    ExplicitTop = 360
-    ExplicitWidth = 533
-  end
   object HeaderPanel: TPanel
     Left = 0
     Top = 0
-    Width = 519
+    Width = 592
     Height = 60
     Align = alTop
     BevelEdges = [beBottom]
     Color = clWhite
     ParentBackground = False
     TabOrder = 1
+    ExplicitWidth = 644
     object LogoImage: TImage
       Left = 4
       Top = 4
@@ -371,43 +359,62 @@ object frmWizard: TfrmWizard
       Caption = 'lblDescription'
     end
   end
-  object btnNext: TButton
-    Left = 436
-    Top = 339
-    Width = 75
-    Height = 25
-    Anchors = [akRight, akBottom]
-    Caption = '&Next >>'
-    Default = True
-    TabOrder = 2
-    OnClick = btnNextClick
-  end
-  object btnBack: TButton
-    Left = 355
-    Top = 339
-    Width = 75
-    Height = 25
-    Anchors = [akRight, akBottom]
-    Caption = '<< &Back'
-    TabOrder = 3
-    OnClick = btnBackClick
-  end
   object DockPanel: TPanel
-    Left = 8
-    Top = 66
-    Width = 502
-    Height = 252
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    Left = 0
+    Top = 60
+    Width = 592
+    Height = 319
+    Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 644
+    ExplicitHeight = 368
   end
-  object btnAbout: TButton
-    Left = 8
-    Top = 339
-    Width = 75
-    Height = 25
-    Caption = 'About...'
-    TabOrder = 4
-    OnClick = btnAboutClick
+  object pBottom: TPanel
+    Left = 0
+    Top = 379
+    Width = 592
+    Height = 37
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 2
+    ExplicitTop = 434
+    ExplicitWidth = 644
+    object btnBack: TButton
+      AlignWithMargins = True
+      Left = 423
+      Top = 3
+      Width = 80
+      Height = 31
+      Align = alRight
+      Caption = '<< &Back'
+      TabOrder = 0
+      OnClick = btnBackClick
+      ExplicitLeft = 475
+    end
+    object btnNext: TButton
+      AlignWithMargins = True
+      Left = 509
+      Top = 3
+      Width = 80
+      Height = 31
+      Align = alRight
+      Caption = '&Next >>'
+      Default = True
+      TabOrder = 1
+      OnClick = btnNextClick
+      ExplicitLeft = 561
+    end
+    object btnAbout: TButton
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 80
+      Height = 31
+      Align = alLeft
+      Caption = 'About...'
+      TabOrder = 2
+      OnClick = btnAboutClick
+    end
   end
 end
