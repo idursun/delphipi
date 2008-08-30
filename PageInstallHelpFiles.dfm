@@ -1,6 +1,8 @@
 inherited InstallHelpFilesPage: TInstallHelpFilesPage
   Caption = 'InstallHelpFilesPage'
   OnCreate = FormCreate
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -18,7 +20,7 @@ inherited InstallHelpFilesPage: TInstallHelpFilesPage
     Left = 8
     Top = 50
     Width = 484
-    Height = 158
+    Height = 161
     Anchors = [akLeft, akTop, akRight, akBottom]
     Checkboxes = True
     Columns = <
@@ -38,7 +40,7 @@ inherited InstallHelpFilesPage: TInstallHelpFilesPage
     Top = 217
     Width = 114
     Height = 25
-    Anchors = [akTop, akRight]
+    Anchors = [akRight, akBottom]
     Caption = 'Install Help Files'
     TabOrder = 1
     OnClick = btnInstallHelpFilesClick

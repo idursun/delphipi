@@ -2,6 +2,8 @@ inherited SelectFoldersPage: TSelectFoldersPage
   Caption = 'SelectFoldersPage'
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -62,16 +64,16 @@ inherited SelectFoldersPage: TSelectFoldersPage
       484
       76)
     object Label1: TLabel
-      Left = 8
-      Top = 14
+      Left = 12
+      Top = 24
       Width = 56
       Height = 13
       Caption = 'Base Folder'
     end
     object btnSelectFolder: TButton
-      Left = 433
-      Top = 33
-      Width = 41
+      Left = 442
+      Top = 43
+      Width = 32
       Height = 21
       Anchors = [akTop, akRight]
       Caption = '...'
@@ -80,9 +82,9 @@ inherited SelectFoldersPage: TSelectFoldersPage
       OnClick = btnSelectFolderClick
     end
     object edtBaseFolder: TEdit
-      Left = 8
-      Top = 33
-      Width = 419
+      Left = 12
+      Top = 43
+      Width = 424
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
