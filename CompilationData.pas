@@ -16,16 +16,18 @@ type
 
     procedure SetPackageList(const aPackageList: TPackageList);
     procedure SetSourceFilePaths(const aPathList: TStringList);
+    procedure SetBaseFolder(const Value: String);
   public
     constructor Create;
     destructor Destroy; override;
     //TODO: can be moved
     procedure ResolveSourcePaths;
+    procedure ResolveHelpFiles;
     procedure AddSourcePathsToIDE;
     
     property Pattern: String read fPattern write fPattern;
     property Installation: TJclBorRADToolInstallation read fInstallation write fInstallation;
-    property BaseFolder: String read fBaseFolder write fBaseFolder;
+    property BaseFolder: String read fBaseFolder write SetBaseFolder;
     property HelpFiles: TStringList read fHelpFiles;
     property PackageList: TPackageList read fPackageList write SetPackageList;
     property SourceFilePaths : TStringList read fSourceFilePaths write SetSourceFilePaths;
@@ -53,6 +55,13 @@ begin
   inherited;
 end;
 
+procedure TCompilationData.SetBaseFolder(const Value: String);
+begin
+  fBaseFolder := Value;
+  if fPackageList <> nil then
+    fPackageList.InitialFolder := fBaseFolder;
+end;
+
 procedure TCompilationData.SetPackageList(const aPackageList: TPackageList);
 begin
   fPackageList.Free;
@@ -64,6 +73,27 @@ begin
   fSourceFilePaths := aPathList;
 end;
 
+procedure TCompilationData.ResolveHelpFiles;
+var
+  files: TStringList;
+  filename: string;
+begin
+  files := TStringList.Create;
+  try
+    AdvBuildFileList(fPackageList.InitialFolder+'\*.hlp',
+           faAnyFile,
+           files,
+           amAny,
+           [flFullnames, flRecursive],
+           '', nil);
+     for filename in files do
+       fHelpFiles.Add(filename);
+  finally
+    files.Free;
+  end;
+end;
+
+//TODO: refactor -- finds paths of files has .pas extension and then matches pas files in packages, removes remaining paths 
 procedure TCompilationData.ResolveSourcePaths;
 var
   i : integer;

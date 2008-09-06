@@ -79,7 +79,6 @@ begin
   inherited;
   TranslateComponent(self);
   lblPackage.Caption := '';
- // lblFileName.Caption := '';
   CurrectPackageNo := 0;
   compileThreadWorking := false;
   Compile;

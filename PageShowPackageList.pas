@@ -37,6 +37,7 @@ type
     procedure packageTreeGetImageIndex(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
       var Ghosted: Boolean; var ImageIndex: Integer);
+    procedure PackageInfoCollectCallBack(const node: PVirtualNode);   
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -64,10 +65,17 @@ type
   protected
     procedure Execute; override;
     procedure Search(parent: PVirtualNode; folder: String);
-    procedure CleanTree(node: PVirtualNode; level: integer);
+    procedure CleanTree(node: PVirtualNode);
   public
     constructor Create(data: TCompilationData; tree: TBaseVirtualTree);
   end;
+
+  TVirtualNodeHandler = procedure(const node: PVirtualNode) of object;
+  TVirtualTreeHelper = class helper for TBaseVirtualTree
+  public
+    procedure Traverse(node: PVirtualNode; handler: TVirtualNodeHandler);
+  end;
+
 
 { TShowPackageListPage }
 
@@ -75,8 +83,9 @@ procedure TShowPackageListPage.ChangeState(node: PVirtualNode;
   checkState: TCheckState);
 var
   child: PVirtualNode;
+  data: PNodeData;
 begin
- if node = nil then  exit;
+ if node = nil then exit;
   node.CheckState := checkState;
   child := node.FirstChild;
   while child <> nil do
@@ -111,7 +120,7 @@ begin
   wizard.SetHeader(_('Select Packages'));
   wizard.SetDescription(_('Select packages that you want to compile.'));
   button := wizard.GetButton(wbtNext);
-  button.Enabled := (not threadWorking) and (fCompilationData.PackageList <> nil) and (fCompilationData.PackageList.Count > 0);
+  button.Enabled := (not threadWorking);
   if not threadWorking then
   begin
     button := wizard.GetButton(wbtNext);
@@ -123,7 +132,7 @@ procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
 begin
   threadWorking := false;
   packageTree.FullExpand;
-  wizard.UpdateInterface;
+  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree;
@@ -204,7 +213,19 @@ begin
     packageLoadThread.Terminate;
     exit;
   end;
+  packageTree.Traverse(packageTree.RootNode, packageInfoCollectCallBack);
   fCompilationData.PackageList.Pack;
+end;
+
+procedure TShowPackageListPage.PackageInfoCollectCallBack(
+  const node: PVirtualNode);
+var
+  data: PNodeData;  
+begin
+  if node.CheckState <> csCheckedNormal then exit;
+  data := packageTree.GetNodeData(node);
+  if data.info <> nil then
+    fCompilationData.PackageList.Add(data.info);
 end;
 
 procedure TShowPackageListPage.FormCreate(Sender: TObject);
@@ -269,7 +290,7 @@ begin
   fTree:= tree;
 end;
 
-procedure TPackageLoadThread.CleanTree(node: PVirtualNode; level: integer);
+procedure TPackageLoadThread.CleanTree(node: PVirtualNode);
 var
  c: PVirtualNode;
  data: PNodeData;
@@ -282,7 +303,7 @@ begin
      begin
          data := fTree.GetNodeData(c);
          if data.info = nil then
-           CleanTree(c, level+1);
+           CleanTree(c);
          c := c.NextSibling;
      end;
   end;
@@ -297,7 +318,7 @@ begin
   fTree.BeginUpdate;
   try
     Search(fTree.RootNode, fCompilationData.BaseFolder);
-    CleanTree(fTree.RootNode,0);
+    CleanTree(fTree.RootNode);
   finally
     fTree.EndUpdate;
   end;
@@ -353,6 +374,21 @@ begin
   finally
     directoryList.Free;
   end;
+end;
+
+{ TVirtualTreeHelper }
+
+procedure TVirtualTreeHelper.Traverse(node: PVirtualNode;
+  handler: TVirtualNodeHandler);
+begin
+  if node = nil then exit;
+  handler(node);
+  
+  if node.ChildCount > 0 then
+    Traverse(node.FirstChild, handler);
+
+  if (node.NextSibling <> nil) and (node <> node.NextSibling) then
+    Traverse(node.NextSibling, handler);
 end;
 
 end.

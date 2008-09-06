@@ -38,7 +38,7 @@ inherited ProgressPage: TProgressPage
     object lblCurrentPackageNo: TLabel
       Left = 440
       Top = 20
-      Width = 25
+      Width = 15
       Height = 13
       Anchors = [akTop, akRight, akBottom]
       Caption = '     '

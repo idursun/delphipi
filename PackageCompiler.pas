@@ -50,9 +50,12 @@ begin
   try
     if fCompilationData.SourceFilePaths.Count = 0 then
       fCompilationData.ResolveSourcePaths;
-
-    fCompilationData.AddSourcePathsToIDE;  
       
+    fCompilationData.AddSourcePathsToIDE;
+      
+    if fCompilationData.HelpFiles.Count = 0 then
+      fCompilationData.ResolveHelpFiles; 
+
     for i := 0 to fPackageList.Count - 1 do begin
       info := fPackageList[i];
       RaiseEvent(info, psCompiling);
