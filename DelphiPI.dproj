@@ -48,6 +48,11 @@
     </DCCReference>
     <DCCReference Include="libs\gnugettext.pas" />
     <DCCReference Include="libs\RegExpr.pas" />
+    <DCCReference Include="libs\VirtualTreeview\MSAAIntf.pas" />
+    <DCCReference Include="libs\VirtualTreeview\VirtualTrees.pas" />
+    <DCCReference Include="libs\VirtualTreeview\VTAccessibility.pas" />
+    <DCCReference Include="libs\VirtualTreeview\VTAccessibilityFactory.pas" />
+    <DCCReference Include="libs\VirtualTreeview\VTHeaderPopup.pas" />
     <DCCReference Include="PackageCompiler.pas" />
     <DCCReference Include="PackageInfo.pas" />
     <DCCReference Include="PageBase.pas">

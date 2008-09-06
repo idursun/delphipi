@@ -9,35 +9,49 @@ interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
-  Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus;
+  Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees;
 
 type
   TShowPackageListPage = class(TWizardPage)
-    packageListView: TListView;
     PopupMenu: TPopupMenu;
     miSelectAll: TMenuItem;
     miUnselectAll: TMenuItem;
     miSelectUsing: TMenuItem;
     N1: TMenuItem;
+    ImageList: TImageList;
     procedure FormCreate(Sender: TObject);
-    procedure packageListViewInfoTip(Sender: TObject; Item: TListItem; var InfoTip: string);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure miSelectAllClick(Sender: TObject);
-    procedure miUnselectAllClick(Sender: TObject);
-    procedure miSelectUsingClick(Sender: TObject);
+    procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
+    procedure packageTreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
+      Column: TColumnIndex; TextType: TVSTTextType; var CellText: WideString);
+    procedure packageTreeGetNodeDataSize(Sender: TBaseVirtualTree;
+      var NodeDataSize: Integer);
+    procedure packageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
+      var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: UnicodeString);
   private
     packageLoadThread: TThread;
-    procedure DisplayPackageList(const PackageList: TPackageList);
+    packageTree : TVirtualStringTree;
     procedure PackageLoadCompleted(Sender: TObject);
+    procedure ChangeState(node: PVirtualNode; checkState: TCheckState);
+    procedure CreateVirtualTree;
+    procedure packageTreeGetImageIndex(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
+      var Ghosted: Boolean; var ImageIndex: Integer);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
   end;
 
 implementation
-
 uses JclFileUtils, gnugettext;
+
 {$R *.dfm}
+type
+  PNodeData = ^TNodeData;
+  TNodeData = record
+    name: string;
+    info: TPackageInfo;
+  end;
 var
   threadWorking : Boolean;
 type
@@ -45,61 +59,47 @@ type
   TPackageLoadThread = class(TThread)
   private
     fCompilationData: TCompilationData;
+    fTree: TBaseVirtualTree;
+    procedure BuildFileNodes(parent: PVirtualNode; directory: string);
   protected
     procedure Execute; override;
+    procedure Search(parent: PVirtualNode; folder: String);
+    procedure CleanTree(node: PVirtualNode; level: integer);
   public
-   constructor Create(data: TCompilationData);
+    constructor Create(data: TCompilationData; tree: TBaseVirtualTree);
   end;
 
 { TShowPackageListPage }
+
+procedure TShowPackageListPage.ChangeState(node: PVirtualNode;
+  checkState: TCheckState);
+var
+  child: PVirtualNode;
+begin
+ if node = nil then  exit;
+  node.CheckState := checkState;
+  child := node.FirstChild;
+  while child <> nil do
+  begin
+     ChangeState(child, checkState);
+     child := child.NextSibling;
+  end;
+end;
 
 constructor TShowPackageListPage.Create(Owner: TComponent;
   const compilationData: TCompilationData);
 begin
   inherited;
   fCompilationData := compilationData;
-    // If there is no source file path in the list then load
-  if FCompilationData.SourceFilePaths.Count = 0 then
-  begin
-    packageLoadThread := TPackageLoadThread.Create(FCompilationData);
-    with packageLoadThread do begin
-      FreeOnTerminate := true;
-      OnTerminate := packageLoadCompleted;
-      packageListView.AddItem(_('Looking for packages in folders...'),nil);
-      threadWorking := true;
-      Resume;
-    end;
-  end else begin
-    DisplayPackageList(fCompilationData.PackageList);
-  end;
-end;
+  CreateVirtualTree;
 
-
-procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
-var
-  I: Integer;
-begin
-  inherited;
-  for I := 0 to packageListView.Items.Count - 1 do
-  begin
-    packageListView.Items[I].Checked := true;
-  end;
-end;
-
-procedure TShowPackageListPage.miSelectUsingClick(Sender: TObject);
-begin
-  inherited;
-  ShowMessage('Not Implemented');
-end;
-
-procedure TShowPackageListPage.miUnselectAllClick(Sender: TObject);
-var
-  i: Integer;
-begin
-  inherited;
-  for I := 0 to packageListView.Items.Count - 1 do
-  begin
-    packageListView.Items[I].Checked := false;
+  packageLoadThread := TPackageLoadThread.Create(FCompilationData, packageTree);
+  with packageLoadThread do begin
+    FreeOnTerminate := true;
+    OnTerminate := packageLoadCompleted;
+    //packageListView.AddItem(_('Looking for packages in folders...'),nil);
+    threadWorking := true;
+    Resume;
   end;
 end;
 
@@ -119,51 +119,90 @@ begin
   end;
 end;
 
-procedure TShowPackageListPage.packageListViewInfoTip(Sender: TObject;
-  Item: TListItem; var InfoTip: string);
-var
-  info : TPackageInfo;
-  _type : string;
-const
-  CRLF = #13#10;
-begin
-  inherited;
-  info := TPackageInfo(Item.Data);
-  _type := _('Designtime Package');
-  if (info.RunOnly) then
-    _type := _('Runtime Package');
-  InfoTip := _('FullPath:')+info.FileName+CRLF+
-             _('Type    :')+ _type +CRLF+
-             _('Requires:')+ CRLF + info.RequiredPackageList.Text;
-end;
-
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
 begin
   threadWorking := false;
-  DisplayPackageList(fCompilationData.PackageList);
+  packageTree.FullExpand;
   wizard.UpdateInterface;
+end;
+
+procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree;
+  Node: PVirtualNode);
+begin
+  ChangeState(Node, Node.CheckState);
+  packageTree.InvalidateChildren(Node,true);
+end;
+
+procedure TShowPackageListPage.packageTreeGetHint(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex;
+  var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: UnicodeString);
+var
+  data: PNodeData;
+  _type: string;
+  info : TPackageInfo;  
+begin
+  data := Sender.GetNodeData(Node);
+  if data.info <> nil then
+  begin
+    info := data.info;
+    _type := _('Designtime Package');
+    if (info.RunOnly) then
+      _type := _('Runtime Package');
+    HintText := _('FullPath   :')+ info.FileName+#13#10+
+                _('Description:')+ info.Description+#13#10+
+                _('Type       :')+ _type+#13#10+
+                _('Requires   :')+ #13#10 + info.RequiredPackageList.Text;
+  end;
+end;
+
+procedure TShowPackageListPage.packageTreeGetNodeDataSize(
+  Sender: TBaseVirtualTree; var NodeDataSize: Integer);
+begin
+  NodeDataSize := sizeof(TNodeData);
+end;
+
+procedure TShowPackageListPage.packageTreeGetText(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType;
+  var CellText: WideString);
+var
+  data : PNodeData;
+begin
+  CellText := '';
+  data := Sender.GetNodeData(Node);
+  case Column of
+    0: CellText := data.name;
+    1: if data.info <> nil then
+         CellText := data.info.Description;
+    2: if data.info <> nil then
+         if data.info.RunOnly then
+           CellText := _('runtime');
+         else
+           CellText := _('design');  
+  end;
+end;
+
+procedure TShowPackageListPage.packageTreeGetImageIndex(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
+  var Ghosted: Boolean; var ImageIndex: Integer);
+var
+  data: PNodeData;  
+begin
+  if column <> 0 then exit;
+  data := Sender.GetNodeData(Node);
+  if data.info = nil then
+    ImageIndex := 0
+  else
+    ImageIndex := 1;  
 end;
 
 procedure TShowPackageListPage.FormClose(Sender: TObject;
   var Action: TCloseAction);
-var
-  i : integer;
-  info : TPackageInfo;
 begin
   inherited;
   if threadWorking then begin
     packageLoadThread.Suspend;
     packageLoadThread.Terminate;
     exit;
-  end;
-
-  for i := 0 to packageListView.Items.Count - 1 do begin
-    info := TPackageInfo(packageListView.Items[i].Data);
-    if not packageListView.Items[i].Checked then
-    begin
-      fCompilationData.PackageList.Remove(info);
-      FreeAndNil(info);
-    end;
   end;
   fCompilationData.PackageList.Pack;
 end;
@@ -173,74 +212,146 @@ begin
   TranslateComponent(self);
 end;
 
-procedure TShowPackageListPage.DisplayPackageList(const PackageList: TPackageList);
-var
-  info : TPackageInfo;
-  I: Integer;
+procedure TShowPackageListPage.CreateVirtualTree;
 begin
-  if PackageList = nil then exit;
-  packageListView.Clear;
-  packageListView.Items.BeginUpdate;
-  try
-    for I := 0 to PackageList.Count - 1 do begin
-      info := PackageList[i];
-      with packageListView.Items.Add do begin
-        Caption := info.Description;
-        if Caption = '' then
-          Caption := _('<No Description>');
-
-        SubItems.Add(info.PackageName);
-        if info.RunOnly then
-          SubItems.Add(_('runtime'))
-        else
-          SubItems.Add(_('design'));
-        Checked := True;
-        Data := info;
-      end;
+  packageTree := TVirtualStringTree.Create(Self);
+  with packageTree do
+  begin
+    Name := 'packageTree';
+    Parent := Self;
+    Left := 12;
+    Top := 7;
+    Width := 470;
+    Height := 220;
+    Anchors := [akLeft, akTop, akRight, akBottom];
+    Header.AutoSizeIndex := 0;
+    Header.Font.Charset := DEFAULT_CHARSET;
+    Header.Font.Color := clWindowText;
+    Header.Font.Height := -11;
+    Header.Font.Name := 'Tahoma';
+    Header.Font.Style := [];
+    Header.Options := [hoColumnResize, hoDrag, hoVisible];
+    TabOrder := 0;
+    TreeOptions.MiscOptions := [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning];
+    ShowHint := true;
+    HintMode := hmHint;
+    StateImages := ImageList;
+    OnChecked := packageTreeChecked;
+    OnGetText := packageTreeGetText;
+    OnGetNodeDataSize := packageTreeGetNodeDataSize;
+    OnGetHint := packageTreeGetHint;
+    OnGetImageIndex := packageTreeGetImageIndex;
+    with Header.Columns.Add do begin 
+      Options := [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coAllowFocus];
+      Position := 0;
+      Width := 220;
+      Caption := _('Package');
     end;
-  finally
-    packageListView.Items.EndUpdate;
+    with Header.Columns.Add do begin
+      Position := 1;
+      Width := 220;
+      Caption := _('Description');
+    end;
+    with Header.Columns.Add do begin
+      Position := 2;
+      Width := 70;
+      Caption := _('Type');
+    end;
   end;
 end;
 
 { TPackageLoadThread }
 
-constructor TPackageLoadThread.Create(data: TCompilationData);
+constructor TPackageLoadThread.Create(data: TCompilationData; tree: TBaseVirtualTree);
 begin
   inherited Create(true);
   fCompilationData := data;
+  fTree:= tree;
+end;
+
+procedure TPackageLoadThread.CleanTree(node: PVirtualNode; level: integer);
+var
+ c: PVirtualNode;
+ data: PNodeData;
+begin
+  if node = nil then exit;
+  if node.ChildCount > 0 then
+  begin
+     c := node.FirstChild;
+     while c <> nil do
+     begin
+         data := fTree.GetNodeData(c);
+         if data.info = nil then
+           CleanTree(c, level+1);
+         c := c.NextSibling;
+     end;
+  end;
+
+  if node.ChildCount = 0 then
+    fTree.DeleteNode(node);
 end;
 
 procedure TPackageLoadThread.Execute;
-var
-  searcher: IJclFileEnumerator;
-  fileName: string;
-  info: TPackageInfo;
-  fileList :TStringList;
 begin
   inherited;
-
-  fCompilationData.PackageList.InitialFolder := fCompilationData.BaseFolder;
-  searcher := TJclFileEnumerator.Create;
-  fileList := TStringList.Create;
+  fTree.BeginUpdate;
   try
-    searcher.RootDirectory := fCompilationData.BaseFolder;
-    searcher.FileMask := fCompilationData.Pattern + ';*.hlp';
-    searcher.FillList(fileList);
-    while searcher.RunningTasks > 0 do
-      Sleep(100);
-    for fileName in fileList do begin
-      if ExtractFileExt(fileName) = '.dpk' then begin
-        info := TPackageInfo.Create(fileName);
-        fCompilationData.PackageList.Add(info);
-      end;
-      if ExtractFileExt(fileName) = '.hlp' then
-        fCompilationData.HelpFiles.Add(fileName);
-    end;
-    fCompilationData.PackageList.SortList;
+    Search(fTree.RootNode, fCompilationData.BaseFolder);
+    CleanTree(fTree.RootNode,0);
   finally
-    searcher := nil;
-    fileList.Free;
+    fTree.EndUpdate;
+  end;
+end;
+
+procedure TPackageLoadThread.BuildFileNodes(parent: PVirtualNode; directory: string);
+var
+  sr: TSearchRec;
+  child: PVirtualNode;
+  data: PNodeData;
+begin
+  if FindFirst(directory + '\' + fCompilationData.Pattern, faAnyFile, sr) = 0 then
+  begin
+    try
+      repeat
+        if ExtractFileExt(sr.Name) = '.dpk' then
+        begin
+          child := fTree.AddChild(parent);
+          child.CheckState := csCheckedNormal;
+          child.CheckType := ctCheckBox;
+          data := fTree.GetNodeData(child);
+          data.name := sr.Name;
+          data.info := TPackageInfo.Create(directory + '\' + sr.Name);
+        end;
+      until FindNext(Sr) <> 0;
+    finally
+       FindClose(sr);
+    end;
+  end;
+end;
+
+procedure TPackageLoadThread.Search(parent: PVirtualNode; folder: String);
+var
+  child: PVirtualNode;
+  data: PNodeData;
+  directoryList : TStringList;
+  directory: string;
+begin
+  directoryList := TStringList.Create;
+  try
+    BuildFileList(folder + '\*.*', faDirectory, directoryList);
+    for directory in directoryList do
+    begin
+      child := fTree.AddChild(parent);
+      child.CheckState := csCheckedNormal;
+      child.CheckType := ctCheckBox;
+      child.States := child.States + [vsHasChildren];
+      data := fTree.GetNodeData(child);
+      data.name := directory;
+      Search(child, folder + '\' + directory);
+    end;
+    BuildFileNodes(parent, folder + '\' + directory);
+  finally
+    directoryList.Free;
   end;
 end;
 

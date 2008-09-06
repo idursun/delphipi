@@ -15,6 +15,7 @@ inherited SummaryPage: TSummaryPage
     Caption = 
       'Would you like to save this installation as a script so that you' +
       ' can automate installation of these packages?'
+    Visible = False
     WordWrap = True
   end
   object Label2: TLabel
@@ -32,13 +33,14 @@ inherited SummaryPage: TSummaryPage
     Anchors = [akRight, akBottom]
     Caption = 'Save'
     TabOrder = 0
+    Visible = False
     OnClick = btnSaveClick
   end
   object edtSummary: TMemo
     Left = 8
     Top = 28
     Width = 484
-    Height = 163
+    Height = 214
     Anchors = [akLeft, akTop, akRight, akBottom]
     ReadOnly = True
     ScrollBars = ssBoth
