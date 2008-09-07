@@ -13,12 +13,13 @@ uses
 
 type
   TShowPackageListPage = class(TWizardPage)
-    PopupMenu: TPopupMenu;
+    SelectPopupMenu: TPopupMenu;
     miSelectAll: TMenuItem;
     miUnselectAll: TMenuItem;
-    miSelectUsing: TMenuItem;
+    miSelectMatching: TMenuItem;
     N1: TMenuItem;
     ImageList: TImageList;
+    miUnselectMatching: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -28,10 +29,15 @@ type
       var NodeDataSize: Integer);
     procedure packageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
       var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: UnicodeString);
+    procedure miSelectAllClick(Sender: TObject);
+    procedure miUnselectAllClick(Sender: TObject);
+    procedure miSelectMatchingClick(Sender: TObject);
+    procedure miUnselectMatchingClick(Sender: TObject);
   private
     packageLoadThread: TThread;
     fPackageTree : TVirtualStringTree;
     fProcessedPackageInfo: TPackageInfo;
+    fSelectMask: string;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(node: PVirtualNode; checkState: TCheckState);
     procedure CreateVirtualTree;
@@ -41,6 +47,10 @@ type
     procedure PackageInfoCollectCallBack(const node: PVirtualNode);
     procedure CheckRequiredPackagesCallBack(const node: PVirtualNode);
     procedure UncheckDependentPackagesCallBack(const node: PVirtualNode);
+    procedure SelectAllCallBack(const node: PVirtualNode);
+    procedure UnselectAllCallBack(const node: PVirtualNode);
+    procedure SelectMatchingCallBack(const node: PVirtualNode);
+    procedure UnSelectMatchingCallBack(const node: PVirtualNode);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -53,8 +63,8 @@ uses JclFileUtils, gnugettext;
 type
   PNodeData = ^TNodeData;
   TNodeData = record
-    name: string;
-    info: TPackageInfo;
+    Name: string;
+    Info: TPackageInfo;
   end;
 var
   threadWorking : Boolean;
@@ -82,6 +92,23 @@ type
 
 
 { TShowPackageListPage }
+
+constructor TShowPackageListPage.Create(Owner: TComponent;
+  const compilationData: TCompilationData);
+begin
+  inherited;
+  fCompilationData := compilationData;
+  CreateVirtualTree;
+
+  packageLoadThread := TPackageLoadThread.Create(FCompilationData, fPackageTree);
+  with packageLoadThread do begin
+    FreeOnTerminate := true;
+    OnTerminate := packageLoadCompleted;
+    //packageListView.AddItem(_('Looking for packages in folders...'),nil);
+    threadWorking := true;
+    Resume;
+  end;
+end;
 
 procedure TShowPackageListPage.ChangeState(node: PVirtualNode;
   checkState: TCheckState);
@@ -119,39 +146,57 @@ begin
   if fProcessedPackageInfo = nil then exit;
   
   data := fPackageTree.GetNodeData(node);
-  if (data = nil) or (data.info = nil) then exit;
-  if fProcessedPackageInfo.DependsOn(data.info) then
+  if (data = nil) or (data.Info = nil) then exit;
+  if fProcessedPackageInfo.DependsOn(data.Info) then
     node.CheckState := csCheckedNormal;
 end;
 
 procedure TShowPackageListPage.UncheckDependentPackagesCallBack(
   const node: PVirtualNode);
 var
-  data: PNodeData;  
+  data: PNodeData;
 begin
   if node.CheckState = csUncheckedNormal then exit;
   if fProcessedPackageInfo = nil then exit;
-  
+
   data := fPackageTree.GetNodeData(node);
-  if (data = nil) or (data.info = nil) then exit;
-  if data.info.DependsOn(fProcessedPackageInfo) then
+  if (data = nil) or (data.Info = nil) then exit;
+  if data.Info.DependsOn(fProcessedPackageInfo) then
     node.CheckState := csUncheckedNormal;
 end;
 
-constructor TShowPackageListPage.Create(Owner: TComponent;
-  const compilationData: TCompilationData);
+procedure TShowPackageListPage.UnselectAllCallBack(const node: PVirtualNode);
 begin
-  inherited;
-  fCompilationData := compilationData;
-  CreateVirtualTree;
+  node.CheckState := csUncheckedNormal;
+end;
 
-  packageLoadThread := TPackageLoadThread.Create(FCompilationData, fPackageTree);
-  with packageLoadThread do begin
-    FreeOnTerminate := true;
-    OnTerminate := packageLoadCompleted;
-    //packageListView.AddItem(_('Looking for packages in folders...'),nil);
-    threadWorking := true;
-    Resume;
+procedure TShowPackageListPage.UnSelectMatchingCallBack(
+  const node: PVirtualNode);
+var
+  data: PNodeData;
+begin
+  data := fPackageTree.GetNodeData(node);
+  if (data <> nil) and (data.Info <> nil) then
+  begin
+    if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
+       node.CheckState := csUncheckedNormal;
+  end;
+end;
+
+procedure TShowPackageListPage.SelectAllCallBack(const node: PVirtualNode);
+begin
+  node.CheckState := csCheckedNormal;
+end;
+
+procedure TShowPackageListPage.SelectMatchingCallBack(const node: PVirtualNode);
+var
+  data: PNodeData;
+begin
+  data := fPackageTree.GetNodeData(node);
+  if (data <> nil) and (data.Info <> nil) then
+  begin
+    if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
+       node.CheckState := csCheckedNormal;
   end;
 end;
 
@@ -191,12 +236,12 @@ procedure TShowPackageListPage.packageTreeGetHint(Sender: TBaseVirtualTree;
 var
   data: PNodeData;
   _type: string;
-  info : TPackageInfo;  
+  info : TPackageInfo;
 begin
   data := Sender.GetNodeData(Node);
-  if data.info <> nil then
+  if data.Info <> nil then
   begin
-    info := data.info;
+    info := data.Info;
     _type := _('Designtime Package');
     if (info.RunOnly) then
       _type := _('Runtime Package');
@@ -222,16 +267,17 @@ begin
   CellText := '';
   data := Sender.GetNodeData(Node);
   case Column of
-    0: CellText := data.name;
-    1: if data.info <> nil then
-         CellText := data.info.Description;
-    2: if data.info <> nil then
-         if data.info.RunOnly then
+    0: CellText := data.Name;
+    1: if data.Info <> nil then
+         CellText := data.Info.Description;
+    2: if data.Info <> nil then
+         if data.Info.RunOnly then
            CellText := _('runtime');
          else
-           CellText := _('design');  
+           CellText := _('design');
   end;
 end;
+
 
 procedure TShowPackageListPage.packageTreeGetImageIndex(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
@@ -241,7 +287,7 @@ var
 begin
   if column <> 0 then exit;
   data := Sender.GetNodeData(Node);
-  if data.info = nil then
+  if data.Info = nil then
     ImageIndex := 0
   else
     ImageIndex := 1;  
@@ -267,13 +313,51 @@ var
 begin
   if node.CheckState <> csCheckedNormal then exit;
   data := fPackageTree.GetNodeData(node);
-  if data.info <> nil then
-    fCompilationData.PackageList.Add(data.info);
+  if data.Info <> nil then
+    fCompilationData.PackageList.Add(data.Info);
 end;
 
 procedure TShowPackageListPage.FormCreate(Sender: TObject);
 begin
   TranslateComponent(self);
+end;
+
+procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
+begin
+  fPackageTree.Traverse(SelectAllCallBack);
+  fPackageTree.Invalidate;
+end;
+
+procedure TShowPackageListPage.miSelectMatchingClick(Sender: TObject);
+var
+  value : string;
+begin
+  value := fCompilationData.Pattern;
+  if InputQuery(_('Select Matching...'),_('File Mask'),value) then
+  begin
+    fSelectMask := value;
+    fPackageTree.Traverse(SelectMatchingCallBack);
+    fPackageTree.Invalidate;
+  end;
+end;
+
+procedure TShowPackageListPage.miUnselectAllClick(Sender: TObject);
+begin
+  fPackageTree.Traverse(UnselectAllCallBack);
+  fPackageTree.Invalidate;
+end;
+
+procedure TShowPackageListPage.miUnselectMatchingClick(Sender: TObject);
+var
+  value: string;
+begin
+  value := fCompilationData.Pattern;
+  if InputQuery(_('UnSelect Matching...'),_('File Mask'),value) then
+  begin
+    fSelectMask := value;
+    fPackageTree.Traverse(UnSelectMatchingCallBack);
+    fPackageTree.Invalidate;
+  end;
 end;
 
 procedure TShowPackageListPage.CreateVirtualTree;
@@ -300,6 +384,7 @@ begin
     ShowHint := true;
     HintMode := hmHint;
     StateImages := ImageList;
+    PopupMenu := SelectPopupMenu;
     OnChecked := packageTreeChecked;
     OnGetText := packageTreeGetText;
     OnGetNodeDataSize := packageTreeGetNodeDataSize;
@@ -345,7 +430,7 @@ begin
      while c <> nil do
      begin
          data := fTree.GetNodeData(c);
-         if data.info = nil then
+         if data.Info = nil then
            CleanTree(c);
          c := c.NextSibling;
      end;
@@ -383,8 +468,8 @@ begin
           child.CheckState := csCheckedNormal;
           child.CheckType := ctCheckBox;
           data := fTree.GetNodeData(child);
-          data.name := sr.Name;
-          data.info := TPackageInfo.Create(directory + sr.Name);
+          data.Name := sr.Name;
+          data.Info := TPackageInfo.Create(directory + sr.Name);
         end;
       until FindNext(Sr) <> 0;
     finally
@@ -410,7 +495,7 @@ begin
       child.CheckType := ctCheckBox;
       child.States := child.States + [vsHasChildren];
       data := fTree.GetNodeData(child);
-      data.name := directory;
+      data.Name := directory;
       Search(child, folder + '\' + directory);
     end;
     BuildFileNodes(parent, folder + '\' + directory);

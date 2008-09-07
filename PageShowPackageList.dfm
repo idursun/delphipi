@@ -2,28 +2,36 @@ inherited ShowPackageListPage: TShowPackageListPage
   Caption = 'ShowPackageListPage'
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
-  object PopupMenu: TPopupMenu
-    Left = 236
-    Top = 111
+  object SelectPopupMenu: TPopupMenu
+    Left = 292
+    Top = 5
     object miSelectAll: TMenuItem
       Caption = 'Select All'
+      OnClick = miSelectAllClick
     end
     object miUnselectAll: TMenuItem
       Caption = 'Unselect All'
+      OnClick = miUnselectAllClick
     end
     object N1: TMenuItem
       Caption = '-'
     end
-    object miSelectUsing: TMenuItem
-      Caption = 'Select Using...'
-      Visible = False
+    object miSelectMatching: TMenuItem
+      Caption = 'Select Matching...'
+      OnClick = miSelectMatchingClick
+    end
+    object miUnselectMatching: TMenuItem
+      Caption = 'Unselect Matching...'
+      OnClick = miUnselectMatchingClick
     end
   end
   object ImageList: TImageList
-    Left = 350
-    Top = 159
+    Left = 326
+    Top = 4
     Bitmap = {
       494C010102000400040010001000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
