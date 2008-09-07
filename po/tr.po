@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: DelphiPI 0.23\n"
-"POT-Creation-Date: 2008-05-24 13:59\n"
+"Project-Id-Version: DelphiPI 0.32\n"
+"POT-Creation-Date: 2008-09-07 21:27\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ibrahim dursun\n"
 "Language-Team: \n"
@@ -19,38 +19,35 @@ msgstr "DelphiPI Hakkında"
 #. frmAbout..Font.Name
 #. frmAbout..GroupBox2..Label7..Font.Name
 #. frmAbout..GroupBox2..Label8..Font.Name
-#. frmAbout..GroupBox2..Label13..Font.Name
-#. frmAbout..GroupBox2..Label1..Font.Name
+#. frmAbout..GroupBox2..lblAuthorsWebsite..Font.Name
+#. frmAbout..GroupBox2..lblProjectWebsite..Font.Name
 #. frmWizard..Font.Name
 #. frmWizard..HeaderPanel..lblHeader..Font.Name
 #. WizardPage..Font.Name
 #. ProgressPage..GroupBox1..lblPackage..Font.Name
-#. ProgressPage..GroupBox1..lblFileName..Font.Name
 #. frmAbout..Font.Name
 #. frmAbout..GroupBox2..Label7..Font.Name
 #. frmAbout..GroupBox2..Label8..Font.Name
-#. frmAbout..GroupBox2..Label13..Font.Name
-#. frmAbout..GroupBox2..Label1..Font.Name
+#. frmAbout..GroupBox2..lblAuthorsWebsite..Font.Name
+#. frmAbout..GroupBox2..lblProjectWebsite..Font.Name
 #. frmWizard..Font.Name
 #. frmWizard..HeaderPanel..lblHeader..Font.Name
 #. WizardPage..Font.Name
 #. ProgressPage..GroupBox1..lblPackage..Font.Name
-#. ProgressPage..GroupBox1..lblFileName..Font.Name
 #: FormAbout.dfm:12
 #: FormAbout.dfm:52
 #: FormAbout.dfm:621
 #: FormAbout.dfm:656
 #: FormAbout.dfm:671
 #: FormWizard.dfm:13
-#: FormWizard.dfm:362
-#: PageBase.dfm:12
-#: PageProgress.dfm:30
-#: PageProgress.dfm:51
+#: FormWizard.dfm:349
+#: PageBase.dfm:13
+#: PageProgress.dfm:34
 msgid "Tahoma"
 msgstr "Tahoma"
 
-#. frmAbout..Button1..Caption
-#. frmAbout..Button1..Caption
+#. frmAbout..btnClose..Caption
+#. frmAbout..btnClose..Caption
 #: FormAbout.dfm:32
 msgid "Close"
 msgstr "Kapat"
@@ -70,8 +67,8 @@ msgstr "Delphi Package Installer"
 #. frmAbout..GroupBox2..Label8..Caption
 #. frmAbout..GroupBox2..Label8..Caption
 #: FormAbout.dfm:617
-msgid "0.23 'Dainese'"
-msgstr "0.23 'Dainese'"
+msgid "0.32 'Dainese'"
+msgstr "0.32 'Dainese'"
 
 #. frmAbout..GroupBox2..Label9..Caption
 #. frmAbout..GroupBox2..Label9..Caption
@@ -91,14 +88,14 @@ msgstr "Proje Websitesi:"
 msgid "Author's name:"
 msgstr "Yazar'ın adı:"
 
-#. frmAbout..GroupBox2..Label13..Caption
-#. frmAbout..GroupBox2..Label13..Caption
+#. frmAbout..GroupBox2..lblAuthorsWebsite..Caption
+#. frmAbout..GroupBox2..lblAuthorsWebsite..Caption
 #: FormAbout.dfm:652
 msgid "http://www.thexpot.net"
 msgstr "http://www.thexpot.net"
 
-#. frmAbout..GroupBox2..Label1..Caption
-#. frmAbout..GroupBox2..Label1..Caption
+#. frmAbout..GroupBox2..lblProjectWebsite..Caption
+#. frmAbout..GroupBox2..lblProjectWebsite..Caption
 #: FormAbout.dfm:667
 msgid "http://delphipi.googlecode.com"
 msgstr "http://delphipi.googlecode.com"
@@ -109,61 +106,55 @@ msgstr "http://delphipi.googlecode.com"
 msgid "Author's website:"
 msgstr "Yazarın Websitesi:"
 
+#. frmAbout..btnDonate..Caption
+#. frmAbout..btnDonate..Caption
+#: FormAbout.dfm:696
+msgid "Donate to DelphiPI"
+msgstr "Bağış"
+
 #. frmWizard..Caption
 #. frmWizard..Caption
-#: FormWizard.dfm:6
+#: FormWizard.dfm:4
 msgid "Delphi PI"
 msgstr "Delphi PI"
 
 #. frmWizard..HeaderPanel..lblHeader..Caption
 #. frmWizard..HeaderPanel..lblHeader..Caption
-#: FormWizard.dfm:358
+#: FormWizard.dfm:345
 msgid "lblHeader"
 msgstr "lblHeader"
 
 #. frmWizard..HeaderPanel..lblDescription..Caption
 #. frmWizard..HeaderPanel..lblDescription..Caption
-#: FormWizard.dfm:371
+#: FormWizard.dfm:358
 msgid "lblDescription"
 msgstr "lblDescription"
 
-#. frmWizard..btnNext..Caption
-#. frmWizard..btnNext..Caption
-#: FormWizard.dfm:380
-#: FormWizard.pas:149
-msgid "&Next >>"
-msgstr "&Sonraki >>"
-
-#. frmWizard..btnBack..Caption
-#. frmWizard..btnBack..Caption
-#: FormWizard.dfm:391
+#. frmWizard..pBottom..btnBack..Caption
+#. frmWizard..pBottom..btnBack..Caption
+#: FormWizard.dfm:385
 #: FormWizard.pas:150
 msgid "<< &Back"
 msgstr "<< Ö&nceki"
 
-#. frmWizard..btnAbout..Caption
-#. frmWizard..btnAbout..Caption
-#: FormWizard.dfm:409
+#. frmWizard..pBottom..btnNext..Caption
+#. frmWizard..pBottom..btnNext..Caption
+#: FormWizard.dfm:396
+#: FormWizard.pas:146
+msgid "&Next >>"
+msgstr "&Sonraki >>"
+
+#. frmWizard..pBottom..btnAbout..Caption
+#. frmWizard..pBottom..btnAbout..Caption
+#: FormWizard.dfm:408
 msgid "About..."
 msgstr "Hakkında..."
 
 #. WizardPage..Caption
 #. WizardPage..Caption
-#: PageBase.dfm:5
+#: PageBase.dfm:6
 msgid "WizardPage"
 msgstr "WizardPage"
-
-#. FinishedPage..Caption
-#. FinishedPage..Caption
-#: PageFinished.dfm:2
-msgid "FinishedPage"
-msgstr "FinishedPage"
-
-#. FinishedPage..Label1..Caption
-#. FinishedPage..Label1..Caption
-#: PageFinished.dfm:10
-msgid "Label1"
-msgstr "Label1"
 
 #. InstallHelpFilesPage..Caption
 #. InstallHelpFilesPage..Caption
@@ -173,19 +164,19 @@ msgstr "InstallHelpFilesPage"
 
 #. InstallHelpFilesPage..Label1....Caption
 #. InstallHelpFilesPage..Label1....Caption
-#: PageInstallHelpFiles.dfm:13
+#: PageInstallHelpFiles.dfm:16
 msgid "DelphiPI has found some help files in the folder that you have selected. Would you like to install them as well?"
 msgstr "DelphiPI, seçtiğiniz klasörde bazı yardım dosyaları da buldu. Bunları da kurmak ister misiniz?"
 
 #. InstallHelpFilesPage..helpFileList......Caption
 #. InstallHelpFilesPage..helpFileList......Caption
-#: PageInstallHelpFiles.dfm:26
+#: PageInstallHelpFiles.dfm:29
 msgid "Help File Name"
 msgstr "Yardım Dosyası Adı"
 
 #. InstallHelpFilesPage..btnInstallHelpFiles..Caption
 #. InstallHelpFilesPage..btnInstallHelpFiles..Caption
-#: PageInstallHelpFiles.dfm:40
+#: PageInstallHelpFiles.dfm:44
 msgid "Install Help Files"
 msgstr "Yardım Dosyalarını Kur"
 
@@ -197,49 +188,37 @@ msgstr "ProgressPage"
 
 #. ProgressPage..GroupBox1..Caption
 #. ProgressPage..GroupBox1..Caption
-#: PageProgress.dfm:12
+#: PageProgress.dfm:13
 msgid "Overall Progress"
 msgstr "Ortalama İlerleme"
 
 #. ProgressPage..GroupBox1..Label1..Caption
 #. ProgressPage..GroupBox1..Label1..Caption
-#: PageProgress.dfm:19
+#: PageProgress.dfm:23
 msgid "Package:"
 msgstr "Paket:"
 
 #. ProgressPage..GroupBox1..lblPackage..Caption
 #. ProgressPage..GroupBox1..lblPackage..Caption
-#: PageProgress.dfm:26
+#: PageProgress.dfm:30
 msgid "lblPackage"
 msgstr "lblPackage"
 
-#. ProgressPage..GroupBox1..Label2..Caption
-#. ProgressPage..GroupBox1..Label2..Caption
-#: PageProgress.dfm:39
-msgid "File:"
-msgstr "Dosya:"
-
-#. ProgressPage..GroupBox1..lblFileName..Caption
-#. ProgressPage..GroupBox1..lblFileName..Caption
-#: PageProgress.dfm:47
-msgid "lblFileName"
-msgstr "lblFileName"
-
 #. ProgressPage..GroupBox1..lblCurrentPackageNo..Caption
 #. ProgressPage..GroupBox1..lblCurrentPackageNo..Caption
-#: PageProgress.dfm:61
+#: PageProgress.dfm:44
 msgid "     "
 msgstr "     "
 
 #. ProgressPage..GroupBox2..Caption
 #. ProgressPage..GroupBox2..Caption
-#: PageProgress.dfm:76
+#: PageProgress.dfm:61
 msgid "Compiler Output"
 msgstr "Derleyici Çıktısı"
 
 #. ProgressPage..GroupBox2..Memo..Font.Name
 #. ProgressPage..GroupBox2..Memo..Font.Name
-#: PageProgress.dfm:87
+#: PageProgress.dfm:74
 msgid "Courier New"
 msgstr "Courier New"
 
@@ -254,6 +233,36 @@ msgstr "SelectDelphiInstallationPage"
 #: PageSelectDelphiInstallation.dfm:14
 msgid "Installed Delphi Versions"
 msgstr "Yüklenmiş Delphi Sürümleri"
+
+#. SelectDelphiInstallationPage..grpOutputFolders..Caption
+#. SelectDelphiInstallationPage..grpOutputFolders..Caption
+#: PageSelectDelphiInstallation.dfm:25
+msgid "Output Folders"
+msgstr "Çıktı Klasörleri"
+
+#. SelectDelphiInstallationPage..grpOutputFolders..lblBPLOutputFolder..Caption
+#. SelectDelphiInstallationPage..grpOutputFolders..lblBPLOutputFolder..Caption
+#: PageSelectDelphiInstallation.dfm:35
+msgid "BPL:"
+msgstr "BPL:"
+
+#. SelectDelphiInstallationPage..grpOutputFolders..lblDCP..Caption
+#. SelectDelphiInstallationPage..grpOutputFolders..lblDCP..Caption
+#: PageSelectDelphiInstallation.dfm:42
+msgid "DCP:"
+msgstr "DCP:"
+
+#. SelectDelphiInstallationPage..grpOutputFolders..btnBPLBrowse..Caption
+#. SelectDelphiInstallationPage..grpOutputFolders..btnDCPBrowse..Caption
+#. SelectFoldersPage..GroupBox2..btnSelectFolder..Caption
+#. SelectDelphiInstallationPage..grpOutputFolders..btnBPLBrowse..Caption
+#. SelectDelphiInstallationPage..grpOutputFolders..btnDCPBrowse..Caption
+#. SelectFoldersPage..GroupBox2..btnSelectFolder..Caption
+#: PageSelectDelphiInstallation.dfm:58
+#: PageSelectDelphiInstallation.dfm:76
+#: PageSelectFolders.dfm:77
+msgid "..."
+msgstr "..."
 
 #. SelectFoldersPage..Caption
 #. SelectFoldersPage..Caption
@@ -281,27 +290,21 @@ msgstr "Delphi sürümünüze uygun olan paketleri seçecek bir desen belirleyin
 
 #. SelectFoldersPage..GroupBox1..cbPattern..Text
 #. SelectFoldersPage..GroupBox1..cbPattern..Text
-#: PageSelectFolders.dfm:76
+#: PageSelectFolders.dfm:50
 msgid "*.dpk"
 msgstr "*.dpk"
 
 #. SelectFoldersPage..GroupBox2..Caption
 #. SelectFoldersPage..GroupBox2..Caption
-#: PageSelectFolders.dfm:84
+#: PageSelectFolders.dfm:59
 msgid "Select Base Folder contains both Package and Source files"
 msgstr "Paket ve kaynak dosyalarını içeren alt klasörü seçin"
 
 #. SelectFoldersPage..GroupBox2..Label1..Caption
 #. SelectFoldersPage..GroupBox2..Label1..Caption
-#: PageSelectFolders.dfm:91
+#: PageSelectFolders.dfm:69
 msgid "Base Folder"
 msgstr "Alt Klasör"
-
-#. SelectFoldersPage..GroupBox2..btnSelectFolder..Caption
-#. SelectFoldersPage..GroupBox2..btnSelectFolder..Caption
-#: PageSelectFolders.dfm:98
-msgid "&Select Folder..."
-msgstr "Klasör &Seçin"
 
 #. ShowPackageListPage..Caption
 #. ShowPackageListPage..Caption
@@ -309,184 +312,332 @@ msgstr "Klasör &Seçin"
 msgid "ShowPackageListPage"
 msgstr "ShowPackageListPage"
 
-#. ShowPackageListPage..packageListView......Caption
-#. ShowPackageListPage..packageListView......Caption
-#: PageShowPackageList.dfm:17
-msgid "Description"
-msgstr "Açıklama"
-
-#. ShowPackageListPage..packageListView......Caption
-#. ShowPackageListPage..packageListView......Caption
-#: PageShowPackageList.dfm:21
-msgid "Name"
-msgstr "İsim"
-
-#. ShowPackageListPage..packageListView......Caption
-#. ShowPackageListPage..packageListView......Caption
-#: PageShowPackageList.dfm:26
-msgid "Type"
-msgstr "Tip"
-
-#. ShowPackageListPage..PopupMenu..miSelectAll..Caption
-#. ShowPackageListPage..PopupMenu..miSelectAll..Caption
-#: PageShowPackageList.dfm:42
+#. ShowPackageListPage..SelectPopupMenu..miSelectAll..Caption
+#. ShowPackageListPage..SelectPopupMenu..miSelectAll..Caption
+#: PageShowPackageList.dfm:13
 msgid "Select All"
 msgstr "Hepsini Seç"
 
-#. ShowPackageListPage..PopupMenu..miUnselectAll..Caption
-#. ShowPackageListPage..PopupMenu..miUnselectAll..Caption
-#: PageShowPackageList.dfm:46
+#. ShowPackageListPage..SelectPopupMenu..miUnselectAll..Caption
+#. ShowPackageListPage..SelectPopupMenu..miUnselectAll..Caption
+#: PageShowPackageList.dfm:17
 msgid "Unselect All"
 msgstr "Hiçbirini Seçme"
 
-#. ShowPackageListPage..PopupMenu..N1..Caption
-#. ShowPackageListPage..PopupMenu..N1..Caption
-#: PageShowPackageList.dfm:50
+#. ShowPackageListPage..SelectPopupMenu..N1..Caption
+#. ShowPackageListPage..SelectPopupMenu..N1..Caption
+#: PageShowPackageList.dfm:21
 msgid "-"
 msgstr "-"
 
-#. ShowPackageListPage..PopupMenu..miSelectUsing..Caption
-#. ShowPackageListPage..PopupMenu..miSelectUsing..Caption
-#: PageShowPackageList.dfm:53
-msgid "Select Using..."
-msgstr "Özel Seç"
+#. ShowPackageListPage..SelectPopupMenu..miSelectMatching..Caption
+#. ShowPackageListPage..SelectPopupMenu..miSelectMatching..Caption
+#: PageShowPackageList.dfm:24
+#: PageShowPackageList.pas:336
+msgid "Select Matching..."
+msgstr "Eşleşenleri Seç..."
+
+#. ShowPackageListPage..SelectPopupMenu..miUnselectMatching..Caption
+#. ShowPackageListPage..SelectPopupMenu..miUnselectMatching..Caption
+#: PageShowPackageList.dfm:28
+msgid "Unselect Matching..."
+msgstr "Eşleşenleri Seçme..."
+
+#. SummaryPage..Caption
+#. SummaryPage..Caption
+#: PageSummary.dfm:2
+msgid "SummaryPage"
+msgstr "SummaryPage"
+
+#. SummaryPage..Label1....Caption
+#. SummaryPage..Label1....Caption
+#: PageSummary.dfm:17
+msgid "Would you like to save this installation as a script so that you can automate installation of these packages?"
+msgstr "Bu kurulumu otomatikleştirmek için betik dosyası olarak kaydetmek ister misiniz?"
+
+#. SummaryPage..Label2..Caption
+#. SummaryPage..Label2..Caption
+#: PageSummary.dfm:26
+msgid "Summary:"
+msgstr "Özet:"
+
+#. SummaryPage..btnSave..Caption
+#. SummaryPage..btnSave..Caption
+#: PageSummary.dfm:34
+msgid "Save"
+msgstr "Kaydet"
+
+#: ConsoleRunner.pas:51
+msgid "Compiling:"
+msgstr "Derleniyor:"
+
+#: ConsoleRunner.pas:53
+msgid "Compiled :"
+msgstr "Derlenenler:"
 
 #. Programmer's name for it: StrRUNONLY
 #. Programmer's name for it: StrRUNONLY
-#: PackageInfo.pas:66
+#: PackageInfo.pas:65
 msgid "{$RUNONLY"
 msgstr "{$RUNONLY"
 
 #. Programmer's name for it: StrDESCRIPTION
 #. Programmer's name for it: StrDESCRIPTION
-#: PackageInfo.pas:67
+#: PackageInfo.pas:66
 msgid "{$DESCRIPTION "
 msgstr "{$DESCRIPTION "
 
 #. Programmer's name for it: StrSUFFIX
 #. Programmer's name for it: StrSUFFIX
-#: PackageInfo.pas:68
+#: PackageInfo.pas:67
 msgid "{$LIBSUFFIX "
 msgstr "{$LIBSUFFIX "
 
 #. Programmer's name for it: StrPackage
 #. Programmer's name for it: StrPackage
-#: PackageInfo.pas:69
+#: PackageInfo.pas:68
 msgid "package"
 msgstr "package"
 
 #. Programmer's name for it: StrRequires
 #. Programmer's name for it: StrRequires
-#: PackageInfo.pas:70
+#: PackageInfo.pas:69
 msgid "requires"
 msgstr "requires"
 
 #. Programmer's name for it: StrContains
 #. Programmer's name for it: StrContains
-#: PackageInfo.pas:71
+#: PackageInfo.pas:70
 msgid "contains"
 msgstr "contains"
 
-#: PageInstallHelpFiles.pas:47
+#: PageInstallHelpFiles.pas:51
 msgid "No help files are found."
 msgstr "Yardım dosyası bulunamadı."
 
-#: PageInstallHelpFiles.pas:65
+#: PageInstallHelpFiles.pas:69
 msgid "Help Files"
 msgstr "Yardım Dosyaları"
 
-#: PageInstallHelpFiles.pas:66
+#: PageInstallHelpFiles.pas:70
 msgid "Select the help files that you want to register, if there are any."
 msgstr "Kurmak istediğiniz yardım dosyası varsa seçin."
 
-#: PageInstallHelpFiles.pas:68
-msgid "&Finish"
-msgstr "&Bitir"
-
-#: PageInstallHelpFiles.pas:88
+#: PageInstallHelpFiles.pas:90
 msgid "%d help file(s) are registered successfully"
 msgstr "%d tane yardım dosyası başarı ile kaydedildi."
 
-#: PageProgress.pas:95
+#: PageProgress.pas:90
 msgid "Compile and Install Packages"
 msgstr "Paketleri derle ve yükle"
 
-#: PageProgress.pas:96
+#: PageProgress.pas:91
 msgid "Compiling packages that you have selected. Design time packages are going to be installed."
 msgstr "Seçtiğiniz paketler derleniyor. Tasarım paketleri de kaydedilecektir."
 
-#: PageProgress.pas:147
+#. lblFileName.Caption := '';
+#. lblFileName.Caption := '';
+#: PageProgress.pas:141
 msgid "*** Completed"
 msgstr "*** Tamamlandı"
 
-#: PageSelectDelphiInstallation.pas:85
+#: PageSelectDelphiInstallation.pas:130
+msgid "Select output folder"
+msgstr "Çıktı klasörlerini seçin"
+
+#: PageSelectDelphiInstallation.pas:215
 msgid "Select Delphi Installation"
 msgstr "Delphi Sürümünüzü Seçin"
 
-#: PageSelectDelphiInstallation.pas:86
+#: PageSelectDelphiInstallation.pas:216
 msgid "Please select delphi installation that you want to compile with"
 msgstr "Derlemek için kullanacağınız Delphi sürümünü seçin."
 
-#: PageSelectDelphiInstallation.pas:88
-msgid "Compile"
-msgstr "Derle"
-
-#: PageSelectFolders.pas:48
+#: PageSelectFolders.pas:49
 msgid "Select Folders"
 msgstr "Klasörleri Seçin"
 
-#: PageSelectFolders.pas:49
+#: PageSelectFolders.pas:50
 msgid "Please select folders which contains the packages that you want to install"
 msgstr "Yüklemek istediğiniz paketleri içeren klasörü seçiniz."
 
-#: PageSelectFolders.pas:61
+#: PageSelectFolders.pas:62
 msgid "Select the folder where packages are"
 msgstr "Paketlerin olduğu klasörü seçin"
 
-#: PageShowPackageList.pas:64
-msgid "Looking for packages in folders..."
-msgstr "Klasörlerdeki paketler aranıyor..."
-
-#: PageShowPackageList.pas:103
+#: PageShowPackageList.pas:208
 msgid "Select Packages"
 msgstr "Paketleri seçiniz"
 
-#: PageShowPackageList.pas:104
+#: PageShowPackageList.pas:209
 msgid "Select packages that you want to compile."
 msgstr "Derlemek istediğiniz paketleri seçin."
 
-#: PageShowPackageList.pas:119
+#: PageShowPackageList.pas:215
+msgid "Compile"
+msgstr "Derle"
+
+#: PageShowPackageList.pas:245
 msgid "Designtime Package"
 msgstr "Tasarım Anı Paketi"
 
-#: PageShowPackageList.pas:121
+#: PageShowPackageList.pas:247
 msgid "Runtime Package"
 msgstr "Çalışma Anı Paketi"
 
-#: PageShowPackageList.pas:122
-msgid "FullPath:"
+#: PageShowPackageList.pas:248
+msgid "FullPath   :"
 msgstr "Tam Yol:"
 
-#: PageShowPackageList.pas:123
-msgid "Type    :"
+#: PageShowPackageList.pas:249
+msgid "Description:"
+msgstr "Açıklama:"
+
+#: PageShowPackageList.pas:250
+msgid "Type       :"
 msgstr "Tip     :"
 
-#: PageShowPackageList.pas:124
-msgid "Requires:"
+#: PageShowPackageList.pas:251
+msgid "Requires   :"
 msgstr "Gerekliler:"
 
-#: PageShowPackageList.pas:170
-msgid "<No Description>"
-msgstr "<Açıklama Yok>"
-
-#: PageShowPackageList.pas:174
+#: PageShowPackageList.pas:275
 msgid "runtime"
 msgstr "çalışma anı"
 
-#: PageShowPackageList.pas:176
+#: PageShowPackageList.pas:277
 msgid "design"
 msgstr "tasarım anı"
 
+#: PageShowPackageList.pas:336
+#: PageShowPackageList.pas:355
+msgid "File Mask"
+msgstr "Dosya maskesi"
+
+#: PageShowPackageList.pas:355
+msgid "UnSelect Matching..."
+msgstr "Eşleşenleri Seçme..."
+
+#: PageShowPackageList.pas:397
+msgid "Package"
+msgstr "Paket:"
+
+#: PageShowPackageList.pas:402
+msgid "Description"
+msgstr "Açıklama"
+
+#: PageShowPackageList.pas:407
+msgid "Type"
+msgstr "Tip"
+
+#: PageSummary.pas:46
+msgid "Base Folder:"
+msgstr "Taban Klasör:"
+
+#: PageSummary.pas:52
+msgid "Delphi Version:"
+msgstr "Delphi Sürümü:"
+
+#: PageSummary.pas:60
+msgid "Help Files:"
+msgstr "Yardım Dosyaları:"
+
+#: PageSummary.pas:71
+msgid "Package List:"
+msgstr "Paket Listesi:"
+
+#: PageSummary.pas:84
+msgid "However, following packages had some errors:"
+msgstr "Aşağıdaki paketlerde bazı hatalar oluştu:"
+
+#: PageSummary.pas:97
+msgid "Source File Paths:"
+msgstr "Kaynak Dosya Yolları:"
+
+#: PageSummary.pas:149
+msgid "Finished"
+msgstr "Bitti"
+
+#: PageSummary.pas:150
+msgid "Installation Summary"
+msgstr "Kurulum Özeti"
+
+#: PageSummary.pas:152
+msgid "&Exit"
+msgstr "&Çıkış"
+
+#. Localizable strings.
+#. Programmer's name for it: SEditLinkIsNil
+#. Localizable strings.
+#. Programmer's name for it: SEditLinkIsNil
+#: libs/VirtualTreeview/VirtualTrees.pas:3484
+msgid "Edit link must not be nil."
+msgstr "Edit link must not be nil."
+
+#. Programmer's name for it: SWrongMoveError
+#. Programmer's name for it: SWrongMoveError
+#: libs/VirtualTreeview/VirtualTrees.pas:3485
+msgid "Target node cannot be a child node of the node to be moved."
+msgstr "Target node cannot be a child node of the node to be moved."
+
+#. Programmer's name for it: SWrongStreamFormat
+#. Programmer's name for it: SWrongStreamFormat
+#: libs/VirtualTreeview/VirtualTrees.pas:3486
+msgid "Unable to load tree structure, the format is wrong."
+msgstr "Unable to load tree structure, the format is wrong."
+
+#. Programmer's name for it: SWrongStreamVersion
+#. Programmer's name for it: SWrongStreamVersion
+#: libs/VirtualTreeview/VirtualTrees.pas:3487
+msgid "Unable to load tree structure, the version is unknown."
+msgstr "Unable to load tree structure, the version is unknown."
+
+#. Programmer's name for it: SStreamTooSmall
+#. Programmer's name for it: SStreamTooSmall
+#: libs/VirtualTreeview/VirtualTrees.pas:3488
+msgid "Unable to load tree structure, not enough data available."
+msgstr "Unable to load tree structure, not enough data available."
+
+#. Programmer's name for it: SCorruptStream1
+#. Programmer's name for it: SCorruptStream1
+#: libs/VirtualTreeview/VirtualTrees.pas:3489
+msgid "Stream data corrupt. A node's anchor chunk is missing."
+msgstr "Stream data corrupt. A node's anchor chunk is missing."
+
+#. Programmer's name for it: SCorruptStream2
+#. Programmer's name for it: SCorruptStream2
+#: libs/VirtualTreeview/VirtualTrees.pas:3490
+msgid "Stream data corrupt. Unexpected data after node's end position."
+msgstr "Stream data corrupt. Unexpected data after node's end position."
+
+#. Programmer's name for it: SClipboardFailed
+#. Programmer's name for it: SClipboardFailed
+#: libs/VirtualTreeview/VirtualTrees.pas:3491
+msgid "Clipboard operation failed."
+msgstr "Clipboard operation failed."
+
+#. Programmer's name for it: SCannotSetUserData
+#. Programmer's name for it: SCannotSetUserData
+#: libs/VirtualTreeview/VirtualTrees.pas:3492
+msgid "Cannot set initial user data because there is not enough user data space allocated."
+msgstr "Cannot set initial user data because there is not enough user data space allocated."
+
+#~ msgid "Label1"
+#~ msgstr "Label1"
+#~ msgid "File:"
+#~ msgstr "Dosya:"
+#~ msgid "lblFileName"
+#~ msgstr "lblFileName"
+#~ msgid "&Select Folder..."
+#~ msgstr "Klasör &Seçin"
+#~ msgid "Name"
+#~ msgstr "İsim"
+#~ msgid "&Finish"
+#~ msgstr "&Bitir"
+#~ msgid "Looking for packages in folders..."
+#~ msgstr "Klasörlerdeki paketler aranıyor..."
+#~ msgid "<No Description>"
+#~ msgstr "<Açıklama Yok>"
 #~ msgid "Author: ibrahim dursun (thex@thexpot.net)"
 #~ msgstr "Yazar: ibrahim dursun (thex@thexpot.net)"
 #~ msgid "DelphiPI helps you to compile & install delphi packages to IDE."

@@ -278,7 +278,6 @@ begin
   end;
 end;
 
-
 procedure TShowPackageListPage.packageTreeGetImageIndex(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
   var Ghosted: Boolean; var ImageIndex: Integer);
