@@ -30,14 +30,17 @@ type
       var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: UnicodeString);
   private
     packageLoadThread: TThread;
-    packageTree : TVirtualStringTree;
+    fPackageTree : TVirtualStringTree;
+    fProcessedPackageInfo: TPackageInfo;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(node: PVirtualNode; checkState: TCheckState);
     procedure CreateVirtualTree;
     procedure packageTreeGetImageIndex(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
       var Ghosted: Boolean; var ImageIndex: Integer);
-    procedure PackageInfoCollectCallBack(const node: PVirtualNode);   
+    procedure PackageInfoCollectCallBack(const node: PVirtualNode);
+    procedure CheckRequiredPackagesCallBack(const node: PVirtualNode);
+    procedure UncheckDependentPackagesCallBack(const node: PVirtualNode);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -73,7 +76,8 @@ type
   TVirtualNodeHandler = procedure(const node: PVirtualNode) of object;
   TVirtualTreeHelper = class helper for TBaseVirtualTree
   public
-    procedure Traverse(node: PVirtualNode; handler: TVirtualNodeHandler);
+    procedure Traverse(node: PVirtualNode; handler: TVirtualNodeHandler); overload;
+    procedure Traverse(handler: TVirtualNodeHandler); overload;
   end;
 
 
@@ -87,12 +91,51 @@ var
 begin
  if node = nil then exit;
   node.CheckState := checkState;
+  // code below unchecks dependent packages when a required package is unchecked, vice versa
+//  data := fPackageTree.GetNodeData(node);
+//  if data.info <> nil then
+//  begin
+//    fProcessedPackageInfo := data.info;
+//    if node.CheckState = csUncheckedNormal then
+//      fPackageTree.Traverse(fPackageTree.RootNode, UncheckDependentPackagesCallBack);
+//    if node.CheckState = csCheckedNormal then
+//      fPackageTree.Traverse(fPackageTree.RootNode, CheckRequiredPackagesCallBack);
+//  end;
+
   child := node.FirstChild;
   while child <> nil do
   begin
      ChangeState(child, checkState);
      child := child.NextSibling;
   end;
+end;
+
+procedure TShowPackageListPage.CheckRequiredPackagesCallBack(
+  const node: PVirtualNode);
+var
+  data: PNodeData;  
+begin
+  if node.CheckState = csCheckedNormal then exit;
+  if fProcessedPackageInfo = nil then exit;
+  
+  data := fPackageTree.GetNodeData(node);
+  if (data = nil) or (data.info = nil) then exit;
+  if fProcessedPackageInfo.DependsOn(data.info) then
+    node.CheckState := csCheckedNormal;
+end;
+
+procedure TShowPackageListPage.UncheckDependentPackagesCallBack(
+  const node: PVirtualNode);
+var
+  data: PNodeData;  
+begin
+  if node.CheckState = csUncheckedNormal then exit;
+  if fProcessedPackageInfo = nil then exit;
+  
+  data := fPackageTree.GetNodeData(node);
+  if (data = nil) or (data.info = nil) then exit;
+  if data.info.DependsOn(fProcessedPackageInfo) then
+    node.CheckState := csUncheckedNormal;
 end;
 
 constructor TShowPackageListPage.Create(Owner: TComponent;
@@ -102,7 +145,7 @@ begin
   fCompilationData := compilationData;
   CreateVirtualTree;
 
-  packageLoadThread := TPackageLoadThread.Create(FCompilationData, packageTree);
+  packageLoadThread := TPackageLoadThread.Create(FCompilationData, fPackageTree);
   with packageLoadThread do begin
     FreeOnTerminate := true;
     OnTerminate := packageLoadCompleted;
@@ -131,7 +174,7 @@ end;
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
 begin
   threadWorking := false;
-  packageTree.FullExpand;
+  fPackageTree.FullExpand;
   UpdateWizardState;
 end;
 
@@ -139,7 +182,7 @@ procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree;
   Node: PVirtualNode);
 begin
   ChangeState(Node, Node.CheckState);
-  packageTree.InvalidateChildren(Node,true);
+  fPackageTree.InvalidateChildren(Node,true);
 end;
 
 procedure TShowPackageListPage.packageTreeGetHint(Sender: TBaseVirtualTree;
@@ -213,7 +256,7 @@ begin
     packageLoadThread.Terminate;
     exit;
   end;
-  packageTree.Traverse(packageTree.RootNode, packageInfoCollectCallBack);
+  fPackageTree.Traverse(fPackageTree.RootNode, packageInfoCollectCallBack);
   fCompilationData.PackageList.Pack;
 end;
 
@@ -223,7 +266,7 @@ var
   data: PNodeData;  
 begin
   if node.CheckState <> csCheckedNormal then exit;
-  data := packageTree.GetNodeData(node);
+  data := fPackageTree.GetNodeData(node);
   if data.info <> nil then
     fCompilationData.PackageList.Add(data.info);
 end;
@@ -235,8 +278,8 @@ end;
 
 procedure TShowPackageListPage.CreateVirtualTree;
 begin
-  packageTree := TVirtualStringTree.Create(Self);
-  with packageTree do
+  fPackageTree := TVirtualStringTree.Create(Self);
+  with fPackageTree do
   begin
     Name := 'packageTree';
     Parent := Self;
@@ -341,7 +384,7 @@ begin
           child.CheckType := ctCheckBox;
           data := fTree.GetNodeData(child);
           data.name := sr.Name;
-          data.info := TPackageInfo.Create(directory + '\' + sr.Name);
+          data.info := TPackageInfo.Create(directory + sr.Name);
         end;
       until FindNext(Sr) <> 0;
     finally
@@ -389,6 +432,11 @@ begin
 
   if (node.NextSibling <> nil) and (node <> node.NextSibling) then
     Traverse(node.NextSibling, handler);
+end;
+
+procedure TVirtualTreeHelper.Traverse(handler: TVirtualNodeHandler);
+begin
+  Traverse(RootNode, handler);
 end;
 
 end.

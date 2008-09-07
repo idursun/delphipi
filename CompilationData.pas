@@ -115,7 +115,7 @@ begin
   SourceFilePaths.Duplicates := dupIgnore;
      
   for i := 0 to fPackageList.Count - 1 do begin
-    SourceFilePaths.Add(ExtractFilePath(fPackageList[i].FileName));
+    SourceFilePaths.Add(ExtractFileDir(fPackageList[i].FileName));
     for j := 0 to fPackageList[i].ContainedFileList.Count - 1 do
       containedFiles.Add(ExtractFileName(fPackageList[i].ContainedFileList[j]));
   end;
@@ -128,7 +128,7 @@ begin
            '', nil);
 
   for I := 0 to files.count - 1 do begin
-    if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
+    if containedFiles.IndexOf(ExtractFileDir(files[i])) > 0 then
       SourceFilePaths.Add(ExtractFilePath(files[i]));
   end;
 end;
