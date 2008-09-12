@@ -99,6 +99,7 @@ var
   i : integer;
   j: Integer;
   files, containedFiles  : TStringList;
+  tmp: String;
 begin
   Assert(assigned(SourceFilePaths));
   fSourceFilePaths.Clear;
@@ -128,8 +129,8 @@ begin
            '', nil);
 
   for I := 0 to files.count - 1 do begin
-    if containedFiles.IndexOf(ExtractFileDir(files[i])) > 0 then
-      SourceFilePaths.Add(ExtractFilePath(files[i]));
+    if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
+      SourceFilePaths.Add(ExtractFileDir(files[i]));
   end;
 end;
 
