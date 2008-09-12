@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "DelphiPI"
-#define MyAppVerName "DelphiPI 0.22"
+#define MyAppVerName "DelphiPI 0.32"
 #define MyAppPublisher "http://www.thexpot.net"
 #define MyAppURL "http://delphipi.googlecode.com"
 #define MyAppExeName "DelphiPI.exe"
@@ -18,7 +18,7 @@ DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=C:\Projelerim\delphipi\setup\LICENSE.txt
-OutputBaseFilename=delphipi.0.22.setup
+OutputBaseFilename=delphipi.0.32.setup
 Compression=lzma/ultra
 SolidCompression=true
 
@@ -33,7 +33,7 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 Source: ..\DelphiPI.exe; DestDir: {app}; Flags: ignoreversion
 Source: LICENSE.txt; DestDir: {app}; Flags: ignoreversion
 Source: README.TXT; DestDir: {app}; Flags: ignoreversion
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+Source: ..\locale\tr\LC_MESSAGES\default.mo; DestDir: {app}\locale\tr\LC_MESSAGES; DestName: default.mo; Flags: ignoreversion; Languages: tr
 
 [Icons]
 Name: {group}\{#MyAppName}; Filename: {app}\{#MyAppExeName}

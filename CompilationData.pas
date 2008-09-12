@@ -96,10 +96,8 @@ end;
 //TODO: refactor -- finds paths of files has .pas extension and then matches pas files in packages, removes remaining paths 
 procedure TCompilationData.ResolveSourcePaths;
 var
-  i : integer;
-  j: Integer;
-  files, containedFiles  : TStringList;
-  tmp: String;
+  i,j: integer;
+  files, containedFiles: TStringList;
 begin
   Assert(assigned(SourceFilePaths));
   fSourceFilePaths.Clear;

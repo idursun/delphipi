@@ -21,6 +21,7 @@ type
     ImageList: TImageList;
     miUnselectMatching: TMenuItem;
     fPackageTree: TVirtualStringTree;
+    lblWait: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -105,6 +106,7 @@ begin
   with packageLoadThread do begin
     FreeOnTerminate := true;
     OnTerminate := packageLoadCompleted;
+    lblWait.Visible := true;
     //packageListView.AddItem(_('Looking for packages in folders...'),nil);
     threadWorking := true;
     Resume;
@@ -220,6 +222,7 @@ end;
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
 begin
   threadWorking := false;
+  lblWait.Visible := false;
   fPackageTree.FullExpand;
   UpdateWizardState;
 end;
@@ -246,10 +249,10 @@ begin
     _type := _('Designtime Package');
     if (info.RunOnly) then
       _type := _('Runtime Package');
-    HintText := _('FullPath   :')+ info.FileName+#13#10+
+    HintText := _('FullPath:')+ info.FileName+#13#10+
                 _('Description:')+ info.Description+#13#10+
-                _('Type       :')+ _type+#13#10+
-                _('Requires   :')+ #13#10 + info.RequiredPackageList.Text;
+                _('Type:')+ _type+#13#10+
+                _('Requires:')+ #13#10 + info.RequiredPackageList.Text;
   end;
 end;
 
@@ -273,7 +276,7 @@ begin
          CellText := data.Info.Description;
     2: if data.Info <> nil then
          if data.Info.RunOnly then
-           CellText := _('runtime');
+           CellText := _('runtime')
          else
            CellText := _('design');
   end;

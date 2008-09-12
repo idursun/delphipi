@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: DelphiPI 0.32\n"
-"POT-Creation-Date: 2008-09-07 21:27\n"
+"POT-Creation-Date: 2008-09-12 22:28\n"
 "PO-Revision-Date: \n"
 "Last-Translator: ibrahim dursun\n"
 "Language-Team: \n"
@@ -25,6 +25,8 @@ msgstr "DelphiPI Hakkında"
 #. frmWizard..HeaderPanel..lblHeader..Font.Name
 #. WizardPage..Font.Name
 #. ProgressPage..GroupBox1..lblPackage..Font.Name
+#. ShowPackageListPage..lblWait..Font.Name
+#. ShowPackageListPage..fPackageTree..Header.Font.Name
 #. frmAbout..Font.Name
 #. frmAbout..GroupBox2..Label7..Font.Name
 #. frmAbout..GroupBox2..Label8..Font.Name
@@ -34,6 +36,8 @@ msgstr "DelphiPI Hakkında"
 #. frmWizard..HeaderPanel..lblHeader..Font.Name
 #. WizardPage..Font.Name
 #. ProgressPage..GroupBox1..lblPackage..Font.Name
+#. ShowPackageListPage..lblWait..Font.Name
+#. ShowPackageListPage..fPackageTree..Header.Font.Name
 #: FormAbout.dfm:12
 #: FormAbout.dfm:52
 #: FormAbout.dfm:621
@@ -43,6 +47,8 @@ msgstr "DelphiPI Hakkında"
 #: FormWizard.dfm:349
 #: PageBase.dfm:13
 #: PageProgress.dfm:34
+#: PageShowPackageList.dfm:18
+#: PageShowPackageList.dfm:33
 msgid "Tahoma"
 msgstr "Tahoma"
 
@@ -86,7 +92,7 @@ msgstr "Proje Websitesi:"
 #. frmAbout..GroupBox2..Label11..Caption
 #: FormAbout.dfm:644
 msgid "Author's name:"
-msgstr "Yazar'ın adı:"
+msgstr "Yazarın adı:"
 
 #. frmAbout..GroupBox2..lblAuthorsWebsite..Caption
 #. frmAbout..GroupBox2..lblAuthorsWebsite..Caption
@@ -133,14 +139,14 @@ msgstr "lblDescription"
 #. frmWizard..pBottom..btnBack..Caption
 #. frmWizard..pBottom..btnBack..Caption
 #: FormWizard.dfm:385
-#: FormWizard.pas:150
+#: FormWizard.pas:161
 msgid "<< &Back"
 msgstr "<< Ö&nceki"
 
 #. frmWizard..pBottom..btnNext..Caption
 #. frmWizard..pBottom..btnNext..Caption
 #: FormWizard.dfm:396
-#: FormWizard.pas:146
+#: FormWizard.pas:157
 msgid "&Next >>"
 msgstr "&Sonraki >>"
 
@@ -312,34 +318,58 @@ msgstr "Alt Klasör"
 msgid "ShowPackageListPage"
 msgstr "ShowPackageListPage"
 
+#. ShowPackageListPage..lblWait..Caption
+#. ShowPackageListPage..lblWait..Caption
+#: PageShowPackageList.dfm:14
+msgid "Please wait while searching folders "
+msgstr "Klasörler taranırken lütfen bekleyiniz"
+
+#. ShowPackageListPage..fPackageTree......WideText
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:55
+msgid "Package"
+msgstr "Paket:"
+
+#. ShowPackageListPage..fPackageTree......WideText
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:60
+msgid "Description"
+msgstr "Açıklama"
+
+#. ShowPackageListPage..fPackageTree......WideText
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:65
+msgid "Type"
+msgstr "Tip"
+
 #. ShowPackageListPage..SelectPopupMenu..miSelectAll..Caption
 #. ShowPackageListPage..SelectPopupMenu..miSelectAll..Caption
-#: PageShowPackageList.dfm:13
+#: PageShowPackageList.dfm:72
 msgid "Select All"
 msgstr "Hepsini Seç"
 
 #. ShowPackageListPage..SelectPopupMenu..miUnselectAll..Caption
 #. ShowPackageListPage..SelectPopupMenu..miUnselectAll..Caption
-#: PageShowPackageList.dfm:17
+#: PageShowPackageList.dfm:76
 msgid "Unselect All"
 msgstr "Hiçbirini Seçme"
 
 #. ShowPackageListPage..SelectPopupMenu..N1..Caption
 #. ShowPackageListPage..SelectPopupMenu..N1..Caption
-#: PageShowPackageList.dfm:21
+#: PageShowPackageList.dfm:80
 msgid "-"
 msgstr "-"
 
 #. ShowPackageListPage..SelectPopupMenu..miSelectMatching..Caption
 #. ShowPackageListPage..SelectPopupMenu..miSelectMatching..Caption
-#: PageShowPackageList.dfm:24
-#: PageShowPackageList.pas:336
+#: PageShowPackageList.dfm:83
+#: PageShowPackageList.pas:339
 msgid "Select Matching..."
 msgstr "Eşleşenleri Seç..."
 
 #. ShowPackageListPage..SelectPopupMenu..miUnselectMatching..Caption
 #. ShowPackageListPage..SelectPopupMenu..miUnselectMatching..Caption
-#: PageShowPackageList.dfm:28
+#: PageShowPackageList.dfm:87
 msgid "Unselect Matching..."
 msgstr "Eşleşenleri Seçme..."
 
@@ -465,70 +495,58 @@ msgstr "Yüklemek istediğiniz paketleri içeren klasörü seçiniz."
 msgid "Select the folder where packages are"
 msgstr "Paketlerin olduğu klasörü seçin"
 
-#: PageShowPackageList.pas:208
+#: PageShowPackageList.pas:211
 msgid "Select Packages"
 msgstr "Paketleri seçiniz"
 
-#: PageShowPackageList.pas:209
+#: PageShowPackageList.pas:212
 msgid "Select packages that you want to compile."
 msgstr "Derlemek istediğiniz paketleri seçin."
 
-#: PageShowPackageList.pas:215
+#: PageShowPackageList.pas:218
 msgid "Compile"
 msgstr "Derle"
 
-#: PageShowPackageList.pas:245
+#: PageShowPackageList.pas:249
 msgid "Designtime Package"
 msgstr "Tasarım Anı Paketi"
 
-#: PageShowPackageList.pas:247
+#: PageShowPackageList.pas:251
 msgid "Runtime Package"
 msgstr "Çalışma Anı Paketi"
 
-#: PageShowPackageList.pas:248
-msgid "FullPath   :"
+#: PageShowPackageList.pas:252
+msgid "FullPath:"
 msgstr "Tam Yol:"
 
-#: PageShowPackageList.pas:249
+#: PageShowPackageList.pas:253
 msgid "Description:"
 msgstr "Açıklama:"
 
-#: PageShowPackageList.pas:250
-msgid "Type       :"
-msgstr "Tip     :"
+#: PageShowPackageList.pas:254
+msgid "Type:"
+msgstr "Tip:"
 
-#: PageShowPackageList.pas:251
-msgid "Requires   :"
+#: PageShowPackageList.pas:255
+msgid "Requires:"
 msgstr "Gerekliler:"
 
-#: PageShowPackageList.pas:275
+#: PageShowPackageList.pas:279
 msgid "runtime"
 msgstr "çalışma anı"
 
-#: PageShowPackageList.pas:277
+#: PageShowPackageList.pas:281
 msgid "design"
 msgstr "tasarım anı"
 
-#: PageShowPackageList.pas:336
-#: PageShowPackageList.pas:355
+#: PageShowPackageList.pas:339
+#: PageShowPackageList.pas:358
 msgid "File Mask"
 msgstr "Dosya maskesi"
 
-#: PageShowPackageList.pas:355
+#: PageShowPackageList.pas:358
 msgid "UnSelect Matching..."
 msgstr "Eşleşenleri Seçme..."
-
-#: PageShowPackageList.pas:397
-msgid "Package"
-msgstr "Paket:"
-
-#: PageShowPackageList.pas:402
-msgid "Description"
-msgstr "Açıklama"
-
-#: PageShowPackageList.pas:407
-msgid "Type"
-msgstr "Tip"
 
 #: PageSummary.pas:46
 msgid "Base Folder:"
@@ -566,62 +584,30 @@ msgstr "Kurulum Özeti"
 msgid "&Exit"
 msgstr "&Çıkış"
 
-#. Localizable strings.
-#. Programmer's name for it: SEditLinkIsNil
-#. Localizable strings.
-#. Programmer's name for it: SEditLinkIsNil
-#: libs/VirtualTreeview/VirtualTrees.pas:3484
-msgid "Edit link must not be nil."
-msgstr "Edit link must not be nil."
-
-#. Programmer's name for it: SWrongMoveError
-#. Programmer's name for it: SWrongMoveError
-#: libs/VirtualTreeview/VirtualTrees.pas:3485
-msgid "Target node cannot be a child node of the node to be moved."
-msgstr "Target node cannot be a child node of the node to be moved."
-
-#. Programmer's name for it: SWrongStreamFormat
-#. Programmer's name for it: SWrongStreamFormat
-#: libs/VirtualTreeview/VirtualTrees.pas:3486
-msgid "Unable to load tree structure, the format is wrong."
-msgstr "Unable to load tree structure, the format is wrong."
-
-#. Programmer's name for it: SWrongStreamVersion
-#. Programmer's name for it: SWrongStreamVersion
-#: libs/VirtualTreeview/VirtualTrees.pas:3487
-msgid "Unable to load tree structure, the version is unknown."
-msgstr "Unable to load tree structure, the version is unknown."
-
-#. Programmer's name for it: SStreamTooSmall
-#. Programmer's name for it: SStreamTooSmall
-#: libs/VirtualTreeview/VirtualTrees.pas:3488
-msgid "Unable to load tree structure, not enough data available."
-msgstr "Unable to load tree structure, not enough data available."
-
-#. Programmer's name for it: SCorruptStream1
-#. Programmer's name for it: SCorruptStream1
-#: libs/VirtualTreeview/VirtualTrees.pas:3489
-msgid "Stream data corrupt. A node's anchor chunk is missing."
-msgstr "Stream data corrupt. A node's anchor chunk is missing."
-
-#. Programmer's name for it: SCorruptStream2
-#. Programmer's name for it: SCorruptStream2
-#: libs/VirtualTreeview/VirtualTrees.pas:3490
-msgid "Stream data corrupt. Unexpected data after node's end position."
-msgstr "Stream data corrupt. Unexpected data after node's end position."
-
-#. Programmer's name for it: SClipboardFailed
-#. Programmer's name for it: SClipboardFailed
-#: libs/VirtualTreeview/VirtualTrees.pas:3491
-msgid "Clipboard operation failed."
-msgstr "Clipboard operation failed."
-
-#. Programmer's name for it: SCannotSetUserData
-#. Programmer's name for it: SCannotSetUserData
-#: libs/VirtualTreeview/VirtualTrees.pas:3492
-msgid "Cannot set initial user data because there is not enough user data space allocated."
-msgstr "Cannot set initial user data because there is not enough user data space allocated."
-
+#~ msgid "Type       :"
+#~ msgstr "Tip     :"
+#~ msgid "Edit link must not be nil."
+#~ msgstr "Edit link must not be nil."
+#~ msgid "Target node cannot be a child node of the node to be moved."
+#~ msgstr "Target node cannot be a child node of the node to be moved."
+#~ msgid "Unable to load tree structure, the format is wrong."
+#~ msgstr "Unable to load tree structure, the format is wrong."
+#~ msgid "Unable to load tree structure, the version is unknown."
+#~ msgstr "Unable to load tree structure, the version is unknown."
+#~ msgid "Unable to load tree structure, not enough data available."
+#~ msgstr "Unable to load tree structure, not enough data available."
+#~ msgid "Stream data corrupt. A node's anchor chunk is missing."
+#~ msgstr "Stream data corrupt. A node's anchor chunk is missing."
+#~ msgid "Stream data corrupt. Unexpected data after node's end position."
+#~ msgstr "Stream data corrupt. Unexpected data after node's end position."
+#~ msgid "Clipboard operation failed."
+#~ msgstr "Clipboard operation failed."
+#~ msgid ""
+#~ "Cannot set initial user data because there is not enough user data space "
+#~ "allocated."
+#~ msgstr ""
+#~ "Cannot set initial user data because there is not enough user data space "
+#~ "allocated."
 #~ msgid "Label1"
 #~ msgstr "Label1"
 #~ msgid "File:"

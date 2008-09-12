@@ -2,628 +2,718 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-09-07 22:07\n"
-"PO-Revision-Date: 2008-09-07 22:10+0200\n"
-"Last-Translator: ibrahim dursun\n"
+"POT-Creation-Date: 2008-09-12 22:28\n"
+"PO-Revision-Date: 2008-09-12 22:28\n"
+"Last-Translator: Somebody <your.email@address.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: dxgettext 1.2.1\n"
-"Language-Team: \n"
 
 #. frmAbout..Caption
+#: FormAbout.dfm:5
 #. frmAbout..Caption
 #: FormAbout.dfm:5
 msgid "About DelphiPI"
-msgstr "About DelphiPI"
+msgstr ""
 
 #. frmAbout..Font.Name
-#. frmAbout..GroupBox2..Label7..Font.Name
-#. frmAbout..GroupBox2..Label8..Font.Name
-#. frmAbout..GroupBox2..lblAuthorsWebsite..Font.Name
-#. frmAbout..GroupBox2..lblProjectWebsite..Font.Name
-#. frmWizard..Font.Name
-#. frmWizard..HeaderPanel..lblHeader..Font.Name
-#. WizardPage..Font.Name
-#. ProgressPage..GroupBox1..lblPackage..Font.Name
-#. frmAbout..Font.Name
-#. frmAbout..GroupBox2..Label7..Font.Name
-#. frmAbout..GroupBox2..Label8..Font.Name
-#. frmAbout..GroupBox2..lblAuthorsWebsite..Font.Name
-#. frmAbout..GroupBox2..lblProjectWebsite..Font.Name
-#. frmWizard..Font.Name
-#. frmWizard..HeaderPanel..lblHeader..Font.Name
-#. WizardPage..Font.Name
-#. ProgressPage..GroupBox1..lblPackage..Font.Name
 #: FormAbout.dfm:12
+#. frmAbout..GroupBox2..Label7..Font.Name
 #: FormAbout.dfm:52
+#. frmAbout..GroupBox2..Label8..Font.Name
 #: FormAbout.dfm:621
+#. frmAbout..GroupBox2..lblAuthorsWebsite..Font.Name
 #: FormAbout.dfm:656
+#. frmAbout..GroupBox2..lblProjectWebsite..Font.Name
 #: FormAbout.dfm:671
+#. frmWizard..Font.Name
 #: FormWizard.dfm:13
+#. frmWizard..HeaderPanel..lblHeader..Font.Name
 #: FormWizard.dfm:349
+#. WizardPage..Font.Name
 #: PageBase.dfm:13
+#. ProgressPage..GroupBox1..lblPackage..Font.Name
 #: PageProgress.dfm:34
+#. ShowPackageListPage..lblWait..Font.Name
+#: PageShowPackageList.dfm:18
+#. ShowPackageListPage..fPackageTree..Header.Font.Name
+#: PageShowPackageList.dfm:33
+#. frmAbout..Font.Name
+#: FormAbout.dfm:12
+#. frmAbout..GroupBox2..Label7..Font.Name
+#: FormAbout.dfm:52
+#. frmAbout..GroupBox2..Label8..Font.Name
+#: FormAbout.dfm:621
+#. frmAbout..GroupBox2..lblAuthorsWebsite..Font.Name
+#: FormAbout.dfm:656
+#. frmAbout..GroupBox2..lblProjectWebsite..Font.Name
+#: FormAbout.dfm:671
+#. frmWizard..Font.Name
+#: FormWizard.dfm:13
+#. frmWizard..HeaderPanel..lblHeader..Font.Name
+#: FormWizard.dfm:349
+#. WizardPage..Font.Name
+#: PageBase.dfm:13
+#. ProgressPage..GroupBox1..lblPackage..Font.Name
+#: PageProgress.dfm:34
+#. ShowPackageListPage..lblWait..Font.Name
+#: PageShowPackageList.dfm:18
+#. ShowPackageListPage..fPackageTree..Header.Font.Name
+#: PageShowPackageList.dfm:33
 msgid "Tahoma"
 msgstr ""
 
 #. frmAbout..btnClose..Caption
+#: FormAbout.dfm:32
 #. frmAbout..btnClose..Caption
 #: FormAbout.dfm:32
 msgid "Close"
 msgstr ""
 
 #. frmAbout..GroupBox2..Caption
+#: FormAbout.dfm:41
 #. frmAbout..GroupBox2..Caption
 #: FormAbout.dfm:41
 msgid "Information"
 msgstr ""
 
 #. frmAbout..GroupBox2..Label7..Caption
+#: FormAbout.dfm:48
 #. frmAbout..GroupBox2..Label7..Caption
 #: FormAbout.dfm:48
 msgid "Delphi Package Installer"
 msgstr ""
 
 #. frmAbout..GroupBox2..Label8..Caption
+#: FormAbout.dfm:617
 #. frmAbout..GroupBox2..Label8..Caption
 #: FormAbout.dfm:617
 msgid "0.32 'Dainese'"
 msgstr ""
 
 #. frmAbout..GroupBox2..Label9..Caption
+#: FormAbout.dfm:630
 #. frmAbout..GroupBox2..Label9..Caption
 #: FormAbout.dfm:630
 msgid "Version:"
 msgstr ""
 
 #. frmAbout..GroupBox2..Label10..Caption
+#: FormAbout.dfm:637
 #. frmAbout..GroupBox2..Label10..Caption
 #: FormAbout.dfm:637
 msgid "Project Website:"
 msgstr ""
 
 #. frmAbout..GroupBox2..Label11..Caption
+#: FormAbout.dfm:644
 #. frmAbout..GroupBox2..Label11..Caption
 #: FormAbout.dfm:644
 msgid "Author's name:"
 msgstr ""
 
 #. frmAbout..GroupBox2..lblAuthorsWebsite..Caption
+#: FormAbout.dfm:652
 #. frmAbout..GroupBox2..lblAuthorsWebsite..Caption
 #: FormAbout.dfm:652
 msgid "http://www.thexpot.net"
 msgstr ""
 
 #. frmAbout..GroupBox2..lblProjectWebsite..Caption
+#: FormAbout.dfm:667
 #. frmAbout..GroupBox2..lblProjectWebsite..Caption
 #: FormAbout.dfm:667
 msgid "http://delphipi.googlecode.com"
 msgstr ""
 
 #. frmAbout..GroupBox2..Label2..Caption
+#: FormAbout.dfm:681
 #. frmAbout..GroupBox2..Label2..Caption
 #: FormAbout.dfm:681
 msgid "Author's website:"
 msgstr ""
 
 #. frmAbout..btnDonate..Caption
+#: FormAbout.dfm:696
 #. frmAbout..btnDonate..Caption
 #: FormAbout.dfm:696
 msgid "Donate to DelphiPI"
 msgstr ""
 
 #. frmWizard..Caption
+#: FormWizard.dfm:4
 #. frmWizard..Caption
 #: FormWizard.dfm:4
 msgid "Delphi PI"
 msgstr ""
 
 #. frmWizard..HeaderPanel..lblHeader..Caption
+#: FormWizard.dfm:345
 #. frmWizard..HeaderPanel..lblHeader..Caption
 #: FormWizard.dfm:345
 msgid "lblHeader"
 msgstr ""
 
 #. frmWizard..HeaderPanel..lblDescription..Caption
+#: FormWizard.dfm:358
 #. frmWizard..HeaderPanel..lblDescription..Caption
 #: FormWizard.dfm:358
 msgid "lblDescription"
 msgstr ""
 
 #. frmWizard..pBottom..btnBack..Caption
+#: FormWizard.dfm:385
+#: FormWizard.pas:161
 #. frmWizard..pBottom..btnBack..Caption
 #: FormWizard.dfm:385
-#: FormWizard.pas:150
+#: FormWizard.pas:161
 msgid "<< &Back"
 msgstr ""
 
 #. frmWizard..pBottom..btnNext..Caption
+#: FormWizard.dfm:396
+#: FormWizard.pas:157
 #. frmWizard..pBottom..btnNext..Caption
 #: FormWizard.dfm:396
-#: FormWizard.pas:146
+#: FormWizard.pas:157
 msgid "&Next >>"
 msgstr ""
 
 #. frmWizard..pBottom..btnAbout..Caption
+#: FormWizard.dfm:408
 #. frmWizard..pBottom..btnAbout..Caption
 #: FormWizard.dfm:408
 msgid "About..."
 msgstr ""
 
 #. WizardPage..Caption
+#: PageBase.dfm:6
 #. WizardPage..Caption
 #: PageBase.dfm:6
 msgid "WizardPage"
 msgstr ""
 
 #. InstallHelpFilesPage..Caption
+#: PageInstallHelpFiles.dfm:2
 #. InstallHelpFilesPage..Caption
 #: PageInstallHelpFiles.dfm:2
 msgid "InstallHelpFilesPage"
 msgstr ""
 
 #. InstallHelpFilesPage..Label1....Caption
+#: PageInstallHelpFiles.dfm:16
 #. InstallHelpFilesPage..Label1....Caption
 #: PageInstallHelpFiles.dfm:16
-msgid "DelphiPI has found some help files in the folder that you have selected. Would you like to install them as well?"
+msgid "DelphiPI has found some help files in the folder that you have "
+"selected. Would you like to install them as "
+"well?"
 msgstr ""
 
 #. InstallHelpFilesPage..helpFileList......Caption
+#: PageInstallHelpFiles.dfm:29
 #. InstallHelpFilesPage..helpFileList......Caption
 #: PageInstallHelpFiles.dfm:29
 msgid "Help File Name"
 msgstr ""
 
 #. InstallHelpFilesPage..btnInstallHelpFiles..Caption
+#: PageInstallHelpFiles.dfm:44
 #. InstallHelpFilesPage..btnInstallHelpFiles..Caption
 #: PageInstallHelpFiles.dfm:44
 msgid "Install Help Files"
 msgstr ""
 
 #. ProgressPage..Caption
+#: PageProgress.dfm:2
 #. ProgressPage..Caption
 #: PageProgress.dfm:2
 msgid "ProgressPage"
 msgstr ""
 
 #. ProgressPage..GroupBox1..Caption
+#: PageProgress.dfm:13
 #. ProgressPage..GroupBox1..Caption
 #: PageProgress.dfm:13
 msgid "Overall Progress"
 msgstr ""
 
 #. ProgressPage..GroupBox1..Label1..Caption
+#: PageProgress.dfm:23
 #. ProgressPage..GroupBox1..Label1..Caption
 #: PageProgress.dfm:23
 msgid "Package:"
 msgstr ""
 
 #. ProgressPage..GroupBox1..lblPackage..Caption
+#: PageProgress.dfm:30
 #. ProgressPage..GroupBox1..lblPackage..Caption
 #: PageProgress.dfm:30
 msgid "lblPackage"
 msgstr ""
 
 #. ProgressPage..GroupBox1..lblCurrentPackageNo..Caption
+#: PageProgress.dfm:44
 #. ProgressPage..GroupBox1..lblCurrentPackageNo..Caption
 #: PageProgress.dfm:44
 msgid "     "
 msgstr ""
 
 #. ProgressPage..GroupBox2..Caption
+#: PageProgress.dfm:61
 #. ProgressPage..GroupBox2..Caption
 #: PageProgress.dfm:61
 msgid "Compiler Output"
 msgstr ""
 
 #. ProgressPage..GroupBox2..Memo..Font.Name
+#: PageProgress.dfm:74
 #. ProgressPage..GroupBox2..Memo..Font.Name
 #: PageProgress.dfm:74
 msgid "Courier New"
 msgstr ""
 
 #. SelectDelphiInstallationPage..Caption
+#: PageSelectDelphiInstallation.dfm:3
 #. SelectDelphiInstallationPage..Caption
 #: PageSelectDelphiInstallation.dfm:3
 msgid "SelectDelphiInstallationPage"
 msgstr ""
 
 #. SelectDelphiInstallationPage..rgDelphiVersions..Caption
+#: PageSelectDelphiInstallation.dfm:14
 #. SelectDelphiInstallationPage..rgDelphiVersions..Caption
 #: PageSelectDelphiInstallation.dfm:14
 msgid "Installed Delphi Versions"
 msgstr ""
 
 #. SelectDelphiInstallationPage..grpOutputFolders..Caption
+#: PageSelectDelphiInstallation.dfm:25
 #. SelectDelphiInstallationPage..grpOutputFolders..Caption
 #: PageSelectDelphiInstallation.dfm:25
 msgid "Output Folders"
 msgstr ""
 
 #. SelectDelphiInstallationPage..grpOutputFolders..lblBPLOutputFolder..Caption
+#: PageSelectDelphiInstallation.dfm:35
 #. SelectDelphiInstallationPage..grpOutputFolders..lblBPLOutputFolder..Caption
 #: PageSelectDelphiInstallation.dfm:35
 msgid "BPL:"
 msgstr ""
 
 #. SelectDelphiInstallationPage..grpOutputFolders..lblDCP..Caption
+#: PageSelectDelphiInstallation.dfm:42
 #. SelectDelphiInstallationPage..grpOutputFolders..lblDCP..Caption
 #: PageSelectDelphiInstallation.dfm:42
 msgid "DCP:"
 msgstr ""
 
 #. SelectDelphiInstallationPage..grpOutputFolders..btnBPLBrowse..Caption
-#. SelectDelphiInstallationPage..grpOutputFolders..btnDCPBrowse..Caption
-#. SelectFoldersPage..GroupBox2..btnSelectFolder..Caption
-#. SelectDelphiInstallationPage..grpOutputFolders..btnBPLBrowse..Caption
-#. SelectDelphiInstallationPage..grpOutputFolders..btnDCPBrowse..Caption
-#. SelectFoldersPage..GroupBox2..btnSelectFolder..Caption
 #: PageSelectDelphiInstallation.dfm:58
+#. SelectDelphiInstallationPage..grpOutputFolders..btnDCPBrowse..Caption
 #: PageSelectDelphiInstallation.dfm:76
+#. SelectFoldersPage..GroupBox2..btnSelectFolder..Caption
+#: PageSelectFolders.dfm:77
+#. SelectDelphiInstallationPage..grpOutputFolders..btnBPLBrowse..Caption
+#: PageSelectDelphiInstallation.dfm:58
+#. SelectDelphiInstallationPage..grpOutputFolders..btnDCPBrowse..Caption
+#: PageSelectDelphiInstallation.dfm:76
+#. SelectFoldersPage..GroupBox2..btnSelectFolder..Caption
 #: PageSelectFolders.dfm:77
 msgid "..."
 msgstr ""
 
 #. SelectFoldersPage..Caption
+#: PageSelectFolders.dfm:2
 #. SelectFoldersPage..Caption
 #: PageSelectFolders.dfm:2
 msgid "SelectFoldersPage"
 msgstr ""
 
 #. SelectFoldersPage..GroupBox1..Caption
+#: PageSelectFolders.dfm:13
 #. SelectFoldersPage..GroupBox1..Caption
 #: PageSelectFolders.dfm:13
 msgid "Pattern to select package files "
 msgstr ""
 
 #. SelectFoldersPage..GroupBox1..Label3..Caption
+#: PageSelectFolders.dfm:23
 #. SelectFoldersPage..GroupBox1..Label3..Caption
 #: PageSelectFolders.dfm:23
 msgid "Package File Pattern"
 msgstr ""
 
 #. SelectFoldersPage..GroupBox1..Label2....Caption
+#: PageSelectFolders.dfm:33
 #. SelectFoldersPage..GroupBox1..Label2....Caption
 #: PageSelectFolders.dfm:33
-msgid "Specify a pattern that matches for the package files that are suitable for your delphi installation. ie: *d7.dpk for Delphi 7"
+msgid "Specify a pattern that matches for the package files that are "
+"suitable for your delphi installation. ie: *d7.dpk for Delphi "
+"7"
 msgstr ""
 
 #. SelectFoldersPage..GroupBox1..cbPattern..Text
+#: PageSelectFolders.dfm:50
 #. SelectFoldersPage..GroupBox1..cbPattern..Text
 #: PageSelectFolders.dfm:50
 msgid "*.dpk"
 msgstr ""
 
 #. SelectFoldersPage..GroupBox2..Caption
+#: PageSelectFolders.dfm:59
 #. SelectFoldersPage..GroupBox2..Caption
 #: PageSelectFolders.dfm:59
-msgid "Select Base Folder contains both Package and Source files"
+msgid "Select Base Folder contains both Package and Source "
+"files"
 msgstr ""
 
 #. SelectFoldersPage..GroupBox2..Label1..Caption
+#: PageSelectFolders.dfm:69
 #. SelectFoldersPage..GroupBox2..Label1..Caption
 #: PageSelectFolders.dfm:69
 msgid "Base Folder"
 msgstr ""
 
 #. ShowPackageListPage..Caption
+#: PageShowPackageList.dfm:2
 #. ShowPackageListPage..Caption
 #: PageShowPackageList.dfm:2
 msgid "ShowPackageListPage"
 msgstr ""
 
+#. ShowPackageListPage..lblWait..Caption
+#: PageShowPackageList.dfm:14
+#. ShowPackageListPage..lblWait..Caption
+#: PageShowPackageList.dfm:14
+msgid "Please wait while searching folders "
+msgstr ""
+
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:55
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:55
+msgid "Package"
+msgstr ""
+
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:60
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:60
+msgid "Description"
+msgstr ""
+
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:65
+#. ShowPackageListPage..fPackageTree......WideText
+#: PageShowPackageList.dfm:65
+msgid "Type"
+msgstr ""
+
 #. ShowPackageListPage..SelectPopupMenu..miSelectAll..Caption
+#: PageShowPackageList.dfm:72
 #. ShowPackageListPage..SelectPopupMenu..miSelectAll..Caption
-#: PageShowPackageList.dfm:13
+#: PageShowPackageList.dfm:72
 msgid "Select All"
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..miUnselectAll..Caption
+#: PageShowPackageList.dfm:76
 #. ShowPackageListPage..SelectPopupMenu..miUnselectAll..Caption
-#: PageShowPackageList.dfm:17
+#: PageShowPackageList.dfm:76
 msgid "Unselect All"
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..N1..Caption
+#: PageShowPackageList.dfm:80
 #. ShowPackageListPage..SelectPopupMenu..N1..Caption
-#: PageShowPackageList.dfm:21
+#: PageShowPackageList.dfm:80
 msgid "-"
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..miSelectMatching..Caption
+#: PageShowPackageList.dfm:83
+#: PageShowPackageList.pas:339
 #. ShowPackageListPage..SelectPopupMenu..miSelectMatching..Caption
-#: PageShowPackageList.dfm:24
-#: PageShowPackageList.pas:336
+#: PageShowPackageList.dfm:83
+#: PageShowPackageList.pas:339
 msgid "Select Matching..."
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..miUnselectMatching..Caption
+#: PageShowPackageList.dfm:87
 #. ShowPackageListPage..SelectPopupMenu..miUnselectMatching..Caption
-#: PageShowPackageList.dfm:28
+#: PageShowPackageList.dfm:87
 msgid "Unselect Matching..."
 msgstr ""
 
 #. SummaryPage..Caption
+#: PageSummary.dfm:2
 #. SummaryPage..Caption
 #: PageSummary.dfm:2
 msgid "SummaryPage"
 msgstr ""
 
 #. SummaryPage..Label1....Caption
+#: PageSummary.dfm:17
 #. SummaryPage..Label1....Caption
 #: PageSummary.dfm:17
-msgid "Would you like to save this installation as a script so that you can automate installation of these packages?"
+msgid "Would you like to save this installation as a script so that you can "
+"automate installation of these packages?"
 msgstr ""
 
 #. SummaryPage..Label2..Caption
+#: PageSummary.dfm:26
 #. SummaryPage..Label2..Caption
 #: PageSummary.dfm:26
 msgid "Summary:"
 msgstr ""
 
 #. SummaryPage..btnSave..Caption
+#: PageSummary.dfm:34
 #. SummaryPage..btnSave..Caption
 #: PageSummary.dfm:34
 msgid "Save"
 msgstr ""
 
 #: ConsoleRunner.pas:51
+#: ConsoleRunner.pas:51
 msgid "Compiling:"
 msgstr ""
 
+#: ConsoleRunner.pas:53
 #: ConsoleRunner.pas:53
 msgid "Compiled :"
 msgstr ""
 
 #. Programmer's name for it: StrRUNONLY
+#: PackageInfo.pas:65
 #. Programmer's name for it: StrRUNONLY
 #: PackageInfo.pas:65
 msgid "{$RUNONLY"
 msgstr ""
 
 #. Programmer's name for it: StrDESCRIPTION
+#: PackageInfo.pas:66
 #. Programmer's name for it: StrDESCRIPTION
 #: PackageInfo.pas:66
 msgid "{$DESCRIPTION "
 msgstr ""
 
 #. Programmer's name for it: StrSUFFIX
+#: PackageInfo.pas:67
 #. Programmer's name for it: StrSUFFIX
 #: PackageInfo.pas:67
 msgid "{$LIBSUFFIX "
 msgstr ""
 
 #. Programmer's name for it: StrPackage
+#: PackageInfo.pas:68
 #. Programmer's name for it: StrPackage
 #: PackageInfo.pas:68
 msgid "package"
 msgstr ""
 
 #. Programmer's name for it: StrRequires
+#: PackageInfo.pas:69
 #. Programmer's name for it: StrRequires
 #: PackageInfo.pas:69
 msgid "requires"
 msgstr ""
 
 #. Programmer's name for it: StrContains
+#: PackageInfo.pas:70
 #. Programmer's name for it: StrContains
 #: PackageInfo.pas:70
 msgid "contains"
 msgstr ""
 
 #: PageInstallHelpFiles.pas:51
+#: PageInstallHelpFiles.pas:51
 msgid "No help files are found."
 msgstr ""
 
+#: PageInstallHelpFiles.pas:69
 #: PageInstallHelpFiles.pas:69
 msgid "Help Files"
 msgstr ""
 
 #: PageInstallHelpFiles.pas:70
-msgid "Select the help files that you want to register, if there are any."
+#: PageInstallHelpFiles.pas:70
+msgid "Select the help files that you want to register, if there are "
+"any."
 msgstr ""
 
+#: PageInstallHelpFiles.pas:90
 #: PageInstallHelpFiles.pas:90
 msgid "%d help file(s) are registered successfully"
 msgstr ""
 
 #: PageProgress.pas:90
+#: PageProgress.pas:90
 msgid "Compile and Install Packages"
 msgstr ""
 
 #: PageProgress.pas:91
-msgid "Compiling packages that you have selected. Design time packages are going to be installed."
+#: PageProgress.pas:91
+msgid "Compiling packages that you have selected. Design time packages are "
+"going to be installed."
 msgstr ""
 
 #. lblFileName.Caption := '';
+#: PageProgress.pas:141
 #. lblFileName.Caption := '';
 #: PageProgress.pas:141
 msgid "*** Completed"
 msgstr ""
 
 #: PageSelectDelphiInstallation.pas:130
+#: PageSelectDelphiInstallation.pas:130
 msgid "Select output folder"
 msgstr ""
 
+#: PageSelectDelphiInstallation.pas:215
 #: PageSelectDelphiInstallation.pas:215
 msgid "Select Delphi Installation"
 msgstr ""
 
 #: PageSelectDelphiInstallation.pas:216
-msgid "Please select delphi installation that you want to compile with"
+#: PageSelectDelphiInstallation.pas:216
+msgid "Please select delphi installation that you want to compile "
+"with"
 msgstr ""
 
+#: PageSelectFolders.pas:49
 #: PageSelectFolders.pas:49
 msgid "Select Folders"
 msgstr ""
 
 #: PageSelectFolders.pas:50
-msgid "Please select folders which contains the packages that you want to install"
+#: PageSelectFolders.pas:50
+msgid "Please select folders which contains the packages that you want to "
+"install"
 msgstr ""
 
+#: PageSelectFolders.pas:62
 #: PageSelectFolders.pas:62
 msgid "Select the folder where packages are"
 msgstr ""
 
-#: PageShowPackageList.pas:208
+#: PageShowPackageList.pas:211
+#: PageShowPackageList.pas:211
 msgid "Select Packages"
 msgstr ""
 
-#: PageShowPackageList.pas:209
+#: PageShowPackageList.pas:212
+#: PageShowPackageList.pas:212
 msgid "Select packages that you want to compile."
 msgstr ""
 
-#: PageShowPackageList.pas:215
+#: PageShowPackageList.pas:218
+#: PageShowPackageList.pas:218
 msgid "Compile"
 msgstr ""
 
-#: PageShowPackageList.pas:245
+#: PageShowPackageList.pas:249
+#: PageShowPackageList.pas:249
 msgid "Designtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:247
+#: PageShowPackageList.pas:251
+#: PageShowPackageList.pas:251
 msgid "Runtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:248
-msgid "FullPath   :"
+#: PageShowPackageList.pas:252
+#: PageShowPackageList.pas:252
+msgid "FullPath:"
 msgstr ""
 
-#: PageShowPackageList.pas:249
+#: PageShowPackageList.pas:253
+#: PageShowPackageList.pas:253
 msgid "Description:"
 msgstr ""
 
-#: PageShowPackageList.pas:250
-msgid "Type       :"
+#: PageShowPackageList.pas:254
+#: PageShowPackageList.pas:254
+msgid "Type:"
 msgstr ""
 
-#: PageShowPackageList.pas:251
-msgid "Requires   :"
+#: PageShowPackageList.pas:255
+#: PageShowPackageList.pas:255
+msgid "Requires:"
 msgstr ""
 
-#: PageShowPackageList.pas:275
+#: PageShowPackageList.pas:279
+#: PageShowPackageList.pas:279
 msgid "runtime"
 msgstr ""
 
-#: PageShowPackageList.pas:277
+#: PageShowPackageList.pas:281
+#: PageShowPackageList.pas:281
 msgid "design"
 msgstr ""
 
-#: PageShowPackageList.pas:336
-#: PageShowPackageList.pas:355
+#: PageShowPackageList.pas:339
+#: PageShowPackageList.pas:358
+#: PageShowPackageList.pas:339
+#: PageShowPackageList.pas:358
 msgid "File Mask"
 msgstr ""
 
-#: PageShowPackageList.pas:355
+#: PageShowPackageList.pas:358
+#: PageShowPackageList.pas:358
 msgid "UnSelect Matching..."
 msgstr ""
 
-#: PageShowPackageList.pas:397
-msgid "Package"
-msgstr ""
-
-#: PageShowPackageList.pas:402
-msgid "Description"
-msgstr ""
-
-#: PageShowPackageList.pas:407
-msgid "Type"
-msgstr ""
-
+#: PageSummary.pas:46
 #: PageSummary.pas:46
 msgid "Base Folder:"
 msgstr ""
 
 #: PageSummary.pas:52
+#: PageSummary.pas:52
 msgid "Delphi Version:"
 msgstr ""
 
+#: PageSummary.pas:60
 #: PageSummary.pas:60
 msgid "Help Files:"
 msgstr ""
 
 #: PageSummary.pas:71
+#: PageSummary.pas:71
 msgid "Package List:"
 msgstr ""
 
 #: PageSummary.pas:84
-msgid "However, following packages had some errors:"
+#: PageSummary.pas:84
+msgid "However, following packages had some "
+"errors:"
 msgstr ""
 
+#: PageSummary.pas:97
 #: PageSummary.pas:97
 msgid "Source File Paths:"
 msgstr ""
 
 #: PageSummary.pas:149
+#: PageSummary.pas:149
 msgid "Finished"
 msgstr ""
 
+#: PageSummary.pas:150
 #: PageSummary.pas:150
 msgid "Installation Summary"
 msgstr ""
 
 #: PageSummary.pas:152
+#: PageSummary.pas:152
 msgid "&Exit"
-msgstr ""
-
-#. Localizable strings.
-#. Programmer's name for it: SEditLinkIsNil
-#. Localizable strings.
-#. Programmer's name for it: SEditLinkIsNil
-#: libs/VirtualTreeview/VirtualTrees.pas:3484
-msgid "Edit link must not be nil."
-msgstr ""
-
-#. Programmer's name for it: SWrongMoveError
-#. Programmer's name for it: SWrongMoveError
-#: libs/VirtualTreeview/VirtualTrees.pas:3485
-msgid "Target node cannot be a child node of the node to be moved."
-msgstr ""
-
-#. Programmer's name for it: SWrongStreamFormat
-#. Programmer's name for it: SWrongStreamFormat
-#: libs/VirtualTreeview/VirtualTrees.pas:3486
-msgid "Unable to load tree structure, the format is wrong."
-msgstr ""
-
-#. Programmer's name for it: SWrongStreamVersion
-#. Programmer's name for it: SWrongStreamVersion
-#: libs/VirtualTreeview/VirtualTrees.pas:3487
-msgid "Unable to load tree structure, the version is unknown."
-msgstr ""
-
-#. Programmer's name for it: SStreamTooSmall
-#. Programmer's name for it: SStreamTooSmall
-#: libs/VirtualTreeview/VirtualTrees.pas:3488
-msgid "Unable to load tree structure, not enough data available."
-msgstr ""
-
-#. Programmer's name for it: SCorruptStream1
-#. Programmer's name for it: SCorruptStream1
-#: libs/VirtualTreeview/VirtualTrees.pas:3489
-msgid "Stream data corrupt. A node's anchor chunk is missing."
-msgstr ""
-
-#. Programmer's name for it: SCorruptStream2
-#. Programmer's name for it: SCorruptStream2
-#: libs/VirtualTreeview/VirtualTrees.pas:3490
-msgid "Stream data corrupt. Unexpected data after node's end position."
-msgstr ""
-
-#. Programmer's name for it: SClipboardFailed
-#. Programmer's name for it: SClipboardFailed
-#: libs/VirtualTreeview/VirtualTrees.pas:3491
-msgid "Clipboard operation failed."
-msgstr ""
-
-#. Programmer's name for it: SCannotSetUserData
-#. Programmer's name for it: SCannotSetUserData
-#: libs/VirtualTreeview/VirtualTrees.pas:3492
-msgid "Cannot set initial user data because there is not enough user data space allocated."
 msgstr ""
 

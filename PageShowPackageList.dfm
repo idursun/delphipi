@@ -4,6 +4,22 @@ inherited ShowPackageListPage: TShowPackageListPage
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
+  object lblWait: TLabel
+    Left = 48
+    Top = 117
+    Width = 423
+    Height = 31
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Please wait while searching folders '
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Layout = tlCenter
+  end
   object fPackageTree: TVirtualStringTree
     Left = 8
     Top = 8
