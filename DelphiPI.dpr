@@ -20,12 +20,7 @@ uses
   CompilationData in 'CompilationData.pas',
   ScriptPersister in 'ScriptPersister.pas',
   RegExpr in 'libs\RegExpr.pas',
-  gnugettext in 'libs\gnugettext.pas',
-  VTHeaderPopup in 'libs\VirtualTreeview\VTHeaderPopup.pas',
-  MSAAIntf in 'libs\VirtualTreeview\MSAAIntf.pas',
-  VirtualTrees in 'libs\VirtualTreeview\VirtualTrees.pas',
-  VTAccessibility in 'libs\VirtualTreeview\VTAccessibility.pas',
-  VTAccessibilityFactory in 'libs\VirtualTreeview\VTAccessibilityFactory.pas';
+  gnugettext in 'libs\gnugettext.pas';
 
 {$R *.res}
 

@@ -20,6 +20,7 @@ type
     N1: TMenuItem;
     ImageList: TImageList;
     miUnselectMatching: TMenuItem;
+    fPackageTree: TVirtualStringTree;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -28,22 +29,22 @@ type
     procedure packageTreeGetNodeDataSize(Sender: TBaseVirtualTree;
       var NodeDataSize: Integer);
     procedure packageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
-      var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: UnicodeString);
+      var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: WideString);
     procedure miSelectAllClick(Sender: TObject);
     procedure miUnselectAllClick(Sender: TObject);
     procedure miSelectMatchingClick(Sender: TObject);
     procedure miUnselectMatchingClick(Sender: TObject);
+    procedure packageTreeGetImageIndex(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
+      var Ghosted: Boolean; var ImageIndex: Integer);
   private
     packageLoadThread: TThread;
-    fPackageTree : TVirtualStringTree;
+    //fPackageTree : TVirtualStringTree;
     fProcessedPackageInfo: TPackageInfo;
     fSelectMask: string;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(node: PVirtualNode; checkState: TCheckState);
-    procedure CreateVirtualTree;
-    procedure packageTreeGetImageIndex(Sender: TBaseVirtualTree;
-      Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
-      var Ghosted: Boolean; var ImageIndex: Integer);
+
     procedure PackageInfoCollectCallBack(const node: PVirtualNode);
     procedure CheckRequiredPackagesCallBack(const node: PVirtualNode);
     procedure UncheckDependentPackagesCallBack(const node: PVirtualNode);
@@ -98,7 +99,7 @@ constructor TShowPackageListPage.Create(Owner: TComponent;
 begin
   inherited;
   fCompilationData := compilationData;
-  CreateVirtualTree;
+//  CreateVirtualTree;
 
   packageLoadThread := TPackageLoadThread.Create(FCompilationData, fPackageTree);
   with packageLoadThread do begin
@@ -114,7 +115,7 @@ procedure TShowPackageListPage.ChangeState(node: PVirtualNode;
   checkState: TCheckState);
 var
   child: PVirtualNode;
-  data: PNodeData;
+  //data: PNodeData;
 begin
  if node = nil then exit;
   node.CheckState := checkState;
@@ -356,55 +357,6 @@ begin
     fSelectMask := value;
     fPackageTree.Traverse(UnSelectMatchingCallBack);
     fPackageTree.Invalidate;
-  end;
-end;
-
-procedure TShowPackageListPage.CreateVirtualTree;
-begin
-  fPackageTree := TVirtualStringTree.Create(Self);
-  with fPackageTree do
-  begin
-    Name := 'packageTree';
-    Parent := Self;
-    Left := 12;
-    Top := 7;
-    Width := 470;
-    Height := 220;
-    Anchors := [akLeft, akTop, akRight, akBottom];
-    Header.AutoSizeIndex := 0;
-    Header.Font.Charset := DEFAULT_CHARSET;
-    Header.Font.Color := clWindowText;
-    Header.Font.Height := -11;
-    Header.Font.Name := 'Tahoma';
-    Header.Font.Style := [];
-    Header.Options := [hoColumnResize, hoDrag, hoVisible];
-    TabOrder := 0;
-    TreeOptions.MiscOptions := [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning];
-    ShowHint := true;
-    HintMode := hmHint;
-    StateImages := ImageList;
-    PopupMenu := SelectPopupMenu;
-    OnChecked := packageTreeChecked;
-    OnGetText := packageTreeGetText;
-    OnGetNodeDataSize := packageTreeGetNodeDataSize;
-    OnGetHint := packageTreeGetHint;
-    OnGetImageIndex := packageTreeGetImageIndex;
-    with Header.Columns.Add do begin 
-      Options := [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coAllowFocus];
-      Position := 0;
-      Width := 220;
-      Caption := _('Package');
-    end;
-    with Header.Columns.Add do begin
-      Position := 1;
-      Width := 220;
-      Caption := _('Description');
-    end;
-    with Header.Columns.Add do begin
-      Position := 2;
-      Width := 70;
-      Caption := _('Type');
-    end;
   end;
 end;
 

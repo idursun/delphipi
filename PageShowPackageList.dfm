@@ -2,10 +2,53 @@ inherited ShowPackageListPage: TShowPackageListPage
   Caption = 'ShowPackageListPage'
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitWidth = 500
-  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
+  object fPackageTree: TVirtualStringTree
+    Left = 8
+    Top = 8
+    Width = 484
+    Height = 234
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    Header.AutoSizeIndex = 0
+    Header.Font.Charset = DEFAULT_CHARSET
+    Header.Font.Color = clWindowText
+    Header.Font.Height = -11
+    Header.Font.Name = 'Tahoma'
+    Header.Font.Style = []
+    Header.Options = [hoColumnResize, hoDrag, hoVisible, hoAutoSpring]
+    HintMode = hmHint
+    Images = ImageList
+    ParentShowHint = False
+    PopupMenu = SelectPopupMenu
+    ShowHint = True
+    TabOrder = 0
+    TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
+    TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect]
+    TreeOptions.StringOptions = [toSaveCaptions]
+    OnChecked = packageTreeChecked
+    OnGetText = packageTreeGetText
+    OnGetImageIndex = packageTreeGetImageIndex
+    OnGetHint = packageTreeGetHint
+    OnGetNodeDataSize = packageTreeGetNodeDataSize
+    Columns = <
+      item
+        Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
+        Position = 0
+        Width = 220
+        WideText = 'Package'
+      end
+      item
+        Position = 1
+        Width = 220
+        WideText = 'Description'
+      end
+      item
+        Position = 2
+        Width = 70
+        WideText = 'Type'
+      end>
+  end
   object SelectPopupMenu: TPopupMenu
     Left = 292
     Top = 5
