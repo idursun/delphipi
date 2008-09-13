@@ -80,7 +80,7 @@ type
   protected
     procedure Execute; override;
     procedure Search(parent: PVirtualNode; folder: String);
-    procedure CleanTree(node: PVirtualNode);
+    procedure RemoveEmptyFolderNodes(node: PVirtualNode);
   public
     constructor Create(data: TCompilationData; tree: TBaseVirtualTree);
     property Active: boolean read fActive write fActive;
@@ -376,26 +376,23 @@ begin
   fTree:= tree;
 end;
 
-procedure TPackageLoadThread.CleanTree(node: PVirtualNode);
+procedure TPackageLoadThread.RemoveEmptyFolderNodes(node: PVirtualNode);
 var
   c: PVirtualNode;
   data: PNodeData;
 begin
   if not fActive then exit;
   if node = nil then exit;
-  if node.ChildCount > 0 then
+  
+  c := fTree.GetFirstChild(node);
+  while c <> nil do
   begin
-     c := node.FirstChild;
-     while c <> nil do
-     begin
-         data := fTree.GetNodeData(c);
-         if data.Info = nil then
-           CleanTree(c);
-         c := c.NextSibling;
-     end;
+    data := fTree.GetNodeData(c);
+    if data.Info = nil then
+      RemoveEmptyFolderNodes(c);
+    c := fTree.GetNextSibling(c);
   end;
-
-  if node.ChildCount = 0 then
+  if node.FirstChild = nil then
     fTree.DeleteNode(node);
 end;
 
@@ -405,10 +402,13 @@ begin
   fActive := true;
   fTree.BeginUpdate;
   try
-    Search(fTree.RootNode, fCompilationData.BaseFolder);
-    CleanTree(fTree.RootNode);
+    try
+      Search(fTree.RootNode, fCompilationData.BaseFolder);
+      RemoveEmptyFolderNodes(fTree.RootNode);
+    except
+      on e:Exception do ShowMessage(e.Message);
+    end;
   finally
-//    fActive := false;
     fTree.EndUpdate;
   end;
 end;
@@ -419,7 +419,7 @@ var
   child: PVirtualNode;
   data: PNodeData;
 begin
-  if FindFirst(directory + '\' + fCompilationData.Pattern, faAnyFile, sr) = 0 then
+  if FindFirst(PathAddSeparator(directory) + fCompilationData.Pattern, faAnyFile, sr) = 0 then
   begin
     try
       repeat
@@ -430,7 +430,7 @@ begin
           child.CheckType := ctCheckBox;
           data := fTree.GetNodeData(child);
           data.Name := sr.Name;
-          data.Info := TPackageInfo.Create(directory + sr.Name);
+          data.Info := TPackageInfo.Create(PathAddSeparator(directory) + sr.Name);
         end;
       until FindNext(Sr) <> 0;
     finally
@@ -450,7 +450,7 @@ begin
   
   directoryList := TStringList.Create;
   try
-    BuildFileList(folder + '\*.*', faDirectory, directoryList);
+    BuildFileList(PathAddSeparator(folder) + '*.*', faDirectory, directoryList);
     for directory in directoryList do
     begin
       child := fTree.AddChild(parent);
@@ -459,9 +459,9 @@ begin
       child.States := child.States + [vsHasChildren];
       data := fTree.GetNodeData(child);
       data.Name := directory;
-      Search(child, folder + '\' + directory);
+      Search(child, PathAddSeparator(folder) + directory);
     end;
-    BuildFileNodes(parent, folder + '\' + directory);
+    BuildFileNodes(parent, PathAddSeparator(folder) + directory);
   finally
     directoryList.Free;
   end;
