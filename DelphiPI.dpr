@@ -19,7 +19,6 @@ uses
   CompileThread in 'CompileThread.pas',
   CompilationData in 'CompilationData.pas',
   ScriptPersister in 'ScriptPersister.pas',
-  RegExpr in 'libs\RegExpr.pas',
   gnugettext in 'libs\gnugettext.pas';
 
 {$R *.res}

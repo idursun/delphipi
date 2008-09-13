@@ -40,7 +40,6 @@ type
       var Ghosted: Boolean; var ImageIndex: Integer);
   private
     packageLoadThread: TThread;
-    //fPackageTree : TVirtualStringTree;
     fProcessedPackageInfo: TPackageInfo;
     fSelectMask: string;
     procedure PackageLoadCompleted(Sender: TObject);
@@ -76,6 +75,7 @@ type
   private
     fCompilationData: TCompilationData;
     fTree: TBaseVirtualTree;
+    fActive: Boolean;
     procedure BuildFileNodes(parent: PVirtualNode; directory: string);
   protected
     procedure Execute; override;
@@ -83,6 +83,7 @@ type
     procedure CleanTree(node: PVirtualNode);
   public
     constructor Create(data: TCompilationData; tree: TBaseVirtualTree);
+    property Active: boolean read fActive write fActive;
   end;
 
   TVirtualNodeHandler = procedure(const node: PVirtualNode) of object;
@@ -100,16 +101,25 @@ constructor TShowPackageListPage.Create(Owner: TComponent;
 begin
   inherited;
   fCompilationData := compilationData;
-//  CreateVirtualTree;
-
   packageLoadThread := TPackageLoadThread.Create(FCompilationData, fPackageTree);
   with packageLoadThread do begin
-    FreeOnTerminate := true;
     OnTerminate := packageLoadCompleted;
     lblWait.Visible := true;
-    //packageListView.AddItem(_('Looking for packages in folders...'),nil);
     threadWorking := true;
+    fPackageTree.Visible := false;
     Resume;
+  end;
+end;
+
+procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
+begin
+  threadWorking := false;
+  if TPackageLoadThread(packageLoadThread).Active then
+  begin
+    lblWait.Visible := false;
+    fPackageTree.Visible := True;
+    fPackageTree.FullExpand;
+    UpdateWizardState;
   end;
 end;
 
@@ -219,13 +229,6 @@ begin
   end;
 end;
 
-procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
-begin
-  threadWorking := false;
-  lblWait.Visible := false;
-  fPackageTree.FullExpand;
-  UpdateWizardState;
-end;
 
 procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree;
   Node: PVirtualNode);
@@ -301,8 +304,9 @@ procedure TShowPackageListPage.FormClose(Sender: TObject;
 begin
   inherited;
   if threadWorking then begin
-    packageLoadThread.Suspend;
-    packageLoadThread.Terminate;
+    TPackageLoadThread(packageLoadThread).Active := false;
+    packageLoadThread.WaitFor;
+    packageLoadThread.Free;
     exit;
   end;
   fPackageTree.Traverse(fPackageTree.RootNode, packageInfoCollectCallBack);
@@ -374,9 +378,10 @@ end;
 
 procedure TPackageLoadThread.CleanTree(node: PVirtualNode);
 var
- c: PVirtualNode;
- data: PNodeData;
+  c: PVirtualNode;
+  data: PNodeData;
 begin
+  if not fActive then exit;
   if node = nil then exit;
   if node.ChildCount > 0 then
   begin
@@ -397,11 +402,13 @@ end;
 procedure TPackageLoadThread.Execute;
 begin
   inherited;
+  fActive := true;
   fTree.BeginUpdate;
   try
     Search(fTree.RootNode, fCompilationData.BaseFolder);
     CleanTree(fTree.RootNode);
   finally
+//    fActive := false;
     fTree.EndUpdate;
   end;
 end;
@@ -439,6 +446,8 @@ var
   directoryList : TStringList;
   directory: string;
 begin
+  if not fActive then exit;
+  
   directoryList := TStringList.Create;
   try
     BuildFileList(folder + '\*.*', faDirectory, directoryList);

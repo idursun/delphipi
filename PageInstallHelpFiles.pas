@@ -18,7 +18,6 @@ type
     btnInstallHelpFiles: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnInstallHelpFilesClick(Sender: TObject);
-
   private
   public
     procedure UpdateWizardState; override;
