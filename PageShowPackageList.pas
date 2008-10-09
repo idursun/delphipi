@@ -12,6 +12,7 @@ uses
   Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees;
 
 type
+
   TShowPackageListPage = class(TWizardPage)
     SelectPopupMenu: TPopupMenu;
     miSelectAll: TMenuItem;
@@ -25,12 +26,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
-    procedure packageTreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
-      Column: TColumnIndex; TextType: TVSTTextType; var CellText: WideString);
     procedure packageTreeGetNodeDataSize(Sender: TBaseVirtualTree;
       var NodeDataSize: Integer);
-    procedure packageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
-      var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: WideString);
     procedure miSelectAllClick(Sender: TObject);
     procedure miUnselectAllClick(Sender: TObject);
     procedure miSelectMatchingClick(Sender: TObject);
@@ -38,6 +35,11 @@ type
     procedure packageTreeGetImageIndex(Sender: TBaseVirtualTree;
       Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
       var Ghosted: Boolean; var ImageIndex: Integer);
+    procedure fPackageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode;
+      Column: TColumnIndex; var LineBreakStyle: TVTTooltipLineBreakStyle;
+      var HintText: string);
+    procedure fPackageTreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
+      Column: TColumnIndex; TextType: TVSTTextType; var CellText: string);
   private
     packageLoadThread: TThread;
     fProcessedPackageInfo: TPackageInfo;
@@ -237,59 +239,17 @@ begin
   fPackageTree.InvalidateChildren(Node,true);
 end;
 
-procedure TShowPackageListPage.packageTreeGetHint(Sender: TBaseVirtualTree;
-  Node: PVirtualNode; Column: TColumnIndex;
-  var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: UnicodeString);
-var
-  data: PNodeData;
-  _type: string;
-  info : TPackageInfo;
-begin
-  data := Sender.GetNodeData(Node);
-  if data.Info <> nil then
-  begin
-    info := data.Info;
-    _type := _('Designtime Package');
-    if (info.RunOnly) then
-      _type := _('Runtime Package');
-    HintText := _('FullPath:')+ info.FileName+#13#10+
-                _('Description:')+ info.Description+#13#10+
-                _('Type:')+ _type+#13#10+
-                _('Requires:')+ #13#10 + info.RequiredPackageList.Text;
-  end;
-end;
-
 procedure TShowPackageListPage.packageTreeGetNodeDataSize(
   Sender: TBaseVirtualTree; var NodeDataSize: Integer);
 begin
   NodeDataSize := sizeof(TNodeData);
 end;
 
-procedure TShowPackageListPage.packageTreeGetText(Sender: TBaseVirtualTree;
-  Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType;
-  var CellText: WideString);
-var
-  data : PNodeData;
-begin
-  CellText := '';
-  data := Sender.GetNodeData(Node);
-  case Column of
-    0: CellText := data.Name;
-    1: if data.Info <> nil then
-         CellText := data.Info.Description;
-    2: if data.Info <> nil then
-         if data.Info.RunOnly then
-           CellText := _('runtime')
-         else
-           CellText := _('design');
-  end;
-end;
-
 procedure TShowPackageListPage.packageTreeGetImageIndex(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
   var Ghosted: Boolean; var ImageIndex: Integer);
 var
-  data: PNodeData;  
+  data: PNodeData;
 begin
   if column <> 0 then exit;
   data := Sender.GetNodeData(Node);
@@ -327,6 +287,49 @@ end;
 procedure TShowPackageListPage.FormCreate(Sender: TObject);
 begin
   TranslateComponent(self);
+end;
+
+procedure TShowPackageListPage.fPackageTreeGetHint(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex;
+  var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: string);
+
+var
+  data: PNodeData;
+  _type: string;
+  info : TPackageInfo;
+begin
+  data := Sender.GetNodeData(Node);
+  if data.Info <> nil then
+  begin
+    info := data.Info;
+    _type := _('Designtime Package');
+    if (info.RunOnly) then
+      _type := _('Runtime Package');
+    HintText := _('FullPath:')+ info.FileName+#13#10+
+                _('Description:')+ info.Description+#13#10+
+                _('Type:')+ _type+#13#10+
+                _('Requires:')+ #13#10 + info.RequiredPackageList.Text;
+  end;
+end;
+
+procedure TShowPackageListPage.fPackageTreeGetText(Sender: TBaseVirtualTree;
+  Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType;
+  var CellText: string);
+var
+  data : PNodeData;
+begin
+  CellText := '';
+  data := Sender.GetNodeData(Node);
+  case Column of
+    0: CellText := data.Name;
+    1: if data.Info <> nil then
+         CellText := data.Info.Description;
+    2: if data.Info <> nil then
+         if data.Info.RunOnly then
+           CellText := _('runtime')
+         else
+           CellText := _('design');
+  end;
 end;
 
 procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);

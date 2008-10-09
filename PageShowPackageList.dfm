@@ -2,6 +2,8 @@ inherited ShowPackageListPage: TShowPackageListPage
   Caption = 'ShowPackageListPage'
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object lblWait: TLabel
@@ -47,9 +49,9 @@ inherited ShowPackageListPage: TShowPackageListPage
     TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect]
     TreeOptions.StringOptions = [toSaveCaptions]
     OnChecked = packageTreeChecked
-    OnGetText = packageTreeGetText
+    OnGetText = fPackageTreeGetText
     OnGetImageIndex = packageTreeGetImageIndex
-    OnGetHint = packageTreeGetHint
+    OnGetHint = fPackageTreeGetHint
     OnGetNodeDataSize = packageTreeGetNodeDataSize
     Columns = <
       item

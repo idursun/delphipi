@@ -79,7 +79,7 @@ begin
   Strs := TStringList.Create;
   Stack := TStack.Create;
   try
-     ExtractStrings(['\'],[' '],PAnsiChar(ExcludeTrailingBackslash(Str)),Strs);
+     ExtractStrings(['\'],[' '],PWideChar(ExcludeTrailingBackslash(Str)),Strs);
      for i := 0 to strs.Count-1 do
        if (Strs[i] <> '..') and (Strs[i] <> '') then
          stack.Push(PAnsiChar(Strs[i]))

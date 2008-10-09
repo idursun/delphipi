@@ -52,7 +52,7 @@ const
 
 procedure TfrmAbout.btnDonateClick(Sender: TObject);
 begin
-  ShellExecute(0,'open',PAnsiChar(donationAddress), NIL, NIL, SW_SHOWNORMAL);
+  ShellExecute(0,'open',PWideChar(donationAddress), NIL, NIL, SW_SHOWNORMAL);
 end;
 
 procedure TfrmAbout.btnCloseClick(Sender: TObject);
@@ -67,12 +67,12 @@ end;
 
 procedure TfrmAbout.lblAuthorsWebsiteClick(Sender: TObject);
 begin
-  ShellExecute(0,'open',PAnsiChar(lblAuthorsWebsite.Caption), NIL, NIL, SW_SHOWNORMAL);
+  ShellExecute(0,'open',PWideChar(lblAuthorsWebsite.Caption), NIL, NIL, SW_SHOWNORMAL);
 end;
 
 procedure TfrmAbout.lblProjectWebsiteClick(Sender: TObject);
 begin
-  ShellExecute(0,'open',PAnsiChar(lblProjectWebsite.Caption), NIL, NIL, SW_SHOWNORMAL);
+  ShellExecute(0,'open',PWideChar(lblProjectWebsite.Caption), NIL, NIL, SW_SHOWNORMAL);
 end;
 
 end.

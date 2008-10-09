@@ -18,7 +18,7 @@ type
      fPackageCompileEvent: TPackageCompileEvent;
    protected
      function GetExtraOptions: String; virtual;
-     function GetShortPaths(paths: string): string;
+     function ConvertToShortPaths(const paths : TStringList): string;
      procedure RaiseEvent(const packageInfo: TPackageInfo; status: TPackageStatus);virtual;
    public
      constructor Create(const compilationData: TCompilationData);
@@ -45,7 +45,7 @@ procedure TPackageCompiler.Compile;
 var
   i: integer;
   info: TPackageInfo;
-  compileSuccessful: boolean;
+  compilationSuccessful: boolean;
 begin
   try
     if fCompilationData.SourceFilePaths.Count = 0 then
@@ -54,19 +54,20 @@ begin
     fCompilationData.AddSourcePathsToIDE;
       
     if fCompilationData.HelpFiles.Count = 0 then
-      fCompilationData.ResolveHelpFiles; 
+      fCompilationData.ResolveHelpFiles;
 
+    fPackageList.SortList;
     for i := 0 to fPackageList.Count - 1 do begin
       info := fPackageList[i];
       RaiseEvent(info, psCompiling);
-      compileSuccessful := CompilePackage(info);
+      compilationSuccessful := CompilePackage(info);
 
-      if compileSuccessful and (not info.RunOnly) then
+      if compilationSuccessful and (not info.RunOnly) then
       begin
         RaiseEvent(info, psInstalling);
         InstallPackage(info);
       end;
-      if compileSuccessful then
+      if compilationSuccessful then
         RaiseEvent(info, psSuccess)
       else
         RaiseEvent(info, psError);
@@ -92,31 +93,33 @@ end;
 
 function TPackageCompiler.GetExtraOptions: String;
 var
-  paths : string;
+  shortPaths : string;
+  pathList : TStringList;
 begin
-  paths := GetShortPaths(fInstallation.LibrarySearchPath);
-  Result := '-B';
-  Result := Result + #13#10 +'-I"'+paths+'"';
-  Result := Result + #13#10+ '-U"'+paths+'"';
-  Result := Result + #13#10+ '-O"'+paths+'"';
-  Result := Result + #13#10+ '-R"'+paths+'"';
+  pathList := TStringList.Create;
+  try
+    ExtractStrings([';'],[' '],PWideChar(fInstallation.LibrarySearchPath),pathList);
+    pathList.Add(fInstallation.BPLOutputPath);
+    shortPaths := ConvertToShortPaths(pathList);
+  finally
+    pathList.Free;
+  end;
+
+  Result := '-B -Q';
+  Result := Result + ' -I'+shortPaths+'';
+  Result := Result + ' -U'+shortPaths+'';
+  Result := Result + ' -O'+shortPaths+'';
+  Result := Result + ' -R'+shortPaths+'';
 end;
 
-function TPackageCompiler.GetShortPaths(paths : string):string;
+function TPackageCompiler.ConvertToShortPaths(const paths : TStringList):string;
 var
-  pathList : TStringList;
   path : string;
 begin
   Result := '';
-  pathList := TStringList.Create;
-  try
-    ExtractStrings([';'],[' '],PAnsiChar(paths),pathList);
-    for path in pathList do
-    begin
-      Result := Result + StrDoubleQuote(PathGetShortName(StrTrimQuotes(path))) + ';';
-    end;
-  finally
-    pathList.Free;
+  for path in paths do
+  begin
+    Result := Result + StrDoubleQuote(PathGetShortName(StrTrimQuotes(path))) + ';';
   end;
 end;
 
