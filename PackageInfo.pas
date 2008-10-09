@@ -69,31 +69,6 @@ resourcestring
   StrRequires = 'requires';
   StrContains = 'contains';
 
-function SimplifyPath(const Str: string):string;
-var
-  Strs : TStringList;
-  Stack : TStack;
-  i : integer;
-begin
-  Result := '';
-  Strs := TStringList.Create;
-  Stack := TStack.Create;
-  try
-     ExtractStrings(['\'],[' '],PWideChar(ExcludeTrailingBackslash(Str)),Strs);
-     for i := 0 to strs.Count-1 do
-       if (Strs[i] <> '..') and (Strs[i] <> '') then
-         stack.Push(PAnsiChar(Strs[i]))
-       else
-         stack.Pop;
-     while stack.Count > 0 do
-       Result := PAnsiChar(stack.Pop) + '\' + Result;
-  finally
-    Strs.Free;
-    Stack.Free;
-  end;
-  Result := ExcludeTrailingBackslash(Result);
-end;
-
 constructor TPackageInfo.Create(const packagefile: string);
 begin
   Create;
