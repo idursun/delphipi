@@ -47,13 +47,9 @@ type
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(node: PVirtualNode; checkState: TCheckState);
 
-    procedure PackageInfoCollectCallBack(const node: PVirtualNode);
-    procedure CheckRequiredPackagesCallBack(const node: PVirtualNode);
-    procedure UncheckDependentPackagesCallBack(const node: PVirtualNode);
-    procedure SelectAllCallBack(const node: PVirtualNode);
-    procedure UnselectAllCallBack(const node: PVirtualNode);
-    procedure SelectMatchingCallBack(const node: PVirtualNode);
-    procedure UnSelectMatchingCallBack(const node: PVirtualNode);
+    procedure PackageInfoCollectCallBack(node: PVirtualNode);
+    procedure CheckRequiredPackagesCallBack(node: PVirtualNode);
+    procedure UncheckDependentPackagesCallBack(node: PVirtualNode);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -91,8 +87,8 @@ type
   TVirtualNodeHandler = procedure(const node: PVirtualNode) of object;
   TVirtualTreeHelper = class helper for TBaseVirtualTree
   public
-    procedure Traverse(node: PVirtualNode; handler: TVirtualNodeHandler); overload;
-    procedure Traverse(handler: TVirtualNodeHandler); overload;
+    procedure Traverse(node: PVirtualNode; handler: TProc<PVirtualNode>); overload;
+    procedure Traverse(handler: TProc<PVirtualNode>); overload;
   end;
 
 
@@ -152,8 +148,7 @@ begin
   end;
 end;
 
-procedure TShowPackageListPage.CheckRequiredPackagesCallBack(
-  const node: PVirtualNode);
+procedure TShowPackageListPage.CheckRequiredPackagesCallBack(node: PVirtualNode);
 var
   data: PNodeData;  
 begin
@@ -166,8 +161,7 @@ begin
     node.CheckState := csCheckedNormal;
 end;
 
-procedure TShowPackageListPage.UncheckDependentPackagesCallBack(
-  const node: PVirtualNode);
+procedure TShowPackageListPage.UncheckDependentPackagesCallBack(node: PVirtualNode);
 var
   data: PNodeData;
 begin
@@ -178,41 +172,6 @@ begin
   if (data = nil) or (data.Info = nil) then exit;
   if data.Info.DependsOn(fProcessedPackageInfo) then
     node.CheckState := csUncheckedNormal;
-end;
-
-procedure TShowPackageListPage.UnselectAllCallBack(const node: PVirtualNode);
-begin
-  node.CheckState := csUncheckedNormal;
-end;
-
-procedure TShowPackageListPage.UnSelectMatchingCallBack(
-  const node: PVirtualNode);
-var
-  data: PNodeData;
-begin
-  data := fPackageTree.GetNodeData(node);
-  if (data <> nil) and (data.Info <> nil) then
-  begin
-    if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
-       node.CheckState := csUncheckedNormal;
-  end;
-end;
-
-procedure TShowPackageListPage.SelectAllCallBack(const node: PVirtualNode);
-begin
-  node.CheckState := csCheckedNormal;
-end;
-
-procedure TShowPackageListPage.SelectMatchingCallBack(const node: PVirtualNode);
-var
-  data: PNodeData;
-begin
-  data := fPackageTree.GetNodeData(node);
-  if (data <> nil) and (data.Info <> nil) then
-  begin
-    if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
-       node.CheckState := csCheckedNormal;
-  end;
 end;
 
 procedure TShowPackageListPage.UpdateWizardState;
@@ -269,12 +228,13 @@ begin
     packageLoadThread.Free;
     exit;
   end;
+  fCompilationData.PackageList.Clear;
   fPackageTree.Traverse(fPackageTree.RootNode, packageInfoCollectCallBack);
   fCompilationData.PackageList.Pack;
 end;
 
 procedure TShowPackageListPage.PackageInfoCollectCallBack(
-  const node: PVirtualNode);
+  node: PVirtualNode);
 var
   data: PNodeData;  
 begin
@@ -334,7 +294,9 @@ end;
 
 procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
 begin
-  fPackageTree.Traverse(SelectAllCallBack);
+  fPackageTree.Traverse(procedure (node:PVirtualNode) begin
+     node.CheckState := csCheckedNormal;
+  end);
   fPackageTree.Invalidate;
 end;
 
@@ -346,14 +308,26 @@ begin
   if InputQuery(_('Select Matching...'),_('File Mask'),value) then
   begin
     fSelectMask := value;
-    fPackageTree.Traverse(SelectMatchingCallBack);
+    fPackageTree.Traverse(procedure (node:PVirtualNode)
+    var
+      data: PNodeData;
+    begin
+        data := fPackageTree.GetNodeData(node);
+        if (data <> nil) and (data.Info <> nil) then
+        begin
+          if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
+          node.CheckState := csCheckedNormal;
+        end;
+    end);
     fPackageTree.Invalidate;
   end;
 end;
 
 procedure TShowPackageListPage.miUnselectAllClick(Sender: TObject);
 begin
-  fPackageTree.Traverse(UnselectAllCallBack);
+  fPackageTree.Traverse(procedure (node:PVirtualNode) begin
+    node.CheckState := csUncheckedNormal;
+  end);
   fPackageTree.Invalidate;
 end;
 
@@ -365,7 +339,17 @@ begin
   if InputQuery(_('UnSelect Matching...'),_('File Mask'),value) then
   begin
     fSelectMask := value;
-    fPackageTree.Traverse(UnSelectMatchingCallBack);
+    fPackageTree.Traverse(procedure (node:PVirtualNode)
+    var
+      data: PNodeData;
+    begin
+      data := fPackageTree.GetNodeData(node);
+      if (data <> nil) and (data.Info <> nil) then
+      begin
+        if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
+        node.CheckState := csUncheckedNormal;
+      end;
+    end);
     fPackageTree.Invalidate;
   end;
 end;
@@ -473,7 +457,7 @@ end;
 { TVirtualTreeHelper }
 
 procedure TVirtualTreeHelper.Traverse(node: PVirtualNode;
-  handler: TVirtualNodeHandler);
+  handler: TProc<PVirtualNode>);
 begin
   if node = nil then exit;
   handler(node);
@@ -485,7 +469,7 @@ begin
     Traverse(node.NextSibling, handler);
 end;
 
-procedure TVirtualTreeHelper.Traverse(handler: TVirtualNodeHandler);
+procedure TVirtualTreeHelper.Traverse(handler:TProc<PVirtualNode>);
 begin
   Traverse(RootNode, handler);
 end;
