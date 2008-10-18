@@ -17,9 +17,8 @@ type
     ProgressBar: TProgressBar;
     Label1: TLabel;
     lblPackage: TLabel;
-    GroupBox2: TGroupBox;
-    Memo: TMemo;
     lblCurrentPackageNo: TLabel;
+    memo: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
@@ -31,6 +30,8 @@ type
     procedure compileCompleted(sender: TObject);
     procedure SetCurrentPackageNo(const Value: Integer);
     property CurrectPackageNo: Integer read fCurrPackageNo write SetCurrentPackageNo;
+  protected
+    procedure WriteInfo(const color: TColor; const info: string);
   public
     procedure Compile;
     procedure UpdateWizardState; override;
@@ -40,7 +41,7 @@ var
   ProgressPage: TProgressPage;
 
 implementation
-uses PackageInfo, gnugettext;
+uses PackageInfo, gnugettext, StrUtils;
 type
 
   TPageProgressMonitor = class(TInterfacedObject, IProgressMonitor )
@@ -54,8 +55,10 @@ type
     function GetPackageName: String;
   public
     constructor Create(const page: TProgressPage);  
+    procedure PackageCompiled(const packageInfo: TPackageInfo; status: TPackageStatus);
     property StepNo: Integer read FStepNo write SetStepNo;
     property PackageName: String read FPackageName write SetPackageName;
+
   end;
 var
   pageProgressMonitor : TPageProgressMonitor;
@@ -96,6 +99,17 @@ begin
     Enabled := not compileThreadWorking;
 end;
 
+procedure TProgressPage.WriteInfo(const color: TColor; const info: string);
+var
+  oldColor: TColor;
+begin
+  oldColor := memo.SelAttributes.Color;
+  memo.SelAttributes.Color := color;
+  memo.Lines.Add(info);
+  memo.SelAttributes.Color := oldColor;
+end;
+
+
 procedure TProgressPage.Compile;
 begin
   pageProgressMonitor := TPageProgressMonitor.Create(self);
@@ -116,11 +130,12 @@ var
   S : String;
 begin
   S := Trim(Text);
-  if S[Length(S)] =')' then begin
-    //lblFileName.Caption := ExtractFileName(S);
-    //Sleep(1);
-  end else
-    memo.lines.add(text);
+
+  if Pos('Fatal:', S) > 0 then
+    WriteInfo(clRed, text);
+
+  //memo.lines.add(text);
+  memo.SelAttributes.Color := clBlack;
 end;
 
 procedure TProgressPage.SetCurrentPackageNo(const Value: Integer);
@@ -135,10 +150,9 @@ end;
 procedure TProgressPage.CompileCompleted(sender: TObject);
 begin
   lblPackage.Caption :='';
- // lblFileName.Caption := '';
   ProgressBar.Position := 0;
   compileThreadWorking := false;
-  memo.Lines.Add(_('*** Completed'));
+  WriteInfo(clBlack, _('*** Completed'));
   Wizard.UpdateInterface;
 end;
 
@@ -155,6 +169,18 @@ end;
 function TPageProgressMonitor.GetStepNo: Integer;
 begin
   Result := FStepNo;
+end;
+
+procedure TPageProgressMonitor.PackageCompiled(const packageInfo: TPackageInfo;
+  status: TPackageStatus);
+begin
+  case status of
+    psNone: ;
+    psCompiling: FPage.WriteInfo(clBlack, _('Compiling:') + packageInfo.PackageName);
+    psInstalling: FPage.WriteInfo(clBlue, _('Installing'));
+    psSuccess: FPage.WriteInfo(clGreen, _('Successful'));
+    psError: fPage.WriteInfo(clRed,_('Failed'));
+  end;
 end;
 
 procedure TPageProgressMonitor.SetPackageName(const Value: String);

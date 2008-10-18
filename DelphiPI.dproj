@@ -23,6 +23,7 @@
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base)'!=''">
+			<BRCC_Defines>UNICODE;$(BRCC_Defines)</BRCC_Defines>
 			<DCC_DebugDCUs>true</DCC_DebugDCUs>
 			<DCC_DependencyCheckOutputName>DelphiPI.exe</DCC_DependencyCheckOutputName>
 		</PropertyGroup>
@@ -166,7 +167,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">34</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">81</VersionInfo>
+						<VersionInfo Name="Build">82</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -178,7 +179,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.34.0.81</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.34.0.82</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright"/>
 						<VersionInfoKeys Name="LegalTrademarks"/>

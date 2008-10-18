@@ -9,14 +9,17 @@ type
     procedure SetStepNo(const value: Integer);
     function GetPackageName: String;
     procedure SetPackageName(const value : string);
+    procedure PackageCompiled(const packageInfo: TPackageInfo; status: TPackageStatus);
     property StepNo: Integer read GetStepNo write SetStepNo;
     property PackageName: String read GetPackageName write SetPackageName;
-  end;
+ end;
   
   TCompileThread = class(TThread)
   private
-    fStepNo, fSuccededs, fErroreds: Integer;
+    fStepNo, fSucceededs, fErroreds: Integer;
     fPackageName: String;
+    fPackageInfo : TPackageInfo;
+    fStatus : TPackageStatus;
     fMonitor : IProgressMonitor;
     fCompilationData: TCompilationData;
     procedure SetMonitor(const Value: IProgressMonitor);
@@ -56,14 +59,17 @@ end;
 procedure TCompileThread.PackageEventHandler(const package: TPackageInfo;
   status: TPackageStatus);
 begin
+   //TODO: reorganize code, there is dublicate info
    if status = psCompiling then
      fPackageName := package.PackageName;
-
    if (status = psSuccess) or (status = psError) then
      fStepNo := fStepNo + 1;
-     
+
+   fStatus := status;
+   fPackageInfo := package;
+
    if status = psError then inc(fErroreds);
-   if status = psSuccess then inc(fSuccededs);
+   if status = psSuccess then inc(fSucceededs);
 
    Synchronize(UpdateMonitor);
 end;
@@ -79,6 +85,7 @@ begin
    begin
      fMonitor.StepNo := fStepNo;
      fMonitor.PackageName := fPackageName;
+     fMonitor.PackageCompiled(fPackageInfo, fStatus);
    end;
 end;
 end.

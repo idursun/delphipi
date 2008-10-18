@@ -2,6 +2,8 @@ inherited ProgressPage: TProgressPage
   Caption = 'ProgressPage'
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -36,8 +38,8 @@ inherited ProgressPage: TProgressPage
       ParentFont = False
     end
     object lblCurrentPackageNo: TLabel
-      Left = 440
-      Top = 20
+      Left = 448
+      Top = 18
       Width = 15
       Height = 13
       Anchors = [akTop, akRight, akBottom]
@@ -46,37 +48,25 @@ inherited ProgressPage: TProgressPage
     object ProgressBar: TProgressBar
       Left = 3
       Top = 37
-      Width = 465
+      Width = 478
       Height = 20
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
     end
   end
-  object GroupBox2: TGroupBox
+  object memo: TRichEdit
     Left = 8
     Top = 82
     Width = 484
     Height = 160
     Anchors = [akLeft, akTop, akRight, akBottom]
-    Caption = 'Compiler Output'
+    Font.Charset = TURKISH_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
+    ScrollBars = ssBoth
     TabOrder = 1
-    object Memo: TMemo
-      AlignWithMargins = True
-      Left = 5
-      Top = 18
-      Width = 474
-      Height = 137
-      TabStop = False
-      Align = alClient
-      Font.Charset = TURKISH_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -11
-      Font.Name = 'Courier New'
-      Font.Style = []
-      ParentFont = False
-      ScrollBars = ssBoth
-      TabOrder = 0
-      WordWrap = False
-    end
   end
 end
