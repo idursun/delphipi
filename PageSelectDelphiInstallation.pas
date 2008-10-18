@@ -29,9 +29,9 @@ type
   private
    installations : TJclBorRADToolInstallations;
     procedure DisposeCustomObjects;
-    procedure AddDephiInstallation(const installation: TJclBorRADToolInstallation);
-    procedure SaveInstallationOutputFolders(const versionIndex: integer);
-    procedure ShowInstallationOutputFolders(const versionIndex: integer);
+    procedure AddDelphiInstallation(const installation: TJclBorRADToolInstallation);
+    procedure SaveInstallationOutputFolders(versionIndex: integer);
+    procedure ShowInstallationOutputFolders(versionIndex: integer);
     procedure BrowseFolder(var folder: string);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override; 
@@ -94,24 +94,20 @@ begin
   installations := TJclBorRADToolInstallations.Create;
 
   for i := 0 to installations.Count - 1 do begin
-    AddDephiInstallation(installations.Installations[i]);
+    AddDelphiInstallation(installations.Installations[i]);
   end;
-  ShowInstallationOutputFolders(0);
-  rgDelphiVersions.ItemIndex := 0;
-
-  if fCompilationData.Installation = nil then exit;
-
+  lastSelectedIndex := 0;
   //TODO: does this work?
-  for i := 0 to installations.Count - 1 do begin
-    if (installations.Installations[i].VersionNumber = FCompilationData.Installation.VersionNumber) then
-    begin
-      rgDelphiVersions.ItemIndex := i;
-      break;
+  if fCompilationData.Installation <> nil then
+    for i := 0 to installations.Count - 1 do begin
+      if (installations.Installations[i].VersionNumber <> FCompilationData.Installation.VersionNumber) then
+        continue;
+      lastSelectedIndex := i;
     end;
-  end;
 
-  lastSelectedIndex := rgDelphiVersions.ItemIndex;
-
+  //TODO: Eliminate hidden behaviour, radio button click event handler affects  custom folder save and show process
+  ShowInstallationOutputFolders(lastSelectedIndex);
+  rgDelphiVersions.ItemIndex := lastSelectedIndex;
 end;
 
 procedure TSelectDelphiInstallationPage.rgDelphiVersionsClick(Sender: TObject);
@@ -157,7 +153,7 @@ begin
   Result := installations.Count > 1;
 end;
 
-procedure TSelectDelphiInstallationPage.SaveInstallationOutputFolders(const versionIndex: integer);
+procedure TSelectDelphiInstallationPage.SaveInstallationOutputFolders(versionIndex: integer);
 var
   outputFolders: TCustomOutputFolders;
 begin
@@ -171,11 +167,11 @@ begin
   end;
 end;
 
-procedure TSelectDelphiInstallationPage.ShowInstallationOutputFolders(const versionIndex: integer);
+procedure TSelectDelphiInstallationPage.ShowInstallationOutputFolders(versionIndex: integer);
 var
   outputFolders: TCustomOutputFolders;
 begin
-  if (versionIndex < 0) or (versionIndex > rgDelphiVersions.Items.Count) then exit;
+  if (versionIndex < 0) or (versionIndex > rgDelphiVersions.Items.Count) then versionIndex := 0;
   outputFolders := rgDelphiVersions.Items.Objects[versionIndex] as TCustomOutputFolders;
   if outputFolders <> nil then
   begin
@@ -184,7 +180,7 @@ begin
   end;
 end;
 
-procedure TSelectDelphiInstallationPage.AddDephiInstallation(const installation: TJclBorRADToolInstallation);
+procedure TSelectDelphiInstallationPage.AddDelphiInstallation(const installation: TJclBorRADToolInstallation);
 var
   outputFolders: TCustomOutputFolders;
   i: integer;
