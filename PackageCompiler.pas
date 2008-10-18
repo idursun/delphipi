@@ -16,6 +16,7 @@ type
      fCompilationData: TCompilationData;
      fPackageList: TPackageList;
      fPackageCompileEvent: TPackageCompileEvent;
+     fCancel: boolean;
    protected
      function GetExtraOptions: String; virtual;
      function ConvertToShortPaths(const paths : TStringList): string;
@@ -27,6 +28,8 @@ type
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
      //Events
      property OnPackageEvent: TPackageCompileEvent read fPackageCompileEvent write fPackageCompileEvent;
+     //Properties
+     property Cancel: boolean read fCancel write fCancel;
    end;
 
 implementation
@@ -71,6 +74,9 @@ begin
         RaiseEvent(info, psSuccess)
       else
         RaiseEvent(info, psError);
+
+      if fCancel then
+        break;
     end;
   finally
     

@@ -22,7 +22,10 @@ type
     fStatus : TPackageStatus;
     fMonitor : IProgressMonitor;
     fCompilationData: TCompilationData;
+    fCancel: boolean;
+    fCompiler: TPackageCompiler;
     procedure SetMonitor(const Value: IProgressMonitor);
+    procedure SetCancel(const Value: boolean);
   protected
     procedure Execute; override;
     procedure UpdateMonitor;
@@ -30,6 +33,7 @@ type
   public
     constructor Create(const compilationData: TCompilationData);
     property Monitor: IProgressMonitor read FMonitor write SetMonitor;
+    property Cancel: boolean read fCancel write SetCancel;
   end;
 
 implementation
@@ -43,16 +47,14 @@ begin
 end;
 
 procedure TCompileThread.Execute;
-var
-  compiler: TPackageCompiler;
 begin
   inherited;
-  compiler := TPackageCompiler.Create(fCompilationData);
+  fCompiler := TPackageCompiler.Create(fCompilationData);
   try
-    compiler.OnPackageEvent := self.PackageEventHandler;
-    compiler.Compile;
+    fCompiler.OnPackageEvent := self.PackageEventHandler;
+    fCompiler.Compile;
   finally
-    compiler.Free;
+    fCompiler.Free;
   end;
 end;
 
@@ -72,6 +74,13 @@ begin
    if status = psSuccess then inc(fSucceededs);
 
    Synchronize(UpdateMonitor);
+end;
+
+procedure TCompileThread.SetCancel(const Value: boolean);
+begin
+  fCancel := Value;
+  if fCompiler <> nil then
+    fCompiler.Cancel := true;
 end;
 
 procedure TCompileThread.SetMonitor(const Value: IProgressMonitor);

@@ -71,7 +71,8 @@ procedure TProgressPage.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
   if compileThreadWorking then begin
-    compileThread.Suspend;
+    compileThread.Cancel := true;
+    compileThread.WaitFor;
     compileThread.Terminate;
   end;
   pageProgressMonitor := nil;
