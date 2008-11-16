@@ -89,6 +89,7 @@
 			<DCCReference Include="CompilationData.pas"/>
 			<DCCReference Include="ScriptPersister.pas"/>
 			<DCCReference Include="libs\gnugettext.pas"/>
+			<DCCReference Include="Utils.pas"/>
 			<None Include="DelphiPI.todo"/>
 			<None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
 			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>

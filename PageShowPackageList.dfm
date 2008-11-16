@@ -50,6 +50,7 @@ inherited ShowPackageListPage: TShowPackageListPage
     TreeOptions.StringOptions = [toSaveCaptions]
     OnChecked = packageTreeChecked
     OnGetText = fPackageTreeGetText
+    OnPaintText = fPackageTreePaintText
     OnGetImageIndex = packageTreeGetImageIndex
     OnGetHint = fPackageTreeGetHint
     OnGetNodeDataSize = packageTreeGetNodeDataSize

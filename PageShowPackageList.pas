@@ -40,23 +40,28 @@ type
       var HintText: string);
     procedure fPackageTreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Column: TColumnIndex; TextType: TVSTTextType; var CellText: string);
+    procedure fPackageTreePaintText(Sender: TBaseVirtualTree;
+      const TargetCanvas: TCanvas; Node: PVirtualNode; Column: TColumnIndex;
+      TextType: TVSTTextType);
   private
     packageLoadThread: TThread;
     fProcessedPackageInfo: TPackageInfo;
     fSelectMask: string;
+    fDefaultPackageNames: TStringList;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(node: PVirtualNode; checkState: TCheckState);
 
-    procedure PackageInfoCollectCallBack(node: PVirtualNode);
-    procedure CheckRequiredPackagesCallBack(node: PVirtualNode);
-    procedure UncheckDependentPackagesCallBack(node: PVirtualNode);
+    procedure ByCollectingPackageInfo(node: PVirtualNode);
+    procedure ByCheckingDependencies(node: PVirtualNode);
+    procedure BySelectingDependentPackages(node: PVirtualNode);
+    procedure ByUnselectingDependentPackages(node: PVirtualNode);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
   end;
 
 implementation
-uses JclFileUtils, gnugettext;
+uses JclFileUtils, gnugettext, Utils;
 
 {$R *.dfm}
 type
@@ -64,6 +69,7 @@ type
   TNodeData = record
     Name: string;
     Info: TPackageInfo;
+    MissingPackageName: string;
   end;
 var
   threadWorking : Boolean;
@@ -117,6 +123,15 @@ begin
     lblWait.Visible := false;
     fPackageTree.Visible := True;
     fPackageTree.FullExpand;
+    fCompilationData.PackageList.Clear;
+    fDefaultPackageNames := TStringList.Create;
+    try
+      utils.GetDefaultPackageList(fDefaultPackageNames, fCompilationData.Installation.VersionNumberStr);
+      fPackageTree.Traverse(ByCollectingPackageInfo);
+      fPackageTree.Traverse(ByCheckingDependencies);
+    finally
+      fDefaultPackageNames.Free;
+    end;
     UpdateWizardState;
   end;
 end;
@@ -148,7 +163,7 @@ begin
   end;
 end;
 
-procedure TShowPackageListPage.CheckRequiredPackagesCallBack(node: PVirtualNode);
+procedure TShowPackageListPage.BySelectingDependentPackages(node: PVirtualNode);
 var
   data: PNodeData;  
 begin
@@ -161,7 +176,7 @@ begin
     node.CheckState := csCheckedNormal;
 end;
 
-procedure TShowPackageListPage.UncheckDependentPackagesCallBack(node: PVirtualNode);
+procedure TShowPackageListPage.ByUnselectingDependentPackages(node: PVirtualNode);
 var
   data: PNodeData;
 begin
@@ -229,19 +244,71 @@ begin
     exit;
   end;
   fCompilationData.PackageList.Clear;
-  fPackageTree.Traverse(fPackageTree.RootNode, packageInfoCollectCallBack);
+  fPackageTree.Traverse(fPackageTree.RootNode, ByCollectingPackageInfo);
   fCompilationData.PackageList.Pack;
 end;
 
-procedure TShowPackageListPage.PackageInfoCollectCallBack(
+procedure TShowPackageListPage.ByCollectingPackageInfo(
   node: PVirtualNode);
 var
   data: PNodeData;  
 begin
   if node.CheckState <> csCheckedNormal then exit;
   data := fPackageTree.GetNodeData(node);
-  if data.Info <> nil then
+  if (data <> nil) and (data.Info <> nil) then
     fCompilationData.PackageList.Add(data.Info);
+end;
+
+procedure TShowPackageListPage.ByCheckingDependencies(
+  node: PVirtualNode);
+var
+  data:PNodeData;
+  requiredPackage: string;
+  I: Integer;
+  idePackageName: string;
+  preInstalled: boolean;
+  j: integer;
+begin
+  data := fPackageTree.GetNodeData(node);    
+  if (data = nil) or (data.Info = nil) then exit;
+  data.MissingPackageName := '';
+  
+  for requiredPackage in data.Info.RequiredPackageList do begin
+    preInstalled := false; 
+    // if required package is like vcl, rtl, vclx, etc... then continue
+    for I := 0 to fDefaultPackageNames.Count - 1 do
+    begin
+      if Pos(UpperCase(requiredPackage), UpperCase(fDefaultPackageNames[i])) = 1 then
+      begin
+        preInstalled := true; 
+        break;
+      end;
+    end;
+      
+    if preInstalled  then
+      continue; 
+      
+    //check if it is already installed to ide
+    for I := 0 to fCompilationData.Installation.IdePackages.Count - 1 do
+    begin
+      idePackageName :=  fCompilationData.Installation.IdePackages.PackageFileNames[i];
+      idePackageName := PathExtractFileNameNoExt(idePackageName);
+      if UpperCase(idePackageName) = UpperCase(requiredPackage) then begin
+        preInstalled := true;
+        break;
+      end;
+    end;
+    
+    if preInstalled  then
+      continue; 
+    
+    if fCompilationData.PackageList.IndexOf(requiredPackage) = -1 then
+    begin
+      data.MissingPackageName := requiredPackage;
+      exit;
+    end;
+    
+  end;
 end;
 
 procedure TShowPackageListPage.FormCreate(Sender: TObject);
@@ -269,6 +336,8 @@ begin
                 _('Description:')+ info.Description+#13#10+
                 _('Type:')+ _type+#13#10+
                 _('Requires:')+ #13#10 + info.RequiredPackageList.Text;
+    if data.MissingPackageName <> '' then
+      HintText := HintText +#13#10 + _('Missing Package:')  + data.MissingPackageName;
   end;
 end;
 
@@ -289,6 +358,23 @@ begin
            CellText := _('runtime')
          else
            CellText := _('design');
+  end;
+end;
+
+procedure TShowPackageListPage.fPackageTreePaintText(Sender: TBaseVirtualTree;
+  const TargetCanvas: TCanvas; Node: PVirtualNode; Column: TColumnIndex;
+  TextType: TVSTTextType);
+var
+  data: PNodeData;  
+begin
+  inherited;
+  data := Sender.GetNodeData(Node);
+  if Column = 0 then
+  begin
+     if (data.Info <> nil) and (data.MissingPackageName <> '') then
+       TargetCanvas.Font.Color := clRed
+     else
+       TargetCanvas.Font.Color := clBlack;
   end;
 end;
 

@@ -78,6 +78,8 @@ var
   files: TStringList;
   filename: string;
 begin
+  if self.fInstallation.IDEVersionNumber >= 7 then exit; //delphi 2007 and later
+  
   files := TStringList.Create;
   try
     AdvBuildFileList(fPackageList.InitialFolder+'\*.hlp',
@@ -93,7 +95,7 @@ begin
   end;
 end;
 
-//TODO: refactor -- finds paths of files has .pas extension and then matches pas files in packages, removes remaining paths 
+//TODO: refactor -- finds paths of files have .pas extension and then matches pas files in packages, removes remaining paths 
 procedure TCompilationData.ResolveSourcePaths;
 var
   i,j: integer;
