@@ -22,7 +22,6 @@ type
   public
     constructor Create(const baseFolder:String);
     destructor Destroy; override;
-    function BuildPackageList(pattern: string): TPackageList;
     property BaseFolder: String read FBaseFolder;
     property PackageFolders: TStringList read getPackageFolders;
     property SourceFolders: TStringList read getSourceFolders;
@@ -32,16 +31,6 @@ type
 implementation
 uses contnrs;
 { TCompileInfo }
-
-function TCompileInfo.BuildPackageList(pattern: string): TPackageList;
-begin
-  //TODO Implement here, move code from MainForm
-  Result := nil;
-  if FPackageFolders.Count = 0 then
-    exit;
-  if pattern = '' then
-      pattern := '*.dpk';
-end;
 
 constructor TCompileInfo.Create(const baseFolder:String);
 begin

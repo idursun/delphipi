@@ -49,6 +49,7 @@
 			<DCCReference Include="TestPackageList.pas"/>
 			<DCCReference Include="..\PackageInfo.pas"/>
 			<DCCReference Include="..\PackageList.pas"/>
+			<DCCReference Include="TestPackageInfo.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

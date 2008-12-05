@@ -49,8 +49,8 @@ type
      BPL: string;
      DCP: string;
   end;
+  
 var
-
   lastSelectedIndex : Integer;
 {$R *.dfm}
 

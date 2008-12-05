@@ -22,6 +22,7 @@ type
     fStatus: TPackageStatus;
   public
     constructor Create;overload;
+    constructor Create(const packageName:string);overload;
     destructor Destroy; override;
     function DependsOn(const package: TPackageInfo): Boolean; overload;
     
@@ -52,6 +53,12 @@ begin
   FreeAndNil(fRequiredPackageList);
   FreeAndNil(fContainedFileList);
   inherited;
+end;
+
+constructor TPackageInfo.Create(const packageName: string);
+begin
+  Create;
+  FPackageName := packageName;
 end;
 
 function TPackageInfo.DependsOn(const package: TPackageInfo): Boolean;

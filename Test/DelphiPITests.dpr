@@ -21,7 +21,8 @@ uses
   TextTestRunner,
   TestPackageList in 'TestPackageList.pas',
   PackageInfo in '..\PackageInfo.pas',
-  PackageList in '..\PackageList.pas';
+  PackageList in '..\PackageList.pas',
+  TestPackageInfo in 'TestPackageInfo.pas';
 
 {$R *.RES}
 

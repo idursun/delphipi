@@ -17,7 +17,7 @@ type
     function GetWizardController: IWizard;
     procedure SetWizardController(const Value: IWizard);
   protected
-    FWizard: IWizard;
+    fWizardController: IWizard;
     fCompilationData: TCompilationData;
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); reintroduce; virtual;
@@ -51,7 +51,7 @@ end;
 
 procedure TWizardPage.SetWizardController(const Value: IWizard);
 begin
-  FWizard := Value;
+  fWizardController := Value;
 end;
 procedure TWizardPage.UpdateWizardState;
 begin

@@ -76,8 +76,6 @@ var
   files: TStringList;
   filename: string;
 begin
-  if self.fInstallation.IDEVersionNumber >= 7 then exit; //delphi 2007 and later
-  
   files := TStringList.Create;
   try
     AdvBuildFileList(fBaseFolder +'\*.hlp',

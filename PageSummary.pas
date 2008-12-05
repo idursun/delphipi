@@ -146,12 +146,12 @@ end;
 procedure TSummaryPage.UpdateWizardState;
 begin
   inherited;
-  FWizard.SetHeader(_('Finished'));
-  FWizard.SetDescription(_('Installation Summary'));
-  with FWizard.GetButton(wbtNext) do
+  fWizardController.SetHeader(_('Finished'));
+  fWizardController.SetDescription(_('Installation Summary'));
+  with fWizardController.GetButton(wbtNext) do
     Caption := _('&Exit');
 
-  with FWizard.GetButton(wbtBack) do
+  with fWizardController.GetButton(wbtBack) do
     Visible := false;
 end;
 

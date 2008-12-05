@@ -11,7 +11,6 @@ type
 
   TPackageList = class(TList)
   private
-    FInitialFolder : String;
     function get(I: Integer): TPackageInfo;
     procedure put(I: Integer; const Value: TPackageInfo);
   public
@@ -80,6 +79,7 @@ begin
   Delete(i);
 end;  
 
+//TODO: encapsulate in another class, sorting list by considering dependencies
 procedure TPackageList.SortList();
 var
   tmp : TPackageInfo;
