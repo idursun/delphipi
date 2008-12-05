@@ -61,7 +61,7 @@ type
   end;
 
 implementation
-uses JclFileUtils, gnugettext, Utils;
+uses JclFileUtils, gnugettext, Utils, PackageInfoFactory;
 
 {$R *.dfm}
 type
@@ -78,6 +78,7 @@ type
   TPackageLoadThread = class(TThread)
   private
     fCompilationData: TCompilationData;
+    fPackageInfoFactory: TPackageInfoFactory;
     fTree: TBaseVirtualTree;
     fActive: Boolean;
     procedure BuildFileNodes(parent: PVirtualNode; directory: string);
@@ -87,6 +88,7 @@ type
     procedure RemoveEmptyFolderNodes(node: PVirtualNode);
   public
     constructor Create(data: TCompilationData; tree: TBaseVirtualTree);
+    destructor Destroy; override;
     property Active: boolean read fActive write fActive;
   end;
 
@@ -267,7 +269,6 @@ var
   I: Integer;
   idePackageName: string;
   preInstalled: boolean;
-  j: integer;
 begin
   data := fPackageTree.GetNodeData(node);    
   if (data = nil) or (data.Info = nil) then exit;
@@ -447,6 +448,13 @@ begin
   inherited Create(true);
   fCompilationData := data;
   fTree:= tree;
+  fPackageInfoFactory := TPackageInfoFactory.Create;
+end;
+
+destructor TPackageLoadThread.Destroy;
+begin
+  fPackageInfoFactory.Free;   
+  inherited;
 end;
 
 procedure TPackageLoadThread.RemoveEmptyFolderNodes(node: PVirtualNode);
@@ -503,7 +511,7 @@ begin
           child.CheckType := ctCheckBox;
           data := fTree.GetNodeData(child);
           data.Name := sr.Name;
-          data.Info := TPackageInfo.Create(PathAddSeparator(directory) + sr.Name);
+          data.Info := fPackageInfoFactory.CreatePackageInfo(PathAddSeparator(directory) + sr.Name);
         end;
       until FindNext(Sr) <> 0;
     finally

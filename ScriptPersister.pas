@@ -6,7 +6,7 @@
 unit ScriptPersister;
 
 interface
-uses SysUtils, Classes, CompilationData;
+uses SysUtils, Classes, CompilationData, PackageInfoFactory;
 type
   //TODO: refactor: this class has more than one responsibility = scanner + script persister
   TScriptPersister = class
@@ -14,6 +14,7 @@ type
     fLines: TStringList;
     fLine: String;
     fCurrentLine :integer;
+    fPackageInfoFactory: TPackageInfoFactory;
   protected
     function IsSectionHeader(line: string):boolean;
     function GetSectionHeader(line: string):string;
@@ -37,7 +38,7 @@ type
   end;
 
 implementation
-uses JclStrings, PackageInfo, JclBorlandTools;
+uses JclStrings, JclBorlandTools, PackageInfo;
 type
 
   TScriptWriter = class(TStringList)
@@ -50,11 +51,13 @@ type
 constructor TScriptPersister.Create();
 begin
   fLines := TStringList.Create;
+  fPackageInfoFactory.Create;
 end;
 
 destructor TScriptPersister.Destroy;
 begin
   fLines.Free;
+  fPackageInfoFactory.Free;
   inherited;
 end;
 
@@ -155,7 +158,7 @@ begin
        Dec(fCurrentLine);
        break;
      end;
-     compilationData.PackageList.Add(TPackageInfo.Create(line));
+     compilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(line));
    end;
 end;
 

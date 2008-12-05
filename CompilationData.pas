@@ -1,9 +1,9 @@
 unit CompilationData;
 interface
-uses Classes, PackageInfo, JclBorlandTools;
+uses Classes, PackageInfo, PackageList, JclBorlandTools;
 
 type
-  TCompilationData = class(TInterfacedObject)
+  TCompilationData = class
   private
     fBaseFolder: String;
     fInstallation: TJclBorRADToolInstallation;
@@ -58,8 +58,6 @@ end;
 procedure TCompilationData.SetBaseFolder(const Value: String);
 begin
   fBaseFolder := Value;
-  if fPackageList <> nil then
-    fPackageList.InitialFolder := fBaseFolder;
 end;
 
 procedure TCompilationData.SetPackageList(const aPackageList: TPackageList);
@@ -82,7 +80,7 @@ begin
   
   files := TStringList.Create;
   try
-    AdvBuildFileList(fPackageList.InitialFolder+'\*.hlp',
+    AdvBuildFileList(fBaseFolder +'\*.hlp',
            faAnyFile,
            files,
            amAny,
@@ -121,7 +119,7 @@ begin
       containedFiles.Add(ExtractFileName(fPackageList[i].ContainedFileList[j]));
   end;
 
-  AdvBuildFileList(fPackageList.InitialFolder+'\*.pas',
+  AdvBuildFileList(fBaseFolder+'\*.pas',
            faAnyFile,
            files,
            amAny,

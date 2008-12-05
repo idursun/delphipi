@@ -6,7 +6,7 @@
 unit CompileInfo;
 
 interface
-uses Classes, SysUtils, PackageInfo;
+uses Classes, SysUtils, PackageInfo, PackageList;
 type
 
   TCompileInfo = class

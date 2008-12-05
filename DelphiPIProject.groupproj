@@ -1,0 +1,48 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{23AE099F-B83D-4A21-A920-873D7D98B66A}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="DelphiPI.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="Test\DelphiPITests.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="DelphiPI">
+			<MSBuild Projects="DelphiPI.dproj"/>
+		</Target>
+		<Target Name="DelphiPI:Clean">
+			<MSBuild Targets="Clean" Projects="DelphiPI.dproj"/>
+		</Target>
+		<Target Name="DelphiPI:Make">
+			<MSBuild Targets="Make" Projects="DelphiPI.dproj"/>
+		</Target>
+		<Target Name="DelphiPITests">
+			<MSBuild Projects="Test\DelphiPITests.dproj"/>
+		</Target>
+		<Target Name="DelphiPITests:Clean">
+			<MSBuild Targets="Clean" Projects="Test\DelphiPITests.dproj"/>
+		</Target>
+		<Target Name="DelphiPITests:Make">
+			<MSBuild Targets="Make" Projects="Test\DelphiPITests.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="DelphiPI;DelphiPITests"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="DelphiPI:Clean;DelphiPITests:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="DelphiPI:Make;DelphiPITests:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>

@@ -90,6 +90,8 @@
 			<DCCReference Include="ScriptPersister.pas"/>
 			<DCCReference Include="libs\gnugettext.pas"/>
 			<DCCReference Include="Utils.pas"/>
+			<DCCReference Include="PackageInfoFactory.pas"/>
+			<DCCReference Include="PackageList.pas"/>
 			<None Include="DelphiPI.todo"/>
 			<None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
 			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>
@@ -168,7 +170,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">40</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">97</VersionInfo>
+						<VersionInfo Name="Build">99</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -180,7 +182,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.40.0.97</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.40.0.99</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">Katarina</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright"/>
 						<VersionInfoKeys Name="LegalTrademarks"/>

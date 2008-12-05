@@ -20,7 +20,9 @@ uses
   CompilationData in 'CompilationData.pas',
   ScriptPersister in 'ScriptPersister.pas',
   gnugettext in 'libs\gnugettext.pas',
-  Utils in 'Utils.pas';
+  Utils in 'Utils.pas',
+  PackageInfoFactory in 'PackageInfoFactory.pas',
+  PackageList in 'PackageList.pas';
 
 {$R *.res}
 

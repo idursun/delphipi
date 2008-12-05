@@ -6,7 +6,7 @@
 unit PackageCompiler;
 
 interface
-uses JclBorlandTools, PackageInfo, SysUtils, Classes, CompilationData;
+uses JclBorlandTools, PackageInfo, PackageList, SysUtils, Classes, CompilationData;
 
 type
    TPackageCompileEvent = procedure(const package: TPackageInfo; status: TPackageStatus) of object;
