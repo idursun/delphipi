@@ -140,6 +140,15 @@
 			<None Include="ModelSupport_DelphiPI\WizardData\default.txvpck"/>
 			<None Include="ModelSupport_DelphiPI\WizardIntfs\default.txaPackage"/>
 			<None Include="ModelSupport_DelphiPI\WizardIntfs\default.txvpck"/>
+			<None Include="ModelSupport_DelphiPI\ScriptPersister\default.txvpck"/>
+			<None Include="ModelSupport_DelphiPI\PackageCompiler\default.txvpck"/>
+			<None Include="ModelSupport_DelphiPI\PageSummary\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\Utils\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\Command\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\PackageList\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\PackageInfoFactory\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\CommandResolveSourcePaths\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\Command\default.txvpck"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
@@ -170,7 +179,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">40</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">99</VersionInfo>
+						<VersionInfo Name="Build">102</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -182,7 +191,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.40.0.99</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.40.0.102</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">Katarina</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright"/>
 						<VersionInfoKeys Name="LegalTrademarks"/>

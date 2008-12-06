@@ -45,7 +45,6 @@ type
       TextType: TVSTTextType);
   private
     packageLoadThread: TThread;
-    fProcessedPackageInfo: TPackageInfo;
     fSelectMask: string;
     fDefaultPackageNames: TStringList;
     procedure PackageLoadCompleted(Sender: TObject);
@@ -53,8 +52,8 @@ type
 
     procedure ByCollectingPackageInfo(node: PVirtualNode);
     procedure ByCheckingDependencies(node: PVirtualNode);
-    procedure BySelectingDependentPackages(node: PVirtualNode);
-    procedure ByUnselectingDependentPackages(node: PVirtualNode);
+//    procedure BySelectingDependentPackages(node: PVirtualNode);
+//    procedure ByUnselectingDependentPackages(node: PVirtualNode);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -142,21 +141,9 @@ procedure TShowPackageListPage.ChangeState(node: PVirtualNode;
   checkState: TCheckState);
 var
   child: PVirtualNode;
-  //data: PNodeData;
 begin
  if node = nil then exit;
   node.CheckState := checkState;
-  // code below unchecks dependent packages when a required package is unchecked, vice versa
-//  data := fPackageTree.GetNodeData(node);
-//  if data.info <> nil then
-//  begin
-//    fProcessedPackageInfo := data.info;
-//    if node.CheckState = csUncheckedNormal then
-//      fPackageTree.Traverse(fPackageTree.RootNode, UncheckDependentPackagesCallBack);
-//    if node.CheckState = csCheckedNormal then
-//      fPackageTree.Traverse(fPackageTree.RootNode, CheckRequiredPackagesCallBack);
-//  end;
-
   child := node.FirstChild;
   while child <> nil do
   begin
@@ -164,32 +151,32 @@ begin
      child := child.NextSibling;
   end;
 end;
-
-procedure TShowPackageListPage.BySelectingDependentPackages(node: PVirtualNode);
-var
-  data: PNodeData;  
-begin
-  if node.CheckState = csCheckedNormal then exit;
-  if fProcessedPackageInfo = nil then exit;
-  
-  data := fPackageTree.GetNodeData(node);
-  if (data = nil) or (data.Info = nil) then exit;
-  if fProcessedPackageInfo.DependsOn(data.Info) then
-    node.CheckState := csCheckedNormal;
-end;
-
-procedure TShowPackageListPage.ByUnselectingDependentPackages(node: PVirtualNode);
-var
-  data: PNodeData;
-begin
-  if node.CheckState = csUncheckedNormal then exit;
-  if fProcessedPackageInfo = nil then exit;
-
-  data := fPackageTree.GetNodeData(node);
-  if (data = nil) or (data.Info = nil) then exit;
-  if data.Info.DependsOn(fProcessedPackageInfo) then
-    node.CheckState := csUncheckedNormal;
-end;
+//
+//procedure TShowPackageListPage.BySelectingDependentPackages(node: PVirtualNode);
+//var
+//  data: PNodeData;  
+//begin
+//  if node.CheckState = csCheckedNormal then exit;
+//  if fProcessedPackageInfo = nil then exit;
+//  
+//  data := fPackageTree.GetNodeData(node);
+//  if (data = nil) or (data.Info = nil) then exit;
+//  if fProcessedPackageInfo.DependsOn(data.Info) then
+//    node.CheckState := csCheckedNormal;
+//end;
+//
+//procedure TShowPackageListPage.ByUnselectingDependentPackages(node: PVirtualNode);
+//var
+//  data: PNodeData;
+//begin
+//  if node.CheckState = csUncheckedNormal then exit;
+//  if fProcessedPackageInfo = nil then exit;
+//
+//  data := fPackageTree.GetNodeData(node);
+//  if (data = nil) or (data.Info = nil) then exit;
+//  if data.Info.DependsOn(fProcessedPackageInfo) then
+//    node.CheckState := csUncheckedNormal;
+//end;
 
 procedure TShowPackageListPage.UpdateWizardState;
 var

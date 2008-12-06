@@ -11,7 +11,7 @@ uses JclFileUtils, SysUtils;
 
 procedure GetDefaultPackageList(const list: TStrings; const versionNumberStr: string);
 var
-  systemPath,path,searchPath, entry,versionSuffix: string;
+  systemPath,searchPath, entry,versionSuffix: string;
   packageName: string;
   internalList: TStringList;
 begin

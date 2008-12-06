@@ -61,9 +61,9 @@ end;
 procedure TCompileThread.PackageEventHandler(const package: TPackageInfo;
   status: TPackageStatus);
 begin
-   //TODO: reorganize code, there is dublicate info
    if status = psCompiling then
      fPackageName := package.PackageName;
+     
    if (status = psSuccess) or (status = psError) then
      fStepNo := fStepNo + 1;
 
