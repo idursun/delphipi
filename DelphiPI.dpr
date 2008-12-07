@@ -23,7 +23,9 @@ uses
   Utils in 'Utils.pas',
   PackageInfoFactory in 'PackageInfoFactory.pas',
   PackageList in 'PackageList.pas',
-  PackageDependencyVerifier in 'PackageDependencyVerifier.pas';
+  PackageDependencyVerifier in 'PackageDependencyVerifier.pas',
+  ProgressMonitor in 'ProgressMonitor.pas',
+  MonitoredPackageCompiler in 'MonitoredPackageCompiler.pas';
 
 {$R *.res}
 

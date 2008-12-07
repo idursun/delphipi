@@ -9,10 +9,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, ComCtrls, WizardIntfs, CompileThread;
+  Dialogs, PageBase, StdCtrls, ComCtrls, WizardIntfs, CompileThread, ProgressMonitor, PackageInfo;
 
 type
-  TProgressPage = class(TWizardPage)
+  TProgressPage = class(TWizardPage, IProgressMonitor)
     GroupBox1: TGroupBox;
     ProgressBar: TProgressBar;
     Label1: TLabel;
@@ -24,48 +24,40 @@ type
   private
     compileThreadWorking: Boolean;
     compileThread: TCompileThread;
-    fCurrPackageNo: Integer;
-
-    procedure handleText(const text: string);
-    procedure compileCompleted(sender: TObject);
-    procedure SetCurrentPackageNo(const Value: Integer);
-    property CurrectPackageNo: Integer read fCurrPackageNo write SetCurrentPackageNo;
+    fFullLog : TStringList;
   protected
     procedure WriteInfo(const color: TColor; const info: string);
   public
     procedure Compile;
     procedure UpdateWizardState; override;
+    procedure Finished;
+    procedure Started;
+    procedure CompilerOutput(const line: string);
+    procedure PackageProcessed(const packageInfo: TPackageInfo;
+      status: TPackageStatus);
+    procedure Log(const text: string);
+      
   end;
 
 var
   ProgressPage: TProgressPage;
 
 implementation
-uses PackageInfo, gnugettext, StrUtils;
-type
-
-  TPageProgressMonitor = class(TInterfacedObject, IProgressMonitor )
-  private
-    FStepNo: Integer;
-    FPackageName: String;
-    FPage: TProgressPage;
-    procedure SetPackageName(const Value: String);
-    procedure SetStepNo(const Value: Integer);
-    function GetStepNo: Integer;
-    function GetPackageName: String;
-  public
-    constructor Create(const page: TProgressPage);  
-    procedure PackageCompiled(const packageInfo: TPackageInfo; status: TPackageStatus);
-    property StepNo: Integer read FStepNo write SetStepNo;
-    property PackageName: String read FPackageName write SetPackageName;
-
-  end;
-var
-  pageProgressMonitor : TPageProgressMonitor;
+uses  gnugettext, StrUtils;
 
 {$R *.dfm}
 
 { TProgressPage }
+
+procedure TProgressPage.FormCreate(Sender: TObject);
+begin
+  inherited;
+  TranslateComponent(self);
+  lblPackage.Caption := '';
+  compileThreadWorking := false;
+  fFullLog := TStringList.Create;
+  Compile;
+end;
 
 procedure TProgressPage.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -75,17 +67,7 @@ begin
     compileThread.WaitFor;
     compileThread.Terminate;
   end;
-  pageProgressMonitor := nil;
-end;
-
-procedure TProgressPage.FormCreate(Sender: TObject);
-begin
-  inherited;
-  TranslateComponent(self);
-  lblPackage.Caption := '';
-  CurrectPackageNo := 0;
-  compileThreadWorking := false;
-  Compile;
+  fFullLog.Free;
 end;
 
 procedure TProgressPage.UpdateWizardState;
@@ -113,42 +95,53 @@ end;
 
 procedure TProgressPage.Compile;
 begin
-  pageProgressMonitor := TPageProgressMonitor.Create(self);
-  fCompilationData.Installation.OutputCallback := self.handletext;
   ProgressBar.Max := fCompilationData.PackageList.Count;
   compileThread := TCompileThread.Create(fCompilationData);
-  compileThread.Monitor := pageProgressMonitor;
+  compileThread.Monitor := Self as IProgressMonitor;
   with compileThread do begin
-    OnTerminate := compileCompleted;
     FreeOnTerminate := true;
     compileThreadWorking := true;
     Resume;
   end;
 end;
 
-procedure TProgressPage.handleText(const text: string);
+procedure TProgressPage.Log(const text: string);
+begin
+
+end;
+
+procedure TProgressPage.PackageProcessed(const packageInfo: TPackageInfo;
+  status: TPackageStatus);
+begin
+ case status of
+    psNone: ;
+    psCompiling: begin
+      WriteInfo(clBlack, _('Compiling:') + packageInfo.PackageName);
+      ProgressBar.StepBy(1);
+      lblCurrentPackageNo.Caption := Format('%d/%d',[ProgressBar.Position,ProgressBar.Max]);
+    end;
+    psInstalling: WriteInfo(clBlue, _('Installing'));
+    psSuccess: WriteInfo(clGreen, _('Successful'));
+    psError: WriteInfo(clRed,_('Failed'));
+  end;
+end;
+
+procedure TProgressPage.Started;
+begin
+  ProgressBar.Position := 0;
+  ProgressBar.Max := fCompilationData.PackageList.Count;
+end;
+
+procedure TProgressPage.CompilerOutput(const line: string);
 var
   S : String;
 begin
-  S := Trim(Text);
-
+  S := Trim(line);
   if Pos('Fatal:', S) > 0 then
-    WriteInfo(clRed, text);
-
-  //memo.lines.add(text);
-  memo.SelAttributes.Color := clBlack;
+    WriteInfo(clRed, line)
 end;
 
-procedure TProgressPage.SetCurrentPackageNo(const Value: Integer);
-begin
-  if fCurrPackageNo = Value then
-    exit;
-
-  fCurrPackageNo := Value;
-  lblCurrentPackageNo.Caption := Format('%d/%d',[fCurrPackageNo,fCompilationData.PackageList.Count]);
-end;
-
-procedure TProgressPage.CompileCompleted(sender: TObject);
+procedure TProgressPage.Finished;
 begin
   lblPackage.Caption :='';
   ProgressBar.Position := 0;
@@ -157,50 +150,5 @@ begin
   Wizard.UpdateInterface;
 end;
 
-constructor TPageProgressMonitor.Create(const page: TProgressPage);
-begin
-  FPage := page;
-end;
-
-function TPageProgressMonitor.GetPackageName: String;
-begin
-  Result := FPackageName;
-end;
-
-function TPageProgressMonitor.GetStepNo: Integer;
-begin
-  Result := FStepNo;
-end;
-
-procedure TPageProgressMonitor.PackageCompiled(const packageInfo: TPackageInfo;
-  status: TPackageStatus);
-begin
-  case status of
-    psNone: ;
-    psCompiling: FPage.WriteInfo(clBlack, _('Compiling:') + packageInfo.PackageName);
-    psInstalling: FPage.WriteInfo(clBlue, _('Installing'));
-    psSuccess: FPage.WriteInfo(clGreen, _('Successful'));
-    psError: fPage.WriteInfo(clRed,_('Failed'));
-  end;
-end;
-
-procedure TPageProgressMonitor.SetPackageName(const Value: String);
-begin
-  if FPackageName <> Value then
-  begin
-    FPackageName := Value;
-    fPage.lblPackage.Caption := FPackageName;
-  end;
-end;
-
-procedure TPageProgressMonitor.SetStepNo(const Value: Integer);
-begin
-  if FStepNo <> Value then
-  begin
-    FStepNo := Value;
-    fPage.ProgressBar.Position := FStepNo;
-    fPage.CurrectPackageNo := fPage.CurrectPackageNo + 1;
-  end;
-end;
 
 end.

@@ -6,36 +6,35 @@
 unit PackageCompiler;
 
 interface
-uses JclBorlandTools, PackageInfo, PackageList, SysUtils, Classes, CompilationData;
+uses JclBorlandTools, PackageInfo, PackageList, SysUtils, Classes, CompilationData, ProgressMonitor;
 
 type
-   TPackageCompileEvent = procedure(const package: TPackageInfo; status: TPackageStatus) of object;
+   
    TPackageCompiler = class
    private
      fInstallation : TJclBorRADToolInstallation;
      fCompilationData: TCompilationData;
      fPackageList: TPackageList;
-     fPackageCompileEvent: TPackageCompileEvent;
      fCancel: boolean;
      fSourceFilePaths: TStringList;
+     fExtraOptions: String;
 
     procedure ResolveHelpFiles(const compilationData: TCompilationData);
     procedure AddSourcePathsToIDE(const sourceFilePaths: TStrings; const installation: TJclBorRADToolInstallation);
    protected
-     function GetExtraOptions: String; virtual;
+     procedure PrepareExtraOptions; virtual;
      function ConvertToShortPaths(const paths : TStringList): string;
-     procedure RaiseEvent(const packageInfo: TPackageInfo; status: TPackageStatus);virtual;
+     
+     property Installation: TJclBorRADToolInstallation read fInstallation;
    public
-     constructor Create(const compilationData: TCompilationData);
+     constructor Create(const compilationData: TCompilationData); virtual;
      destructor Destroy; override;
      
-     procedure Compile;
+     procedure Compile; virtual;
      function CompilePackage(const packageInfo : TPackageInfo): Boolean; virtual;
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
-     procedure ResolveSourcePaths;
-
-     //Events
-     property OnPackageEvent: TPackageCompileEvent read fPackageCompileEvent write fPackageCompileEvent;
+     procedure ResolveSourcePaths; virtual;
+  
      //Properties
      property Cancel: boolean read fCancel write fCancel;
      property SourceFilePaths: TStringList read fSourceFilePaths write fSourceFilePaths;
@@ -67,54 +66,42 @@ var
   info: TPackageInfo;
   compilationSuccessful: boolean;
 begin
-  try
-    if SourceFilePaths.Count = 0 then
-      ResolveSourcePaths;
-      
-    AddSourcePathsToIDE(SourceFilePaths, fCompilationData.Installation);
-      
-    if fCompilationData.HelpFiles.Count = 0 then
-      ResolveHelpFiles(fCompilationData);
-
-    fPackageList.SortList;
-    for i := 0 to fPackageList.Count - 1 do begin
-      info := fPackageList[i];
-      RaiseEvent(info, psCompiling);
-      compilationSuccessful := CompilePackage(info);
-
-      if compilationSuccessful and (not info.RunOnly) then
-      begin
-        RaiseEvent(info, psInstalling);
-        InstallPackage(info);
-      end;
-      if compilationSuccessful then
-        RaiseEvent(info, psSuccess)
-      else
-        RaiseEvent(info, psError);
-
-      if fCancel then
-        break;
-    end;
-  finally
+  PrepareExtraOptions;
     
+  if SourceFilePaths.Count = 0 then
+    ResolveSourcePaths;
+      
+  AddSourcePathsToIDE(SourceFilePaths, fCompilationData.Installation);
+      
+  if fCompilationData.HelpFiles.Count = 0 then
+    ResolveHelpFiles(fCompilationData);
+
+  fPackageList.SortList;
+  for i := 0 to fPackageList.Count - 1 do 
+  begin
+    info := fPackageList[i];
+    compilationSuccessful := CompilePackage(info);
+
+    if compilationSuccessful and (not info.RunOnly) then
+      InstallPackage(info);
+
+    if fCancel then
+      break;
   end;
 end;
 
 function TPackageCompiler.CompilePackage(
   const packageInfo: TPackageInfo): Boolean;
-var
-  ExtraOptions : String;
 begin
-  ExtraOptions := GetExtraOptions;
   Result := fInstallation.DCC32.MakePackage(
                 packageInfo.filename,
                 fCompilationData.BPLOutputFolder,
                 fCompilationData.DCPOutputFolder,
-                ExtraOptions);
+                fExtraOptions);
 end;
 
 
-function TPackageCompiler.GetExtraOptions: String;
+procedure TPackageCompiler.PrepareExtraOptions;
 var
   shortPaths : string;
   pathList : TStringList;
@@ -128,11 +115,11 @@ begin
     pathList.Free;
   end;
 
-  Result := '-B -Q';
-  Result := Result + ' -I'+shortPaths+'';
-  Result := Result + ' -U'+shortPaths+'';
-  Result := Result + ' -O'+shortPaths+'';
-  Result := Result + ' -R'+shortPaths+'';
+  fExtraOptions := '-B -Q';
+  fExtraOptions := fExtraOptions + ' -I'+shortPaths+'';
+  fExtraOptions := fExtraOptions + ' -U'+shortPaths+'';
+  fExtraOptions := fExtraOptions + ' -O'+shortPaths+'';
+  fExtraOptions := fExtraOptions + ' -R'+shortPaths+'';
 end;
 
 function TPackageCompiler.ConvertToShortPaths(const paths : TStringList):string;
@@ -140,8 +127,7 @@ var
   path : string;
 begin
   Result := '';
-  for path in paths do
-  begin
+  for path in paths do begin
     Result := Result + StrDoubleQuote(PathGetShortName(StrTrimQuotes(path))) + ';';
   end;
 end;
@@ -153,18 +139,6 @@ var
 begin
   BPLFileName := PathAddSeparator(fInstallation.BPLOutputPath) + PathExtractFileNameNoExt(packageInfo.FileName) + packageInfo.Suffix + '.bpl';
   Result := fInstallation.RegisterPackage(BPLFileName, packageInfo.Description);
-end;
-
-procedure TPackageCompiler.RaiseEvent(const packageInfo: TPackageInfo;
-  status: TPackageStatus);
-begin
-   if Assigned(fPackageCompileEvent) then
-   begin
-     if (status = psSuccess) or (status = psError) then
-        packageInfo.Status := status;
-        
-     fPackageCompileEvent(packageInfo, status);
-   end;
 end;
 
 //TODO: refactor -- finds paths of files have .pas extension and then matches pas files in packages, removes remaining paths 
@@ -200,10 +174,13 @@ begin
            amAny,
            [flFullnames, flRecursive],
            '', nil);
-
+           
+  
   for I := 0 to files.count - 1 do begin
     if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
-      SourceFilePaths.Add(ExtractFileDir(files[i]));
+      begin
+        SourceFilePaths.Add(ExtractFileDir(files[i]));
+      end;
   end;
 end;
 
@@ -235,10 +212,10 @@ var
 begin
   Assert(assigned(sourceFilePaths));
   Assert(assigned(installation));
-  
   for path in sourceFilePaths do
+  begin
     installation.AddToLibrarySearchPath(path);
+  end;
 end;
-
 
 end.

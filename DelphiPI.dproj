@@ -93,6 +93,8 @@
 			<DCCReference Include="PackageInfoFactory.pas"/>
 			<DCCReference Include="PackageList.pas"/>
 			<DCCReference Include="PackageDependencyVerifier.pas"/>
+			<DCCReference Include="ProgressMonitor.pas"/>
+			<DCCReference Include="MonitoredPackageCompiler.pas"/>
 			<None Include="DelphiPI.todo"/>
 			<None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
 			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>
@@ -154,6 +156,10 @@
 			<None Include="ModelSupport_DelphiPI\PageSummary\default.txvpck"/>
 			<None Include="ModelSupport_DelphiPI\Utils\default.txvpck"/>
 			<None Include="ModelSupport_DelphiPI\PackageDependencyVerifier\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\ProgressMonitor\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\ProgressMonitor\default.txvpck"/>
+			<None Include="ModelSupport_DelphiPI\MonitoredPackageCompiler\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\MonitoredPackageCompiler\default.txvpck"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

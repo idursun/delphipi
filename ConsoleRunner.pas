@@ -37,7 +37,7 @@ begin
 
   packageCompiler := TPackageCompiler.Create(compilationData);
   try
-    packageCompiler.OnPackageEvent := PackageEventHandler;
+    //packageCompiler.OnPackageEvent := PackageEventHandler;
     packageCompiler.Compile;
   finally
     packageCompiler.Free;

@@ -36,7 +36,7 @@ inherited ProgressPage: TProgressPage
       ParentFont = False
     end
     object lblCurrentPackageNo: TLabel
-      Left = 448
+      Left = 458
       Top = 18
       Width = 15
       Height = 13
@@ -44,9 +44,9 @@ inherited ProgressPage: TProgressPage
       Caption = '     '
     end
     object ProgressBar: TProgressBar
-      Left = 3
+      Left = 12
       Top = 37
-      Width = 478
+      Width = 461
       Height = 20
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
