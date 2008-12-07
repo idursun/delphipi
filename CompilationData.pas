@@ -1,3 +1,8 @@
+{**
+ DelphiPI (Delphi Package Installer)
+ Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ License : GNU General Public License 2.0
+**}
 unit CompilationData;
 interface
 uses Classes, PackageInfo, PackageList, JclBorlandTools;
@@ -9,22 +14,23 @@ type
     fInstallation: TJclBorRADToolInstallation;
     fPackageList: TPackageList;
     fHelpFiles: TStringList;
-    fSourceFilePaths: TStringList;
     fPattern: String;
     fDCPOutputFolder: string;
     fBPLOutputFolder: string;
 
     procedure SetPackageList(const aPackageList: TPackageList);
+  protected
   public
     constructor Create;
     destructor Destroy; override;
+
+    procedure GetIdePackages(const list: TStringList); virtual;  
     
     property Pattern: String read fPattern write fPattern;
     property Installation: TJclBorRADToolInstallation read fInstallation write fInstallation;
     property BaseFolder: String read fBaseFolder write fBaseFolder;
     property HelpFiles: TStringList read fHelpFiles;
     property PackageList: TPackageList read fPackageList write SetPackageList;
-    property SourceFilePaths : TStringList read fSourceFilePaths write fSourceFilePaths;
     property DCPOutputFolder: string read fDCPOutputFolder write fDCPOutputFolder;
     property BPLOutputFolder: string read fBPLOutputFolder write fBPLOutputFolder;
   end;
@@ -39,15 +45,23 @@ begin
   fPattern := '*.dpk';
   fPackageList := TPackageList.Create;
   fHelpFiles := TStringList.Create;
-  fSourceFilePaths := TStringList.Create;
 end;
 
 destructor TCompilationData.Destroy;
 begin
   fPackageList.Free;
   fHelpFiles.Free;
-  fSourceFilePaths.Free;
   inherited;
+end;
+
+procedure TCompilationData.GetIdePackages(const list: TStringList);
+var
+ i: integer;
+begin
+  assert(Assigned(Installation),'installation cannot be null');
+ 
+  for i := 0 to Installation.IdePackages.Count - 1 do
+    list.Add(Installation.IdePackages.PackageFileNames[i]);
 end;
 
 procedure TCompilationData.SetPackageList(const aPackageList: TPackageList);

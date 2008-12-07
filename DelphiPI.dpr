@@ -22,7 +22,8 @@ uses
   gnugettext in 'libs\gnugettext.pas',
   Utils in 'Utils.pas',
   PackageInfoFactory in 'PackageInfoFactory.pas',
-  PackageList in 'PackageList.pas';
+  PackageList in 'PackageList.pas',
+  PackageDependencyVerifier in 'PackageDependencyVerifier.pas';
 
 {$R *.res}
 

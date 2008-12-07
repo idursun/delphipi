@@ -94,9 +94,9 @@ procedure TSummaryPage.AddSourcePathList(const summary: TStringList);
 var
   path: string;
 begin
- summary.Add(_('Source File Paths:'));
- for path in fCompilationData.SourceFilePaths do
-    summary.Add(Indented(path));
+// summary.Add(_('Source File Paths:'));
+// for path in fCompilationData.SourceFilePaths do
+//    summary.Add(Indented(path));
 end;
 
 procedure TSummaryPage.btnSaveClick(Sender: TObject);

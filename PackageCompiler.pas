@@ -17,6 +17,8 @@ type
      fPackageList: TPackageList;
      fPackageCompileEvent: TPackageCompileEvent;
      fCancel: boolean;
+     fSourceFilePaths: TStringList;
+
     procedure ResolveHelpFiles(const compilationData: TCompilationData);
     procedure AddSourcePathsToIDE(const sourceFilePaths: TStrings; const installation: TJclBorRADToolInstallation);
    protected
@@ -25,6 +27,8 @@ type
      procedure RaiseEvent(const packageInfo: TPackageInfo; status: TPackageStatus);virtual;
    public
      constructor Create(const compilationData: TCompilationData);
+     destructor Destroy; override;
+     
      procedure Compile;
      function CompilePackage(const packageInfo : TPackageInfo): Boolean; virtual;
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
@@ -34,6 +38,7 @@ type
      property OnPackageEvent: TPackageCompileEvent read fPackageCompileEvent write fPackageCompileEvent;
      //Properties
      property Cancel: boolean read fCancel write fCancel;
+     property SourceFilePaths: TStringList read fSourceFilePaths write fSourceFilePaths;
    end;
 
 implementation
@@ -46,6 +51,14 @@ begin
   fCompilationData := compilationData;
   fInstallation := fCompilationData.Installation;
   fPackageList := fCompilationData.PackageList;
+  fSourceFilePaths := TStringList.Create;
+end;
+
+destructor TPackageCompiler.Destroy;
+begin
+  fSourceFilePaths.Free;
+  
+  inherited;
 end;
 
 procedure TPackageCompiler.Compile;
@@ -55,10 +68,10 @@ var
   compilationSuccessful: boolean;
 begin
   try
-    if fCompilationData.SourceFilePaths.Count = 0 then
+    if SourceFilePaths.Count = 0 then
       ResolveSourcePaths;
       
-    AddSourcePathsToIDE(fCompilationData.SourceFilePaths, fCompilationData.Installation);
+    AddSourcePathsToIDE(SourceFilePaths, fCompilationData.Installation);
       
     if fCompilationData.HelpFiles.Count = 0 then
       ResolveHelpFiles(fCompilationData);
@@ -160,9 +173,9 @@ var
   i,j: integer;
   files, containedFiles: TStringList;
 begin
-  Assert(assigned(fCompilationData.SourceFilePaths));
-  fCompilationData.SourceFilePaths.Clear;
-
+  Assert(assigned(SourceFilePaths));
+  
+  
   files := TStringList.Create;
   files.Sorted := true;
   files.Duplicates := dupIgnore;
@@ -171,11 +184,12 @@ begin
   containedFiles.Sorted := true;
   containedFiles.Duplicates := dupIgnore;
 
-  fCompilationData.SourceFilePaths.Sorted := true;
-  fCompilationData.SourceFilePaths.Duplicates := dupIgnore;
+  SourceFilePaths.Clear;   
+  SourceFilePaths.Sorted := true;
+  SourceFilePaths.Duplicates := dupIgnore;
      
   for i := 0 to fPackageList.Count - 1 do begin
-    fCompilationData.SourceFilePaths.Add(ExtractFileDir(fCompilationData.PackageList[i].FileName));
+    SourceFilePaths.Add(ExtractFileDir(fCompilationData.PackageList[i].FileName));
     for j := 0 to fPackageList[i].ContainedFileList.Count - 1 do
       containedFiles.Add(ExtractFileName(fCompilationData.PackageList[i].ContainedFileList[j]));
   end;
@@ -189,7 +203,7 @@ begin
 
   for I := 0 to files.count - 1 do begin
     if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
-      fCompilationData.SourceFilePaths.Add(ExtractFileDir(files[i]));
+      SourceFilePaths.Add(ExtractFileDir(files[i]));
   end;
 end;
 

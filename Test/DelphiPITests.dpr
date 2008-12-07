@@ -22,7 +22,10 @@ uses
   TestPackageList in 'TestPackageList.pas',
   PackageInfo in '..\PackageInfo.pas',
   PackageList in '..\PackageList.pas',
-  TestPackageInfo in 'TestPackageInfo.pas';
+  TestPackageInfo in 'TestPackageInfo.pas',
+  TestPackageDependencyVerifier in 'TestPackageDependencyVerifier.pas',
+  PackageDependencyVerifier in '..\PackageDependencyVerifier.pas',
+  CompilationData in '..\CompilationData.pas';
 
 {$R *.RES}
 
