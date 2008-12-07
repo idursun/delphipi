@@ -36,27 +36,38 @@ inherited ProgressPage: TProgressPage
       ParentFont = False
     end
     object lblCurrentPackageNo: TLabel
-      Left = 458
+      Left = 359
       Top = 18
-      Width = 15
+      Width = 57
       Height = 13
+      Alignment = taRightJustify
       Anchors = [akTop, akRight, akBottom]
       Caption = '     '
     end
     object ProgressBar: TProgressBar
       Left = 12
       Top = 37
-      Width = 461
+      Width = 404
       Height = 20
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
+    end
+    object btnCancel: TButton
+      Left = 422
+      Top = 37
+      Width = 59
+      Height = 20
+      Anchors = [akTop, akRight]
+      Caption = 'Cancel'
+      TabOrder = 1
+      OnClick = btnCancelClick
     end
   end
   object memo: TRichEdit
     Left = 8
     Top = 82
     Width = 484
-    Height = 160
+    Height = 143
     Anchors = [akLeft, akTop, akRight, akBottom]
     Font.Charset = TURKISH_CHARSET
     Font.Color = clWindowText
@@ -66,5 +77,15 @@ inherited ProgressPage: TProgressPage
     ParentFont = False
     ScrollBars = ssBoth
     TabOrder = 1
+  end
+  object chkShowFullLog: TCheckBox
+    Left = 304
+    Top = 228
+    Width = 188
+    Height = 17
+    Anchors = [akRight, akBottom]
+    Caption = 'Show Full Log'
+    TabOrder = 2
+    OnClick = chkShowFullLogClick
   end
 end

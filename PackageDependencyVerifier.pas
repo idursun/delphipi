@@ -140,7 +140,12 @@ begin
     for i := 0 to fCompilationData.PackageList.Count - 1 do
     begin
       package:= fCompilationData.PackageList[i];
-      fMissingPackages.Add(package.PackageName,'');
+      //NOTE: i dont know why AddOrSet method throws exception 
+      if fMissingPackages.ContainsKey(package.PackageName) then
+         fMissingPackages[package.PackageName] := ''
+      else
+         fMissingPackages.Add(package.PackageName,'');
+         
   
       for requiredPackage in package.RequiredPackageList do begin
         if fMissingPackages.TryGetValue(requiredPackage, value) then

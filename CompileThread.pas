@@ -13,8 +13,6 @@ type
     procedure SetCancel(const Value: boolean);
   protected
     procedure Execute; override;
-//    procedure UpdateMonitor;
-    //procedure PackageEventHandler(const package: TPackageInfo; status: TPackageStatus);
   public
     constructor Create(const compilationData: TCompilationData);
     property Monitor: IProgressMonitor read FMonitor write SetMonitor;
@@ -42,7 +40,6 @@ begin
   end;
 end;
 
-
 procedure TCompileThread.SetCancel(const Value: boolean);
 begin
   fCancel := Value;
@@ -54,14 +51,5 @@ procedure TCompileThread.SetMonitor(const Value: IProgressMonitor);
 begin
   FMonitor := Value;
 end;
-//
-//procedure TCompileThread.UpdateMonitor;
-//begin
-//   if fMonitor <> nil then
-//   begin
-//     fMonitor.StepNo := fStepNo;
-//     fMonitor.PackageName := fPackageName;
-//     fMonitor.PackageProcessed(fPackageInfo, fStatus);
-//   end;
-//end;
+
 end.

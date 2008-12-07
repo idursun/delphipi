@@ -160,6 +160,7 @@
 			<None Include="ModelSupport_DelphiPI\ProgressMonitor\default.txvpck"/>
 			<None Include="ModelSupport_DelphiPI\MonitoredPackageCompiler\default.txaPackage"/>
 			<None Include="ModelSupport_DelphiPI\MonitoredPackageCompiler\default.txvpck"/>
+			<None Include="ModelSupport_DelphiPI\ConsoleRunner\default.txvpck"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

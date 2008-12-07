@@ -91,7 +91,8 @@ begin
 
     if Pos(StrRequires,str) = 1 then RequiresBlock := True;
     if RequiresBlock then begin
-      packageInfo.RequiredPackageList.Add(ClearStr(Str));
+      if not StartsStr('{$', Str) then
+        packageInfo.RequiredPackageList.Add(ClearStr(Str));
     end;
     if (RequiresBlock) and (pos(';',str) > 0) then
       RequiresBlock := False;

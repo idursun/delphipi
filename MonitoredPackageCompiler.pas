@@ -15,6 +15,8 @@ type
     fProgressMonitor: IProgressMonitor;
   protected
     procedure RaiseEvent(const packageInfo: TPackageInfo; status: TPackageStatus);virtual;
+    procedure PrepareExtraOptions; override;
+    
   public
     constructor Create(const fCompilationData: TCompilationData);override;
     procedure ResolveSourcePaths; override;
@@ -36,19 +38,26 @@ end;
 procedure TLoggedPackageCompiler.Compile;
 begin
   Monitor.Started;
+  Monitor.Log('-=Started');
   inherited;
   Monitor.Finished;
+  Monitor.Log('-=Finished');
 end;
 
 function TLoggedPackageCompiler.CompilePackage(
   const packageInfo: TPackageInfo): boolean;
 begin
+  Monitor.Log('-=Compiling: ' + packageInfo.PackageName);
+  Monitor.Log('Required :'+packageInfo.RequiredPackageList.DelimitedText);
+  Monitor.Log('Contains :'+packageInfo.ContainedFileList.DelimitedText);
+
   RaiseEvent(packageInfo, psCompiling);
   Result := inherited CompilePackage(packageInfo);
   if not Result then
     RaiseEvent(packageInfo, psError)
   else
     RaiseEvent(packageInfo, psSuccess);  
+  Monitor.Log('Finished');
 end;
 
 procedure TLoggedPackageCompiler.CompilerOutputCallback(const line: string);
@@ -60,6 +69,13 @@ function TLoggedPackageCompiler.InstallPackage(
   const packageInfo: TPackageInfo): boolean;
 begin
    Result := inherited InstallPackage(packageInfo);
+end;
+
+procedure TLoggedPackageCompiler.PrepareExtraOptions;
+begin
+  inherited;
+  Monitor.Log('-=ExtraOptions:');
+  Monitor.Log(ExtraOptions);
 end;
 
 procedure TLoggedPackageCompiler.RaiseEvent(const packageInfo: TPackageInfo;
@@ -74,8 +90,13 @@ begin
 end;
 
 procedure TLoggedPackageCompiler.ResolveSourcePaths;
+var
+  path: string;
 begin
   inherited;
+  Monitor.Log('-=Source Paths:');
+  for path in SourceFilePaths do
+    Monitor.Log(path);
 end;
 
 end.

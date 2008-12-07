@@ -19,8 +19,12 @@ type
     lblPackage: TLabel;
     lblCurrentPackageNo: TLabel;
     memo: TRichEdit;
+    btnCancel: TButton;
+    chkShowFullLog: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnCancelClick(Sender: TObject);
+    procedure chkShowFullLogClick(Sender: TObject);
   private
     compileThreadWorking: Boolean;
     compileThread: TCompileThread;
@@ -43,8 +47,9 @@ var
   ProgressPage: TProgressPage;
 
 implementation
-uses  gnugettext, StrUtils;
-
+uses  gnugettext, StrUtils, JclStrings;
+var
+  savedRtf: string;
 {$R *.dfm}
 
 { TProgressPage }
@@ -93,6 +98,39 @@ begin
 end;
 
 
+procedure TProgressPage.btnCancelClick(Sender: TObject);
+begin
+  inherited;
+  CompileThread.Cancel := true;
+end;
+
+procedure TProgressPage.chkShowFullLogClick(Sender: TObject);
+var
+  line: string;
+begin
+  inherited;
+  if chkShowFullLog.Checked then
+  begin
+    savedRtf := memo.Text;
+    memo.Clear;
+    for line in fFullLog do
+    begin
+      if StartsStr('-=',line) then
+      begin
+        memo.SelAttributes.Size := 12;
+        memo.SelAttributes.Style := [fsBold];
+        memo.Lines.Add(Copy(line,3,length(line)-2));
+      end else begin
+        memo.SelAttributes.Size := 8;
+        memo.SelAttributes.Style := [];
+        memo.Lines.Add(line);
+      end;
+    end;
+  end else begin
+    memo.Text := savedRtf;
+  end;
+end;
+
 procedure TProgressPage.Compile;
 begin
   ProgressBar.Max := fCompilationData.PackageList.Count;
@@ -107,7 +145,7 @@ end;
 
 procedure TProgressPage.Log(const text: string);
 begin
-
+  fFullLog.Add(text);
 end;
 
 procedure TProgressPage.PackageProcessed(const packageInfo: TPackageInfo;

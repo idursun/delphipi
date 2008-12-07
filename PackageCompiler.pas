@@ -19,11 +19,12 @@ type
      fSourceFilePaths: TStringList;
      fExtraOptions: String;
 
-    procedure ResolveHelpFiles(const compilationData: TCompilationData);
-    procedure AddSourcePathsToIDE(const sourceFilePaths: TStrings; const installation: TJclBorRADToolInstallation);
+     function ConvertToShortPaths(const paths : TStringList): string;
    protected
      procedure PrepareExtraOptions; virtual;
-     function ConvertToShortPaths(const paths : TStringList): string;
+     procedure ResolveHelpFiles(const compilationData: TCompilationData);
+     procedure AddSourcePathsToIDE(const sourceFilePaths: TStrings; const installation: TJclBorRADToolInstallation);
+     procedure ResolveSourcePaths; virtual;
      
      property Installation: TJclBorRADToolInstallation read fInstallation;
    public
@@ -33,11 +34,11 @@ type
      procedure Compile; virtual;
      function CompilePackage(const packageInfo : TPackageInfo): Boolean; virtual;
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
-     procedure ResolveSourcePaths; virtual;
   
      //Properties
      property Cancel: boolean read fCancel write fCancel;
      property SourceFilePaths: TStringList read fSourceFilePaths write fSourceFilePaths;
+     property ExtraOptions: string read fExtraOptions;
    end;
 
 implementation
