@@ -124,6 +124,7 @@ begin
     
     fCompilationData.PackageList.Clear;  //TODO: why?
     dependencyVerifier := TPackageDependencyVerifier.Create(fCompilationData);
+    dependencyVerifier.Initialize;
     try
       fPackageTree.Traverse(ByCollectingPackageInfo);
       dependencyVerifier.Verify;

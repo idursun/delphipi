@@ -25,6 +25,7 @@ type
     destructor Destroy; override;
 
     procedure GetIdePackages(const list: TStringList); virtual;  
+    function GetIdeVersionSuffix: string; virtual;
     
     property Pattern: String read fPattern write fPattern;
     property Installation: TJclBorRADToolInstallation read fInstallation write fInstallation;
@@ -62,6 +63,11 @@ begin
  
   for i := 0 to Installation.IdePackages.Count - 1 do
     list.Add(Installation.IdePackages.PackageFileNames[i]);
+end;
+
+function TCompilationData.GetIdeVersionSuffix: string;
+begin
+  Result := Installation.VersionNumberStr;
 end;
 
 procedure TCompilationData.SetPackageList(const aPackageList: TPackageList);

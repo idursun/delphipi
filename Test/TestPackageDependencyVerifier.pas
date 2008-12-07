@@ -30,6 +30,7 @@ type
     procedure GetIdePackages(const list: TStringList); override;
     function CreatePackage(name: string; requireds: string ): TPackageInfo;
     destructor Destroy; override;
+    function GetIdeVersionSuffix: string; override;
   end;
 
 procedure TestTPackageDependencyVerifier.When_a_required_package_is_missing_then_packages_depending_on_it_should_be_set_as_missing;
@@ -42,6 +43,7 @@ begin
     CreatePackage('package3','missing package');
     
     Sut := TPackageDependencyVerifier.Create(fCompilationData);
+    Sut.Initialize;
     Sut.Verify;
     
     CheckEqualsString('',Sut.MissingPackages['package1']);
@@ -66,7 +68,7 @@ begin
     Sut.Verify;
     
     CheckEqualsString('missing ide package',Sut.MissingPackages['package1']);
-    CheckEqualsString('package1 (missing ide package)',Sut.MissingPackages['package2']);
+    CheckEqualsString('package1 requires "missing ide package"',Sut.MissingPackages['package2']);
 
     Sut.Free;
   finally
@@ -109,6 +111,11 @@ end;
 procedure TFakeCompilationData.GetIdePackages(const list: TStringList);
 begin
   list.Add('an ide package');
+end;
+
+function TFakeCompilationData.GetIdeVersionSuffix: string;
+begin
+  Result := 'd7';
 end;
 
 initialization
