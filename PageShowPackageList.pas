@@ -91,6 +91,7 @@ type
   public
     procedure Traverse(node: PVirtualNode; handler: TProc<PVirtualNode>); overload;
     procedure Traverse(handler: TProc<PVirtualNode>); overload;
+    procedure TraverseData(handler: TProc<PNodeData>); overload;
   end;
 
 
@@ -129,12 +130,8 @@ begin
       fPackageTree.Traverse(ByCollectingPackageInfo);
       dependencyVerifier.Verify;
       
-      fPackageTree.Traverse(procedure(node:PVirtualNode) 
-      var
-        data: PNodeData;
+      fPackageTree.TraverseData(procedure(data:PNodeData) 
       begin
-        data := fPackageTree.GetNodeData(node);
-        if (data = nil) or (data.Info = nil) then exit;
         data.MissingPackageName := dependencyVerifier.MissingPackages[data.Info.PackageName];
       end);
       
@@ -484,6 +481,18 @@ end;
 procedure TVirtualTreeHelper.Traverse(handler:TProc<PVirtualNode>);
 begin
   Traverse(RootNode, handler);
+end;
+
+procedure TVirtualTreeHelper.TraverseData(handler: TProc<PNodeData>);
+var
+  data: PNodeData;
+begin
+  Traverse(procedure (node: PVirtualNode)
+  begin
+    data := self.GetNodeData(node);
+    if (data <> nil) and (data.Info <> nil)  then
+      handler(data); 
+  end);
 end;
 
 end.
