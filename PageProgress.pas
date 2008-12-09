@@ -97,6 +97,7 @@ begin
   memo.SelAttributes.Color := color;
   memo.Lines.Add(info);
   memo.SelAttributes.Color := oldColor;
+  memo.SelStart := Length(memo.Text);
 end;
 
 
@@ -147,6 +148,7 @@ end;
 
 procedure TProgressPage.Log(const text: string);
 begin
+
   fFullLog.Add(text);
 end;
 
