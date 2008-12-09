@@ -10,7 +10,7 @@ uses progressmonitor, packagecompiler, packageinfo, CompilationData;
 
 type
   TPackageCompileEvent = procedure(const package: TPackageInfo; status: TPackageStatus) of object;
-  TLoggedPackageCompiler = class(TPackageCompiler)
+  TMonitoredPackageCompiler = class(TPackageCompiler)
   private
     fProgressMonitor: IProgressMonitor;
   protected
@@ -18,7 +18,7 @@ type
     procedure PrepareExtraOptions; override;
     
   public
-    constructor Create(const fCompilationData: TCompilationData);override;
+    constructor Create(const compilationData: TCompilationData);override;
     procedure ResolveSourcePaths; override;
     procedure CompilerOutputCallback(const line:string); virtual;
     function CompilePackage(const packageInfo: TPackageInfo): boolean; override;
@@ -29,14 +29,14 @@ type
 
 implementation
  
-constructor TLoggedPackageCompiler.Create(const fCompilationData:TCompilationData);
+constructor TMonitoredPackageCompiler.Create(const compilationData:TCompilationData);
 begin
-  inherited Create(fCompilationData);
-  Installation.DCC32.OutputCallback := self.CompilerOutputCallback;
+  inherited Create(compilationData);
 end;
 
-procedure TLoggedPackageCompiler.Compile;
+procedure TMonitoredPackageCompiler.Compile;
 begin
+  Installation.DCC32.OutputCallback := CompilerOutputCallback;
   Monitor.Started;
   Monitor.Log('-=Started');
   inherited;
@@ -44,7 +44,7 @@ begin
   Monitor.Log('-=Finished');
 end;
 
-function TLoggedPackageCompiler.CompilePackage(
+function TMonitoredPackageCompiler.CompilePackage(
   const packageInfo: TPackageInfo): boolean;
 begin
   Monitor.Log('-=Compiling: ' + packageInfo.PackageName);
@@ -60,25 +60,25 @@ begin
   Monitor.Log('Finished');
 end;
 
-procedure TLoggedPackageCompiler.CompilerOutputCallback(const line: string);
+procedure TMonitoredPackageCompiler.CompilerOutputCallback(const line: string);
 begin
   Monitor.CompilerOutput(line);
 end;
 
-function TLoggedPackageCompiler.InstallPackage(
+function TMonitoredPackageCompiler.InstallPackage(
   const packageInfo: TPackageInfo): boolean;
 begin
    Result := inherited InstallPackage(packageInfo);
 end;
 
-procedure TLoggedPackageCompiler.PrepareExtraOptions;
+procedure TMonitoredPackageCompiler.PrepareExtraOptions;
 begin
   inherited;
   Monitor.Log('-=ExtraOptions:');
   Monitor.Log(ExtraOptions);
 end;
 
-procedure TLoggedPackageCompiler.RaiseEvent(const packageInfo: TPackageInfo;
+procedure TMonitoredPackageCompiler.RaiseEvent(const packageInfo: TPackageInfo;
   status: TPackageStatus);
 begin
   if Assigned(Monitor) then
@@ -89,7 +89,7 @@ begin
   end;
 end;
 
-procedure TLoggedPackageCompiler.ResolveSourcePaths;
+procedure TMonitoredPackageCompiler.ResolveSourcePaths;
 var
   path: string;
 begin

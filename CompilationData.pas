@@ -26,6 +26,7 @@ type
 
     procedure GetIdePackages(const list: TStringList); virtual;  
     function GetIdeVersionSuffix: string; virtual;
+    function SetDelphiVersion(const version:string):boolean; virtual;
     
     property Pattern: String read fPattern write fPattern;
     property Installation: TJclBorRADToolInstallation read fInstallation write fInstallation;
@@ -39,7 +40,8 @@ type
 implementation
 
 uses JclFileUtils,SysUtils;
-
+var
+  installations: TJclBorRADToolInstallations;
 
 constructor TCompilationData.Create;
 begin
@@ -70,10 +72,31 @@ begin
   Result := Installation.VersionNumberStr;
 end;
 
+function TCompilationData.SetDelphiVersion(const version: string): boolean;
+var
+  installation: TJclBorRADToolInstallation;
+  i : integer;
+begin
+  for i := 0 to installations.Count - 1 do begin
+    installation := installations.Installations[i];
+    if UpperCase(Trim(installation.VersionNumberStr)) = UpperCase(Trim(version)) then
+    begin
+      fInstallation := installation;
+      break;
+    end;
+  end;
+  if fInstallation = nil then
+    raise Exception.Create('cannot find delphi version:' + version);
+end;
+
 procedure TCompilationData.SetPackageList(const aPackageList: TPackageList);
 begin
   fPackageList.Free;
   fPackageList := aPackageList;
 end;
+initialization
+  installations := TJclBorRADToolInstallations.Create;
+finalization
+  installations.Free;  
 
 end.

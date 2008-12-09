@@ -8,7 +8,7 @@ type
     fMonitor : IProgressMonitor;
     fCompilationData: TCompilationData;
     fCancel: boolean;
-    fCompiler: TLoggedPackageCompiler;
+    fCompiler: TMonitoredPackageCompiler;
     procedure SetMonitor(const Value: IProgressMonitor);
     procedure SetCancel(const Value: boolean);
   protected
@@ -31,7 +31,7 @@ end;
 procedure TCompileThread.Execute;
 begin
   inherited;
-  fCompiler := TLoggedPackageCompiler.Create(fCompilationData);
+  fCompiler := TMonitoredPackageCompiler.Create(fCompilationData);
   fCompiler.Monitor := Monitor;
   try
     fCompiler.Compile;

@@ -9,6 +9,9 @@
 			<Projects Include="Test\DelphiPITests.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="DelphiPIConsole.dproj">
+				<Dependencies/>
+			</Projects>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,14 +38,23 @@
 		<Target Name="DelphiPITests:Make">
 			<MSBuild Targets="Make" Projects="Test\DelphiPITests.dproj"/>
 		</Target>
+		<Target Name="DelphiPIConsole">
+			<MSBuild Projects="DelphiPIConsole.dproj"/>
+		</Target>
+		<Target Name="DelphiPIConsole:Clean">
+			<MSBuild Targets="Clean" Projects="DelphiPIConsole.dproj"/>
+		</Target>
+		<Target Name="DelphiPIConsole:Make">
+			<MSBuild Targets="Make" Projects="DelphiPIConsole.dproj"/>
+		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="DelphiPI;DelphiPITests"/>
+			<CallTarget Targets="DelphiPI;DelphiPITests;DelphiPIConsole"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="DelphiPI:Clean;DelphiPITests:Clean"/>
+			<CallTarget Targets="DelphiPI:Clean;DelphiPITests:Clean;DelphiPIConsole:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="DelphiPI:Make;DelphiPITests:Make"/>
+			<CallTarget Targets="DelphiPI:Make;DelphiPITests:Make;DelphiPIConsole:Make"/>
 		</Target>
 		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 	</Project>

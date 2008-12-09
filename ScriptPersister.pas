@@ -30,7 +30,7 @@ type
     procedure Save(const compilationData: TCompilationData; const scriptFilePath: string);
   private
    class var
-     const Header_BaseFolder = 'basefolder';
+     const Header_BaseFolder = 'base-folder';
      const Header_DelphiVersion = 'delphi-version';
      const Header_BPLOutputFolder = 'bpl-output-folder';
      const Header_DCPOutputFolder = 'dcp-output-folder';
@@ -51,7 +51,7 @@ type
 constructor TScriptPersister.Create();
 begin
   fLines := TStringList.Create;
-  fPackageInfoFactory.Create;
+  fPackageInfoFactory := TPackageInfoFactory.Create;
 end;
 
 destructor TScriptPersister.Destroy;
@@ -118,33 +118,17 @@ begin
     exit;
   end;
 
-  inc(fCurrentLine);
-
   fLine :=  fLines[fCurrentLine];
+  inc(fCurrentLine);
   Result := fLine;
 end;
 
 procedure TScriptPersister.SetDelphiVersion(compilationData: TCompilationData);
 var
-  installations: TJclBorRADToolInstallations;
-  installation: TJclBorRADToolInstallation;
-  i : integer;
+  version: string;
 begin
-  ReadNextLine;
-  installations := TJclBorRADToolInstallations.Create;
-  try
-    for i := 0 to installations.Count - 1 do begin
-      installation := installations.Installations[i];
-      if StrLower(Trim(installation.VersionNumberStr)) = StrLower(Trim(fLine)) then
-      begin
-        compilationData.Installation := installation;
-        break;
-      end;
-    end;
-  finally
-    installations.Free;
-  end;
-
+  version := ReadNextLine;
+  compilationData.SetDelphiVersion(version);
 end;
 
 procedure TScriptPersister.SetPackageList(compilationData: TCompilationData);
@@ -158,7 +142,7 @@ begin
        Dec(fCurrentLine);
        break;
      end;
-     compilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(line));
+     compilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(Trim(line)));
    end;
 end;
 

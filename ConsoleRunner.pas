@@ -6,51 +6,101 @@
 unit ConsoleRunner;
 
 interface
-uses PackageInfo, gnugettext;
+uses PackageInfo, CompilationData, ConsoleProgressMonitor;
 type
 
   TConsoleRunner = class
   private
+    fCompilationData: TCompilationData;
+    fMonitor: TConsoleProgressMonitor;
   protected
-    procedure PackageEventHandler(const packageInfo: TPackageInfo; status:TPackageStatus);
+    procedure DisplayHeader; virtual;
   public
-    constructor Create(const params:array of string);
+    constructor Create;
+    procedure Run;
   end;
   
 implementation
 
-uses CompilationData, ScriptPersister, PackageCompiler;
-{ TConsoleRunner }
+uses Classes,gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler, Utils;
 
-constructor TConsoleRunner.Create(const params:array of string);
-var
-  compilationData: TCompilationData;
-  scripter : TScriptPersister;
-  packageCompiler: TPackageCompiler;
-begin
-  scripter := TScriptPersister.Create;
-  try
-    compilationData := scripter.Load(params[1]);
-  finally
-    scripter.Free;
+type
+  TConsoleParameterParser = class
+  private
+    fValues : TStringList;
+    fOutputLevel: TConsoleOutputLevel;
+
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Parse;
+
+    property OutputLevel: TConsoleOutputLevel read fOutputLevel;
   end;
 
-  packageCompiler := TPackageCompiler.Create(compilationData);
+{ TConsoleRunner }
+
+constructor TConsoleRunner.Create;
+var
+  scripter : TScriptPersister;
+  parser : TConsoleParameterParser;
+begin
+   scripter := TScriptPersister.Create;
+   parser := TConsoleParameterParser.Create;
+   parser.Parse;  
   try
-    //packageCompiler.OnPackageEvent := PackageEventHandler;
+    fCompilationData := scripter.Load(parser.fValues[0]);
+    fMonitor := TConsoleProgressMonitor.Create;
+    fMonitor.OutputLevel := parser.OutputLevel;
+    
+  finally
+    scripter.Free;
+    parser.Free;
+  end;
+end;
+
+procedure TConsoleRunner.Run;
+var
+   packageCompiler: TMonitoredPackageCompiler;
+begin
+  DisplayHeader;
+  
+  packageCompiler := TMonitoredPackageCompiler.Create(fCompilationData);
+  packageCompiler.Monitor := fMonitor;
+  try
     packageCompiler.Compile;
   finally
     packageCompiler.Free;
   end;
 end;
 
-procedure TConsoleRunner.PackageEventHandler(
-  const packageInfo: TPackageInfo; status: TPackageStatus);
+procedure TConsoleRunner.DisplayHeader;
 begin
-   if status = psCompiling then
-      WriteLn(_('Compiling:') + ' '+ packageInfo.PackageName);
-   if status = psSuccess then
-      WriteLn(_('Compiled :') + ' '+ packageInfo.PackageName);
+  WriteLn('DelphiPI Console ' + Utils.VERSION);
+  WriteLn('By ' + Utils.AUTHOR);
+end;
+
+{ TConsoleParameterParser }
+
+constructor TConsoleParameterParser.Create;
+begin
+  fValues := TStringList.Create;
+end;
+
+destructor TConsoleParameterParser.Destroy;
+begin
+  fValues.Free;
+  inherited;
+end;
+
+procedure TConsoleParameterParser.Parse;
+var
+  I: Integer;
+begin
+  fValues.Clear;
+  fOutputLevel := TConsoleOutputLevel.colBrief;
+  for I := 1 to ParamCount do
+    fValues.Add(ParamStr(i));
 end;
 
 end.

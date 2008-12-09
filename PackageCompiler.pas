@@ -12,21 +12,22 @@ type
    
    TPackageCompiler = class
    private
-     fInstallation : TJclBorRADToolInstallation;
      fCompilationData: TCompilationData;
-     fPackageList: TPackageList;
      fCancel: boolean;
      fSourceFilePaths: TStringList;
      fExtraOptions: String;
 
      function ConvertToShortPaths(const paths : TStringList): string;
+    function GetInstallation: TJclBorRADToolInstallation;
+    function GetPackageList: TPackageList;
    protected
      procedure PrepareExtraOptions; virtual;
      procedure ResolveHelpFiles(const compilationData: TCompilationData);
      procedure AddSourcePathsToIDE(const sourceFilePaths: TStrings; const installation: TJclBorRADToolInstallation);
      procedure ResolveSourcePaths; virtual;
-     
-     property Installation: TJclBorRADToolInstallation read fInstallation;
+
+     property Installation: TJclBorRADToolInstallation read GetInstallation;
+     property PackageList: TPackageList read GetPackageList;
    public
      constructor Create(const compilationData: TCompilationData); virtual;
      destructor Destroy; override;
@@ -49,8 +50,6 @@ uses JclFileUtils, JclStrings;
 constructor TPackageCompiler.Create(const compilationData: TCompilationData);
 begin
   fCompilationData := compilationData;
-  fInstallation := fCompilationData.Installation;
-  fPackageList := fCompilationData.PackageList;
   fSourceFilePaths := TStringList.Create;
 end;
 
@@ -59,6 +58,16 @@ begin
   fSourceFilePaths.Free;
   
   inherited;
+end;
+
+function TPackageCompiler.GetInstallation: TJclBorRADToolInstallation;
+begin
+  Result := fCompilationData.Installation;
+end;
+
+function TPackageCompiler.GetPackageList: TPackageList;
+begin
+  Result := fCompilationData.PackageList;
 end;
 
 procedure TPackageCompiler.Compile;
@@ -77,10 +86,10 @@ begin
   if fCompilationData.HelpFiles.Count = 0 then
     ResolveHelpFiles(fCompilationData);
 
-  fPackageList.SortList;
-  for i := 0 to fPackageList.Count - 1 do 
+  PackageList.SortList;
+  for i := 0 to PackageList.Count - 1 do 
   begin
-    info := fPackageList[i];
+    info := PackageList[i];
     compilationSuccessful := CompilePackage(info);
 
     if compilationSuccessful and (not info.RunOnly) then
@@ -94,7 +103,7 @@ end;
 function TPackageCompiler.CompilePackage(
   const packageInfo: TPackageInfo): Boolean;
 begin
-  Result := fInstallation.DCC32.MakePackage(
+  Result := Installation.DCC32.MakePackage(
                 packageInfo.filename,
                 fCompilationData.BPLOutputFolder,
                 fCompilationData.DCPOutputFolder,
@@ -109,8 +118,8 @@ var
 begin
   pathList := TStringList.Create;
   try
-    ExtractStrings([';'],[' '],PWideChar(fInstallation.LibrarySearchPath),pathList);
-    pathList.Add(fInstallation.BPLOutputPath);
+    ExtractStrings([';'],[' '],PWideChar(Installation.LibrarySearchPath),pathList);
+    pathList.Add(Installation.BPLOutputPath);
     shortPaths := ConvertToShortPaths(pathList);
   finally
     pathList.Free;
@@ -138,8 +147,8 @@ function TPackageCompiler.InstallPackage(
 var
   BPLFileName : String;  
 begin
-  BPLFileName := PathAddSeparator(fInstallation.BPLOutputPath) + PathExtractFileNameNoExt(packageInfo.FileName) + packageInfo.Suffix + '.bpl';
-  Result := fInstallation.RegisterPackage(BPLFileName, packageInfo.Description);
+  BPLFileName := PathAddSeparator(Installation.BPLOutputPath) + PathExtractFileNameNoExt(packageInfo.FileName) + packageInfo.Suffix + '.bpl';
+  Result := Installation.RegisterPackage(BPLFileName, packageInfo.Description);
 end;
 
 //TODO: refactor -- finds paths of files have .pas extension and then matches pas files in packages, removes remaining paths 
@@ -163,10 +172,10 @@ begin
   SourceFilePaths.Sorted := true;
   SourceFilePaths.Duplicates := dupIgnore;
      
-  for i := 0 to fPackageList.Count - 1 do begin
-    SourceFilePaths.Add(ExtractFileDir(fCompilationData.PackageList[i].FileName));
-    for j := 0 to fPackageList[i].ContainedFileList.Count - 1 do
-      containedFiles.Add(ExtractFileName(fCompilationData.PackageList[i].ContainedFileList[j]));
+  for i := 0 to PackageList.Count - 1 do begin
+    SourceFilePaths.Add(ExtractFileDir(PackageList[i].FileName));
+    for j := 0 to PackageList[i].ContainedFileList.Count - 1 do
+      containedFiles.Add(ExtractFileName(PackageList[i].ContainedFileList[j]));
   end;
 
   AdvBuildFileList(fCompilationData.BaseFolder+'\*.pas',
