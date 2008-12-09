@@ -69,7 +69,7 @@ begin
     Sut.Verify;
     
     CheckEqualsString('missing ide package',Sut.MissingPackages['package1']);
-    CheckEqualsString('package1 requires "missing ide package"',Sut.MissingPackages['package2']);
+    CheckEqualsString('package1 requires missing ide package',Sut.MissingPackages['package2']);
 
     Sut.Free;
   finally

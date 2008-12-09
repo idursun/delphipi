@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2008-10-18 22:27\n"
-"PO-Revision-Date: 2008-10-18 22:27\n"
+"POT-Creation-Date: 2008-12-09 16:39\n"
+"PO-Revision-Date: 2008-12-09 16:39\n"
 "Last-Translator: Somebody <your.email@address.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,9 +41,9 @@ msgstr ""
 #. ProgressPage..GroupBox1..lblPackage..Font.Name
 #: PageProgress.dfm:36
 #. ShowPackageListPage..lblWait..Font.Name
-#: PageShowPackageList.dfm:22
+#: PageShowPackageList.dfm:20
 #. ShowPackageListPage..fPackageTree..Header.Font.Name
-#: PageShowPackageList.dfm:39
+#: PageShowPackageList.dfm:37
 #. frmAbout..Font.Name
 #: FormAbout.dfm:12
 #. frmAbout..GroupBox2..Label7..Font.Name
@@ -63,9 +63,9 @@ msgstr ""
 #. ProgressPage..GroupBox1..lblPackage..Font.Name
 #: PageProgress.dfm:36
 #. ShowPackageListPage..lblWait..Font.Name
-#: PageShowPackageList.dfm:22
+#: PageShowPackageList.dfm:20
 #. ShowPackageListPage..fPackageTree..Header.Font.Name
-#: PageShowPackageList.dfm:39
+#: PageShowPackageList.dfm:37
 msgid "Tahoma"
 msgstr ""
 
@@ -94,7 +94,7 @@ msgstr ""
 #: FormAbout.dfm:617
 #. frmAbout..GroupBox2..Label8..Caption
 #: FormAbout.dfm:617
-msgid "0.40 'Katarina'"
+msgid "0.42 'Katarina'"
 msgstr ""
 
 #. frmAbout..GroupBox2..Label9..Caption
@@ -258,17 +258,31 @@ msgid "lblPackage"
 msgstr ""
 
 #. ProgressPage..GroupBox1..lblCurrentPackageNo..Caption
-#: PageProgress.dfm:46
+#: PageProgress.dfm:47
 #. ProgressPage..GroupBox1..lblCurrentPackageNo..Caption
-#: PageProgress.dfm:46
+#: PageProgress.dfm:47
 msgid "     "
 msgstr ""
 
+#. ProgressPage..GroupBox1..btnCancel..Caption
+#: PageProgress.dfm:63
+#. ProgressPage..GroupBox1..btnCancel..Caption
+#: PageProgress.dfm:63
+msgid "Cancel"
+msgstr ""
+
 #. ProgressPage..memo..Font.Name
-#: PageProgress.dfm:66
+#: PageProgress.dfm:77
 #. ProgressPage..memo..Font.Name
-#: PageProgress.dfm:66
+#: PageProgress.dfm:77
 msgid "Courier New"
+msgstr ""
+
+#. ProgressPage..chkShowFullLog..Caption
+#: PageProgress.dfm:89
+#. ProgressPage..chkShowFullLog..Caption
+#: PageProgress.dfm:89
+msgid "Show Full Log"
 msgstr ""
 
 #. SelectDelphiInstallationPage..Caption
@@ -381,67 +395,67 @@ msgid "ShowPackageListPage"
 msgstr ""
 
 #. ShowPackageListPage..lblWait..Caption
-#: PageShowPackageList.dfm:17
+#: PageShowPackageList.dfm:15
 #. ShowPackageListPage..lblWait..Caption
-#: PageShowPackageList.dfm:17
+#: PageShowPackageList.dfm:15
 msgid "Please wait while searching folders "
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:61
+#: PageShowPackageList.dfm:60
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:61
+#: PageShowPackageList.dfm:60
 msgid "Package"
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:66
+#: PageShowPackageList.dfm:65
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:66
+#: PageShowPackageList.dfm:65
 msgid "Description"
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:71
+#: PageShowPackageList.dfm:70
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:71
+#: PageShowPackageList.dfm:70
 msgid "Type"
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..miSelectAll..Caption
-#: PageShowPackageList.dfm:78
+#: PageShowPackageList.dfm:77
 #. ShowPackageListPage..SelectPopupMenu..miSelectAll..Caption
-#: PageShowPackageList.dfm:78
+#: PageShowPackageList.dfm:77
 msgid "Select All"
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..miUnselectAll..Caption
-#: PageShowPackageList.dfm:82
+#: PageShowPackageList.dfm:81
 #. ShowPackageListPage..SelectPopupMenu..miUnselectAll..Caption
-#: PageShowPackageList.dfm:82
+#: PageShowPackageList.dfm:81
 msgid "Unselect All"
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..N1..Caption
-#: PageShowPackageList.dfm:86
+#: PageShowPackageList.dfm:85
 #. ShowPackageListPage..SelectPopupMenu..N1..Caption
-#: PageShowPackageList.dfm:86
+#: PageShowPackageList.dfm:85
 msgid "-"
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..miSelectMatching..Caption
-#: PageShowPackageList.dfm:89
-#: PageShowPackageList.pas:308
+#: PageShowPackageList.dfm:88
+#: PageShowPackageList.pas:313
 #. ShowPackageListPage..SelectPopupMenu..miSelectMatching..Caption
-#: PageShowPackageList.dfm:89
-#: PageShowPackageList.pas:308
+#: PageShowPackageList.dfm:88
+#: PageShowPackageList.pas:313
 msgid "Select Matching..."
 msgstr ""
 
 #. ShowPackageListPage..SelectPopupMenu..miUnselectMatching..Caption
-#: PageShowPackageList.dfm:93
+#: PageShowPackageList.dfm:92
 #. ShowPackageListPage..SelectPopupMenu..miUnselectMatching..Caption
-#: PageShowPackageList.dfm:93
+#: PageShowPackageList.dfm:92
 msgid "Unselect Matching..."
 msgstr ""
 
@@ -453,31 +467,31 @@ msgid "SummaryPage"
 msgstr ""
 
 #. SummaryPage..Label1....Caption
-#: PageSummary.dfm:17
+#: PageSummary.dfm:15
 #. SummaryPage..Label1....Caption
-#: PageSummary.dfm:17
+#: PageSummary.dfm:15
 msgid "Would you like to save this installation as a script so that you can "
 "automate installation of these packages?"
 msgstr ""
 
 #. SummaryPage..Label2..Caption
-#: PageSummary.dfm:26
+#: PageSummary.dfm:24
 #. SummaryPage..Label2..Caption
-#: PageSummary.dfm:26
+#: PageSummary.dfm:24
 msgid "Summary:"
 msgstr ""
 
 #. SummaryPage..btnSave..Caption
-#: PageSummary.dfm:34
+#: PageSummary.dfm:32
 #. SummaryPage..btnSave..Caption
-#: PageSummary.dfm:34
+#: PageSummary.dfm:32
 msgid "Save"
 msgstr ""
 
 #: ConsoleRunner.pas:51
-#: PageProgress.pas:180
+#: PageProgress.pas:159
 #: ConsoleRunner.pas:51
-#: PageProgress.pas:180
+#: PageProgress.pas:159
 msgid "Compiling:"
 msgstr ""
 
@@ -486,45 +500,50 @@ msgstr ""
 msgid "Compiled :"
 msgstr ""
 
+#: PackageDependencyVerifier.pas:135
+#: PackageDependencyVerifier.pas:135
+msgid "%s requires %s"
+msgstr ""
+
 #. Programmer's name for it: StrRUNONLY
-#: PackageInfo.pas:65
+#: PackageInfoFactory.pas:24
 #. Programmer's name for it: StrRUNONLY
-#: PackageInfo.pas:65
+#: PackageInfoFactory.pas:24
 msgid "{$RUNONLY"
 msgstr ""
 
 #. Programmer's name for it: StrDESCRIPTION
-#: PackageInfo.pas:66
+#: PackageInfoFactory.pas:25
 #. Programmer's name for it: StrDESCRIPTION
-#: PackageInfo.pas:66
+#: PackageInfoFactory.pas:25
 msgid "{$DESCRIPTION "
 msgstr ""
 
 #. Programmer's name for it: StrSUFFIX
-#: PackageInfo.pas:67
+#: PackageInfoFactory.pas:26
 #. Programmer's name for it: StrSUFFIX
-#: PackageInfo.pas:67
+#: PackageInfoFactory.pas:26
 msgid "{$LIBSUFFIX "
 msgstr ""
 
 #. Programmer's name for it: StrPackage
-#: PackageInfo.pas:68
+#: PackageInfoFactory.pas:27
 #. Programmer's name for it: StrPackage
-#: PackageInfo.pas:68
+#: PackageInfoFactory.pas:27
 msgid "package"
 msgstr ""
 
 #. Programmer's name for it: StrRequires
-#: PackageInfo.pas:69
+#: PackageInfoFactory.pas:28
 #. Programmer's name for it: StrRequires
-#: PackageInfo.pas:69
+#: PackageInfoFactory.pas:28
 msgid "requires"
 msgstr ""
 
 #. Programmer's name for it: StrContains
-#: PackageInfo.pas:70
+#: PackageInfoFactory.pas:29
 #. Programmer's name for it: StrContains
-#: PackageInfo.pas:70
+#: PackageInfoFactory.pas:29
 msgid "contains"
 msgstr ""
 
@@ -549,35 +568,35 @@ msgstr ""
 msgid "%d help file(s) are registered successfully"
 msgstr ""
 
-#: PageProgress.pas:94
-#: PageProgress.pas:94
+#: PageProgress.pas:82
+#: PageProgress.pas:82
 msgid "Compile and Install Packages"
 msgstr ""
 
-#: PageProgress.pas:95
-#: PageProgress.pas:95
+#: PageProgress.pas:83
+#: PageProgress.pas:83
 msgid "Compiling packages that you have selected. Design time packages are "
 "going to be installed."
 msgstr ""
 
-#: PageProgress.pas:156
-#: PageProgress.pas:156
-msgid "*** Completed"
-msgstr ""
-
-#: PageProgress.pas:181
-#: PageProgress.pas:181
+#: PageProgress.pas:163
+#: PageProgress.pas:163
 msgid "Installing"
 msgstr ""
 
-#: PageProgress.pas:182
-#: PageProgress.pas:182
+#: PageProgress.pas:164
+#: PageProgress.pas:164
 msgid "Successful"
 msgstr ""
 
-#: PageProgress.pas:183
-#: PageProgress.pas:183
+#: PageProgress.pas:165
+#: PageProgress.pas:165
 msgid "Failed"
+msgstr ""
+
+#: PageProgress.pas:189
+#: PageProgress.pas:189
+msgid "*** Completed"
 msgstr ""
 
 #: PageSelectDelphiInstallation.pas:126
@@ -612,70 +631,75 @@ msgstr ""
 msgid "Select the folder where packages are"
 msgstr ""
 
-#: PageShowPackageList.pas:182
-#: PageShowPackageList.pas:182
+#: PageShowPackageList.pas:171
+#: PageShowPackageList.pas:171
 msgid "Select Packages"
 msgstr ""
 
-#: PageShowPackageList.pas:183
-#: PageShowPackageList.pas:183
+#: PageShowPackageList.pas:172
+#: PageShowPackageList.pas:172
 msgid "Select packages that you want to compile."
 msgstr ""
 
-#: PageShowPackageList.pas:189
-#: PageShowPackageList.pas:189
+#: PageShowPackageList.pas:178
+#: PageShowPackageList.pas:178
 msgid "Compile"
 msgstr ""
 
-#: PageShowPackageList.pas:265
-#: PageShowPackageList.pas:265
+#: PageShowPackageList.pas:251
+#: PageShowPackageList.pas:251
 msgid "Designtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:267
-#: PageShowPackageList.pas:267
+#: PageShowPackageList.pas:253
+#: PageShowPackageList.pas:253
 msgid "Runtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:268
-#: PageShowPackageList.pas:268
+#: PageShowPackageList.pas:254
+#: PageShowPackageList.pas:254
 msgid "FullPath:"
 msgstr ""
 
-#: PageShowPackageList.pas:269
-#: PageShowPackageList.pas:269
+#: PageShowPackageList.pas:255
+#: PageShowPackageList.pas:255
 msgid "Description:"
 msgstr ""
 
-#: PageShowPackageList.pas:270
-#: PageShowPackageList.pas:270
+#: PageShowPackageList.pas:256
+#: PageShowPackageList.pas:256
 msgid "Type:"
 msgstr ""
 
-#: PageShowPackageList.pas:271
-#: PageShowPackageList.pas:271
+#: PageShowPackageList.pas:257
+#: PageShowPackageList.pas:257
 msgid "Requires:"
 msgstr ""
 
-#: PageShowPackageList.pas:289
-#: PageShowPackageList.pas:289
+#: PageShowPackageList.pas:259
+#: PageShowPackageList.pas:259
+msgid "Missing Package:"
+msgstr ""
+
+#: PageShowPackageList.pas:277
+#: PageShowPackageList.pas:277
 msgid "runtime"
 msgstr ""
 
-#: PageShowPackageList.pas:291
-#: PageShowPackageList.pas:291
+#: PageShowPackageList.pas:279
+#: PageShowPackageList.pas:279
 msgid "design"
 msgstr ""
 
-#: PageShowPackageList.pas:308
-#: PageShowPackageList.pas:339
-#: PageShowPackageList.pas:308
-#: PageShowPackageList.pas:339
+#: PageShowPackageList.pas:313
+#: PageShowPackageList.pas:344
+#: PageShowPackageList.pas:313
+#: PageShowPackageList.pas:344
 msgid "File Mask"
 msgstr ""
 
-#: PageShowPackageList.pas:339
-#: PageShowPackageList.pas:339
+#: PageShowPackageList.pas:344
+#: PageShowPackageList.pas:344
 msgid "UnSelect Matching..."
 msgstr ""
 
@@ -703,11 +727,6 @@ msgstr ""
 #: PageSummary.pas:84
 msgid "However, following packages had some "
 "errors:"
-msgstr ""
-
-#: PageSummary.pas:97
-#: PageSummary.pas:97
-msgid "Source File Paths:"
 msgstr ""
 
 #: PageSummary.pas:149

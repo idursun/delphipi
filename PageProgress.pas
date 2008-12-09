@@ -61,6 +61,7 @@ begin
   lblPackage.Caption := '';
   compileThreadWorking := false;
   fFullLog := TStringList.Create;
+  chkShowFullLog.Enabled := false;
   Compile;
 end;
 
@@ -85,6 +86,7 @@ begin
 
   with wizard.GetButton(wbtBack) do
     Enabled := not compileThreadWorking;
+  chkShowFullLog.Enabled := not compileThreadWorking;    
 end;
 
 procedure TProgressPage.WriteInfo(const color: TColor; const info: string);

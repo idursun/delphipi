@@ -2,6 +2,8 @@ inherited ProgressPage: TProgressPage
   Caption = 'ProgressPage'
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
@@ -36,9 +38,9 @@ inherited ProgressPage: TProgressPage
       ParentFont = False
     end
     object lblCurrentPackageNo: TLabel
-      Left = 359
+      Left = 401
       Top = 18
-      Width = 57
+      Width = 15
       Height = 13
       Alignment = taRightJustify
       Anchors = [akTop, akRight, akBottom]
@@ -79,11 +81,11 @@ inherited ProgressPage: TProgressPage
     TabOrder = 1
   end
   object chkShowFullLog: TCheckBox
-    Left = 304
-    Top = 228
+    Left = 8
+    Top = 231
     Width = 188
     Height = 17
-    Anchors = [akRight, akBottom]
+    Anchors = [akLeft, akBottom]
     Caption = 'Show Full Log'
     TabOrder = 2
     OnClick = chkShowFullLogClick

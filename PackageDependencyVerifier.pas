@@ -31,7 +31,7 @@ type
   end;
   
 implementation
-uses SysUtils, JclFileUtils;
+uses SysUtils, JclFileUtils, gnugettext;
 
 { TPackageDependencyVerifier }
 constructor TPackageDependencyVerifier.Create(const compilationData: TCompilationData);
@@ -132,7 +132,7 @@ begin
   
       for requiredPackage in package.RequiredPackageList do begin
         if fMissingPackages.Values[requiredPackage] <> '' then
-             fMissingPackages.Values[package.PackageName] := requiredPackage + ' requires "' + fMissingPackages.Values[requiredPackage]+'"';
+             fMissingPackages.Values[package.PackageName] := Format(_('%s requires %s'), [requiredPackage, fMissingPackages.Values[requiredPackage]]);
       
         if allPackages.IndexOf(UpperCase(requiredPackage)) = -1 then
           fMissingPackages.Values[package.PackageName] := requiredPackage;
