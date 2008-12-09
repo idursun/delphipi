@@ -460,7 +460,7 @@ begin
       data.Name := directory;
       Search(child, PathAddSeparator(folder) + directory);
     end;
-    BuildFileNodes(parent, PathAddSeparator(folder) + directory);
+    BuildFileNodes(parent, folder);
   finally
     directoryList.Free;
   end;
