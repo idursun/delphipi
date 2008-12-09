@@ -16,6 +16,7 @@ type
   published
     procedure When_a_required_package_is_missing_then_packages_depending_on_it_should_be_set_as_missing;
     procedure When_a_package_cannot_be_compiled_then_packages_depending_on_it_should_be_marked_as_missing;
+    procedure When_a_package_is_removed__then_next_verfication_should_only_check_custom_packages;
   end;
 
 implementation
@@ -69,6 +70,36 @@ begin
     
     CheckEqualsString('missing ide package',Sut.MissingPackages['package1']);
     CheckEqualsString('package1 requires "missing ide package"',Sut.MissingPackages['package2']);
+
+    Sut.Free;
+  finally
+     Free;
+  end;
+end;
+
+procedure TestTPackageDependencyVerifier.When_a_package_is_removed__then_next_verfication_should_only_check_custom_packages;
+begin
+  fCompilationData := TFakeCompilationData.Create;
+  with fCompilationData as TFakeCompilationData do 
+  try
+    CreatePackage('package1','an ide package');
+    CreatePackage('package2','package1');
+    CreatePackage('package3','package2');
+    
+    Sut := TPackageDependencyVerifier.Create(fCompilationData);
+    Sut.Initialize;
+    Sut.Verify;
+
+    CheckEqualsString('',Sut.MissingPackages['package1']);
+    CheckEqualsString('',Sut.MissingPackages['package2']);
+
+    
+    fCompilationData.PackageList.Remove(fCompilationData.PackageList[0]); // remove package1
+
+    Sut.Verify;
+    
+    CheckEqualsString('',Sut.MissingPackages['package1']);
+    CheckNotEqualsString('',Sut.MissingPackages['package3']);
 
     Sut.Free;
   finally

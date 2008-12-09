@@ -6,28 +6,26 @@
 unit PackageDependencyVerifier;
 
 interface
-uses Classes, Generics.Collections, PackageList, PackageInfo,  CompilationData;
+uses Classes,  PackageList, PackageInfo,  CompilationData;
 type
  
   TPackageDependencyVerifier = class
   private
     fExistentPackageList: TStringList;
     fCompilationData: TCompilationData;
-    fMissingPackages: TDictionary<string, string>;
+    fMissingPackages: TStringList;
     function GetMissingPackage(key:string): String;
   protected 
     function GetVersionSuffix:string; virtual;
     function RemoveVersionSuffix(const name, suffix: string):string; virtual;
     procedure AddDefaultPackageList(); virtual;
-    procedure AddCustomPackageList(const list:TPackageList); virtual;
     procedure AddIDEPackageList; virtual;
-    procedure CheckMissingDependencies; virtual;
   public
     constructor Create(const compilationData: TCompilationData);
     destructor Destroy; override;
     
     procedure Initialize; virtual;
-    procedure Verify;
+    procedure Verify; virtual;
 
     property MissingPackages[key:string]: String read GetMissingPackage;
   end;
@@ -40,7 +38,7 @@ constructor TPackageDependencyVerifier.Create(const compilationData: TCompilatio
 begin
   fCompilationData := compilationData;
   fExistentPackageList := TStringList.Create;
-  fMissingPackages := TDictionary<string, string>.Create();
+  fMissingPackages := TStringList.Create();
 end;
 
 destructor TPackageDependencyVerifier.Destroy;
@@ -52,9 +50,7 @@ end;
 
 function TPackageDependencyVerifier.GetMissingPackage(key:string): String;
 begin
-  Result :='';
-  if fMissingPackages.ContainsKey(key) then
-    Result := fMissingPackages[key];
+  Result := fMissingPackages.Values[key];
 end;
 
 function TPackageDependencyVerifier.GetVersionSuffix: string;
@@ -113,19 +109,11 @@ begin
   end;
 end;
 
-procedure TPackageDependencyVerifier.AddCustomPackageList(const list: TPackageList);
-var
-  I: Integer;
-begin
-  for I := 0 to list.Count - 1 do
-     fExistentPackageList.Add(UpperCase(list[i].PackageName)); 
-end;
 
-procedure TPackageDependencyVerifier.CheckMissingDependencies;
+procedure TPackageDependencyVerifier.Verify;
 var
   requiredPackage: string;
   i: Integer;
-  value: string;
   package: TPackageInfo;
   allPackages: TStringList;
 begin
@@ -140,34 +128,20 @@ begin
     for i := 0 to fCompilationData.PackageList.Count - 1 do
     begin
       package:= fCompilationData.PackageList[i];
-      //NOTE: i dont know why AddOrSet method throws exception 
-      if fMissingPackages.ContainsKey(package.PackageName) then
-         fMissingPackages[package.PackageName] := ''
-      else
-         fMissingPackages.Add(package.PackageName,'');
-         
+      fMissingPackages.Values[package.PackageName] := '';
   
       for requiredPackage in package.RequiredPackageList do begin
-        if fMissingPackages.TryGetValue(requiredPackage, value) then
-           if value <> '' then
-             fMissingPackages[package.PackageName] := requiredPackage + ' requires "' + value+'"';
+        if fMissingPackages.Values[requiredPackage] <> '' then
+             fMissingPackages.Values[package.PackageName] := requiredPackage + ' requires "' + fMissingPackages.Values[requiredPackage]+'"';
       
         if allPackages.IndexOf(UpperCase(requiredPackage)) = -1 then
-          fMissingPackages[package.PackageName] := requiredPackage;
+          fMissingPackages.Values[package.PackageName] := requiredPackage;
       end;
     end;
     
   finally
     allPackages.Free;
   end;
-end;
-
-procedure TPackageDependencyVerifier.Verify;
-var
-  I: Integer;
-begin
-  AddCustomPackageList(fCompilationData.PackageList);  
-  CheckMissingDependencies;
 end;
 
 procedure TPackageDependencyVerifier.Initialize;

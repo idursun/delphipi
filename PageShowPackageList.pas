@@ -9,7 +9,7 @@ interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
-  Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees;
+  Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier;
 
 type
 
@@ -46,17 +46,19 @@ type
   private
     packageLoadThread: TThread;
     fSelectMask: string;
+    fDependencyVerifier: TPackageDependencyVerifier;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(node: PVirtualNode; checkState: TCheckState);
 
     procedure ByCollectingPackageInfo(node: PVirtualNode);
+    procedure VerifyDependencies;
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
   end;
 
 implementation
-uses JclFileUtils, gnugettext, Utils, PackageInfoFactory, PackageDependencyVerifier;
+uses JclFileUtils, gnugettext, Utils, PackageInfoFactory;
 
 {$R *.dfm}
 type
@@ -66,6 +68,7 @@ type
     Info: TPackageInfo;
     MissingPackageName: string;
   end;
+  
 var
   threadWorking : Boolean;
 type
@@ -102,6 +105,9 @@ constructor TShowPackageListPage.Create(Owner: TComponent;
 begin
   inherited;
   fCompilationData := compilationData;
+  fDependencyVerifier := TPackageDependencyVerifier.Create(fCompilationData);
+  fDependencyVerifier.Initialize;
+
   packageLoadThread := TPackageLoadThread.Create(FCompilationData, fPackageTree);
   with packageLoadThread do begin
     OnTerminate := packageLoadCompleted;
@@ -112,9 +118,22 @@ begin
   end;
 end;
 
+procedure TShowPackageListPage.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  if threadWorking then begin
+    TPackageLoadThread(packageLoadThread).Active := false;
+    packageLoadThread.WaitFor;
+    packageLoadThread.Free;
+    exit;
+  end;
+  fCompilationData.PackageList.Clear;
+  fPackageTree.Traverse(fPackageTree.RootNode, ByCollectingPackageInfo);
+  fCompilationData.PackageList.Pack;
+end;
+
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
-var
-  dependencyVerifier: TPackageDependencyVerifier;
 begin
   threadWorking := false;
   if TPackageLoadThread(packageLoadThread).Active then
@@ -122,22 +141,8 @@ begin
     lblWait.Visible := false;
     fPackageTree.Visible := True;
     fPackageTree.FullExpand;
-    
-    fCompilationData.PackageList.Clear;  //TODO: why?
-    dependencyVerifier := TPackageDependencyVerifier.Create(fCompilationData);
-    dependencyVerifier.Initialize;
-    try
-      fPackageTree.Traverse(ByCollectingPackageInfo);
-      dependencyVerifier.Verify;
+    VerifyDependencies;
       
-      fPackageTree.TraverseData(procedure(data:PNodeData) 
-      begin
-        data.MissingPackageName := dependencyVerifier.MissingPackages[data.Info.PackageName];
-      end);
-      
-    finally
-      dependencyVerifier.Free;
-    end;
     UpdateWizardState;
   end;
 end;
@@ -147,7 +152,7 @@ procedure TShowPackageListPage.ChangeState(node: PVirtualNode;
 var
   child: PVirtualNode;
 begin
- if node = nil then exit;
+  if node = nil then exit;
   node.CheckState := checkState;
   child := node.FirstChild;
   while child <> nil do
@@ -155,6 +160,7 @@ begin
      ChangeState(child, checkState);
      child := child.NextSibling;
   end;
+  VerifyDependencies;
 end;
 
 procedure TShowPackageListPage.UpdateWizardState;
@@ -173,6 +179,17 @@ begin
   end;
 end;
 
+procedure TShowPackageListPage.VerifyDependencies;
+begin
+  fCompilationData.PackageList.Clear;
+  fPackageTree.Traverse(ByCollectingPackageInfo);
+  fDependencyVerifier.Verify;
+  fPackageTree.TraverseData(procedure (data: PNodeData)
+  begin
+      data.MissingPackageName := fDependencyVerifier.MissingPackages[data.Info.PackageName];
+  end);
+  fPackageTree.Invalidate;
+end;
 
 procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree;
   Node: PVirtualNode);
@@ -201,20 +218,6 @@ begin
     ImageIndex := 1;  
 end;
 
-procedure TShowPackageListPage.FormClose(Sender: TObject;
-  var Action: TCloseAction);
-begin
-  inherited;
-  if threadWorking then begin
-    TPackageLoadThread(packageLoadThread).Active := false;
-    packageLoadThread.WaitFor;
-    packageLoadThread.Free;
-    exit;
-  end;
-  fCompilationData.PackageList.Clear;
-  fPackageTree.Traverse(fPackageTree.RootNode, ByCollectingPackageInfo);
-  fCompilationData.PackageList.Pack;
-end;
 
 procedure TShowPackageListPage.ByCollectingPackageInfo(
   node: PVirtualNode);
