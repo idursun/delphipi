@@ -26,18 +26,24 @@ type
   end;
 
 implementation
-uses DateUtils, SysUtils, JclConsole;
+uses DateUtils, SysUtils, StrUtils, JclConsole;
 
-procedure WriteLine(color: TJclScreenFontColor; text: string);
+procedure WriteLine(color: TJclScreenFontColor; text: string); overload;
 begin
   TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color));  
 end;
 
+procedure WriteLine(text: string); overload;
+begin
+  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(fclWhite));  
+end;
 
 { TConsoleProgressMonitor }
 
 procedure TConsoleProgressMonitor.CompilerOutput(const line: string);
 begin
+  if length(line) > 256 then exit;   //throws system error 87
+
   if OutputLevel = colSilent then exit;
   if OutputLevel = TConsoleOutputLevel.colFull then
     WriteLn(line)
@@ -52,8 +58,14 @@ end;
 
 procedure TConsoleProgressMonitor.Log(const text: string);
 begin
+ 
   if OutputLevel = TConsoleOutputLevel.colFull then
-    WriteLn(text);
+    begin
+      if StartsStr('-=', text)  then
+        WriteLine(fclYellow, text)
+      else
+        WriteLine(text);
+    end;
 end;
 
 procedure TConsoleProgressMonitor.PackageProcessed(
@@ -61,27 +73,26 @@ procedure TConsoleProgressMonitor.PackageProcessed(
 begin
   if OutputLevel = TConsoleOutputLevel.colSilent then
     exit;
-    
   case status of
     psNone: ;
     psCompiling:  
-       WriteLine(fclWhite, '[Compile] ' + packageInfo.PackageName);
+       WriteLine('[Compile] ' + packageInfo.PackageName);
     psInstalling: 
-       WriteLine(fclWhite, '[Install]' + packageInfo.PackageName);
+       WriteLine('[Install]' + packageInfo.PackageName);
     psSuccess: begin
       WriteLine(fclGreen, '[Success] ' + packageInfo.PackageName); 
-      WriteLn;
+      WriteLine('');
     end;
     psError: begin
       WriteLine(fclRed,   '[Fail   ] ' + packageInfo.PackageName);
-      WriteLn;
+      WriteLine('');
     end;
   end;
 end;
 
 procedure TConsoleProgressMonitor.Started;
 begin
-  WriteLine(fclWhite, 'Starting');
+  WriteLine('Starting');
   fStartTime := GetTime;
 end;
 

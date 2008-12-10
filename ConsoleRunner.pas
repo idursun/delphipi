@@ -28,11 +28,11 @@ type
   
 implementation
 
-uses gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler, Utils, JclConsole;
+uses SysUtils,  gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler, Utils, JclConsole;
 
 procedure WriteLine(color: TJclScreenFontColor; text: string);
 begin
-  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color));  
+  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color));
 end;
 
 { TConsoleRunner }
@@ -41,6 +41,7 @@ begin
   fParameters := TStringList.Create;
 end;
 
+//TODO Refactor this
 procedure TConsoleRunner.Run;
 var
   scripter : TScriptPersister;
@@ -52,6 +53,18 @@ begin
   begin
     DisplayHelp;
     exit;
+  end;
+
+  if not FileExists(fParameters[0]) then
+  begin
+     WriteLine(fclRed, 'File does not exist: ' + fParameters[0]);
+     DisplayHelp;
+     exit;
+  end;
+
+  if fParameters.Count > 1 then
+  begin
+     fOutputLevel := TConsoleOutputLevel(StrToInt(fParameters[1]));
   end;
   
   scripter := TScriptPersister.Create;
@@ -80,19 +93,19 @@ end;
 
 procedure TConsoleRunner.DisplayHeader;
 begin
-  WriteLn('DelphiPI Console ' + Utils.VERSION);
-  WriteLn('By ' + Utils.AUTHOR);
+  WriteLine(fclWhite, 'DelphiPI Console ' + Utils.VERSION);
+  WriteLine(fclWhite, 'By ' + Utils.AUTHOR);
 end;
 
 procedure TConsoleRunner.DisplayHelp;
 begin
-  WriteLn('Usage:');
-  WriteLn('DelphiPIConsole.exe [ScriptFile] [OutputLevel]');
-  WriteLn('ScriptFile : script file saved by the DelphiPI which contains necessary information about compilation');
-  WriteLn('OutputLevel: during compilation how much info should be displayed');
-  WriteLn(#9'0 means silent');
-  WriteLn(#9'1 means brief');
-  WriteLn(#9'2 means full');
+  WriteLine(fclWhite, 'Usage:');
+  WriteLine(fclWhite, 'DelphiPIConsole.exe [ScriptFile] [OutputLevel]');
+  WriteLine(fclWhite, 'ScriptFile : script file saved by the DelphiPI which contains necessary information about compilation');
+  WriteLine(fclWhite, 'OutputLevel: during compilation how much info should be displayed');
+  WriteLine(fclWhite, #9'0 means silent');
+  WriteLine(fclWhite, #9'1 means brief');
+  WriteLine(fclWhite, #9'2 means full');
 end;
 
 
