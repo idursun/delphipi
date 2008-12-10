@@ -18,14 +18,14 @@ type
     GroupBox2: TGroupBox;
     Label7: TLabel;
     Image2: TImage;
-    Label8: TLabel;
+    lblVersion: TLabel;
     Label9: TLabel;
     Label10: TLabel;
     Label11: TLabel;
     lblAuthorsWebsite: TLabel;
     lblProjectWebsite: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
+    lblAuthor: TLabel;
     btnDonate: TButton;
     procedure btnCloseClick(Sender: TObject);
     procedure lblAuthorsWebsiteClick(Sender: TObject);
@@ -42,7 +42,7 @@ var
   frmAbout: TfrmAbout;
 
 implementation
-uses ShellApi, gnugettext;
+uses ShellApi, gnugettext, Utils;
 const
   donationAddress =
     'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=ibrahim'+
@@ -63,6 +63,7 @@ end;
 procedure TfrmAbout.FormCreate(Sender: TObject);
 begin
   TranslateComponent(self);
+  lblVersion.Caption := Utils.VERSION + ' ' + Utils.AUTHOR;
 end;
 
 procedure TfrmAbout.lblAuthorsWebsiteClick(Sender: TObject);

@@ -609,9 +609,9 @@ object frmAbout: TfrmAbout
         000F0000060F0000020F0000020F0000060F0000000F0000001F0000003F0000
         807F0000FFFF0000FFFF0000}
     end
-    object Label8: TLabel
+    object lblVersion: TLabel
       Left = 101
-      Top = 62
+      Top = 61
       Width = 95
       Height = 16
       Caption = '0.42 '#39'Katarina'#39
@@ -680,7 +680,7 @@ object frmAbout: TfrmAbout
       Height = 13
       Caption = 'Author'#39's website:'
     end
-    object Label3: TLabel
+    object lblAuthor: TLabel
       Left = 101
       Top = 102
       Width = 80

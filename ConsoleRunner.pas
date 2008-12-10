@@ -6,64 +6,62 @@
 unit ConsoleRunner;
 
 interface
-uses PackageInfo, CompilationData, ConsoleProgressMonitor;
+uses Classes, PackageInfo, CompilationData, ConsoleProgressMonitor;
 type
 
   TConsoleRunner = class
   private
     fCompilationData: TCompilationData;
     fMonitor: TConsoleProgressMonitor;
+    fParameters: TStringList;
+    fOutputLevel: TConsoleOutputLevel;
+    procedure DisplayHelp;
   protected
     procedure DisplayHeader; virtual;
+    procedure ParseArguments;virtual;
   public
     constructor Create;
     procedure Run;
+    destructor Destroy; override;
+    property OutputLevel: TConsoleOutputLevel read fOutputLevel;
   end;
   
 implementation
 
-uses Classes,gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler, Utils;
+uses gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler, Utils, JclConsole;
 
-type
-  TConsoleParameterParser = class
-  private
-    fValues : TStringList;
-    fOutputLevel: TConsoleOutputLevel;
-
-  public
-    constructor Create;
-    destructor Destroy; override;
-    procedure Parse;
-
-    property OutputLevel: TConsoleOutputLevel read fOutputLevel;
-  end;
+procedure WriteLine(color: TJclScreenFontColor; text: string);
+begin
+  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color));  
+end;
 
 { TConsoleRunner }
-
 constructor TConsoleRunner.Create;
-var
-  scripter : TScriptPersister;
-  parser : TConsoleParameterParser;
 begin
-   scripter := TScriptPersister.Create;
-   parser := TConsoleParameterParser.Create;
-   parser.Parse;  
-  try
-    fCompilationData := scripter.Load(parser.fValues[0]);
-    fMonitor := TConsoleProgressMonitor.Create;
-    fMonitor.OutputLevel := parser.OutputLevel;
-    
-  finally
-    scripter.Free;
-    parser.Free;
-  end;
+  fParameters := TStringList.Create;
 end;
 
 procedure TConsoleRunner.Run;
 var
-   packageCompiler: TMonitoredPackageCompiler;
+  scripter : TScriptPersister;
+  packageCompiler: TMonitoredPackageCompiler;
 begin
   DisplayHeader;
+  ParseArguments;
+  if fParameters.Count = 0 then
+  begin
+    DisplayHelp;
+    exit;
+  end;
+  
+  scripter := TScriptPersister.Create;
+  try
+    fCompilationData := scripter.Load(fParameters[0]);
+    fMonitor := TConsoleProgressMonitor.Create;
+    fMonitor.OutputLevel := Self.OutputLevel;
+  finally
+    scripter.Free;
+  end;
   
   packageCompiler := TMonitoredPackageCompiler.Create(fCompilationData);
   packageCompiler.Monitor := fMonitor;
@@ -74,33 +72,38 @@ begin
   end;
 end;
 
+destructor TConsoleRunner.Destroy;
+begin
+  fParameters.Free;
+  inherited;
+end;
+
 procedure TConsoleRunner.DisplayHeader;
 begin
   WriteLn('DelphiPI Console ' + Utils.VERSION);
   WriteLn('By ' + Utils.AUTHOR);
 end;
 
-{ TConsoleParameterParser }
-
-constructor TConsoleParameterParser.Create;
+procedure TConsoleRunner.DisplayHelp;
 begin
-  fValues := TStringList.Create;
+  WriteLn('Usage:');
+  WriteLn('DelphiPIConsole.exe [ScriptFile] [OutputLevel]');
+  WriteLn('ScriptFile : script file saved by the DelphiPI which contains necessary information about compilation');
+  WriteLn('OutputLevel: during compilation how much info should be displayed');
+  WriteLn(#9'0 means silent');
+  WriteLn(#9'1 means brief');
+  WriteLn(#9'2 means full');
 end;
 
-destructor TConsoleParameterParser.Destroy;
-begin
-  fValues.Free;
-  inherited;
-end;
 
-procedure TConsoleParameterParser.Parse;
+procedure TConsoleRunner.ParseArguments;
 var
-  I: Integer;
+  i:integer;
 begin
-  fValues.Clear;
+  fParameters.Clear;
   fOutputLevel := TConsoleOutputLevel.colBrief;
   for I := 1 to ParamCount do
-    fValues.Add(ParamStr(i));
+    fParameters.Add(ParamStr(i));
 end;
 
 end.

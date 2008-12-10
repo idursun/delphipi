@@ -15,7 +15,6 @@ uses
   PageShowPackageList in 'PageShowPackageList.pas' {ShowPackageListPage},
   PageInstallHelpFiles in 'PageInstallHelpFiles.pas' {InstallHelpFilesPage},
   PageSummary in 'PageSummary.pas' {SummaryPage},
-  ConsoleRunner in 'ConsoleRunner.pas',
   CompileThread in 'CompileThread.pas',
   CompilationData in 'CompilationData.pas',
   ScriptPersister in 'ScriptPersister.pas',

@@ -84,7 +84,6 @@
 			<DCCReference Include="PageSummary.pas">
 				<Form>SummaryPage</Form>
 			</DCCReference>
-			<DCCReference Include="ConsoleRunner.pas"/>
 			<DCCReference Include="CompileThread.pas"/>
 			<DCCReference Include="CompilationData.pas"/>
 			<DCCReference Include="ScriptPersister.pas"/>
@@ -191,7 +190,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">42</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">134</VersionInfo>
+						<VersionInfo Name="Build">135</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -203,7 +202,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.42.0.134</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.42.0.135</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">Katarina</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright"/>
 						<VersionInfoKeys Name="LegalTrademarks"/>

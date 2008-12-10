@@ -118,7 +118,7 @@ begin
     exit;
   end;
 
-  fLine :=  fLines[fCurrentLine];
+  fLine :=  Trim(fLines[fCurrentLine]);
   inc(fCurrentLine);
   Result := fLine;
 end;

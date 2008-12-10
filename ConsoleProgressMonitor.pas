@@ -22,10 +22,17 @@ type
       status: TPackageStatus);
     procedure Started;
     property OutputLevel: TConsoleOutputLevel read fOutputLevel write fOutputLevel;
+    
   end;
 
 implementation
-uses DateUtils, SysUtils;
+uses DateUtils, SysUtils, JclConsole;
+
+procedure WriteLine(color: TJclScreenFontColor; text: string);
+begin
+  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color));  
+end;
+
 
 { TConsoleProgressMonitor }
 
@@ -35,12 +42,12 @@ begin
   if OutputLevel = TConsoleOutputLevel.colFull then
     WriteLn(line)
   else if Pos('Fatal:', line) > 0 then
-    WriteLn(line);
+    WriteLine(fclRed,line);
 end;
 
 procedure TConsoleProgressMonitor.Finished;
 begin
-  WriteLn('Completed in ' + floattostr(MilliSecondsBetween(GetTime, fStartTime)) + ' ms');
+  WriteLine(fclWhite, 'Completed in ' + floattostr(MilliSecondsBetween(GetTime, fStartTime)) + ' ms');
 end;
 
 procedure TConsoleProgressMonitor.Log(const text: string);
@@ -57,13 +64,16 @@ begin
     
   case status of
     psNone: ;
-    psCompiling: WriteLn(packageInfo.PackageName + ' : Compiling');
-    psInstalling: WriteLn(packageInfo.PackageName + ' : Installing');
+    psCompiling:  
+       WriteLine(fclWhite, '[Compile] ' + packageInfo.PackageName);
+    psInstalling: 
+       WriteLine(fclWhite, '[Install]' + packageInfo.PackageName);
     psSuccess: begin
-      WriteLn(packageInfo.PackageName + ' is successfuly compiled'); WriteLn;
+      WriteLine(fclGreen, '[Success] ' + packageInfo.PackageName); 
+      WriteLn;
     end;
     psError: begin
-      WriteLn(packageInfo.PackageName + ' is errored');
+      WriteLine(fclRed,   '[Fail   ] ' + packageInfo.PackageName);
       WriteLn;
     end;
   end;
@@ -71,7 +81,7 @@ end;
 
 procedure TConsoleProgressMonitor.Started;
 begin
-  WriteLn('Starting');
+  WriteLine(fclWhite, 'Starting');
   fStartTime := GetTime;
 end;
 
