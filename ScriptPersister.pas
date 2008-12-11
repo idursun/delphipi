@@ -38,7 +38,7 @@ type
   end;
 
 implementation
-uses JclStrings, JclBorlandTools, PackageInfo;
+uses JclStrings, JclFileUtils, JclBorlandTools, PackageInfo;
 type
 
   TScriptWriter = class(TStringList)
@@ -169,7 +169,14 @@ begin
 
       WriteHeader(Header_Packages);
       for i := 0 to compilationData.PackageList.Count-1 do
+      begin
+        if PathIsChild(compilationData.PackageList[i].FileName, compilationData.BaseFolder) then
+        begin
+          WriteDetail(PathGetRelativePath(compilationData.BaseFolder,compilationData.PackageList[i].FileName));
+        end else begin
           WriteDetail(compilationData.PackageList[i].FileName);
+        end;
+      end;
     end;
     script.SaveToFile(scriptFilePath);
   finally

@@ -77,11 +77,13 @@ var
   installation: TJclBorRADToolInstallation;
   i : integer;
 begin
+  Result := false;
   for i := 0 to installations.Count - 1 do begin
     installation := installations.Installations[i];
     if UpperCase(Trim(installation.VersionNumberStr)) = UpperCase(Trim(version)) then
     begin
       fInstallation := installation;
+      Result := true;
       break;
     end;
   end;

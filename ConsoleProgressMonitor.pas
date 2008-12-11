@@ -30,12 +30,12 @@ uses DateUtils, SysUtils, StrUtils, JclConsole;
 
 procedure WriteLine(color: TJclScreenFontColor; text: string); overload;
 begin
-  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color));  
+  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color,bclBlack, color <> fclWhite));  
 end;
 
-procedure WriteLine(text: string); overload;
+procedure WriteLine(text: string=''); overload;
 begin
-  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(fclWhite));  
+  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(fclWhite, bclBlack, false));  
 end;
 
 { TConsoleProgressMonitor }
@@ -78,14 +78,14 @@ begin
     psCompiling:  
        WriteLine('[Compile] ' + packageInfo.PackageName);
     psInstalling: 
-       WriteLine('[Install]' + packageInfo.PackageName);
+       WriteLine('[Install] ' + packageInfo.PackageName);
     psSuccess: begin
       WriteLine(fclGreen, '[Success] ' + packageInfo.PackageName); 
-      WriteLine('');
+      WriteLine;
     end;
     psError: begin
       WriteLine(fclRed,   '[Fail   ] ' + packageInfo.PackageName);
-      WriteLine('');
+      WriteLine;
     end;
   end;
 end;
