@@ -612,9 +612,9 @@ object frmAbout: TfrmAbout
     object lblVersion: TLabel
       Left = 101
       Top = 61
-      Width = 95
+      Width = 182
       Height = 16
-      Caption = '0.44 '#39'Katarina'#39
+      Caption = 'Utils.Version Utils.CodeName'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -13
@@ -683,9 +683,9 @@ object frmAbout: TfrmAbout
     object lblAuthor: TLabel
       Left = 101
       Top = 102
-      Width = 80
+      Width = 57
       Height = 13
-      Caption = #304'brahim DURSUN'
+      Caption = 'Utils.Author'
     end
   end
   object btnDonate: TButton

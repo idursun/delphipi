@@ -63,7 +63,8 @@ end;
 procedure TfrmAbout.FormCreate(Sender: TObject);
 begin
   TranslateComponent(self);
-  lblVersion.Caption := Utils.VERSION + ' ' + Utils.AUTHOR;
+  lblVersion.Caption :=Format('%s ''%s''', [Utils.VERSION, Utils.CODE]);
+  lblAuthor.Caption := Utils.AUTHOR;
 end;
 
 procedure TfrmAbout.lblAuthorsWebsiteClick(Sender: TObject);
