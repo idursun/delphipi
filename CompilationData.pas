@@ -17,9 +17,11 @@ type
     fPattern: String;
     fDCPOutputFolder: string;
     fBPLOutputFolder: string;
+    fDCUOutputFolder: string;
     FScripting: Boolean;
 
     procedure SetPackageList(const aPackageList: TPackageList);
+    procedure SetInstallation(const Value: TJclBorRADToolInstallation);
   protected
   public
     constructor Create;
@@ -30,12 +32,13 @@ type
     function SetDelphiVersion(const version:string):boolean; virtual;
     
     property Pattern: String read fPattern write fPattern;
-    property Installation: TJclBorRADToolInstallation read fInstallation write fInstallation;
+    property Installation: TJclBorRADToolInstallation read fInstallation write SetInstallation;
     property BaseFolder: String read fBaseFolder write fBaseFolder;
     property HelpFiles: TStringList read fHelpFiles;
     property PackageList: TPackageList read fPackageList write SetPackageList;
     property DCPOutputFolder: string read fDCPOutputFolder write fDCPOutputFolder;
     property BPLOutputFolder: string read fBPLOutputFolder write fBPLOutputFolder;
+    property DCUOutputFolder: string read fDCUOutputFolder write fDCUOutputFolder;
 
     property Scripting: Boolean read fScripting write fScripting;
   end;
@@ -97,6 +100,18 @@ begin
   end;
   if fInstallation = nil then
     raise Exception.Create('cannot find delphi version:' + version);
+end;
+
+procedure TCompilationData.SetInstallation(
+  const Value: TJclBorRADToolInstallation);
+begin
+  if fInstallation = Value then
+    exit;
+    
+  fInstallation := Value;
+
+  BPLOutputFolder := fInstallation.BPLOutputPath;
+  DCPOutputFolder := fInstallation.DCPOutputPath;
 end;
 
 procedure TCompilationData.SetPackageList(const aPackageList: TPackageList);

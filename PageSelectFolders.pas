@@ -9,24 +9,29 @@ interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs;
+  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs, pngimage, JclBorlandTools;
 
 type
   TSelectFoldersPage = class(TWizardPage)
-    GroupBox1: TGroupBox;
+    grpPackagePattern: TGroupBox;
     Label3: TLabel;
     cbPattern: TComboBox;
-    GroupBox2: TGroupBox;
+    grpBaseFolder: TGroupBox;
     Label1: TLabel;
     btnSelectFolder: TButton;
     edtBaseFolder: TEdit;
     Label2: TLabel;
-    Image1: TImage;
+    imgInfo: TImage;
+    grpDelphiVersion: TGroupBox;
+    cbDelphiVersions: TComboBox;
     procedure btnSelectFolderClick(Sender: TObject);
     procedure edtBaseFolderChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
+    procedure cbDelphiVersionsChange(Sender: TObject);
   private
+    procedure AddDelphiInstallation(
+      const installation: TJclBorRADToolInstallation);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override; 
     procedure UpdateWizardState; override;
@@ -39,8 +44,59 @@ var
 implementation
 uses FileCtrl, gnugettext, FormWizard;
 {$R *.dfm}
-
+var
+  installations : TJclBorRADToolInstallations;
 { TSelectFoldersPage }
+
+procedure TSelectFoldersPage.FormCreate(Sender: TObject);
+var 
+ i: integer;
+begin
+  inherited;
+  TranslateComponent(self);
+  installations := TJclBorRADToolInstallations.Create;
+
+  edtBaseFolder.Text := FCompilationData.BaseFolder;
+  cbPattern.Text := FCompilationData.Pattern;
+
+  if (FileExists('patterns.txt')) then
+    cbPattern.Items.LoadFromFile('patterns.txt');
+  if installations <> nil then
+    installations := TJclBorRADToolInstallations.Create;
+
+  for i := 0 to installations.Count - 1 do begin
+    AddDelphiInstallation(installations.Installations[i]);
+  end;
+
+  cbDelphiVersionsChange(cbDelphiVersions);
+end; 
+
+procedure TSelectFoldersPage.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  inherited;
+  if cbPattern.Items.IndexOf(cbPattern.Text) = -1 then
+    cbPattern.Items.Add(cbPattern.Text);
+
+  FCompilationData.BaseFolder := edtBaseFolder.Text;
+  FCompilationData.Pattern := cbPattern.Text;
+  fCompilationData.PackageList.Clear;
+  cbPattern.Items.SaveToFile('patterns.txt');
+end;
+
+
+procedure TSelectFoldersPage.AddDelphiInstallation(const installation: TJclBorRADToolInstallation);
+var
+  i: integer;
+begin
+  i := cbDelphiVersions.Items.Add(installation.Description);
+  cbDelphiVersions.Items.Objects[i] := installation;
+  if not Assigned(fCompilationData.Installation) then
+    exit;
+  
+  if installation.VersionNumber = fCompilationData.Installation.VersionNumber then
+    cbDelphiVersions.ItemIndex := i;
+end;
 
 procedure TSelectFoldersPage.UpdateWizardState;
 var
@@ -71,6 +127,15 @@ begin
   Result := not(fCompilationData.Scripting);
 end;
 
+procedure TSelectFoldersPage.cbDelphiVersionsChange(Sender: TObject);
+begin
+  inherited;
+  if (cbDelphiVersions.ItemIndex = -1) and (cbDelphiVersions.Items.Count > 0) then
+    cbDelphiVersions.ItemIndex := 0;
+
+  fCompilationData.Installation := cbDelphiVersions.Items.Objects[cbDelphiVersions.ItemIndex] as TJclBorRADToolInstallation;
+end;
+
 constructor TSelectFoldersPage.Create(Owner: TComponent;
   const compilationData: TCompilationData);
 begin
@@ -84,29 +149,6 @@ begin
   UpdateWizardState;
 end;
 
-procedure TSelectFoldersPage.FormClose(Sender: TObject;
-  var Action: TCloseAction);
-begin
-  inherited;
-  if cbPattern.Items.IndexOf(cbPattern.Text) = -1 then
-    cbPattern.Items.Add(cbPattern.Text);
 
-  FCompilationData.BaseFolder := edtBaseFolder.Text;
-  FCompilationData.Pattern := cbPattern.Text;
-  fCompilationData.PackageList.Clear;
-  cbPattern.Items.SaveToFile('patterns.txt');
-end;
-
-procedure TSelectFoldersPage.FormCreate(Sender: TObject);
-begin
-  inherited;
-  TranslateComponent(self);
-
-  edtBaseFolder.Text := FCompilationData.BaseFolder;
-  cbPattern.Text := FCompilationData.Pattern;
-
-  if (FileExists('patterns.txt')) then
-    cbPattern.Items.LoadFromFile('patterns.txt');
-end;
 
 end.

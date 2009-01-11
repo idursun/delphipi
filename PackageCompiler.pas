@@ -125,7 +125,7 @@ begin
     pathList.Free;
   end;
 
-  fExtraOptions := '-B -Q';
+  fExtraOptions := '-B -Q -CC';
   fExtraOptions := fExtraOptions + ' -I'+shortPaths+'';
   fExtraOptions := fExtraOptions + ' -U'+shortPaths+'';
   fExtraOptions := fExtraOptions + ' -O'+shortPaths+'';

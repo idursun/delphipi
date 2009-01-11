@@ -1,23 +1,28 @@
 inherited SelectFoldersPage: TSelectFoldersPage
+  ActiveControl = edtBaseFolder
   Caption = 'SelectFoldersPage'
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object GroupBox1: TGroupBox
-    Left = 8
-    Top = 90
-    Width = 484
-    Height = 99
-    Anchors = [akLeft, akTop, akRight]
+  object grpPackagePattern: TGroupBox
+    AlignWithMargins = True
+    Left = 3
+    Top = 134
+    Width = 494
+    Height = 79
+    Align = alTop
     Caption = 'Pattern to select package files '
-    TabOrder = 1
+    TabOrder = 2
+    ExplicitLeft = 8
+    ExplicitTop = 79
+    ExplicitWidth = 484
     DesignSize = (
-      484
-      99)
+      494
+      79)
     object Label3: TLabel
       Left = 12
-      Top = 60
+      Top = 51
       Width = 98
       Height = 13
       Caption = 'Package File Pattern'
@@ -25,17 +30,18 @@ inherited SelectFoldersPage: TSelectFoldersPage
     object Label2: TLabel
       Left = 36
       Top = 16
-      Width = 408
+      Width = 418
       Height = 26
       Anchors = [akLeft, akTop, akRight]
       Caption = 
         'Specify a pattern that matches for the package files that are su' +
         'itable for your delphi installation. ie: *d7.dpk for Delphi 7'
       WordWrap = True
+      ExplicitWidth = 408
     end
     object imgInfo: TImage
       Left = 12
-      Top = 19
+      Top = 16
       Width = 16
       Height = 16
       AutoSize = True
@@ -70,36 +76,41 @@ inherited SelectFoldersPage: TSelectFoldersPage
     end
     object cbPattern: TComboBox
       Left = 116
-      Top = 57
-      Width = 358
+      Top = 48
+      Width = 368
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       ItemHeight = 13
       TabOrder = 0
       Text = '*.dpk'
+      ExplicitWidth = 358
     end
   end
-  object GroupBox2: TGroupBox
-    Left = 8
-    Top = 8
-    Width = 484
-    Height = 76
-    Anchors = [akLeft, akTop, akRight]
+  object grpBaseFolder: TGroupBox
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 494
+    Height = 65
+    Align = alTop
     Caption = 'Select Base Folder contains both Package and Source files'
     TabOrder = 0
+    ExplicitLeft = 8
+    ExplicitTop = 8
+    ExplicitWidth = 484
     DesignSize = (
-      484
-      76)
+      494
+      65)
     object Label1: TLabel
       Left = 12
-      Top = 24
+      Top = 16
       Width = 56
       Height = 13
       Caption = 'Base Folder'
     end
     object btnSelectFolder: TButton
-      Left = 442
-      Top = 43
+      Left = 452
+      Top = 35
       Width = 32
       Height = 21
       Anchors = [akTop, akRight]
@@ -107,15 +118,43 @@ inherited SelectFoldersPage: TSelectFoldersPage
       TabOrder = 0
       WordWrap = True
       OnClick = btnSelectFolderClick
+      ExplicitLeft = 442
     end
     object edtBaseFolder: TEdit
       Left = 12
-      Top = 43
-      Width = 424
+      Top = 35
+      Width = 434
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
       OnChange = edtBaseFolderChange
+      ExplicitWidth = 424
+    end
+  end
+  object grpDelphiVersion: TGroupBox
+    AlignWithMargins = True
+    Left = 3
+    Top = 74
+    Width = 494
+    Height = 54
+    Align = alTop
+    Caption = 'Installed Delphi Versions'
+    TabOrder = 1
+    ExplicitLeft = 6
+    ExplicitTop = 11
+    DesignSize = (
+      494
+      54)
+    object cbDelphiVersions: TComboBox
+      Left = 15
+      Top = 20
+      Width = 459
+      Height = 21
+      Style = csDropDownList
+      Anchors = [akLeft, akTop, akRight]
+      ItemHeight = 13
+      TabOrder = 0
+      OnChange = cbDelphiVersionsChange
     end
   end
 end
