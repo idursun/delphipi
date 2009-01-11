@@ -91,8 +91,8 @@ begin
 end;
 
 procedure TSummaryPage.AddSourcePathList(const summary: TStringList);
-var
-  path: string;
+//var
+//  path: string;
 begin
 // summary.Add(_('Source File Paths:'));
 // for path in fCompilationData.SourceFilePaths do

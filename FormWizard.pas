@@ -22,6 +22,7 @@ type
     btnBack: TButton;
     btnNext: TButton;
     btnAbout: TButton;
+    Bevel1: TBevel;
 
     procedure FormCreate(Sender: TObject);
     procedure btnNextClick(Sender: TObject);
@@ -109,7 +110,8 @@ begin
 
   CurPage := pageNo;
   ActivePage := Pages[pageNo].Create(self,FCompilationData);
-  if not ActivePage.CanShowPage then begin
+  if not ActivePage.CanShowPage then 
+  begin
      SelectPage(pageNo+1);
      exit;
   end;

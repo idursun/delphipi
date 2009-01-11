@@ -43,9 +43,10 @@ inherited ShowPackageListPage: TShowPackageListPage
     PopupMenu = SelectPopupMenu
     ShowHint = True
     TabOrder = 0
+    TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSpanColumns, toAutoTristateTracking, toAutoDeleteMovedNodes]
     TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
-    TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect]
-    TreeOptions.StringOptions = [toSaveCaptions]
+    TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect, toRightClickSelect]
+    TreeOptions.StringOptions = [toSaveCaptions, toShowStaticText]
     OnChecked = packageTreeChecked
     OnGetText = fPackageTreeGetText
     OnPaintText = fPackageTreePaintText
@@ -91,6 +92,31 @@ inherited ShowPackageListPage: TShowPackageListPage
     object miUnselectMatching: TMenuItem
       Caption = 'Unselect Matching...'
       OnClick = miUnselectMatchingClick
+    end
+    object N2: TMenuItem
+      Caption = '-'
+    end
+    object miCollapse: TMenuItem
+      Caption = 'Collapse'
+      object miCollapseChildren: TMenuItem
+        Caption = 'Children'
+        OnClick = miCollapseChildrenClick
+      end
+      object miCollapseAll: TMenuItem
+        Caption = 'All'
+        OnClick = miCollapseAllClick
+      end
+    end
+    object miExpand: TMenuItem
+      Caption = 'Expand'
+      object miExpandChildren: TMenuItem
+        Caption = 'Children'
+        OnClick = miExpandChildrenClick
+      end
+      object miExpandAll: TMenuItem
+        Caption = 'All'
+        OnClick = miExpandAllClick
+      end
     end
   end
   object ImageList: TImageList

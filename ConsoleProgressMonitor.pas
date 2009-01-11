@@ -53,6 +53,9 @@ end;
 
 procedure TConsoleProgressMonitor.Finished;
 begin
+  if OutputLevel = TConsoleOutputLevel.colSilent then
+    exit;
+
   WriteLine(fclWhite, 'Completed in ' + floattostr(MilliSecondsBetween(GetTime, fStartTime)) + ' ms');
 end;
 
@@ -60,12 +63,12 @@ procedure TConsoleProgressMonitor.Log(const text: string);
 begin
  
   if OutputLevel = TConsoleOutputLevel.colFull then
-    begin
-      if StartsStr('-=', text)  then
-        WriteLine(fclYellow, text)
-      else
-        WriteLine(text);
-    end;
+  begin
+    if StartsStr('-=', text)  then
+      WriteLine(fclYellow, text)
+    else
+      WriteLine(text);
+  end;
 end;
 
 procedure TConsoleProgressMonitor.PackageProcessed(
@@ -92,6 +95,8 @@ end;
 
 procedure TConsoleProgressMonitor.Started;
 begin
+  if OutputLevel = TConsoleOutputLevel.colSilent then
+    exit;
   WriteLine('Starting');
   fStartTime := GetTime;
 end;

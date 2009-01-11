@@ -17,6 +17,7 @@ type
     fPattern: String;
     fDCPOutputFolder: string;
     fBPLOutputFolder: string;
+    FScripting: Boolean;
 
     procedure SetPackageList(const aPackageList: TPackageList);
   protected
@@ -35,6 +36,8 @@ type
     property PackageList: TPackageList read fPackageList write SetPackageList;
     property DCPOutputFolder: string read fDCPOutputFolder write fDCPOutputFolder;
     property BPLOutputFolder: string read fBPLOutputFolder write fBPLOutputFolder;
+
+    property Scripting: Boolean read fScripting write fScripting;
   end;
 
 implementation
@@ -48,6 +51,9 @@ begin
   fPattern := '*.dpk';
   fPackageList := TPackageList.Create;
   fHelpFiles := TStringList.Create;
+  fScripting := False;
+
+ 
 end;
 
 destructor TCompilationData.Destroy;
@@ -70,6 +76,8 @@ end;
 function TCompilationData.GetIdeVersionSuffix: string;
 begin
   Result := Installation.VersionNumberStr;
+  if Result = 'd11' then //Delphi 2007 packages have version 10 extension
+    Result := 'd10';
 end;
 
 function TCompilationData.SetDelphiVersion(const version: string): boolean;

@@ -22,6 +22,8 @@ type
     procedure SetPackageList(compilationData: TCompilationData);
     procedure SetDelphiVersion(compilationData: TCompilationData);
     function HasNextLine: boolean;
+    { Added: Ronald Siekman - 24 12 2008 }
+    procedure SetLibrarySearchPath(compilationData: TCompilationData);
   public
     constructor Create();
     destructor Destroy; override;
@@ -35,6 +37,8 @@ type
      const Header_BPLOutputFolder = 'bpl-output-folder';
      const Header_DCPOutputFolder = 'dcp-output-folder';
      const Header_Packages = 'packages';
+     { Added: Ronald Siekman - 24 12 2008 }
+     const Header_Library_Search_Paths = 'library-search-paths';
   end;
 
 implementation
@@ -51,6 +55,8 @@ type
 constructor TScriptPersister.Create();
 begin
   fLines := TStringList.Create;
+
+  { Changed: Ronald Siekman - 24 12 2008 }
   fPackageInfoFactory := TPackageInfoFactory.Create;
 end;
 
@@ -85,7 +91,8 @@ begin
   if not FileExists(scriptFilePath) then exit;
   fCurrentLine := 0;
   fLine := '';
-  fLines := TStringList.Create;
+  { Changed: Ronald Siekman - 24 12 2008 }
+  //fLines := TStringList.Create;
   fLines.LoadFromFile(scriptFilePath);
   try
     while HasNextLine do
@@ -93,6 +100,7 @@ begin
       fLine := ReadNextLine;
       if IsSectionHeader(fLine) then
       begin
+        Result.Scripting := True;
         header := GetSectionHeader(fLine);
 
         if header = Header_BaseFolder then
@@ -103,12 +111,14 @@ begin
           Result.BPLOutputFolder := ReadNextLine;
         if header = Header_DCPOutputFolder then
           Result.DCPOutputFolder := ReadNextLine;
+        if header = Header_Library_Search_Paths then
+          SetLibrarySearchPath(Result);
         if header = Header_Packages then
           SetPackageList(Result);
       end;
     end;
   finally
-    FreeAndNil(fLines);
+    //FreeAndNil(fLines);
   end;
 end;
 function TScriptPersister.ReadNextLine: string;
@@ -124,17 +134,78 @@ begin
 end;
 
 procedure TScriptPersister.SetDelphiVersion(compilationData: TCompilationData);
-var
-  version: string;
 begin
-  version := ReadNextLine;
-  compilationData.SetDelphiVersion(version);
+  ReadNextLine;
+  compilationData.SetDelphiVersion(fLine);
+end;
+
+procedure TScriptPersister.SetLibrarySearchPath(
+  compilationData: TCompilationData);
+
+  procedure SemiColonTextToStringList( const line: string;
+    var List: TStringList );
+  var
+    sValue: string;
+    sLine: string;
+    iPos: Integer;
+  begin
+    sValue := line;
+
+    iPos := Pos(';', sValue);
+    while not(iPos = 0) do
+    begin
+      sLine := Trim(Copy(sValue, 1, iPos-1));
+      List.Add(sLine);
+      Delete(sValue, 1, iPos);
+      iPos := Pos(';', sValue);
+    end;
+
+    sValue := Trim(sValue);
+    if not(sValue = '') then
+    begin
+      List.Add(sValue);
+    end;
+  end;
+
+var
+  line : string;
+  slPaths: TStringList;
+begin
+  { Added: Ronald Siekman - 24 12 2008 }
+  if Assigned(compilationData.Installation) then
+  begin
+    slPaths := TStringList.Create;
+    try
+      SemiColonTextToStringList(compilationData.Installation.LibrarySearchPath,
+                                slPaths);
+
+      while HasNextLine do
+      begin
+        line := ReadNextLine;
+        if IsSectionHeader(line) then begin
+          Dec(fCurrentLine);
+          break;
+        end;
+
+        if (slPaths.IndexOf(line) = -1 ) then
+        begin
+          compilationData.Installation.AddToLibrarySearchPath(line);
+        end;
+      end;
+    finally
+      slPaths.Free;
+    end;
+  end;
 end;
 
 procedure TScriptPersister.SetPackageList(compilationData: TCompilationData);
 var
   line : string;
+  folder : string;
 begin
+   { Changed: Ronald Siekman - 24 12 2008 }
+   folder := IncludeTrailingPathDelimiter(compilationData.BaseFolder);
+
    while HasNextLine do
    begin
      line := ReadNextLine;
@@ -142,7 +213,16 @@ begin
        Dec(fCurrentLine);
        break;
      end;
-     compilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(Trim(line)));
+
+     if (ExtractFilePath(line) = '' ) then
+     begin
+       line := folder+line;
+     end;
+
+     if FileExists( line ) then
+     begin
+       compilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(line));
+     end;
    end;
 end;
 

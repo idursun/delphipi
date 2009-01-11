@@ -113,7 +113,6 @@ begin
   end;
 end;
 
-
 procedure TPackageDependencyVerifier.Verify;
 var
   requiredPackage: string;

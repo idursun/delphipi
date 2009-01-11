@@ -362,52 +362,76 @@ object frmWizard: TfrmWizard
     Left = 0
     Top = 60
     Width = 592
-    Height = 323
+    Height = 316
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitLeft = -8
+    ExplicitTop = 51
+    ExplicitHeight = 323
   end
   object pBottom: TPanel
     Left = 0
-    Top = 383
+    Top = 376
     Width = 592
-    Height = 33
+    Height = 40
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
+    object Bevel1: TBevel
+      AlignWithMargins = True
+      Left = 3
+      Top = 0
+      Width = 586
+      Height = 2
+      Margins.Top = 0
+      Margins.Bottom = 0
+      Align = alTop
+      Shape = bsTopLine
+      ExplicitTop = 3
+    end
     object btnBack: TButton
       AlignWithMargins = True
       Left = 423
-      Top = 3
+      Top = 8
       Width = 80
-      Height = 27
+      Height = 29
+      Margins.Top = 6
       Align = alRight
       Caption = '<< &Back'
       TabOrder = 0
       OnClick = btnBackClick
+      ExplicitTop = 5
+      ExplicitHeight = 34
     end
     object btnNext: TButton
       AlignWithMargins = True
       Left = 509
-      Top = 3
+      Top = 8
       Width = 80
-      Height = 27
+      Height = 29
+      Margins.Top = 6
       Align = alRight
       Caption = '&Next >>'
       Default = True
       TabOrder = 1
       OnClick = btnNextClick
+      ExplicitTop = 5
+      ExplicitHeight = 34
     end
     object btnAbout: TButton
       AlignWithMargins = True
       Left = 3
-      Top = 3
+      Top = 8
       Width = 80
-      Height = 27
+      Height = 29
+      Margins.Top = 6
       Align = alLeft
       Caption = 'About...'
       TabOrder = 2
       OnClick = btnAboutClick
+      ExplicitTop = 5
+      ExplicitHeight = 34
     end
   end
 end

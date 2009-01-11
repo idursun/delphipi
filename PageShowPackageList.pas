@@ -23,6 +23,13 @@ type
     miUnselectMatching: TMenuItem;
     fPackageTree: TVirtualStringTree;
     lblWait: TLabel;
+    N2: TMenuItem;
+    miCollapse: TMenuItem;
+    miExpand: TMenuItem;
+    miCollapseChildren: TMenuItem;
+    miCollapseAll: TMenuItem;
+    miExpandChildren: TMenuItem;
+    miExpandAll: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -43,6 +50,10 @@ type
     procedure fPackageTreePaintText(Sender: TBaseVirtualTree;
       const TargetCanvas: TCanvas; Node: PVirtualNode; Column: TColumnIndex;
       TextType: TVSTTextType);
+    procedure miCollapseAllClick(Sender: TObject);
+    procedure miCollapseChildrenClick(Sender: TObject);
+    procedure miExpandChildrenClick(Sender: TObject);
+    procedure miExpandAllClick(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -91,6 +102,9 @@ type
   end;
 
   TVirtualTreeHelper = class helper for TBaseVirtualTree
+  private
+    procedure InternalTraverse(node: PVirtualNode; level: integer;
+      handler: TProc<PVirtualNode>);
   public
     procedure Traverse(node: PVirtualNode; handler: TProc<PVirtualNode>); overload;
     procedure Traverse(handler: TProc<PVirtualNode>); overload;
@@ -134,6 +148,7 @@ begin
 end;
 
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
+
 begin
   threadWorking := false;
   if TPackageLoadThread(packageLoadThread).Active then
@@ -141,8 +156,8 @@ begin
     lblWait.Visible := false;
     fPackageTree.Visible := True;
     fPackageTree.FullExpand;
+    
     VerifyDependencies;
-      
     UpdateWizardState;
   end;
 end;
@@ -218,7 +233,6 @@ begin
     ImageIndex := 1;  
 end;
 
-
 procedure TShowPackageListPage.ByCollectingPackageInfo(
   node: PVirtualNode);
 var
@@ -268,8 +282,11 @@ var
 begin
   CellText := '';
   data := Sender.GetNodeData(Node);
+  
   case Column of
-    0: CellText := data.Name;
+    0: begin
+         CellText := data.Name;
+       end;
     1: if data.Info <> nil then
          CellText := data.Info.Description;
     2: if data.Info <> nil then
@@ -287,6 +304,13 @@ var
   data: PNodeData;  
 begin
   inherited;
+ 
+  if fPackageTree.FocusedNode = Node then
+  begin
+    TargetCanvas.Font.Color := clWhite;
+    exit;
+  end;
+
   data := Sender.GetNodeData(Node);
   if Column = 0 then
   begin
@@ -295,6 +319,30 @@ begin
      else
        TargetCanvas.Font.Color := clBlack;
   end;
+end;
+
+procedure TShowPackageListPage.miCollapseAllClick(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.FullCollapse;
+end;
+
+procedure TShowPackageListPage.miCollapseChildrenClick(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.FullCollapse(fPackageTree.FocusedNode);
+end;
+
+procedure TShowPackageListPage.miExpandAllClick(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.FullExpand;
+end;
+
+procedure TShowPackageListPage.miExpandChildrenClick(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.FullExpand(fPackageTree.FocusedNode);
 end;
 
 procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
@@ -446,7 +494,6 @@ var
   directory: string;
 begin
   if not fActive then exit;
-  
   directoryList := TStringList.Create;
   try
     BuildFileList(PathAddSeparator(folder) + '*.*', faDirectory, directoryList);
@@ -468,17 +515,26 @@ end;
 
 { TVirtualTreeHelper }
 
+procedure TVirtualTreeHelper.InternalTraverse(node: PVirtualNode; level: integer; handler: TProc<PVirtualNode>);
+begin
+  if node = nil then exit;
+  
+  handler(node);
+
+  if node.ChildCount > 0 then
+    InternalTraverse(node.FirstChild, level, handler);
+
+  if (node.NextSibling <> nil) and (node <> node.NextSibling) and (level < GetNodeLevel(node)) then
+    InternalTraverse(node.NextSibling, level, handler);
+end;
+
 procedure TVirtualTreeHelper.Traverse(node: PVirtualNode;
   handler: TProc<PVirtualNode>);
 begin
-  if node = nil then exit;
-  handler(node);
-  
-  if node.ChildCount > 0 then
-    Traverse(node.FirstChild, handler);
-
-  if (node.NextSibling <> nil) and (node <> node.NextSibling) then
-    Traverse(node.NextSibling, handler);
+  if node = RootNode then
+    InternalTraverse(node, -1, handler)
+  else
+    InternalTraverse(node, GetNodeLevel(node), handler);
 end;
 
 procedure TVirtualTreeHelper.Traverse(handler:TProc<PVirtualNode>);

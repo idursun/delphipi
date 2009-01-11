@@ -179,7 +179,7 @@ var
   S : String;
 begin
   S := Trim(line);
-  if Pos('Fatal:', S) > 0 then
+  if (Pos('Fatal:', S) > 0) or (Pos('Error', S) > 0) then
     WriteInfo(clRed, line)
 end;
 

@@ -30,6 +30,7 @@ type
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override; 
     procedure UpdateWizardState; override;
+    function CanShowPage: Boolean; override;
   end;
 
 var
@@ -63,6 +64,11 @@ begin
     edtBaseFolder.Text := directory;
     UpdateWizardState;
   end;
+end;
+
+function TSelectFoldersPage.CanShowPage: Boolean;
+begin
+  Result := not(fCompilationData.Scripting);
 end;
 
 constructor TSelectFoldersPage.Create(Owner: TComponent;

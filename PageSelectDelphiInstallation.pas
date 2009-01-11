@@ -105,8 +105,15 @@ begin
       lastSelectedIndex := i;
     end;
 
-  //TODO: Eliminate hidden behaviour, radio button click event handler affects  custom folder save and show process
-  ShowInstallationOutputFolders(lastSelectedIndex);
+  if (fCompilationData.Scripting) then
+  begin
+    edtBPL.Text := fCompilationData.BPLOutputFolder;
+    edtDCP.Text := fCompilationData.DCPOutputFolder;
+  end else begin
+    //TODO: Eliminate hidden behaviour, radio button click event handler affects  custom folder save and show process
+    ShowInstallationOutputFolders(lastSelectedIndex);
+  end;
+
   rgDelphiVersions.ItemIndex := lastSelectedIndex;
 end;
 
@@ -150,7 +157,8 @@ end;
 
 function TSelectDelphiInstallationPage.CanShowPage: Boolean;
 begin
-  Result := installations.Count > 1;
+   Result := True;
+  //Result := FCompilationData.Scripting;
 end;
 
 procedure TSelectDelphiInstallationPage.SaveInstallationOutputFolders(versionIndex: integer);
