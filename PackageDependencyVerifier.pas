@@ -67,16 +67,20 @@ end;
 
 procedure TPackageDependencyVerifier.AddDefaultPackageList;
 var
-  systemPath,searchPath, entry,versionSuffix: string;
+  systemPath, searchPath, entry,versionSuffix: string;
+  filePattern : string;
   packageName: string;
   internalList: TStringList;
 begin
    systemPath := GetEnvironmentVariable('WINDIR') + '\System32\';
    versionSuffix :=  GetVersionSuffix;
-   searchPath := systemPath + '*' + versionSuffix + '.bpl';
+   filePattern := '*' + versionSuffix + '.bpl';
+   searchPath := PathAppend(systemPath, filePattern);
    internalList := TStringList.Create;
    try
      BuildFileList(searchPath, faAnyFile, internalList);
+     BuildFileList(PathAppend(fCompilationData.Installation.LibFolderName, filePattern), faAnyFile, internalList);
+     BuildFileList(PathAppend(fCompilationData.Installation.BinFolderName, filePattern), faAnyFile, internalList);
      for entry in internalList   do
      begin
        packageName := PathExtractFileNameNoExt(entry);
