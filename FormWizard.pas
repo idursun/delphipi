@@ -46,7 +46,7 @@ var
   frmWizard: TfrmWizard;
 
 implementation
-uses FormAbout, PageBase, PageSelectFolders, PageSelectDelphiInstallation,
+uses FormAbout, PageBase, PageSelectFolders, PageCompilerOptions,
      PageProgress, PageShowPackageList, PageInstallHelpFiles, PageSummary,
      gnugettext;
 var
@@ -160,7 +160,7 @@ end;
 initialization
    SetLength(Pages,6);
    Pages[0] := TSelectFoldersPage;
-   Pages[1] := TSelectDelphiInstallationPage;
+   Pages[1] := TSelectCompilerOptions;
    Pages[2] := TShowPackageListPage;
    Pages[3] := TProgressPage;
    Pages[4] := TInstallHelpFilesPage;

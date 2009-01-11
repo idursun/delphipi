@@ -9,7 +9,6 @@ uses
   FormWizard in 'FormWizard.pas' {frmWizard},
   PageBase in 'PageBase.pas' {WizardPage},
   PageSelectFolders in 'PageSelectFolders.pas' {SelectFoldersPage},
-  PageSelectDelphiInstallation in 'PageSelectDelphiInstallation.pas' {SelectDelphiInstallationPage},
   PageProgress in 'PageProgress.pas' {ProgressPage},
   WizardIntfs in 'WizardIntfs.pas',
   PageShowPackageList in 'PageShowPackageList.pas' {ShowPackageListPage},
@@ -24,7 +23,8 @@ uses
   PackageList in 'PackageList.pas',
   PackageDependencyVerifier in 'PackageDependencyVerifier.pas',
   ProgressMonitor in 'ProgressMonitor.pas',
-  MonitoredPackageCompiler in 'MonitoredPackageCompiler.pas';
+  MonitoredPackageCompiler in 'MonitoredPackageCompiler.pas',
+  PageCompilerOptions in 'PageCompilerOptions.pas' {SelectCompilerOptions};
 
 {$R *.res}
 

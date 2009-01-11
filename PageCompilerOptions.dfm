@@ -1,5 +1,5 @@
-inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
-  Caption = 'SelectDelphiInstallationPage'
+inherited SelectCompilerOptions: TSelectCompilerOptions
+  Caption = 'SelectCompilerOptions'
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -61,7 +61,6 @@ inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
       Caption = '...'
       TabOrder = 1
       OnClick = btnFolderBrowseClick
-      ExplicitLeft = 436
     end
     object edtDCP: TEdit
       Left = 112
@@ -80,7 +79,6 @@ inherited SelectDelphiInstallationPage: TSelectDelphiInstallationPage
       Caption = '...'
       TabOrder = 3
       OnClick = btnFolderBrowseClick
-      ExplicitLeft = 436
     end
     object edtDCU: TEdit
       Left = 112

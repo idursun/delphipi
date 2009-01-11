@@ -3,16 +3,16 @@
  Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
  License : GNU General Public License 2.0
 **}
-unit PageSelectDelphiInstallation;
+unit PageCompilerOptions;
 
 interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs, JclBorlandTools;
+  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs;
 
 type
-  TSelectDelphiInstallationPage = class(TWizardPage)
+  TSelectCompilerOptions = class(TWizardPage)
     grpOutputFolders: TGroupBox;
     lblBPLOutputFolder: TLabel;
     edtBPL: TEdit;
@@ -29,7 +29,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnFolderBrowseClick(Sender: TObject);
   private
-   installations : TJclBorRADToolInstallations;
     procedure SaveInstallationOutputFolders;
     procedure ShowInstallationOutputFolders;
     procedure BrowseFolder(var folder: string);
@@ -40,39 +39,36 @@ type
   end;
 
 var
-  SelectDelphiInstallationPage: TSelectDelphiInstallationPage;
+  SelectCompilerOptions: TSelectCompilerOptions;
 
 implementation
 uses gnugettext, FileCtrl;
-  
-var
-  lastSelectedIndex : Integer;
 {$R *.dfm}
 
 { TSelectDelphiInstallationPage }
 
-constructor TSelectDelphiInstallationPage.Create(Owner: TComponent;
+constructor TSelectCompilerOptions.Create(Owner: TComponent;
   const compilationData: TCompilationData);
 begin
   inherited;
   FCompilationData := compilationData;
 end;
 
-procedure TSelectDelphiInstallationPage.FormClose(Sender: TObject;
+procedure TSelectCompilerOptions.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
   inherited;
   SaveInstallationOutputFolders;
 end;
 
-procedure TSelectDelphiInstallationPage.FormCreate(Sender: TObject);
+procedure TSelectCompilerOptions.FormCreate(Sender: TObject);
 begin
   inherited;
   TranslateComponent(self);
   ShowInstallationOutputFolders;
 end;
 
-procedure TSelectDelphiInstallationPage.BrowseFolder(var folder:string);
+procedure TSelectCompilerOptions.BrowseFolder(var folder:string);
 var
   directory: string;
 begin
@@ -82,7 +78,7 @@ begin
   end;
 end;
 
-procedure TSelectDelphiInstallationPage.btnFolderBrowseClick(Sender: TObject);
+procedure TSelectCompilerOptions.btnFolderBrowseClick(Sender: TObject);
 var
   path: string;
   editBox: TEdit;
@@ -94,13 +90,13 @@ begin
   editBox.Text := path;
 end;
 
-function TSelectDelphiInstallationPage.CanShowPage: Boolean;
+function TSelectCompilerOptions.CanShowPage: Boolean;
 begin
    Result := True;
   //Result := FCompilationData.Scripting;
 end;
 
-procedure TSelectDelphiInstallationPage.SaveInstallationOutputFolders;
+procedure TSelectCompilerOptions.SaveInstallationOutputFolders;
 begin
   Assert(Assigned(fCompilationData), 'Compilation data is null');
   fCompilationData.BPLOutputFolder := edtBPL.Text;
@@ -108,7 +104,7 @@ begin
   fCompilationData.DCUOutputFolder := edtDCU.Text;
 end;
 
-procedure TSelectDelphiInstallationPage.ShowInstallationOutputFolders;
+procedure TSelectCompilerOptions.ShowInstallationOutputFolders;
 begin
   Assert(Assigned(fCompilationData), 'Compilation data is null');
   edtBPL.Text:= fCompilationData.BPLOutputFolder;
@@ -116,11 +112,11 @@ begin
   edtDCU.Text:= fCompilationData.DCUOutputFolder;
 end;
 
-procedure TSelectDelphiInstallationPage.UpdateWizardState;
+procedure TSelectCompilerOptions.UpdateWizardState;
 begin
   inherited;
-  wizard.SetHeader(_('Select Delphi Installation'));
-  wizard.SetDescription(_('Please select delphi installation that you want to compile with'));
+  wizard.SetHeader(_('Select Output Folders and Compiler Conditionals'));
+  wizard.SetDescription(_('Please select output folders and compiler conditionals that will affect the compilation'));
 end;
 
 end.
