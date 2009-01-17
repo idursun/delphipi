@@ -47,7 +47,7 @@ begin
   if OutputLevel = colSilent then exit;
   if OutputLevel = TConsoleOutputLevel.colFull then
     WriteLn(line)
-  else if Pos('Fatal:', line) > 0 then
+  else if (Pos('Fatal:', line) > 0)  or (Pos('Error', line) > 0) then
     WriteLine(fclRed,line);
 end;
 

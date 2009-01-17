@@ -205,6 +205,7 @@ procedure TScriptPersister.SetPackageList(compilationData: TCompilationData);
 var
   line : string;
   folder : string;
+  filePath : string;
 begin
    { Changed: Ronald Siekman - 24 12 2008 }
    folder := IncludeTrailingPathDelimiter(compilationData.BaseFolder);
@@ -212,19 +213,15 @@ begin
    while HasNextLine do
    begin
      line := ReadNextLine;
+     filePath := PathAppend(folder, line);
      if IsSectionHeader(line) then begin
        Dec(fCurrentLine);
        break;
      end;
 
-     if (ExtractFilePath(line) = '' ) then
+     if FileExists( filePath ) then
      begin
-       line := folder+line;
-     end;
-
-     if FileExists( line ) then
-     begin
-       compilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(line));
+       compilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(filePath));
      end;
    end;
 end;
@@ -249,6 +246,9 @@ begin
 
       WriteHeader(Header_DCPOutputFolder);
         WriteDetail(compilationData.DCPOutputFolder);
+
+      WriteHeader(Header_DCUOutputFolder);
+        WriteDetail(compilationData.DCUOutputFolder);        
 
       WriteHeader(Header_Packages);
       for i := 0 to compilationData.PackageList.Count-1 do
