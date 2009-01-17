@@ -2,18 +2,24 @@ inherited ProgressPage: TProgressPage
   Caption = 'ProgressPage'
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
-    Left = 8
-    Top = 8
-    Width = 484
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 494
     Height = 68
-    Anchors = [akLeft, akTop, akRight]
+    Align = alTop
     Caption = 'Overall Progress'
     TabOrder = 0
+    ExplicitLeft = 8
+    ExplicitTop = 8
+    ExplicitWidth = 484
     DesignSize = (
-      484
+      494
       68)
     object Label1: TLabel
       Left = 12
@@ -36,24 +42,26 @@ inherited ProgressPage: TProgressPage
       ParentFont = False
     end
     object lblCurrentPackageNo: TLabel
-      Left = 401
+      Left = 411
       Top = 18
       Width = 15
       Height = 13
       Alignment = taRightJustify
       Anchors = [akTop, akRight, akBottom]
       Caption = '     '
+      ExplicitLeft = 401
     end
     object ProgressBar: TProgressBar
       Left = 12
       Top = 37
-      Width = 404
+      Width = 414
       Height = 20
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
+      ExplicitWidth = 404
     end
     object btnCancel: TButton
-      Left = 422
+      Left = 432
       Top = 37
       Width = 59
       Height = 20
@@ -61,14 +69,16 @@ inherited ProgressPage: TProgressPage
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = btnCancelClick
+      ExplicitLeft = 422
     end
   end
   object memo: TRichEdit
-    Left = 8
-    Top = 82
-    Width = 484
-    Height = 143
-    Anchors = [akLeft, akTop, akRight, akBottom]
+    AlignWithMargins = True
+    Left = 3
+    Top = 77
+    Width = 494
+    Height = 147
+    Align = alClient
     Font.Charset = TURKISH_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -77,15 +87,23 @@ inherited ProgressPage: TProgressPage
     ParentFont = False
     ScrollBars = ssBoth
     TabOrder = 1
+    ExplicitLeft = 8
+    ExplicitTop = 82
+    ExplicitWidth = 484
+    ExplicitHeight = 143
   end
   object chkShowFullLog: TCheckBox
-    Left = 8
-    Top = 231
-    Width = 188
+    AlignWithMargins = True
+    Left = 3
+    Top = 230
+    Width = 494
     Height = 17
-    Anchors = [akLeft, akBottom]
+    Align = alBottom
     Caption = 'Show Full Log'
     TabOrder = 2
     OnClick = chkShowFullLogClick
+    ExplicitLeft = 8
+    ExplicitTop = 231
+    ExplicitWidth = 188
   end
 end

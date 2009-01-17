@@ -3,8 +3,8 @@ unit Utils;
 interface
 uses classes, JclBorlandTools,Windows;
 const
-  VERSION = '0.44';
-  CODE = 'Katarina';
+  VERSION = '0.50';
+  CODE = 'Josephine';
   AUTHOR = 'Ýbrahim DURSUN';
 implementation
 
