@@ -130,6 +130,7 @@ begin
   fExtraOptions := fExtraOptions + ' -U'+shortPaths+'';
   fExtraOptions := fExtraOptions + ' -O'+shortPaths+'';
   fExtraOptions := fExtraOptions + ' -R'+shortPaths+'';
+  fExtraOptions := fExtraOptions + ' -N'+fCompilationData.DCUOutputFolder+'';
 end;
 
 function TPackageCompiler.ConvertToShortPaths(const paths : TStringList):string;

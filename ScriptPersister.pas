@@ -36,6 +36,7 @@ type
      const Header_DelphiVersion = 'delphi-version';
      const Header_BPLOutputFolder = 'bpl-output-folder';
      const Header_DCPOutputFolder = 'dcp-output-folder';
+     const Header_DCUOutputFolder = 'dcu-output-folder';
      const Header_Packages = 'packages';
      { Added: Ronald Siekman - 24 12 2008 }
      const Header_Library_Search_Paths = 'library-search-paths';
@@ -111,6 +112,8 @@ begin
           Result.BPLOutputFolder := ReadNextLine;
         if header = Header_DCPOutputFolder then
           Result.DCPOutputFolder := ReadNextLine;
+        if header = Header_DCUOutputFolder then
+          Result.DCUOutputFolder := ReadNextLine;
         if header = Header_Library_Search_Paths then
           SetLibrarySearchPath(Result);
         if header = Header_Packages then
