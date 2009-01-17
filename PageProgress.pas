@@ -86,6 +86,7 @@ begin
 
   with wizard.GetButton(wbtBack) do
     Enabled := not compileThreadWorking;
+  btnCancel.Enabled := compileThreadWorking;
   chkShowFullLog.Enabled := not compileThreadWorking;    
 end;
 

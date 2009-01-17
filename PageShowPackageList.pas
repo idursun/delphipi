@@ -181,6 +181,7 @@ end;
 procedure TShowPackageListPage.UpdateWizardState;
 var
   button: TButton;
+  selectedPackageCount : integer;
 begin
   inherited;
   wizard.SetHeader(_('Select Packages'));
@@ -191,6 +192,11 @@ begin
   begin
     button := wizard.GetButton(wbtNext);
     button.Caption := _('Compile');
+    selectedPackageCount := 0;
+    fPackageTree.Traverse(procedure (node: PVirtualNode) begin
+        if node.CheckState = csCheckedNormal then inc(selectedPackageCount);
+    end);    
+    button.Enabled := selectedPackageCount > 0;
   end;
 end;
 
@@ -211,6 +217,7 @@ procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree;
 begin
   ChangeState(Node, Node.CheckState);
   fPackageTree.InvalidateChildren(Node,true);
+  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.packageTreeGetNodeDataSize(
@@ -325,6 +332,7 @@ procedure TShowPackageListPage.miCollapseAllClick(Sender: TObject);
 begin
   inherited;
   fPackageTree.FullCollapse;
+
 end;
 
 procedure TShowPackageListPage.miCollapseChildrenClick(Sender: TObject);
@@ -351,6 +359,7 @@ begin
      node.CheckState := csCheckedNormal;
   end);
   fPackageTree.Invalidate;
+  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.miSelectMatchingClick(Sender: TObject);
@@ -374,6 +383,7 @@ begin
     end);
     fPackageTree.Invalidate;
   end;
+  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.miUnselectAllClick(Sender: TObject);
@@ -382,6 +392,7 @@ begin
     node.CheckState := csUncheckedNormal;
   end);
   fPackageTree.Invalidate;
+  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.miUnselectMatchingClick(Sender: TObject);
@@ -405,6 +416,7 @@ begin
     end);
     fPackageTree.Invalidate;
   end;
+  UpdateWizardState;
 end;
 
 { TPackageLoadThread }

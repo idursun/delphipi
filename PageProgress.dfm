@@ -15,9 +15,6 @@ inherited ProgressPage: TProgressPage
     Align = alTop
     Caption = 'Overall Progress'
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 484
     DesignSize = (
       494
       68)
@@ -58,7 +55,6 @@ inherited ProgressPage: TProgressPage
       Height = 20
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
-      ExplicitWidth = 404
     end
     object btnCancel: TButton
       Left = 432
@@ -69,7 +65,6 @@ inherited ProgressPage: TProgressPage
       Caption = 'Cancel'
       TabOrder = 1
       OnClick = btnCancelClick
-      ExplicitLeft = 422
     end
   end
   object memo: TRichEdit
@@ -87,10 +82,6 @@ inherited ProgressPage: TProgressPage
     ParentFont = False
     ScrollBars = ssBoth
     TabOrder = 1
-    ExplicitLeft = 8
-    ExplicitTop = 82
-    ExplicitWidth = 484
-    ExplicitHeight = 143
   end
   object chkShowFullLog: TCheckBox
     AlignWithMargins = True
@@ -102,8 +93,5 @@ inherited ProgressPage: TProgressPage
     Caption = 'Show Full Log'
     TabOrder = 2
     OnClick = chkShowFullLogClick
-    ExplicitLeft = 8
-    ExplicitTop = 231
-    ExplicitWidth = 188
   end
 end
