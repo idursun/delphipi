@@ -3,7 +3,7 @@ object frmAbout: TfrmAbout
   Top = 0
   BorderStyle = bsDialog
   Caption = 'About DelphiPI'
-  ClientHeight = 211
+  ClientHeight = 249
   ClientWidth = 325
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,33 +16,18 @@ object frmAbout: TfrmAbout
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Bevel1: TBevel
-    Left = 8
-    Top = 161
-    Width = 309
-    Height = 9
-    Shape = bsTopLine
-  end
-  object btnClose: TButton
-    Left = 247
-    Top = 175
-    Width = 70
-    Height = 28
-    Cancel = True
-    Caption = 'Close'
-    TabOrder = 0
-    OnClick = btnCloseClick
-  end
-  object GroupBox2: TGroupBox
-    Left = 8
-    Top = 8
-    Width = 309
-    Height = 147
+  object grpInformation: TGroupBox
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 319
+    Height = 134
+    Align = alTop
     Caption = 'Information'
-    TabOrder = 1
+    TabOrder = 0
     object Label7: TLabel
       Left = 52
-      Top = 23
+      Top = 20
       Width = 232
       Height = 23
       Caption = 'Delphi Package Installer'
@@ -611,7 +596,7 @@ object frmAbout: TfrmAbout
     end
     object lblVersion: TLabel
       Left = 101
-      Top = 61
+      Top = 53
       Width = 182
       Height = 16
       Caption = 'Utils.Version Utils.CodeName'
@@ -624,28 +609,28 @@ object frmAbout: TfrmAbout
     end
     object Label9: TLabel
       Left = 11
-      Top = 64
+      Top = 56
       Width = 39
       Height = 13
       Caption = 'Version:'
     end
     object Label10: TLabel
       Left = 11
-      Top = 83
+      Top = 75
       Width = 80
       Height = 13
       Caption = 'Project Website:'
     end
     object Label11: TLabel
       Left = 11
-      Top = 102
+      Top = 94
       Width = 73
       Height = 13
       Caption = 'Author'#39's name:'
     end
     object lblAuthorsWebsite: TLabel
       Left = 101
-      Top = 121
+      Top = 113
       Width = 118
       Height = 13
       Cursor = crHandPoint
@@ -660,7 +645,7 @@ object frmAbout: TfrmAbout
     end
     object lblProjectWebsite: TLabel
       Left = 101
-      Top = 83
+      Top = 75
       Width = 150
       Height = 13
       Cursor = crHandPoint
@@ -675,26 +660,92 @@ object frmAbout: TfrmAbout
     end
     object Label2: TLabel
       Left = 11
-      Top = 121
+      Top = 113
       Width = 84
       Height = 13
       Caption = 'Author'#39's website:'
     end
     object lblAuthor: TLabel
       Left = 101
-      Top = 102
+      Top = 94
       Width = 57
       Height = 13
       Caption = 'Utils.Author'
     end
   end
-  object btnDonate: TButton
-    Left = 8
-    Top = 175
-    Width = 120
-    Height = 28
-    Caption = 'Donate to DelphiPI'
+  object pnlBottom: TPanel
+    AlignWithMargins = True
+    Left = 3
+    Top = 207
+    Width = 319
+    Height = 42
+    Margins.Bottom = 0
+    Align = alBottom
+    BevelEdges = [beTop]
+    BevelOuter = bvNone
+    BorderWidth = 1
+    TabOrder = 1
+    object Bevel1: TBevel
+      AlignWithMargins = True
+      Left = 1
+      Top = 1
+      Width = 317
+      Height = 2
+      Margins.Left = 0
+      Margins.Top = 0
+      Margins.Right = 0
+      Align = alTop
+      Shape = bsTopLine
+    end
+    object btnDonate: TButton
+      AlignWithMargins = True
+      Left = 4
+      Top = 9
+      Width = 70
+      Height = 29
+      Align = alLeft
+      Caption = 'Donate'
+      TabOrder = 0
+      OnClick = btnDonateClick
+    end
+    object btnClose: TButton
+      AlignWithMargins = True
+      Left = 245
+      Top = 9
+      Width = 70
+      Height = 29
+      Align = alRight
+      Cancel = True
+      Caption = 'Close'
+      TabOrder = 1
+      OnClick = btnCloseClick
+      ExplicitLeft = 239
+      ExplicitHeight = 28
+    end
+  end
+  object grpContributors: TGroupBox
+    AlignWithMargins = True
+    Left = 3
+    Top = 143
+    Width = 319
+    Height = 58
+    Align = alTop
+    Caption = 'Thanks to contributors'
     TabOrder = 2
-    OnClick = btnDonateClick
+    ExplicitTop = 151
+    object Label3: TLabel
+      Left = 12
+      Top = 19
+      Width = 188
+      Height = 13
+      Caption = 'Caleb Hattingh for UI Resizability patch'
+    end
+    object Label4: TLabel
+      Left = 12
+      Top = 38
+      Width = 208
+      Height = 13
+      Caption = 'Ronald Siekman for scripting enhancements'
+    end
   end
 end
