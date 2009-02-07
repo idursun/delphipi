@@ -8,7 +8,7 @@ unit PageCompilerOptions;
 interface
 
 uses
-  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Classes, CompilationData, Windows, Messages, SysUtils, Variants, Graphics, Controls, Forms,
   Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs;
 
 type
@@ -27,11 +27,14 @@ type
     Edit1: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure btnFolderBrowseClick(Sender: TObject);
+    procedure btnBPLBrowseClick(Sender: TObject);
+    procedure btnDCPBrowseClick(Sender: TObject);
+    procedure btnDCUBrowseClick(Sender: TObject);
   private
     procedure SaveInstallationOutputFolders;
     procedure ShowInstallationOutputFolders;
     procedure BrowseFolder(var folder: string);
+    function SelectFolder(const editBox: TEdit): string;
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override; 
     procedure UpdateWizardState; override;
@@ -78,16 +81,33 @@ begin
   end;
 end;
 
-procedure TSelectCompilerOptions.btnFolderBrowseClick(Sender: TObject);
+function TSelectCompilerOptions.SelectFolder(const editBox: TEdit):string;
 var
   path: string;
-  editBox: TEdit;
 begin
   inherited;
-  editBox := TEdit(sender);
+  Assert(Assigned(editBox));
   path := editBox.Text;
   BrowseFolder(path);
   editBox.Text := path;
+end;
+
+procedure TSelectCompilerOptions.btnBPLBrowseClick(Sender: TObject);
+begin
+  inherited;
+  SelectFolder(edtBPL);
+end;
+
+procedure TSelectCompilerOptions.btnDCPBrowseClick(Sender: TObject);
+begin
+  inherited;
+  SelectFolder(edtDCP);
+end;
+
+procedure TSelectCompilerOptions.btnDCUBrowseClick(Sender: TObject);
+begin
+  inherited;
+  SelectFolder(edtDCU);
 end;
 
 function TSelectCompilerOptions.CanShowPage: Boolean;

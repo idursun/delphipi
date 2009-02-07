@@ -60,7 +60,7 @@ inherited SelectCompilerOptions: TSelectCompilerOptions
       Anchors = [akTop, akRight]
       Caption = '...'
       TabOrder = 1
-      OnClick = btnFolderBrowseClick
+      OnClick = btnBPLBrowseClick
     end
     object edtDCP: TEdit
       Left = 112
@@ -78,7 +78,7 @@ inherited SelectCompilerOptions: TSelectCompilerOptions
       Anchors = [akTop, akRight]
       Caption = '...'
       TabOrder = 3
-      OnClick = btnFolderBrowseClick
+      OnClick = btnDCPBrowseClick
     end
     object edtDCU: TEdit
       Left = 112
@@ -96,7 +96,7 @@ inherited SelectCompilerOptions: TSelectCompilerOptions
       Anchors = [akTop, akRight]
       Caption = '...'
       TabOrder = 5
-      OnClick = btnFolderBrowseClick
+      OnClick = btnDCUBrowseClick
     end
     object Edit1: TEdit
       Left = 112
