@@ -113,6 +113,7 @@ type
   private
     procedure InternalTraverse(node: PVirtualNode; level: integer;
       handler: TProc<PVirtualNode>);
+    procedure TraverseWithData(handler: TProc<PVirtualNode, PNodeData>);
   public
     procedure Traverse(node: PVirtualNode; handler: TProc<PVirtualNode>); overload;
     procedure Traverse(handler: TProc<PVirtualNode>); overload;
@@ -398,16 +399,10 @@ begin
   if InputQuery(_('Select Matching...'),_('File Mask'),value) then
   begin
     fSelectMask := value;
-    fPackageTree.Traverse(procedure (node:PVirtualNode)
-    var
-      data: PNodeData;
+    fPackageTree.TraverseWithData(procedure (node:PVirtualNode;data: PNodeData)
     begin
-        data := fPackageTree.GetNodeData(node);
-        if (data <> nil) and (data.Info <> nil) then
-        begin
-          if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
-          node.CheckState := csCheckedNormal;
-        end;
+      if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
+        node.CheckState := csCheckedNormal;
     end);
     fPackageTree.Invalidate;
   end;
@@ -431,16 +426,10 @@ begin
   if InputQuery(_('UnSelect Matching...'),_('File Mask'),value) then
   begin
     fSelectMask := value;
-    fPackageTree.Traverse(procedure (node:PVirtualNode)
-    var
-      data: PNodeData;
+    fPackageTree.TraverseWithData(procedure (node:PVirtualNode; data: PNodeData)
     begin
-      data := fPackageTree.GetNodeData(node);
-      if (data <> nil) and (data.Info <> nil) then
-      begin
-        if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
+      if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
         node.CheckState := csUncheckedNormal;
-      end;
     end);
     fPackageTree.Invalidate;
   end;
@@ -576,6 +565,20 @@ begin
   else
     InternalTraverse(node, GetNodeLevel(node), handler);
 end;
+
+
+procedure TVirtualTreeHelper.TraverseWithData(handler: TProc<PVirtualNode, PNodeData>);
+begin
+  InternalTraverse(Self.RootNode, -1, procedure (node: PVirtualNode) 
+  var
+    data: PNodeData;
+  begin
+    data := Self.GetNodeData(node);
+    if (data <> nil) and (data.Info <> nil) then
+      handler(node, data);
+  end);
+end;
+
 
 procedure TVirtualTreeHelper.Traverse(handler:TProc<PVirtualNode>);
 begin
