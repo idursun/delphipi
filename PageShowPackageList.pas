@@ -9,7 +9,8 @@ interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
-  Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier;
+  Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier,
+  ActnList;
 
 type
 
@@ -30,6 +31,10 @@ type
     miCollapseAll: TMenuItem;
     miExpandChildren: TMenuItem;
     miExpandAll: TMenuItem;
+    ActionList: TActionList;
+    actRemove: TAction;
+    Remove1: TMenuItem;
+    N3: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -54,6 +59,9 @@ type
     procedure miCollapseChildrenClick(Sender: TObject);
     procedure miExpandChildrenClick(Sender: TObject);
     procedure miExpandAllClick(Sender: TObject);
+    procedure fPackageTreeKeyAction(Sender: TBaseVirtualTree;
+      var CharCode: Word; var Shift: TShiftState; var DoDefault: Boolean);
+    procedure actRemoveExecute(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -240,6 +248,16 @@ begin
     ImageIndex := 1;  
 end;
 
+procedure TShowPackageListPage.actRemoveExecute(Sender: TObject);
+begin
+  inherited;
+  if fPackageTree.FocusedNode <> nil then
+  begin
+    fPackageTree.DeleteNode(fPackageTree.FocusedNode);
+    VerifyDependencies;
+  end;
+end;
+
 procedure TShowPackageListPage.ByCollectingPackageInfo(
   node: PVirtualNode);
 var
@@ -302,6 +320,16 @@ begin
          else
            CellText := _('design');
   end;
+end;
+
+procedure TShowPackageListPage.fPackageTreeKeyAction(Sender: TBaseVirtualTree;
+  var CharCode: Word; var Shift: TShiftState; var DoDefault: Boolean);
+begin
+  inherited;
+   if CharCode = VK_DELETE then
+   begin
+     actRemove.Execute;
+   end;
 end;
 
 procedure TShowPackageListPage.fPackageTreePaintText(Sender: TBaseVirtualTree;

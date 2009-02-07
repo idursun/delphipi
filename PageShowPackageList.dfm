@@ -2,6 +2,8 @@ inherited ShowPackageListPage: TShowPackageListPage
   Caption = 'ShowPackageListPage'
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitWidth = 500
+  ExplicitHeight = 250
   PixelsPerInch = 96
   TextHeight = 13
   object lblWait: TLabel
@@ -46,13 +48,14 @@ inherited ShowPackageListPage: TShowPackageListPage
     TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSpanColumns, toAutoTristateTracking, toAutoDeleteMovedNodes]
     TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
     TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect, toRightClickSelect]
-    TreeOptions.StringOptions = [toSaveCaptions, toShowStaticText]
+    TreeOptions.StringOptions = [toSaveCaptions]
     OnChecked = packageTreeChecked
     OnGetText = fPackageTreeGetText
     OnPaintText = fPackageTreePaintText
     OnGetImageIndex = packageTreeGetImageIndex
     OnGetHint = fPackageTreeGetHint
     OnGetNodeDataSize = packageTreeGetNodeDataSize
+    OnKeyAction = fPackageTreeKeyAction
     Columns = <
       item
         Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
@@ -92,6 +95,12 @@ inherited ShowPackageListPage: TShowPackageListPage
     object miUnselectMatching: TMenuItem
       Caption = 'Unselect Matching...'
       OnClick = miUnselectMatchingClick
+    end
+    object N3: TMenuItem
+      Caption = '-'
+    end
+    object Remove1: TMenuItem
+      Action = actRemove
     end
     object N2: TMenuItem
       Caption = '-'
@@ -260,5 +269,14 @@ inherited ShowPackageListPage: TShowPackageListPage
       8001000000000000800100000000000080010000000000008001000000000000
       8001000000000000800380010000000080FFE00300000000FFFFF00F00000000
       FFFFFC3F00000000FFFFFFFF00000000}
+  end
+  object ActionList: TActionList
+    Left = 376
+    Top = 8
+    object actRemove: TAction
+      Caption = 'Remove'
+      ShortCut = 46
+      OnExecute = actRemoveExecute
+    end
   end
 end
