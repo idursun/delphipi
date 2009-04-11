@@ -24,7 +24,8 @@ uses
   PackageDependencyVerifier in 'PackageDependencyVerifier.pas',
   ProgressMonitor in 'ProgressMonitor.pas',
   MonitoredPackageCompiler in 'MonitoredPackageCompiler.pas',
-  PageCompilerOptions in 'PageCompilerOptions.pas' {SelectCompilerOptions};
+  PageCompilerOptions in 'PageCompilerOptions.pas' {SelectCompilerOptions},
+  VirtualTreeHelper in 'VirtualTreeHelper.pas';
 
 {$R *.res}
 

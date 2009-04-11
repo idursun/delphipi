@@ -94,6 +94,7 @@
 			<DCCReference Include="PageCompilerOptions.pas">
 				<Form>SelectCompilerOptions</Form>
 			</DCCReference>
+			<DCCReference Include="VirtualTreeHelper.pas"/>
 			<None Include="DelphiPI.todo"/>
 			<None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
 			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>
@@ -190,7 +191,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">50</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">153</VersionInfo>
+						<VersionInfo Name="Build">158</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -202,7 +203,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.50.0.153</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.50.0.158</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">Josephine</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright"/>
 						<VersionInfoKeys Name="LegalTrademarks"/>
