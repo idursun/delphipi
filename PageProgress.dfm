@@ -1,9 +1,13 @@
 inherited ProgressPage: TProgressPage
+  Left = 299
+  Top = 280
   Caption = 'ProgressPage'
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitWidth = 500
-  ExplicitHeight = 250
+  ExplicitLeft = 299
+  ExplicitTop = 280
+  ExplicitWidth = 516
+  ExplicitHeight = 286
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox

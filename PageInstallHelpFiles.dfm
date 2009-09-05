@@ -1,6 +1,12 @@
 inherited InstallHelpFilesPage: TInstallHelpFilesPage
+  Left = 202
+  Top = 166
   Caption = 'InstallHelpFilesPage'
   OnCreate = FormCreate
+  ExplicitLeft = 202
+  ExplicitTop = 166
+  ExplicitWidth = 516
+  ExplicitHeight = 286
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel

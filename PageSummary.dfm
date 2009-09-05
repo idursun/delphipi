@@ -1,6 +1,12 @@
 inherited SummaryPage: TSummaryPage
+  Left = 328
+  Top = 271
   Caption = 'SummaryPage'
   OnCreate = FormCreate
+  ExplicitLeft = 328
+  ExplicitTop = 271
+  ExplicitWidth = 516
+  ExplicitHeight = 286
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel

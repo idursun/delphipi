@@ -30,8 +30,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure cbDelphiVersionsChange(Sender: TObject);
   private
-    procedure AddDelphiInstallation(
-      const installation: TJclBorRADToolInstallation);
+    FPatternsFileName: string;
+    procedure AddDelphiInstallation(const installation: TJclBorRADToolInstallation);
   public
     constructor Create(Owner: TComponent; const compilationData: TCompilationData); override; 
     procedure UpdateWizardState; override;
@@ -42,7 +42,7 @@ var
   SelectFoldersPage: TSelectFoldersPage;
 
 implementation
-uses FileCtrl, gnugettext, FormWizard;
+uses FileCtrl, gnugettext, FormWizard, JclSysInfo, JclFileUtils;
 {$R *.dfm}
 var
   installations : TJclBorRADToolInstallations;
@@ -51,16 +51,25 @@ var
 procedure TSelectFoldersPage.FormCreate(Sender: TObject);
 var 
  i: integer;
+ dataFolder: string;
 begin
   inherited;
   TranslateComponent(self);
   installations := TJclBorRADToolInstallations.Create;
 
+ dataFolder := PathAppend(PathAddSeparator(GetAppdataFolder), 'DelphiPI');
+  if not DirectoryExists(dataFolder) then
+    CreateDir(dataFolder);
+
+  FPatternsFileName := PathAppend(PathAddSeparator(dataFolder), 'patterns.txt');
+
+
   edtBaseFolder.Text := FCompilationData.BaseFolder;
   cbPattern.Text := FCompilationData.Pattern;
 
-  if (FileExists('patterns.txt')) then
-    cbPattern.Items.LoadFromFile('patterns.txt');
+  if (FileExists(FPatternsFileName)) then
+    cbPattern.Items.LoadFromFile(FPatternsFileName);
+
   if installations <> nil then
     installations := TJclBorRADToolInstallations.Create;
 
@@ -81,7 +90,10 @@ begin
   FCompilationData.BaseFolder := edtBaseFolder.Text;
   FCompilationData.Pattern := cbPattern.Text;
   fCompilationData.PackageList.Clear;
-  cbPattern.Items.SaveToFile('patterns.txt');
+
+  if FileExists(FPatternsFileName) then
+     JclFileUtils.CreateEmptyFile(FPatternsFileName);
+  cbPattern.Items.SaveToFile(FPatternsFileName);
 end;
 
 

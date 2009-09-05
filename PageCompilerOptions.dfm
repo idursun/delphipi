@@ -1,7 +1,13 @@
 inherited SelectCompilerOptions: TSelectCompilerOptions
+  Left = 290
+  Top = 283
   Caption = 'SelectCompilerOptions'
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitLeft = 290
+  ExplicitTop = 283
+  ExplicitWidth = 516
+  ExplicitHeight = 286
   PixelsPerInch = 96
   TextHeight = 13
   object grpOutputFolders: TGroupBox

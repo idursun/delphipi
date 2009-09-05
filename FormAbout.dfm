@@ -1,6 +1,6 @@
 object frmAbout: TfrmAbout
-  Left = 0
-  Top = 0
+  Left = 654
+  Top = 317
   BorderStyle = bsDialog
   Caption = 'About DelphiPI'
   ClientHeight = 249
@@ -719,8 +719,6 @@ object frmAbout: TfrmAbout
       Caption = 'Close'
       TabOrder = 1
       OnClick = btnCloseClick
-      ExplicitLeft = 239
-      ExplicitHeight = 28
     end
   end
   object grpContributors: TGroupBox
@@ -732,7 +730,6 @@ object frmAbout: TfrmAbout
     Align = alTop
     Caption = 'Thanks to contributors'
     TabOrder = 2
-    ExplicitTop = 151
     object Label3: TLabel
       Left = 12
       Top = 19

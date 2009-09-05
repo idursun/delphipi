@@ -14,9 +14,6 @@ inherited SelectFoldersPage: TSelectFoldersPage
     Align = alTop
     Caption = 'Pattern to select package files '
     TabOrder = 2
-    ExplicitLeft = 8
-    ExplicitTop = 79
-    ExplicitWidth = 484
     DesignSize = (
       494
       79)
@@ -30,14 +27,13 @@ inherited SelectFoldersPage: TSelectFoldersPage
     object Label2: TLabel
       Left = 36
       Top = 16
-      Width = 418
+      Width = 408
       Height = 26
       Anchors = [akLeft, akTop, akRight]
       Caption = 
         'Specify a pattern that matches for the package files that are su' +
         'itable for your delphi installation. ie: *d7.dpk for Delphi 7'
       WordWrap = True
-      ExplicitWidth = 408
     end
     object imgInfo: TImage
       Left = 12
@@ -80,10 +76,8 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Width = 368
       Height = 21
       Anchors = [akLeft, akTop, akRight]
-      ItemHeight = 13
       TabOrder = 0
       Text = '*.dpk'
-      ExplicitWidth = 358
     end
   end
   object grpBaseFolder: TGroupBox
@@ -95,9 +89,6 @@ inherited SelectFoldersPage: TSelectFoldersPage
     Align = alTop
     Caption = 'Select Base Folder contains both Package and Source files'
     TabOrder = 0
-    ExplicitLeft = 8
-    ExplicitTop = 8
-    ExplicitWidth = 484
     DesignSize = (
       494
       65)
@@ -118,7 +109,6 @@ inherited SelectFoldersPage: TSelectFoldersPage
       TabOrder = 0
       WordWrap = True
       OnClick = btnSelectFolderClick
-      ExplicitLeft = 442
     end
     object edtBaseFolder: TEdit
       Left = 12
@@ -128,7 +118,6 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
       OnChange = edtBaseFolderChange
-      ExplicitWidth = 424
     end
   end
   object grpDelphiVersion: TGroupBox
@@ -140,8 +129,6 @@ inherited SelectFoldersPage: TSelectFoldersPage
     Align = alTop
     Caption = 'Installed Delphi Versions'
     TabOrder = 1
-    ExplicitLeft = 6
-    ExplicitTop = 11
     DesignSize = (
       494
       54)
@@ -152,7 +139,6 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Height = 21
       Style = csDropDownList
       Anchors = [akLeft, akTop, akRight]
-      ItemHeight = 13
       TabOrder = 0
       OnChange = cbDelphiVersionsChange
     end

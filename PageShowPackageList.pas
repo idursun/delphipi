@@ -111,6 +111,11 @@ constructor TShowPackageListPage.Create(Owner: TComponent;
 begin
   inherited;
   fCompilationData := compilationData;
+
+  if not DirectoryExists(fCompilationData.BaseFolder) then
+    exit;
+
+
   fDependencyVerifier := TPackageDependencyVerifier.Create(fCompilationData);
   fDependencyVerifier.Initialize;
 
@@ -459,6 +464,7 @@ procedure TPackageLoadThread.Execute;
 begin
   inherited;
   fActive := true;
+
   fTree.BeginUpdate;
   try
     try

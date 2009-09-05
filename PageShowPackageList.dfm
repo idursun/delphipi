@@ -1,14 +1,22 @@
 inherited ShowPackageListPage: TShowPackageListPage
+  Left = 289
+  Top = 301
   Caption = 'ShowPackageListPage'
+  ClientHeight = 313
+  ClientWidth = 568
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitLeft = 289
+  ExplicitTop = 301
+  ExplicitWidth = 584
+  ExplicitHeight = 349
   PixelsPerInch = 96
   TextHeight = 13
   object lblWait: TLabel
     Left = 8
     Top = 8
-    Width = 484
-    Height = 234
+    Width = 552
+    Height = 297
     Alignment = taCenter
     Anchors = [akLeft, akTop, akRight, akBottom]
     AutoSize = False
@@ -23,14 +31,17 @@ inherited ShowPackageListPage: TShowPackageListPage
     ParentFont = False
     Transparent = False
     Layout = tlCenter
+    ExplicitWidth = 484
+    ExplicitHeight = 234
   end
   object fPackageTree: TVirtualStringTree
     Left = 8
     Top = 8
-    Width = 484
-    Height = 234
+    Width = 552
+    Height = 297
     Anchors = [akLeft, akTop, akRight, akBottom]
     Header.AutoSizeIndex = 0
+    Header.DefaultHeight = 17
     Header.Font.Charset = DEFAULT_CHARSET
     Header.Font.Color = clWindowText
     Header.Font.Height = -11
@@ -54,11 +65,13 @@ inherited ShowPackageListPage: TShowPackageListPage
     OnGetHint = fPackageTreeGetHint
     OnGetNodeDataSize = packageTreeGetNodeDataSize
     OnKeyAction = fPackageTreeKeyAction
+    ExplicitWidth = 484
+    ExplicitHeight = 234
     Columns = <
       item
         Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
         Position = 0
-        Width = 220
+        Width = 288
         WideText = 'Package'
       end
       item
@@ -130,7 +143,7 @@ inherited ShowPackageListPage: TShowPackageListPage
     Left = 326
     Top = 4
     Bitmap = {
-      494C010102000400040010001000FFFFFFFFFF00FFFFFFFFFFFFFFFF424D3600
+      494C010102000400040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -266,7 +279,8 @@ inherited ShowPackageListPage: TShowPackageListPage
       E003F00F000000008001C0030000000080018001000000008001000000000000
       8001000000000000800100000000000080010000000000008001000000000000
       8001000000000000800380010000000080FFE00300000000FFFFF00F00000000
-      FFFFFC3F00000000FFFFFFFF00000000}
+      FFFFFC3F00000000FFFFFFFF0000000000000000000000000000000000000000
+      000000000000}
   end
   object ActionList: TActionList
     Left = 376
