@@ -13,22 +13,21 @@ type
   private
     fCompilationData: TCompilationData;
     fMonitor: TConsoleProgressMonitor;
-    fParameters: TStringList;
     fOutputLevel: TConsoleOutputLevel;
+    fScriptFile: String;
     procedure DisplayHelp;
   protected
     procedure DisplayHeader; virtual;
     procedure ParseArguments;virtual;
   public
-    constructor Create;
     procedure Run;
-    destructor Destroy; override;
     property OutputLevel: TConsoleOutputLevel read fOutputLevel;
   end;
-  
+
 implementation
 
-uses SysUtils,  gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler, Utils, JclConsole;
+uses SysUtils,  gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler,
+     Utils, JclConsole, StrUtils;
 
 procedure WriteLine(color: TJclScreenFontColor; text: string);
 begin
@@ -36,10 +35,6 @@ begin
 end;
 
 { TConsoleRunner }
-constructor TConsoleRunner.Create;
-begin
-  fParameters := TStringList.Create;
-end;
 
 //TODO Refactor this
 procedure TConsoleRunner.Run;
@@ -48,28 +43,19 @@ var
   packageCompiler: TMonitoredPackageCompiler;
 begin
   DisplayHeader;
-  ParseArguments;
-  if fParameters.Count = 0 then
-  begin
-    DisplayHelp;
-    exit;
+  try
+    ParseArguments;
+  except
+    on ex : Exception do begin
+       WriteLine(fclRed, ex.Message);
+       DisplayHelp;
+       exit;
+    end;
   end;
 
-  if not FileExists(fParameters[0]) then
-  begin
-     WriteLine(fclRed, 'File does not exist: ' + fParameters[0]);
-     DisplayHelp;
-     exit;
-  end;
-
-  if fParameters.Count > 1 then
-  begin
-     fOutputLevel := TConsoleOutputLevel(StrToInt(fParameters[1]));
-  end;
-  
   scripter := TScriptPersister.Create;
   try
-    fCompilationData := scripter.Load(fParameters[0]);
+    fCompilationData := scripter.Load(fScriptFile);
     fMonitor := TConsoleProgressMonitor.Create;
     fMonitor.OutputLevel := Self.OutputLevel;
   finally
@@ -83,12 +69,6 @@ begin
   finally
     packageCompiler.Free;
   end;
-end;
-
-destructor TConsoleRunner.Destroy;
-begin
-  fParameters.Free;
-  inherited;
 end;
 
 procedure TConsoleRunner.DisplayHeader;
@@ -112,11 +92,39 @@ end;
 procedure TConsoleRunner.ParseArguments;
 var
   i:integer;
+  param: string;
 begin
-  fParameters.Clear;
   fOutputLevel := TConsoleOutputLevel.colBrief;
-  for I := 1 to ParamCount do
-    fParameters.Add(ParamStr(i));
+
+  if ParamCount = 0 then
+    raise Exception.Create('Requires Script File.');
+
+  fScriptFile := ParamStr(1);
+
+  if not FileExists(fScriptFile) then
+     raise Exception.Create('File does not exist: ' + fScriptFile);
+
+  i := 2;
+
+  while i < ParamCount do
+  begin
+    param := UpperCase(ParamStr(i));
+    // Logging level
+//    if param = '-L' then
+//    begin
+//       i := i+1;
+//       param :=  UpperCase(ParamStr(i));
+       if (param = '0') or (param = 'SILENT') then
+          fOutputLevel := TConsoleOutputLevel.colSilent
+       else if (param='1') or (param = 'BRIEF') then
+          fOutputLevel := TConsoleOutputLevel.colBrief
+       else if (param='2') or (param = 'FULL') then
+          fOutputLevel := TConsoleOutputLevel.colFull
+       else
+         raise Exception.Create(param + ' is not a valid value for OutputLogLevel');
+    end;
+//
+//  end;
 end;
 
 end.
