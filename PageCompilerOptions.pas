@@ -76,7 +76,8 @@ var
   directory: string;
 begin
   directory := '';
-  if SelectDirectory(_('Select output folder'),'',directory) then begin
+  if SelectDirectory(_('Select output folder'),'',directory) then
+  begin
      folder := directory;
   end;
 end;

@@ -16,7 +16,7 @@ type
   published
     procedure When_a_required_package_is_missing_then_packages_depending_on_it_should_be_set_as_missing;
     procedure When_a_package_cannot_be_compiled_then_packages_depending_on_it_should_be_marked_as_missing;
-    procedure When_a_package_is_removed__then_next_verfication_should_only_check_custom_packages;
+    procedure When_a_package_is_removed_then_next_verfication_should_only_check_custom_packages;
   end;
 
 implementation
@@ -77,7 +77,7 @@ begin
   end;
 end;
 
-procedure TestTPackageDependencyVerifier.When_a_package_is_removed__then_next_verfication_should_only_check_custom_packages;
+procedure TestTPackageDependencyVerifier.When_a_package_is_removed_then_next_verfication_should_only_check_custom_packages;
 begin
   fCompilationData := TFakeCompilationData.Create;
   with fCompilationData as TFakeCompilationData do 

@@ -1,13 +1,13 @@
 inherited ShowPackageListPage: TShowPackageListPage
-  Left = 289
-  Top = 301
+  Left = 441
+  Top = 310
   Caption = 'ShowPackageListPage'
   ClientHeight = 313
   ClientWidth = 568
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitLeft = 289
-  ExplicitTop = 301
+  ExplicitLeft = 441
+  ExplicitTop = 310
   ExplicitWidth = 584
   ExplicitHeight = 349
   PixelsPerInch = 96
@@ -51,7 +51,7 @@ inherited ShowPackageListPage: TShowPackageListPage
     HintMode = hmHint
     Images = ImageList
     ParentShowHint = False
-    PopupMenu = SelectPopupMenu
+    PopupMenu = pmSelectPopupMenu
     ShowHint = True
     TabOrder = 0
     TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSpanColumns, toAutoTristateTracking, toAutoDeleteMovedNodes]
@@ -65,8 +65,6 @@ inherited ShowPackageListPage: TShowPackageListPage
     OnGetHint = fPackageTreeGetHint
     OnGetNodeDataSize = packageTreeGetNodeDataSize
     OnKeyAction = fPackageTreeKeyAction
-    ExplicitWidth = 484
-    ExplicitHeight = 234
     Columns = <
       item
         Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
@@ -85,7 +83,7 @@ inherited ShowPackageListPage: TShowPackageListPage
         WideText = 'Type'
       end>
   end
-  object SelectPopupMenu: TPopupMenu
+  object pmSelectPopupMenu: TPopupMenu
     Left = 292
     Top = 5
     object miSelectAll: TMenuItem

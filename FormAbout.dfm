@@ -685,6 +685,8 @@ object frmAbout: TfrmAbout
     BevelOuter = bvNone
     BorderWidth = 1
     TabOrder = 1
+    ExplicitLeft = -2
+    ExplicitTop = 202
     object Bevel1: TBevel
       AlignWithMargins = True
       Left = 1
