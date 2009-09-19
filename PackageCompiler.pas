@@ -138,7 +138,8 @@ var
   path : string;
 begin
   Result := '';
-  for path in paths do begin
+  for path in paths do
+  begin
     Result := Result + StrDoubleQuote(PathGetShortName(StrTrimQuotes(path))) + ';';
   end;
 end;
@@ -173,7 +174,8 @@ begin
   SourceFilePaths.Sorted := true;
   SourceFilePaths.Duplicates := dupIgnore;
      
-  for i := 0 to PackageList.Count - 1 do begin
+  for i := 0 to PackageList.Count - 1 do
+  begin
     SourceFilePaths.Add(ExtractFileDir(PackageList[i].FileName));
     for j := 0 to PackageList[i].ContainedFileList.Count - 1 do
       containedFiles.Add(ExtractFileName(PackageList[i].ContainedFileList[j]));
@@ -187,11 +189,12 @@ begin
            '', nil);
            
   
-  for I := 0 to files.count - 1 do begin
+  for I := 0 to files.count - 1 do
+  begin
     if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
-      begin
-        SourceFilePaths.Add(ExtractFileDir(files[i]));
-      end;
+    begin
+      SourceFilePaths.Add(ExtractFileDir(files[i]));
+    end;
   end;
 end;
 

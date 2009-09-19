@@ -73,7 +73,8 @@ begin
   RequiresBlock := False;
   ContainsBlock := False;
   packageInfo.RunOnly := False;
-  for I := 0 to lines.Count - 1 do begin
+  for I := 0 to lines.Count - 1 do
+  begin
     Str := TrimRight(lines[i]);
     if Pos(StrRUNONLY+'}',str) = 1 then
       packageInfo.RunOnly := True;
@@ -90,7 +91,8 @@ begin
       packageInfo.PackageName := Trim(Copy(Str,Length(strPackage)+2,Length(Str)- Length(strPackage) -2));
 
     if Pos(StrRequires,str) = 1 then RequiresBlock := True;
-    if RequiresBlock then begin
+    if RequiresBlock then
+    begin
       if not StartsStr('{$', Str) then
         packageInfo.RequiredPackageList.Add(ClearStr(Str));
     end;

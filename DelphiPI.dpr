@@ -5,7 +5,6 @@ uses
   PackageInfo in 'PackageInfo.pas',
   FormAbout in 'FormAbout.pas' {frmAbout},
   PackageCompiler in 'PackageCompiler.pas',
-  CompileInfo in 'CompileInfo.pas',
   FormWizard in 'FormWizard.pas' {frmWizard},
   PageBase in 'PageBase.pas' {WizardPage},
   PageSelectFolders in 'PageSelectFolders.pas' {SelectFoldersPage},

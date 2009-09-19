@@ -182,7 +182,11 @@ begin
     button := wizard.GetButton(wbtNext);
     button.Caption := _('Compile');
     selectedPackageCount := 0;
-    fPackageTree.Traverse( procedure(Node: PVirtualNode)begin if Node.checkState = csCheckedNormal then inc(selectedPackageCount); end);
+    fPackageTree.Traverse(procedure(Node: PVirtualNode)
+    begin
+      if Node.checkState = csCheckedNormal then
+        inc(selectedPackageCount);
+    end);
     button.Enabled := selectedPackageCount > 0;
   end;
 end;

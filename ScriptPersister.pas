@@ -234,7 +234,8 @@ begin
   if compilationData = nil then exit;
   script := TScriptWriter.Create;
   try
-    with compilationData, script do begin
+    with compilationData, script do
+    begin
       WriteHeader(Header_BaseFolder);
         WriteDetail(compilationData.BaseFolder);
 
@@ -256,7 +257,8 @@ begin
         if PathIsChild(compilationData.PackageList[i].FileName, compilationData.BaseFolder) then
         begin
           WriteDetail(PathGetRelativePath(compilationData.BaseFolder,compilationData.PackageList[i].FileName));
-        end else begin
+        end else
+        begin
           WriteDetail(compilationData.PackageList[i].FileName);
         end;
       end;

@@ -61,7 +61,8 @@ var
   I: Integer;
 begin
   Result := -1;
-  for I := 0 to count - 1 do begin
+  for I := 0 to count - 1 do
+  begin
     if UpperCase(Get(i).PackageName) = UpperCase(PackageName) then 
       exit(i);
   end;
@@ -88,7 +89,8 @@ var
   changed : boolean;
 begin
   changed := true;
-  while changed do begin
+  while changed do
+  begin
     changed := false;
     for i := 0 to Count - 1 do
     begin
