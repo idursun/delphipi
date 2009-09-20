@@ -54,6 +54,7 @@ constructor TSelectCompilerOptions.Create(Owner: TComponent;
   const compilationData: TCompilationData);
 begin
   inherited;
+  TranslateComponent(self);
   FCompilationData := compilationData;
 end;
 
