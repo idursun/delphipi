@@ -19,6 +19,7 @@ type
     fBPLOutputFolder: string;
     fDCUOutputFolder: string;
     FScripting: Boolean;
+    fConditionals: string;
 
     procedure SetPackageList(const aPackageList: TPackageList);
     procedure SetInstallation(const Value: TJclBorRADToolInstallation);
@@ -39,6 +40,7 @@ type
     property DCPOutputFolder: string read fDCPOutputFolder write fDCPOutputFolder;
     property BPLOutputFolder: string read fBPLOutputFolder write fBPLOutputFolder;
     property DCUOutputFolder: string read fDCUOutputFolder write fDCUOutputFolder;
+    property Conditionals: string read fConditionals write fConditionals;
 
     property Scripting: Boolean read fScripting write fScripting;
   end;
@@ -89,7 +91,8 @@ var
   i : integer;
 begin
   Result := false;
-  for i := 0 to installations.Count - 1 do begin
+  for i := 0 to installations.Count - 1 do
+  begin
     installation := installations.Installations[i];
     if UpperCase(Trim(installation.VersionNumberStr)) = UpperCase(Trim(version)) then
     begin

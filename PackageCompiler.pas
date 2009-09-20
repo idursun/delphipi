@@ -137,6 +137,8 @@ begin
   fExtraOptions := fExtraOptions + ' -O'+shortPaths+'';
   fExtraOptions := fExtraOptions + ' -R'+shortPaths+'';
   fExtraOptions := fExtraOptions + ' -N'+fCompilationData.DCUOutputFolder+'';
+  if Length(fCompilationData.Conditionals) > 0 then
+    fExtraOptions := fExtraOptions + ' -D'+fCompilationData.Conditionals;
 end;
 
 function TPackageCompiler.ConvertToShortPaths(const paths : TStringList):string;

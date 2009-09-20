@@ -104,7 +104,7 @@ inherited SelectCompilerOptions: TSelectCompilerOptions
       TabOrder = 5
       OnClick = btnDCUBrowseClick
     end
-    object Edit1: TEdit
+    object edtConditionals: TEdit
       Left = 112
       Top = 107
       Width = 362

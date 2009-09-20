@@ -24,7 +24,7 @@ type
     edtDCU: TEdit;
     btnDCUBrowse: TButton;
     Label1: TLabel;
-    Edit1: TEdit;
+    edtConditionals: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnBPLBrowseClick(Sender: TObject);
@@ -124,6 +124,7 @@ begin
   fCompilationData.BPLOutputFolder := edtBPL.Text;
   fCompilationData.DCPOutputFolder := edtDCP.Text;
   fCompilationData.DCUOutputFolder := edtDCU.Text;
+  fCompilationData.Conditionals := edtConditionals.Text;
 end;
 
 procedure TSelectCompilerOptions.ShowInstallationOutputFolders;
@@ -132,6 +133,7 @@ begin
   edtBPL.Text:= fCompilationData.BPLOutputFolder;
   edtDCP.Text:= fCompilationData.DCPOutputFolder;
   edtDCU.Text:= fCompilationData.DCUOutputFolder;
+  edtConditionals.Text := fCompilationData.Conditionals;
 end;
 
 procedure TSelectCompilerOptions.UpdateWizardState;
