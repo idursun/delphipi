@@ -9,7 +9,7 @@ interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs, pngimage, JclBorlandTools;
+  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs, JclBorlandTools;
 
 type
   TSelectFoldersPage = class(TWizardPage)
@@ -21,7 +21,6 @@ type
     btnSelectFolder: TButton;
     edtBaseFolder: TEdit;
     Label2: TLabel;
-    imgInfo: TImage;
     grpDelphiVersion: TGroupBox;
     cbDelphiVersions: TComboBox;
     procedure btnSelectFolderClick(Sender: TObject);

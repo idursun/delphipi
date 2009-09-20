@@ -1,15 +1,21 @@
-inherited ShowPackageListPage: TShowPackageListPage
+object ShowPackageListPage: TShowPackageListPage
   Left = 441
   Top = 310
   Caption = 'ShowPackageListPage'
   ClientHeight = 313
   ClientWidth = 568
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = True
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitLeft = 441
-  ExplicitTop = 310
-  ExplicitWidth = 584
-  ExplicitHeight = 349
+  DesignSize = (
+    568
+    313)
   PixelsPerInch = 96
   TextHeight = 13
   object lblWait: TLabel
@@ -56,7 +62,7 @@ inherited ShowPackageListPage: TShowPackageListPage
     TabOrder = 0
     TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSpanColumns, toAutoTristateTracking, toAutoDeleteMovedNodes]
     TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
-    TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect, toRightClickSelect]
+    TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect, toMultiSelect]
     TreeOptions.StringOptions = [toSaveCaptions]
     OnChecked = packageTreeChecked
     OnGetText = fPackageTreeGetText
@@ -287,6 +293,7 @@ inherited ShowPackageListPage: TShowPackageListPage
       Caption = 'Remove'
       ShortCut = 46
       OnExecute = actRemoveExecute
+      OnUpdate = actRemoveUpdate
     end
   end
 end

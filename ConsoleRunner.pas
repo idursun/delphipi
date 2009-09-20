@@ -62,8 +62,7 @@ begin
     scripter.Free;
   end;
   
-  packageCompiler := TMonitoredPackageCompiler.Create(fCompilationData);
-  packageCompiler.Monitor := fMonitor;
+  packageCompiler := TMonitoredPackageCompiler.Create(fCompilationData, fMonitor);
   try
     packageCompiler.Compile;
   finally

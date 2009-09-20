@@ -42,7 +42,7 @@ inherited SummaryPage: TSummaryPage
     Left = 8
     Top = 28
     Width = 484
-    Height = 169
+    Height = 214
     Anchors = [akLeft, akTop, akRight, akBottom]
     ReadOnly = True
     ScrollBars = ssBoth

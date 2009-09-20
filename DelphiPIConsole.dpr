@@ -5,7 +5,6 @@ program DelphiPIConsole;
 uses
   SysUtils,
   CompilationData in 'CompilationData.pas',
-  CompileInfo in 'CompileInfo.pas',
   CompileThread in 'CompileThread.pas',
   ConsoleRunner in 'ConsoleRunner.pas',
   MonitoredPackageCompiler in 'MonitoredPackageCompiler.pas',

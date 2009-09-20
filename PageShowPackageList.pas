@@ -56,6 +56,7 @@ type
     procedure miExpandAllClick(Sender: TObject);
     procedure fPackageTreeKeyAction(Sender: TBaseVirtualTree; var CharCode: Word; var Shift: TShiftState; var DoDefault: Boolean);
     procedure actRemoveExecute(Sender: TObject);
+    procedure actRemoveUpdate(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -232,11 +233,17 @@ end;
 procedure TShowPackageListPage.actRemoveExecute(Sender: TObject);
 begin
   inherited;
-  if fPackageTree.FocusedNode <> nil then
+  if fPackageTree.SelectedCount > 0 then
   begin
-    fPackageTree.DeleteNode(fPackageTree.FocusedNode);
+    fPackageTree.DeleteSelectedNodes;
     VerifyDependencies;
   end;
+end;
+
+procedure TShowPackageListPage.actRemoveUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := fPackageTree.SelectedCount > 0;
 end;
 
 procedure TShowPackageListPage.ByCollectingPackageInfo(Node: PVirtualNode);

@@ -44,7 +44,6 @@
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="CompilationData.pas"/>
-			<DCCReference Include="CompileInfo.pas"/>
 			<DCCReference Include="CompileThread.pas"/>
 			<DCCReference Include="ConsoleRunner.pas"/>
 			<DCCReference Include="MonitoredPackageCompiler.pas"/>
