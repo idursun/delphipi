@@ -8,7 +8,6 @@ interface
 uses  Classes, StrUtils;
 
 type
-
   TPackageStatus = (psNone, psCompiling, psInstalling, psSuccess, psError);
   TPackageInfo = class
   private
@@ -36,12 +35,9 @@ type
     property Status: TPackageStatus read fStatus write fStatus;
   end;
 
-
-
 implementation
 uses  SysUtils, contnrs, JclStrings;
 
-  
 constructor TPackageInfo.Create;
 begin
   fRequiredPackageList := TStringList.Create;

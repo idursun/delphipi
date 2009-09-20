@@ -42,8 +42,7 @@ end;
 procedure TCompileThread.Execute;
 begin
   inherited;
-  fCompiler := TMonitoredPackageCompiler.Create(fCompilationData);
-  fCompiler.Monitor := Self;
+  fCompiler := TMonitoredPackageCompiler.Create(fCompilationData, Self);
   try
     fCompiler.Compile;
   finally
@@ -53,21 +52,24 @@ end;
 
 procedure TCompileThread.Log(const text: string);
 begin
-  Synchronize(procedure begin
+  Synchronize(procedure
+  begin
     Monitor.Log(text);
   end);
 end; 
  
 procedure TCompileThread.CompilerOutput(const line: string);
 begin
-  Synchronize(procedure begin
+  Synchronize(procedure
+  begin
     Monitor.CompilerOutput(line);
   end);
 end;
 
 procedure TCompileThread.Finished;
 begin
-  Synchronize(procedure begin
+  Synchronize(procedure
+  begin
     Monitor.Finished;
   end);
 end;
@@ -75,14 +77,16 @@ end;
 procedure TCompileThread.PackageProcessed(const packageInfo: TPackageInfo;
   status: TPackageStatus);
 begin
-  Synchronize(procedure begin
+  Synchronize(procedure
+  begin
     Monitor.PackageProcessed(packageInfo, status);
   end);
 end;
 
 procedure TCompileThread.Started;
 begin
-  Synchronize(procedure begin
+  Synchronize(procedure
+  begin
     Monitor.Started;
   end);
 end;

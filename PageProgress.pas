@@ -149,7 +149,6 @@ end;
 
 procedure TProgressPage.Log(const text: string);
 begin
-
   fFullLog.Add(text);
 end;
 
@@ -181,7 +180,7 @@ var
 begin
   S := Trim(line);
   if (Pos('Fatal:', S) > 0) or (Pos('Error', S) > 0) then
-    WriteInfo(clRed, line)
+    WriteInfo(clRed, line);
 end;
 
 procedure TProgressPage.Finished;

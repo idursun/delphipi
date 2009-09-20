@@ -9,17 +9,18 @@ interface
 uses JclBorlandTools, PackageInfo, PackageList, SysUtils, Classes, CompilationData, ProgressMonitor;
 
 type
-   
+
    TPackageCompiler = class
    private
      fCompilationData: TCompilationData;
      fCancel: boolean;
      fSourceFilePaths: TStringList;
      fExtraOptions: String;
+    fAllPaths: TStringList;
 
      function ConvertToShortPaths(const paths : TStringList): string;
-    function GetInstallation: TJclBorRADToolInstallation;
-    function GetPackageList: TPackageList;
+     function GetInstallation: TJclBorRADToolInstallation;
+     function GetPackageList: TPackageList;
    protected
      procedure PrepareExtraOptions; virtual;
      procedure ResolveHelpFiles(const compilationData: TCompilationData);
@@ -31,7 +32,7 @@ type
    public
      constructor Create(const compilationData: TCompilationData); virtual;
      destructor Destroy; override;
-     
+
      procedure Compile; virtual;
      function CompilePackage(const packageInfo : TPackageInfo): Boolean; virtual;
      function InstallPackage(const packageInfo : TPackageInfo): Boolean; virtual;
@@ -39,6 +40,7 @@ type
      //Properties
      property Cancel: boolean read fCancel write fCancel;
      property SourceFilePaths: TStringList read fSourceFilePaths write fSourceFilePaths;
+     property AllPaths: TStringList read fAllPaths;
      property ExtraOptions: string read fExtraOptions;
    end;
 
@@ -51,12 +53,14 @@ constructor TPackageCompiler.Create(const compilationData: TCompilationData);
 begin
   fCompilationData := compilationData;
   fSourceFilePaths := TStringList.Create;
+  fAllPaths := TStringList.Create;
+  fAllPaths.Delimiter := ';';
 end;
 
 destructor TPackageCompiler.Destroy;
 begin
   fSourceFilePaths.Free;
-  
+  fAllPaths.Free;
   inherited;
 end;
 
@@ -113,18 +117,20 @@ end;
 
 procedure TPackageCompiler.PrepareExtraOptions;
 var
-  shortPaths : string;
-  pathList : TStringList;
+  shortPaths, path: string;
+  I: Integer;
 begin
-  pathList := TStringList.Create;
-  try
-    ExtractStrings([';'],[' '],PWideChar(Installation.LibrarySearchPath),pathList);
-    pathList.Add(Installation.BPLOutputPath);
-    shortPaths := ConvertToShortPaths(pathList);
-  finally
-    pathList.Free;
-  end;
+  fAllPaths.Clear;
+  ExtractStrings([';'],[' '],PWideChar(Installation.LibrarySearchPath),fAllPaths);
+  fAllPaths.Add(Installation.BPLOutputPath);
 
+  for path in SourceFilePaths do
+    fAllPaths.Add(path);
+
+  for I := 0 to fAllPaths.Count - 1 do
+    fAllPaths[i] := Installation.SubstitutePath(StrTrimQuotes(fAllPaths[i]));
+
+  shortPaths := ConvertToShortPaths(fAllPaths);
   fExtraOptions := '-B -Q -CC';
   fExtraOptions := fExtraOptions + ' -I'+shortPaths+'';
   fExtraOptions := fExtraOptions + ' -U'+shortPaths+'';
@@ -139,9 +145,7 @@ var
 begin
   Result := '';
   for path in paths do
-  begin
-    Result := Result + StrDoubleQuote(PathGetShortName(StrTrimQuotes(path))) + ';';
-  end;
+    Result := Result + StrDoubleQuote(PathGetShortName(path)) + ';';
 end;
 
 function TPackageCompiler.InstallPackage(
