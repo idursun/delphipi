@@ -7,23 +7,18 @@ unit PackageDependencyVerifier;
 
 interface
 
-uses Classes, PackageList, PackageInfo, CompilationData;
+uses Classes, PackageList, PackageInfo, CompilationData, InstalledPackageResolver;
 
 type
 
   TPackageDependencyVerifier = class
   private
-    fExistentPackageList: TStringList;
     fCompilationData: TCompilationData;
     fMissingPackages: TStringList;
+    fInstalledPackageResolver: TInstalledPackageResolver;
     function GetMissingPackage(key: string): String;
-  protected
-    function GetVersionSuffix: string; virtual;
-    function RemoveVersionSuffix(const name, suffix: string): string; virtual;
-    procedure AddDefaultPackageList; virtual;
-    procedure AddIDEPackageList; virtual;
   public
-    constructor Create(const CompilationData: TCompilationData);
+    constructor Create(const CompilationData: TCompilationData; const installedPackageResolver: TInstalledPackageResolver);
     destructor Destroy; override;
 
     procedure Initialize; virtual;
@@ -32,21 +27,21 @@ type
     property MissingPackages[key: string]: String read GetMissingPackage;
   end;
 
+
 implementation
 
 uses SysUtils, JclFileUtils, gnugettext;
 
 { TPackageDependencyVerifier }
-constructor TPackageDependencyVerifier.Create(const CompilationData: TCompilationData);
+constructor TPackageDependencyVerifier.Create(const CompilationData: TCompilationData; const installedPackageResolver: TInstalledPackageResolver);
 begin
   fCompilationData := CompilationData;
-  fExistentPackageList := TStringList.Create;
-  fMissingPackages := TStringList.Create();
+  fMissingPackages := TStringList.Create;
+  fInstalledPackageResolver := TInstalledPackageResolver.Create;
 end;
 
 destructor TPackageDependencyVerifier.Destroy;
 begin
-  fExistentPackageList.Free;
   fMissingPackages.Free;
   inherited;
 end;
@@ -54,73 +49,6 @@ end;
 function TPackageDependencyVerifier.GetMissingPackage(key: string): String;
 begin
   Result := fMissingPackages.Values[key];
-end;
-
-function TPackageDependencyVerifier.GetVersionSuffix: string;
-begin
-  Result := fCompilationData.GetIdeVersionSuffix;
-  Result := Copy(Result, 2, Length(Result) - 1) + '0';
-end;
-
-function TPackageDependencyVerifier.RemoveVersionSuffix(const name, suffix: string): string;
-begin
-  Result := name;
-  Delete(Result, Length(Result) - Length(suffix) + 1, Length(suffix))
-end;
-
-procedure TPackageDependencyVerifier.AddDefaultPackageList;
-var
-  systemPath, searchPath, entry, versionSuffix: string;
-  filePattern: string;
-  packageName: string;
-  internalList: TStringList;
-begin
-
-  Assert(fCompilationData <> nil, 'Compilation Data cannot be null');
-  Assert(fCompilationData.Installation <> nil, 'Installation cannot be null');
-
-  systemPath := GetEnvironmentVariable('WINDIR') + '\System32\';
-  versionSuffix := GetVersionSuffix;
-  filePattern := '*' + versionSuffix + '.bpl';
-  searchPath := PathAppend(systemPath, filePattern);
-  internalList := TStringList.Create;
-  try
-    BuildFileList(searchPath, faAnyFile, internalList);
-    BuildFileList(PathAppend(fCompilationData.Installation.LibFolderName, filePattern), faAnyFile, internalList);
-    BuildFileList(PathAppend(fCompilationData.Installation.BinFolderName, filePattern), faAnyFile, internalList);
-    for entry in internalList do
-    begin
-      packageName := PathExtractFileNameNoExt(entry);
-      packageName := UpperCase(packageName);
-      packageName := RemoveVersionSuffix(packageName, versionSuffix);
-      fExistentPackageList.Add(packageName);
-    end;
-  finally
-    internalList.Free;
-  end;
-  fExistentPackageList.Add('DESIGNIDE');
-end;
-
-procedure TPackageDependencyVerifier.AddIDEPackageList;
-var
-  i: integer;
-  idePackageName: string;
-  list: TStringList;
-begin
-  Assert(fCompilationData <> nil, 'Compilation Data cannot be null');
-  Assert(fCompilationData.Installation <> nil, 'Installation cannot be null');
-
-  list := TStringList.Create;
-  try
-    fCompilationData.GetIdePackages(list);
-    for i := 0 to list.Count - 1 do
-    begin
-      idePackageName := PathExtractFileNameNoExt(list[i]);
-      fExistentPackageList.Add(UpperCase(idePackageName));
-    end;
-  finally
-    list.Free;
-  end;
 end;
 
 procedure TPackageDependencyVerifier.Verify;
@@ -132,7 +60,7 @@ var
 begin
   fMissingPackages.Clear;
   allPackages := TStringList.Create;
-  allPackages.AddStrings(fExistentPackageList);
+  allPackages.AddStrings(fInstalledPackageResolver.ExistentPackages);
   try
 
     for I := 0 to fCompilationData.PackageList.Count - 1 do
@@ -160,9 +88,11 @@ end;
 
 procedure TPackageDependencyVerifier.Initialize;
 begin
-  fExistentPackageList.Clear;
-  AddDefaultPackageList;
-  AddIDEPackageList;
+  Assert(fInstalledPackageResolver <> nil, 'resolver cannot be null');
+  fInstalledPackageResolver.Clear;
+  fInstalledPackageResolver.AddDefaultPackageList;
+  fInstalledPackageResolver.AddIDEPackageList(fCompilationData);
 end;
+
 
 end.

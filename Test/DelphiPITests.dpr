@@ -26,7 +26,8 @@ uses
   TestPackageDependencyVerifier in 'TestPackageDependencyVerifier.pas',
   PackageDependencyVerifier in '..\PackageDependencyVerifier.pas',
   CompilationData in '..\CompilationData.pas',
-  gnugettext in '..\libs\gnugettext.pas';
+  gnugettext in '..\libs\gnugettext.pas',
+  InstalledPackageResolver in '..\InstalledPackageResolver.pas';
 
 {$R *.RES}
 

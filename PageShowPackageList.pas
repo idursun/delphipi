@@ -10,7 +10,7 @@ interface
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
   Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier,
-  ActnList;
+  ActnList, InstalledPackageResolver;
 
 type
 
@@ -61,6 +61,7 @@ type
     packageLoadThread: TThread;
     fSelectMask: string;
     fDependencyVerifier: TPackageDependencyVerifier;
+    fInstalledPackageResolver: TInstalledPackageResolver;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(Node: PVirtualNode; checkState: TCheckState);
 
@@ -108,7 +109,9 @@ begin
   if not DirectoryExists(fCompilationData.BaseFolder) then
     exit;
 
-  fDependencyVerifier := TPackageDependencyVerifier.Create(fCompilationData);
+  fInstalledPackageResolver := TInstalledPackageResolver.Create(CompilationData);
+
+  fDependencyVerifier := TPackageDependencyVerifier.Create(fCompilationData,fInstalledPackageResolver);
   fDependencyVerifier.Initialize;
 
   packageLoadThread := TPackageLoadThread.Create(fCompilationData, fPackageTree);
@@ -135,6 +138,8 @@ begin
   fCompilationData.PackageList.Clear;
   fPackageTree.Traverse(fPackageTree.RootNode, ByCollectingPackageInfo);
   fCompilationData.PackageList.Pack;
+  FreeAndNil(fDependencyVerifier);
+  FreeAndNil(fInstalledPackageResolver);
 end;
 
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);

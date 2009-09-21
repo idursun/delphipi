@@ -11,8 +11,6 @@ type
   strict private
     SUT: TPackageDependencyVerifier;
     fCompilationData: TCompilationData;
-  private
-  protected
   published
     procedure When_a_required_package_is_missing_then_packages_depending_on_it_should_be_set_as_missing;
     procedure When_a_package_cannot_be_compiled_then_packages_depending_on_it_should_be_marked_as_missing;
@@ -20,7 +18,7 @@ type
   end;
 
 implementation
-uses Generics.Collections;
+uses Generics.Collections, InstalledPackageResolver;
 type
   TStringArr = array of string;
   
@@ -33,47 +31,55 @@ type
     destructor Destroy; override;
     function GetIdeVersionSuffix: string; override;
   end;
-
+  
 procedure TestTPackageDependencyVerifier.When_a_required_package_is_missing_then_packages_depending_on_it_should_be_set_as_missing;
 begin
   fCompilationData := TFakeCompilationData.Create;
-  with fCompilationData as TFakeCompilationData do 
   try
-    CreatePackage('package1','an ide package');
-    CreatePackage('package2','package1');
-    CreatePackage('package3','missing package');
+    with fCompilationData as TFakeCompilationData do
+    begin
+      CreatePackage('package1','an ide package');
+      CreatePackage('package2','package1');
+      CreatePackage('package3','missing package');
+    end;
     
-    Sut := TPackageDependencyVerifier.Create(fCompilationData);
-    Sut.Initialize;
-    Sut.Verify;
+    Sut := TPackageDependencyVerifier.Create(fCompilationData, TInstalledPackageResolver.Create);
+    try    
+      Sut.Initialize;
+      Sut.Verify;
     
-    CheckEqualsString('',Sut.MissingPackages['package1']);
-    CheckEqualsString('',Sut.MissingPackages['package2']);
-    CheckEqualsString('missing package',Sut.MissingPackages['package3']);  
-
-    Sut.Free;
+      CheckEqualsString('',Sut.MissingPackages['package1']);
+      CheckEqualsString('',Sut.MissingPackages['package2']);
+      CheckEqualsString('missing package',Sut.MissingPackages['package3']);  
+    finally      
+      SUT.Free;
+    end;          
   finally
-     Free;
+     fCompilationData.Free;
   end;
 end;
 
 procedure TestTPackageDependencyVerifier.When_a_package_cannot_be_compiled_then_packages_depending_on_it_should_be_marked_as_missing;
 begin
   fCompilationData := TFakeCompilationData.Create;
-  with fCompilationData as TFakeCompilationData do 
   try
-    CreatePackage('package1','an ide package,missing ide package');
-    CreatePackage('package2','package1');
+    with fCompilationData as TFakeCompilationData do 
+    begin    
+      CreatePackage('package1','an ide package,missing ide package');
+      CreatePackage('package2','package1');
+    end;      
     
-    Sut := TPackageDependencyVerifier.Create(fCompilationData);
-    Sut.Verify;
+    Sut := TPackageDependencyVerifier.Create(fCompilationData, TInstalledPackageResolver.Create);
+    try    
+      Sut.Verify;
     
-    CheckEqualsString('missing ide package',Sut.MissingPackages['package1']);
-    CheckEqualsString('package1 requires missing ide package',Sut.MissingPackages['package2']);
-
-    Sut.Free;
+      CheckEqualsString('missing ide package',Sut.MissingPackages['package1']);
+      CheckEqualsString('package1 requires missing ide package',Sut.MissingPackages['package2']);
+    finally      
+      Sut.Free;
+    end;          
   finally
-     Free;
+     fCompilationData.Free;
   end;
 end;
 
@@ -86,7 +92,7 @@ begin
     CreatePackage('package2','package1');
     CreatePackage('package3','package2');
     
-    Sut := TPackageDependencyVerifier.Create(fCompilationData);
+    Sut := TPackageDependencyVerifier.Create(fCompilationData, TInstalledPackageResolver.Create);
     Sut.Initialize;
     Sut.Verify;
 

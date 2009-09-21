@@ -54,6 +54,7 @@
 			<DCCReference Include="..\PackageDependencyVerifier.pas"/>
 			<DCCReference Include="..\CompilationData.pas"/>
 			<DCCReference Include="..\libs\gnugettext.pas"/>
+			<DCCReference Include="..\InstalledPackageResolver.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
