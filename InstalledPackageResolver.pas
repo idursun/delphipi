@@ -74,16 +74,16 @@ begin
   internalList := TStringList.Create;
   try
     for path in fSearchFolders do
-    begin
       BuildFileList(path, faAnyFile, internalList);
-      for entry in internalList do
-      begin
-        packageName := PathExtractFileNameNoExt(entry);
-        packageName := UpperCase(packageName);
-        packageName := RemoveVersionSuffix(packageName, versionSuffix);
-        fExistentPackages.Add(packageName);
-      end;
+
+    for entry in internalList do
+    begin
+      packageName := PathExtractFileNameNoExt(entry);
+      packageName := UpperCase(packageName);
+      packageName := RemoveVersionSuffix(packageName, versionSuffix);
+      fExistentPackages.Add(packageName);
     end;
+
   finally
     internalList.Free;
   end;
