@@ -11,7 +11,7 @@ type
 
   IInstalledPackageResolver = interface
     procedure AddDefaultPackageList;
-    function GetExistentPackages: TStringList;
+    function GetInstalledPackages: TStringList;
     procedure AddIDEPackageList(const CompilationData: TCompilationData);
     procedure Clear;
   end;
@@ -20,9 +20,9 @@ type
   private
     fVersionSuffix: string;
     fSearchFolders: TStringList;
-    fExistentPackages: TStringList;
+    fInstalledPackages: TStringList;
     function RemoveVersionSuffix(const name, suffix: string): string;
-    function GetExistentPackages: TStringList;
+    function GetInstalledPackages: TStringList;
   protected
   public
     constructor Create; overload; virtual;
@@ -31,7 +31,7 @@ type
     procedure AddDefaultPackageList; virtual;
     procedure AddIDEPackageList(const CompilationData: TCompilationData); virtual;
     procedure Clear;
-    property ExistentPackages: TStringList read GetExistentPackages;
+    property InstalledPackages: TStringList read GetInstalledPackages;
   end;
 implementation
 
@@ -40,7 +40,7 @@ constructor TInstalledPackageResolver.Create;
 begin
   inherited Create;
   fSearchFolders := TStringList.Create;
-  fExistentPackages := TStringList.Create;
+  fInstalledPackages := TStringList.Create;
 end;
 
 constructor TInstalledPackageResolver.Create(const CompilationData: TCompilationData);
@@ -81,13 +81,13 @@ begin
       packageName := PathExtractFileNameNoExt(entry);
       packageName := UpperCase(packageName);
       packageName := RemoveVersionSuffix(packageName, versionSuffix);
-      fExistentPackages.Add(packageName);
+      fInstalledPackages.Add(packageName);
     end;
 
   finally
     internalList.Free;
   end;
-  fExistentPackages.Add('DESIGNIDE');
+  fInstalledPackages.Add('DESIGNIDE');
 end;
 
 procedure TInstalledPackageResolver.AddIDEPackageList(const CompilationData: TCompilationData);
@@ -102,7 +102,7 @@ begin
     for i := 0 to list.Count - 1 do
     begin
       idePackageName := PathExtractFileNameNoExt(list[i]);
-      fExistentPackages.Add(UpperCase(idePackageName));
+      fInstalledPackages.Add(UpperCase(idePackageName));
     end;
   finally
     list.Free;
@@ -111,19 +111,19 @@ end;
 
 procedure TInstalledPackageResolver.Clear;
 begin
-  fExistentPackages.Clear;
+  fInstalledPackages.Clear;
 end;
 
 destructor TInstalledPackageResolver.Destroy;
 begin
-  FreeAndNil(fExistentPackages);
+  FreeAndNil(fInstalledPackages);
   FreeAndNil(fSearchFolders);
   inherited;
 end;
 
-function TInstalledPackageResolver.GetExistentPackages: TStringList;
+function TInstalledPackageResolver.GetInstalledPackages: TStringList;
 begin
-  Result := fExistentPackages;
+  Result := fInstalledPackages;
 end;
 
 function TInstalledPackageResolver.RemoveVersionSuffix(const name, suffix: string): string;
