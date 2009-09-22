@@ -12,6 +12,7 @@ object ShowPackageListPage: TShowPackageListPage
   Font.Style = []
   OldCreateOrder = True
   OnClose = FormClose
+  OnCreate = FormCreate
   DesignSize = (
     568
     313)
