@@ -60,14 +60,13 @@ begin
 
   systemPath := GetEnvironmentVariable('WINDIR') + '\System32\';
   fSearchFolders.Add(PathAppend(systemPath, filePattern));
-  fSearchFolders.Add(CompilationData.Installation.LibFolderName);
-  fSearchFolders.Add(CompilationData.Installation.BinFolderName);
+  fSearchFolders.Add(PathAppend(CompilationData.Installation.LibFolderName, '*.bpl'));
+  fSearchFolders.Add(PathAppend(CompilationData.Installation.BinFolderName, '*.bpl'));
 end;
 
 procedure TInstalledPackageResolver.AddDefaultPackageList;
 var
   packageName: string;
-  versionSuffix: string;
   internalList: TStringList;
   path, entry: string;
 begin
@@ -80,7 +79,7 @@ begin
     begin
       packageName := PathExtractFileNameNoExt(entry);
       packageName := UpperCase(packageName);
-      packageName := RemoveVersionSuffix(packageName, versionSuffix);
+      packageName := RemoveVersionSuffix(packageName, fVersionSuffix);
       fInstalledPackages.Add(packageName);
     end;
 
@@ -99,6 +98,10 @@ begin
   list := TStringList.Create;
   try
     CompilationData.GetIdePackages(list);
+
+   for i := 0 to CompilationData.Installation.IdePackages.Count - 1 do
+     list.Add(CompilationData.Installation.IdePackages.PackageFileNames[i]);
+
     for i := 0 to list.Count - 1 do
     begin
       idePackageName := PathExtractFileNameNoExt(list[i]);

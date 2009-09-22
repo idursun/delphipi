@@ -6,54 +6,30 @@
 unit PackageList;
 
 interface
-uses SysUtils, Classes, PackageInfo;
+uses SysUtils, Classes, PackageInfo, Generics.Collections;
 type
 
-  TPackageList = class(TList)
+  TPackageList = class(TObjectList<TPackageInfo>)
   private
-    function get(I: Integer): TPackageInfo;
-    procedure put(I: Integer; const Value: TPackageInfo);
   public
-    destructor Destroy; override;
-    procedure Clear; override;
-    property Item[I : Integer]: TPackageInfo read get write put;default;
-    procedure Add(const item : TPackageInfo); overload;
-    procedure Remove(const item: TPackageInfo); overload;
-    function IndexOf(const PackageName: String):Integer; overload;
-    procedure SortList();
+    constructor Create;
+    function IndexOf(const PackageName: String): Integer; overload;
+    procedure SortList;
   end;
 implementation
+uses Generics.Defaults;
+type
+
+  TPackageInfoComparer = class(TInterfacedObject, IComparer<TPackageInfo>)
+    function Compare(const Left, Right: TPackageInfo): Integer;
+  end;
 
 { TPackageList }
 
-procedure TPackageList.Add(const item: TPackageInfo);
+constructor TPackageList.Create;
 begin
-  inherited add(item);
-end;
-
-procedure TPackageList.Clear;
-var
-  I: Integer;
-  package: TPackageInfo;
-begin
-  inherited;
-  for I := 0 to self.Count - 1 do
-  begin
-    package := self[i] as TPackageInfo;
-    if package <> nil then
-       package.Free;
-  end;
-end;
-
-destructor TPackageList.Destroy;
-begin
-
-  inherited;
-end;
-
-function TPackageList.get(I: Integer): TPackageInfo;
-begin
-  Result := TPackageInfo(inherited get(i));
+  inherited Create(TPackageInfoComparer.Create);
+  OwnsObjects := True;
 end;
 
 function TPackageList.IndexOf(const PackageName: String): Integer;
@@ -63,25 +39,13 @@ begin
   Result := -1;
   for I := 0 to count - 1 do
   begin
-    if UpperCase(Get(i).PackageName) = UpperCase(PackageName) then 
+    if UpperCase(Self[i].PackageName) = UpperCase(PackageName) then
       exit(i);
   end;
 end;
 
-procedure TPackageList.put(I: Integer; const Value: TPackageInfo);
-begin
-  inherited put(i,value);
-end;
-
-procedure TPackageList.Remove(const item: TPackageInfo);
-var i :integer;
-begin
-  i := IndexOf(item.PackageName);
-  Delete(i);
-end;  
-
 //TODO: encapsulate in another class, sorting list by considering dependencies
-procedure TPackageList.SortList();
+procedure TPackageList.SortList;
 var
   tmp : TPackageInfo;
   i,j: Integer;
@@ -106,6 +70,13 @@ begin
       end;
     end;
   end;
+end;
+
+{ TPackageInfoComparer }
+
+function TPackageInfoComparer.Compare(const Left, Right: TPackageInfo): Integer;
+begin
+   Result := CompareStr( UpperCase(Left.PackageName), UpperCase(Right.PackageName) );
 end;
 
 end.

@@ -35,7 +35,6 @@ type
     actRemove: TAction;
     Remove1: TMenuItem;
     N3: TMenuItem;
-    procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure packageTreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
@@ -74,7 +73,7 @@ type
 
 implementation
 
-uses JclFileUtils, gnugettext, Utils, PackageInfoFactory, VirtualTreeHelper;
+uses JclFileUtils, gnugettext, Utils, PackageInfoFactory, VirtualTreeHelper, Generics.Collections;
 {$R *.dfm}
 
 var
@@ -110,10 +109,9 @@ begin
     exit;
 
   fInstalledPackageResolver := TInstalledPackageResolver.Create(CompilationData);
-
-  fDependencyVerifier := TPackageDependencyVerifier.Create(fCompilationData,fInstalledPackageResolver);
-  fDependencyVerifier.Initialize;
-
+  fInstalledPackageResolver.AddDefaultPackageList;
+  fInstalledPackageResolver.AddIDEPackageList(CompilationData);
+  fDependencyVerifier := TPackageDependencyVerifier.Create;
   packageLoadThread := TPackageLoadThread.Create(fCompilationData, fPackageTree);
   with packageLoadThread do
   begin
@@ -137,7 +135,6 @@ begin
   end;
   fCompilationData.PackageList.Clear;
   fPackageTree.Traverse(fPackageTree.RootNode, ByCollectingPackageInfo);
-  fCompilationData.PackageList.Pack;
   FreeAndNil(fDependencyVerifier);
   FreeAndNil(fInstalledPackageResolver);
 end;
@@ -198,10 +195,24 @@ begin
 end;
 
 procedure TShowPackageListPage.VerifyDependencies;
+var
+  selectedPackages: TList<TPackageInfo>;
 begin
-  fCompilationData.PackageList.Clear;
-  fPackageTree.Traverse(ByCollectingPackageInfo);
-  fDependencyVerifier.Verify;
+  selectedPackages := TList<TPackageInfo>.Create;
+
+  fPackageTree.Traverse(procedure (node : PVirtualNode)
+  var
+    data: PNodeData;
+  begin
+    if Node.checkState <> csCheckedNormal then
+      exit;
+
+    data := fPackageTree.GetNodeData(Node);
+    if (data <> nil) and (data.Info <> nil) then
+      selectedPackages.Add(data.Info);
+  end);
+
+  fDependencyVerifier.Verify(selectedPackages, fInstalledPackageResolver);
   fPackageTree.TraverseData( procedure(data: PNodeData)
   begin
     data.MissingPackageName := fDependencyVerifier.MissingPackages[data.Info.PackageName];
@@ -262,11 +273,6 @@ begin
     fCompilationData.PackageList.Add(data.Info);
 end;
 
-procedure TShowPackageListPage.FormCreate(Sender: TObject);
-begin
-  TranslateComponent(self);
-end;
-
 procedure TShowPackageListPage.fPackageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
   var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: string);
 
@@ -285,15 +291,18 @@ begin
       _type := _('Runtime Package');
 
     builder := TStringBuilder.Create;
-    builder.Append(_('FullPath:') + info.FileName).AppendLine;
-    builder.Append(_('Description:') + info.Description).AppendLine;
-    builder.Append(_('Type:') + _type).AppendLine;
-    builder.Append(_('Requires:')).AppendLine;
-    builder.Append(info.RequiredPackageList.Text).AppendLine;
-    if data.MissingPackageName <> '' then
-      builder.Append(_('Missing Package:') + data.MissingPackageName);
-    HintText := builder.ToString;
-    builder.Free;
+    try
+      builder.Append(_('FullPath:') + info.FileName).AppendLine;
+      builder.Append(_('Description:') + info.Description).AppendLine;
+      builder.Append(_('Type:') + _type).AppendLine;
+      builder.Append(_('Requires:')).AppendLine;
+      builder.Append(info.RequiredPackageList.Text).AppendLine;
+      if data.MissingPackageName <> '' then
+        builder.Append(_('Missing Package:') + data.MissingPackageName);
+      HintText := builder.ToString;
+    finally
+      builder.Free;
+    end;
   end;
 end;
 

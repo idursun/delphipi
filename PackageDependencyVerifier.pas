@@ -7,37 +7,27 @@ unit PackageDependencyVerifier;
 
 interface
 
-uses Classes, PackageList, PackageInfo, CompilationData, InstalledPackageResolver;
+uses Classes, PackageList, PackageInfo, CompilationData, InstalledPackageResolver, Generics.Collections;
 
 type
-
   TPackageDependencyVerifier = class
   private
-    fCompilationData: TCompilationData;
     fMissingPackages: TStringList;
-    fInstalledPackageResolver: TInstalledPackageResolver;
     function GetMissingPackage(key: string): String;
   public
-    constructor Create(const CompilationData: TCompilationData; const installedPackageResolver: TInstalledPackageResolver);
+    constructor Create;
     destructor Destroy; override;
-
-    procedure Initialize; virtual;
-    procedure Verify; virtual;
-
+    procedure Verify(const selectedPackages: TList<TPackageInfo>; const installedPackageResolver: TInstalledPackageResolver); virtual;
     property MissingPackages[key: string]: String read GetMissingPackage;
   end;
 
-
 implementation
-
 uses SysUtils, JclFileUtils, gnugettext;
 
 { TPackageDependencyVerifier }
-constructor TPackageDependencyVerifier.Create(const CompilationData: TCompilationData; const installedPackageResolver: TInstalledPackageResolver);
+constructor TPackageDependencyVerifier.Create;
 begin
-  fCompilationData := CompilationData;
   fMissingPackages := TStringList.Create;
-  fInstalledPackageResolver := TInstalledPackageResolver.Create;
 end;
 
 destructor TPackageDependencyVerifier.Destroy;
@@ -51,7 +41,7 @@ begin
   Result := fMissingPackages.Values[key];
 end;
 
-procedure TPackageDependencyVerifier.Verify;
+procedure TPackageDependencyVerifier.Verify(const selectedPackages: TList<TPackageInfo>; const installedPackageResolver: TInstalledPackageResolver);
 var
   requiredPackage: string;
   i: Integer;
@@ -60,15 +50,14 @@ var
 begin
   fMissingPackages.Clear;
   allPackages := TStringList.Create;
-  allPackages.AddStrings(fInstalledPackageResolver.ExistentPackages);
   try
+    allPackages.AddStrings(installedPackageResolver.InstalledPackages);
+    for I := 0 to selectedPackages.Count - 1 do
+      allPackages.Add(UpperCase(selectedPackages[i].PackageName));
 
-    for I := 0 to fCompilationData.PackageList.Count - 1 do
-      allPackages.Add(UpperCase(fCompilationData.PackageList[i].packageName));
-
-    for i := 0 to fCompilationData.PackageList.Count - 1 do
+    for i := 0 to selectedPackages.Count - 1 do
     begin
-      package := fCompilationData.PackageList[i];
+      package := selectedPackages[i];
       fMissingPackages.Values[package.packageName] := '';
 
       for requiredPackage in package.RequiredPackageList do
@@ -86,13 +75,7 @@ begin
   end;
 end;
 
-procedure TPackageDependencyVerifier.Initialize;
-begin
-  Assert(fInstalledPackageResolver <> nil, 'resolver cannot be null');
-  fInstalledPackageResolver.Clear;
-  fInstalledPackageResolver.AddDefaultPackageList;
-  fInstalledPackageResolver.AddIDEPackageList(fCompilationData);
-end;
-
-
 end.
+
+
+

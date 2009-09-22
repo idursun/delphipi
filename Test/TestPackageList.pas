@@ -43,10 +43,6 @@ end;
 
 procedure TestTPackageList.TearDown;
 begin
-  package1.Free;
-  package2.Free;
-  package3.Free;
-  
   FPackageList.Free;
   FPackageList := nil;
 end;
