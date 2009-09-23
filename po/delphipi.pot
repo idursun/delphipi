@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-09-22 22:37\n"
-"PO-Revision-Date: 2009-09-22 22:37\n"
+"POT-Creation-Date: 2009-09-22 23:00\n"
+"PO-Revision-Date: 2009-09-22 23:00\n"
 "Last-Translator: Somebody <your.email@address.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -43,9 +43,9 @@ msgstr ""
 #. ShowPackageListPage..Font.Name
 #: PageShowPackageList.dfm:11
 #. ShowPackageListPage..lblWait..Font.Name
-#: PageShowPackageList.dfm:33
+#: PageShowPackageList.dfm:34
 #. ShowPackageListPage..fPackageTree..Header.Font.Name
-#: PageShowPackageList.dfm:53
+#: PageShowPackageList.dfm:54
 #. frmAbout..Font.Name
 #: FormAbout.dfm:12
 #. frmAbout..grpInformation..Label7..Font.Name
@@ -67,9 +67,9 @@ msgstr ""
 #. ShowPackageListPage..Font.Name
 #: PageShowPackageList.dfm:11
 #. ShowPackageListPage..lblWait..Font.Name
-#: PageShowPackageList.dfm:33
+#: PageShowPackageList.dfm:34
 #. ShowPackageListPage..fPackageTree..Header.Font.Name
-#: PageShowPackageList.dfm:53
+#: PageShowPackageList.dfm:54
 msgid "Tahoma"
 msgstr ""
 
@@ -445,118 +445,118 @@ msgid "ShowPackageListPage"
 msgstr ""
 
 #. ShowPackageListPage..lblWait..Caption
-#: PageShowPackageList.dfm:28
+#: PageShowPackageList.dfm:29
 #. ShowPackageListPage..lblWait..Caption
-#: PageShowPackageList.dfm:28
+#: PageShowPackageList.dfm:29
 msgid "Please wait while searching folders "
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:78
+#: PageShowPackageList.dfm:79
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:78
+#: PageShowPackageList.dfm:79
 msgid "Package"
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:83
+#: PageShowPackageList.dfm:84
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:83
+#: PageShowPackageList.dfm:84
 msgid "Description"
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:88
+#: PageShowPackageList.dfm:89
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:88
+#: PageShowPackageList.dfm:89
 msgid "Type"
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..miSelectAll..Caption
-#: PageShowPackageList.dfm:95
+#: PageShowPackageList.dfm:96
 #. ShowPackageListPage..pmSelectPopupMenu..miSelectAll..Caption
-#: PageShowPackageList.dfm:95
+#: PageShowPackageList.dfm:96
 msgid "Select All"
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..miUnselectAll..Caption
-#: PageShowPackageList.dfm:99
+#: PageShowPackageList.dfm:100
 #. ShowPackageListPage..pmSelectPopupMenu..miUnselectAll..Caption
-#: PageShowPackageList.dfm:99
+#: PageShowPackageList.dfm:100
 msgid "Unselect All"
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..N1..Caption
-#: PageShowPackageList.dfm:103
+#: PageShowPackageList.dfm:104
 #. ShowPackageListPage..pmSelectPopupMenu..N3..Caption
-#: PageShowPackageList.dfm:114
+#: PageShowPackageList.dfm:115
 #. ShowPackageListPage..pmSelectPopupMenu..N2..Caption
-#: PageShowPackageList.dfm:120
+#: PageShowPackageList.dfm:121
 #. ShowPackageListPage..pmSelectPopupMenu..N1..Caption
-#: PageShowPackageList.dfm:103
+#: PageShowPackageList.dfm:104
 #. ShowPackageListPage..pmSelectPopupMenu..N3..Caption
-#: PageShowPackageList.dfm:114
+#: PageShowPackageList.dfm:115
 #. ShowPackageListPage..pmSelectPopupMenu..N2..Caption
-#: PageShowPackageList.dfm:120
+#: PageShowPackageList.dfm:121
 msgid "-"
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..miSelectMatching..Caption
-#: PageShowPackageList.dfm:106
-#: PageShowPackageList.pas:402
+#: PageShowPackageList.dfm:107
+#: PageShowPackageList.pas:387
 #. ShowPackageListPage..pmSelectPopupMenu..miSelectMatching..Caption
-#: PageShowPackageList.dfm:106
-#: PageShowPackageList.pas:402
+#: PageShowPackageList.dfm:107
+#: PageShowPackageList.pas:387
 msgid "Select Matching..."
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..miUnselectMatching..Caption
-#: PageShowPackageList.dfm:110
+#: PageShowPackageList.dfm:111
 #. ShowPackageListPage..pmSelectPopupMenu..miUnselectMatching..Caption
-#: PageShowPackageList.dfm:110
+#: PageShowPackageList.dfm:111
 msgid "Unselect Matching..."
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..miCollapse..Caption
-#: PageShowPackageList.dfm:123
+#: PageShowPackageList.dfm:124
 #. ShowPackageListPage..pmSelectPopupMenu..miCollapse..Caption
-#: PageShowPackageList.dfm:123
+#: PageShowPackageList.dfm:124
 msgid "Collapse"
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..miCollapse..miCollapseChildren..Caption
-#: PageShowPackageList.dfm:125
+#: PageShowPackageList.dfm:126
 #. ShowPackageListPage..pmSelectPopupMenu..miExpand..miExpandChildren..Caption
-#: PageShowPackageList.dfm:136
+#: PageShowPackageList.dfm:137
 #. ShowPackageListPage..pmSelectPopupMenu..miCollapse..miCollapseChildren..Caption
-#: PageShowPackageList.dfm:125
+#: PageShowPackageList.dfm:126
 #. ShowPackageListPage..pmSelectPopupMenu..miExpand..miExpandChildren..Caption
-#: PageShowPackageList.dfm:136
+#: PageShowPackageList.dfm:137
 msgid "Children"
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..miCollapse..miCollapseAll..Caption
-#: PageShowPackageList.dfm:129
+#: PageShowPackageList.dfm:130
 #. ShowPackageListPage..pmSelectPopupMenu..miExpand..miExpandAll..Caption
-#: PageShowPackageList.dfm:140
+#: PageShowPackageList.dfm:141
 #. ShowPackageListPage..pmSelectPopupMenu..miCollapse..miCollapseAll..Caption
-#: PageShowPackageList.dfm:129
+#: PageShowPackageList.dfm:130
 #. ShowPackageListPage..pmSelectPopupMenu..miExpand..miExpandAll..Caption
-#: PageShowPackageList.dfm:140
+#: PageShowPackageList.dfm:141
 msgid "All"
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..miExpand..Caption
-#: PageShowPackageList.dfm:134
+#: PageShowPackageList.dfm:135
 #. ShowPackageListPage..pmSelectPopupMenu..miExpand..Caption
-#: PageShowPackageList.dfm:134
+#: PageShowPackageList.dfm:135
 msgid "Expand"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actRemove..Caption
-#: PageShowPackageList.dfm:292
+#: PageShowPackageList.dfm:293
 #. ShowPackageListPage..ActionList..actRemove..Caption
-#: PageShowPackageList.dfm:292
+#: PageShowPackageList.dfm:293
 msgid "Remove"
 msgstr ""
 
@@ -725,75 +725,75 @@ msgstr ""
 msgid "Select the folder where packages are"
 msgstr ""
 
-#: PageShowPackageList.pas:179
-#: PageShowPackageList.pas:179
+#: PageShowPackageList.pas:189
+#: PageShowPackageList.pas:189
 msgid "Select Packages"
 msgstr ""
 
-#: PageShowPackageList.pas:180
-#: PageShowPackageList.pas:180
+#: PageShowPackageList.pas:190
+#: PageShowPackageList.pas:190
 msgid "Select packages that you want to compile."
 msgstr ""
 
-#: PageShowPackageList.pas:186
-#: PageShowPackageList.pas:186
+#: PageShowPackageList.pas:196
+#: PageShowPackageList.pas:196
 msgid "Compile"
 msgstr ""
 
-#: PageShowPackageList.pas:289
-#: PageShowPackageList.pas:289
+#: PageShowPackageList.pas:274
+#: PageShowPackageList.pas:274
 msgid "Designtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:291
-#: PageShowPackageList.pas:291
+#: PageShowPackageList.pas:276
+#: PageShowPackageList.pas:276
 msgid "Runtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:295
-#: PageShowPackageList.pas:295
+#: PageShowPackageList.pas:280
+#: PageShowPackageList.pas:280
 msgid "FullPath:"
 msgstr ""
 
-#: PageShowPackageList.pas:296
-#: PageShowPackageList.pas:296
+#: PageShowPackageList.pas:281
+#: PageShowPackageList.pas:281
 msgid "Description:"
 msgstr ""
 
-#: PageShowPackageList.pas:297
-#: PageShowPackageList.pas:297
+#: PageShowPackageList.pas:282
+#: PageShowPackageList.pas:282
 msgid "Type:"
 msgstr ""
 
-#: PageShowPackageList.pas:298
-#: PageShowPackageList.pas:298
+#: PageShowPackageList.pas:283
+#: PageShowPackageList.pas:283
 msgid "Requires:"
 msgstr ""
 
-#: PageShowPackageList.pas:301
-#: PageShowPackageList.pas:301
+#: PageShowPackageList.pas:286
+#: PageShowPackageList.pas:286
 msgid "Missing Package:"
 msgstr ""
 
-#: PageShowPackageList.pas:328
-#: PageShowPackageList.pas:328
+#: PageShowPackageList.pas:313
+#: PageShowPackageList.pas:313
 msgid "runtime"
 msgstr ""
 
-#: PageShowPackageList.pas:330
-#: PageShowPackageList.pas:330
+#: PageShowPackageList.pas:315
+#: PageShowPackageList.pas:315
 msgid "design"
 msgstr ""
 
-#: PageShowPackageList.pas:402
-#: PageShowPackageList.pas:427
-#: PageShowPackageList.pas:402
-#: PageShowPackageList.pas:427
+#: PageShowPackageList.pas:387
+#: PageShowPackageList.pas:409
+#: PageShowPackageList.pas:387
+#: PageShowPackageList.pas:409
 msgid "File Mask"
 msgstr ""
 
-#: PageShowPackageList.pas:427
-#: PageShowPackageList.pas:427
+#: PageShowPackageList.pas:409
+#: PageShowPackageList.pas:409
 msgid "UnSelect Matching..."
 msgstr ""
 

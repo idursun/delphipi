@@ -212,18 +212,25 @@ var
   selectedPackages: TList<TPackageInfo>;
 begin
   selectedPackages := TList<TPackageInfo>.Create;
+  try
 
-  fPackageTree.Traverse(procedure(Node: PVirtualNode)
-  var data: PNodeData;
-  begin
-       if Node.checkState <> csCheckedNormal then exit;
+    fPackageTree.Traverse(procedure(Node: PVirtualNode)
+    var
+      data: PNodeData;
+    begin
+      if Node.checkState <> csCheckedNormal then
+        exit;
 
-    data := fPackageTree.GetNodeData(Node);
-    if (data <> nil) and (data.Info <> nil) then
-       selectedPackages.Add(data.Info);
-  end);
+      data := fPackageTree.GetNodeData(Node);
+      if (data <> nil) and (data.Info <> nil) then
+         selectedPackages.Add(data.Info);
+    end);
 
-  fDependencyVerifier.Verify(selectedPackages, fInstalledPackageResolver);
+    fDependencyVerifier.Verify(selectedPackages, fInstalledPackageResolver);
+  finally
+    selectedPackages.Free;
+  end;
+
   fPackageTree.TraverseData( procedure(data: PNodeData)
   begin
     data.MissingPackageName := fDependencyVerifier.MissingPackages[data.Info.PackageName];
