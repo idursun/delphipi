@@ -199,7 +199,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">51</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">256</VersionInfo>
+						<VersionInfo Name="Build">257</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -211,7 +211,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.51.0.256</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.51.0.257</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">Josephine</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright"/>
 						<VersionInfoKeys Name="LegalTrademarks"/>

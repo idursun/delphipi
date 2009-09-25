@@ -132,11 +132,11 @@ begin
 
   shortPaths := ConvertToShortPaths(fAllPaths);
   fExtraOptions := '-B -Q -CC';
-  fExtraOptions := fExtraOptions + ' -I'+shortPaths+'';
-  fExtraOptions := fExtraOptions + ' -U'+shortPaths+'';
-  fExtraOptions := fExtraOptions + ' -O'+shortPaths+'';
-  fExtraOptions := fExtraOptions + ' -R'+shortPaths+'';
-  fExtraOptions := fExtraOptions + ' -N'+fCompilationData.DCUOutputFolder+'';
+  fExtraOptions := fExtraOptions + ' -I'+shortPaths;
+  fExtraOptions := fExtraOptions + ' -U'+shortPaths;
+  fExtraOptions := fExtraOptions + ' -O'+shortPaths;
+  fExtraOptions := fExtraOptions + ' -R'+shortPaths;
+  fExtraOptions := fExtraOptions + ' -N'+PathGetShortName(fCompilationData.DCUOutputFolder);
   if Length(fCompilationData.Conditionals) > 0 then
     fExtraOptions := fExtraOptions + ' -D'+fCompilationData.Conditionals;
 end;
