@@ -24,17 +24,21 @@ type
     grpDelphiVersion: TGroupBox;
     cbDelphiVersions: TComboBox;
     procedure btnSelectFolderClick(Sender: TObject);
-    procedure edtBaseFolderChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure cbDelphiVersionsChange(Sender: TObject);
   private
     FPatternsFileName: string;
+    fInstallations : TJclBorRADToolInstallations;
     procedure AddDelphiInstallation(const installation: TJclBorRADToolInstallation);
+    function GetInstallations: TJclBorRADToolInstallations;
+  protected
+    property Installations: TJclBorRADToolInstallations read GetInstallations;
   public
-    constructor Create(Owner: TComponent; const compilationData: TCompilationData); override; 
+    constructor Create(Owner: TComponent; const compilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
     function CanShowPage: Boolean; override;
+
   end;
 
 var
@@ -43,25 +47,28 @@ var
 implementation
 uses FileCtrl, gnugettext, FormWizard, JclSysInfo, JclFileUtils;
 {$R *.dfm}
-var
-  installations : TJclBorRADToolInstallations;
 { TSelectFoldersPage }
 
+constructor TSelectFoldersPage.Create(Owner: TComponent;
+  const compilationData: TCompilationData);
+begin
+  inherited;
+  fCompilationData := compilationData;
+end;
+
 procedure TSelectFoldersPage.FormCreate(Sender: TObject);
-var 
+var
  i: integer;
  dataFolder: string;
 begin
   inherited;
   TranslateComponent(self);
-  installations := TJclBorRADToolInstallations.Create;
 
- dataFolder := PathAppend(PathAddSeparator(GetAppdataFolder), 'DelphiPI');
+  dataFolder := PathAppend(GetAppdataFolder, 'DelphiPI');
   if not DirectoryExists(dataFolder) then
     CreateDir(dataFolder);
 
-  FPatternsFileName := PathAppend(PathAddSeparator(dataFolder), 'patterns.txt');
-
+  FPatternsFileName := PathAppend(dataFolder, 'patterns.txt');
 
   edtBaseFolder.Text := FCompilationData.BaseFolder;
   cbPattern.Text := FCompilationData.Pattern;
@@ -69,15 +76,13 @@ begin
   if (FileExists(FPatternsFileName)) then
     cbPattern.Items.LoadFromFile(FPatternsFileName);
 
-  if installations <> nil then
-    installations := TJclBorRADToolInstallations.Create;
-
-  for i := 0 to installations.Count - 1 do begin
+  for i := 0 to installations.Count - 1 do
+  begin
     AddDelphiInstallation(installations.Installations[i]);
   end;
 
   cbDelphiVersionsChange(cbDelphiVersions);
-end; 
+end;
 
 procedure TSelectFoldersPage.FormClose(Sender: TObject;
   var Action: TCloseAction);
@@ -95,7 +100,6 @@ begin
   cbPattern.Items.SaveToFile(FPatternsFileName);
 end;
 
-
 procedure TSelectFoldersPage.AddDelphiInstallation(const installation: TJclBorRADToolInstallation);
 var
   i: integer;
@@ -105,7 +109,7 @@ begin
   if not Assigned(fCompilationData.Installation) then
     exit;
   
-  if installation.VersionNumber = fCompilationData.Installation.VersionNumber then
+  if installation.VersionNumberStr = fCompilationData.Installation.VersionNumberStr then
     cbDelphiVersions.ItemIndex := i;
 end;
 
@@ -127,7 +131,8 @@ var
 begin
   inherited;
   directory := edtBaseFolder.Text;
-  if SelectDirectory(_('Select the folder where packages are'),'',directory) then begin
+  if SelectDirectory(_('Select the folder where packages are'),'',directory) then
+  begin
     edtBaseFolder.Text := directory;
     UpdateWizardState;
   end;
@@ -147,19 +152,11 @@ begin
   fCompilationData.Installation := cbDelphiVersions.Items.Objects[cbDelphiVersions.ItemIndex] as TJclBorRADToolInstallation;
 end;
 
-constructor TSelectFoldersPage.Create(Owner: TComponent;
-  const compilationData: TCompilationData);
+function TSelectFoldersPage.GetInstallations: TJclBorRADToolInstallations;
 begin
-  inherited;
-  fCompilationData := compilationData;
+  if fInstallations = nil then
+    fInstallations := TJclBorRADToolInstallations.Create;
+  Result := fInstallations;
 end;
-
-procedure TSelectFoldersPage.edtBaseFolderChange(Sender: TObject);
-begin
-  inherited;
-  UpdateWizardState;
-end;
-
-
 
 end.

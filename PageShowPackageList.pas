@@ -112,6 +112,7 @@ begin
   fInstalledPackageResolver.AddDefaultPackageList;
   fInstalledPackageResolver.AddIDEPackageList(CompilationData);
   fDependencyVerifier := TPackageDependencyVerifier.Create;
+
   packageLoadThread := TPackageLoadThread.Create(fCompilationData, fPackageTree);
   with packageLoadThread do
   begin
@@ -396,7 +397,10 @@ end;
 
 procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
 begin
-  fPackageTree.Traverse( procedure(Node: PVirtualNode)begin Node.checkState := csCheckedNormal; end);
+  fPackageTree.Traverse( procedure(Node: PVirtualNode)
+  begin
+    Node.checkState := csCheckedNormal;
+  end);
   fPackageTree.Invalidate;
   UpdateWizardState;
 end;
@@ -518,7 +522,7 @@ begin
           child.CheckType := ctCheckBox;
           data := fTree.GetNodeData(child);
           data.Name := sr.Name;
-          data.Info := fPackageInfoFactory.CreatePackageInfo(PathAddSeparator(directory) + sr.Name);
+          data.Info := fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name));
         end;
       until FindNext(sr) <> 0;
     finally
@@ -538,7 +542,7 @@ begin
     exit;
   directoryList := TStringList.Create;
   try
-    BuildFileList(PathAddSeparator(folder) + '*.*', faDirectory, directoryList);
+    BuildFileList(PathAppend(folder,'*.*'), faDirectory, directoryList);
     for directory in directoryList do
     begin
       child := fTree.AddChild(parent);

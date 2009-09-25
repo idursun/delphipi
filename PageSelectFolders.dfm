@@ -33,7 +33,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
     object Label2: TLabel
       Left = 15
       Top = 16
-      Width = 469
+      Width = 466
       Height = 26
       Anchors = [akLeft, akTop, akRight]
       Caption = 
@@ -88,7 +88,6 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
-      OnChange = edtBaseFolderChange
     end
   end
   object grpDelphiVersion: TGroupBox
