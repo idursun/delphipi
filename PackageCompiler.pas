@@ -80,11 +80,11 @@ var
   info: TPackageInfo;
   compilationSuccessful: boolean;
 begin
-  PrepareExtraOptions;
-    
   if SourceFilePaths.Count = 0 then
     ResolveSourcePaths;
-      
+
+  PrepareExtraOptions;
+
   AddSourcePathsToIDE(SourceFilePaths, fCompilationData.Installation);
       
   if fCompilationData.HelpFiles.Count = 0 then
@@ -123,9 +123,7 @@ begin
   fAllPaths.Clear;
   ExtractStrings([';'],[' '],PWideChar(Installation.LibrarySearchPath),fAllPaths);
   fAllPaths.Add(Installation.BPLOutputPath);
-
-  for path in SourceFilePaths do
-    fAllPaths.Add(path);
+  fAllPaths.AddStrings(SourceFilePaths);
 
   for I := 0 to fAllPaths.Count - 1 do
     fAllPaths[i] := Installation.SubstitutePath(StrTrimQuotes(fAllPaths[i]));
@@ -164,6 +162,7 @@ procedure TPackageCompiler.ResolveSourcePaths;
 var
   i,j: integer;
   files, containedFiles: TStringList;
+  fileExt: string;
 begin
   Assert(assigned(SourceFilePaths));
   
@@ -187,20 +186,27 @@ begin
       containedFiles.Add(ExtractFileName(PackageList[i].ContainedFileList[j]));
   end;
 
-  AdvBuildFileList(fCompilationData.BaseFolder+'\*.pas',
+  AdvBuildFileList(PathAppend(fCompilationData.BaseFolder,'*.pas'),
            faAnyFile,
            files,
            amAny,
            [flFullnames, flRecursive],
            '', nil);
-           
-  
+
+  AdvBuildFileList(PathAppend(fCompilationData.BaseFolder,'*.inc'),
+           faAnyFile,
+           files,
+           amAny,
+           [flFullnames, flRecursive],
+           '', nil);
+
   for I := 0 to files.count - 1 do
   begin
-    if containedFiles.IndexOf(ExtractFileName(files[i])) > 0 then
+    fileExt := UpperCase(ExtractFileExt(files[i]));
+    if (containedFiles.IndexOf(ExtractFileName(files[i])) > 0) or (fileExt = '.INC') then
     begin
       SourceFilePaths.Add(ExtractFileDir(files[i]));
-    end;
+    end
   end;
 end;
 
