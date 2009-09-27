@@ -511,7 +511,7 @@ var
   child: PVirtualNode;
   data: PNodeData;
 begin
-  if FindFirst(PathAddSeparator(directory) + fCompilationData.Pattern, faAnyFile, sr) = 0 then
+  if FindFirst(PathAppend(directory,fCompilationData.Pattern), faAnyFile, sr) = 0 then
   begin
     try
       repeat
@@ -551,7 +551,7 @@ begin
       child.States := child.States + [vsHasChildren];
       data := fTree.GetNodeData(child);
       data.Name := directory;
-      Search(child, PathAddSeparator(folder) + directory);
+      Search(child, PathAppend(folder, directory));
     end;
     BuildFileNodes(parent, folder);
   finally
