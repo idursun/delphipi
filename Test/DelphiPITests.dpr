@@ -27,7 +27,9 @@ uses
   PackageDependencyVerifier in '..\PackageDependencyVerifier.pas',
   CompilationData in '..\CompilationData.pas',
   gnugettext in '..\libs\gnugettext.pas',
-  InstalledPackageResolver in '..\InstalledPackageResolver.pas';
+  InstalledPackageResolver in '..\InstalledPackageResolver.pas',
+  TestTreeModel in 'TestTreeModel.pas',
+  TreeModel in '..\TreeModel.pas';
 
 {$R *.RES}
 

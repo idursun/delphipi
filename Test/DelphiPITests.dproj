@@ -55,6 +55,8 @@
 			<DCCReference Include="..\CompilationData.pas"/>
 			<DCCReference Include="..\libs\gnugettext.pas"/>
 			<DCCReference Include="..\InstalledPackageResolver.pas"/>
+			<DCCReference Include="TestTreeModel.pas"/>
+			<DCCReference Include="..\TreeModel.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

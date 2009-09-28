@@ -96,6 +96,7 @@
 			</DCCReference>
 			<DCCReference Include="VirtualTreeHelper.pas"/>
 			<DCCReference Include="InstalledPackageResolver.pas"/>
+			<DCCReference Include="TreeModel.pas"/>
 			<None Include="DelphiPI.todo"/>
 			<None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
 			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>

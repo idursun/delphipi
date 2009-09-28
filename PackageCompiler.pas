@@ -16,7 +16,7 @@ type
      fCancel: boolean;
      fSourceFilePaths: TStringList;
      fExtraOptions: String;
-    fAllPaths: TStringList;
+     fAllPaths: TStringList;
 
      function ConvertToShortPaths(const paths : TStringList): string;
      function GetInstallation: TJclBorRADToolInstallation;
@@ -113,7 +113,6 @@ begin
                 fCompilationData.DCPOutputFolder,
                 fExtraOptions);
 end;
-
 
 procedure TPackageCompiler.PrepareExtraOptions;
 var

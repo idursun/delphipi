@@ -25,7 +25,8 @@ uses
   MonitoredPackageCompiler in 'MonitoredPackageCompiler.pas',
   PageCompilerOptions in 'PageCompilerOptions.pas' {SelectCompilerOptions},
   VirtualTreeHelper in 'VirtualTreeHelper.pas',
-  InstalledPackageResolver in 'InstalledPackageResolver.pas';
+  InstalledPackageResolver in 'InstalledPackageResolver.pas',
+  TreeModel in 'TreeModel.pas';
 
 {$R *.res}
 

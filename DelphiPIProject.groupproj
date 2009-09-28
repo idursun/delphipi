@@ -7,7 +7,7 @@
 				<Dependencies/>
 			</Projects>
 			<Projects Include="Test\DelphiPITests.dproj">
-				<Dependencies/>
+				<Dependencies>DelphiPI.dproj</Dependencies>
 			</Projects>
 			<Projects Include="DelphiPIConsole.dproj">
 				<Dependencies/>
@@ -29,13 +29,13 @@
 		<Target Name="DelphiPI:Make">
 			<MSBuild Targets="Make" Projects="DelphiPI.dproj"/>
 		</Target>
-		<Target Name="DelphiPITests">
+		<Target DependsOnTargets="DelphiPI" Name="DelphiPITests">
 			<MSBuild Projects="Test\DelphiPITests.dproj"/>
 		</Target>
-		<Target Name="DelphiPITests:Clean">
+		<Target DependsOnTargets="DelphiPI:Clean" Name="DelphiPITests:Clean">
 			<MSBuild Targets="Clean" Projects="Test\DelphiPITests.dproj"/>
 		</Target>
-		<Target Name="DelphiPITests:Make">
+		<Target DependsOnTargets="DelphiPI:Make" Name="DelphiPITests:Make">
 			<MSBuild Targets="Make" Projects="Test\DelphiPITests.dproj"/>
 		</Target>
 		<Target Name="DelphiPIConsole">
