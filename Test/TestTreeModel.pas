@@ -15,13 +15,13 @@ type
     function GetData: TObject;
     function GetDisplayName: string;
     function GetNodePath: string;
+    procedure SetNodeInfo(const name: string; const path: string);
   end;
 
   TestTTreeModel = class(TTestCase)
   strict private
     FItems: TObjectList<TBasicNode>;
     FTreeModel: TBasicTreeModel<TBasicNode>;
-  private
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -31,6 +31,7 @@ type
     procedure Should_return_child_node_at_index_0;
     procedure Should_return_child_node_at_index_1;
     procedure Should_return_count_of_logical_children;
+    procedure Should_return_logical_node_if_there_are_not_immediate_children;
   end;
 
 implementation
@@ -54,6 +55,11 @@ end;
 function TBasicNode.GetNodePath: string;
 begin
   Result := fName;
+end;
+
+procedure TBasicNode.SetNodeInfo(const name, path: string);
+begin
+  fName := path;
 end;
 
 procedure TestTTreeModel.SetUp;
@@ -117,6 +123,15 @@ var
 begin
   count := FTreeModel.GetChildCount(TBasicNode.Create('b'));
   CheckEquals(1,count, 'logical children count was wrong');
+end;
+
+procedure TestTTreeModel.Should_return_logical_node_if_there_are_not_immediate_children;
+var
+  node : TBasicNode;
+begin
+  node := FTreeModel.GetChild(TBasicNode.Create('b'), 0);
+  CheckNotNull(node, 'logical node should not be null');
+  CheckEquals('b\1',node.GetNodePath, 'logical node path was wrong');
 end;
 
 initialization

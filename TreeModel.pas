@@ -9,6 +9,7 @@ type
      function GetDisplayName: string;
      function GetData: TObject;
      function GetNodePath: string;
+     procedure SetNodeInfo(const name: string; const path: string);
   end;
 
   TTreeView<T: INode > = class
@@ -17,10 +18,10 @@ type
     function GetChildCount(const parent: T): integer; virtual; abstract;
   end;
 
-  TBasicTreeModel<T : INode, class> = class(TTreeView<T>)
+  TBasicTreeModel<T : INode, class, constructor> = class(TTreeView<T>)
   private
     fNodes : TList<T>;
-    function SplitString(const str:string; delimiter:string='\'):TDynStrArray;
+    function SplitString(const str:string):TDynStrArray;
   public
     constructor Create(const nodes: TList<T>);
     function GetChild(const parent: T; index: Integer): T; override;
@@ -29,7 +30,7 @@ type
 
 implementation
 uses JclStrings;
-function TBasicTreeModel<T>.SplitString(const str:string; delimiter:string='\'):TDynStrArray;
+function TBasicTreeModel<T>.SplitString(const str:string):TDynStrArray;
 var
   I, lastIndex: Integer;
   words : TStringList;
@@ -60,6 +61,7 @@ var
   I: Integer;
   currentLevel, nextLevel : integer;
   nodes: TList<T>;
+  immediateChild: boolean;
 begin
   Result := default(T);
 
@@ -73,29 +75,35 @@ begin
     nextLevel := currentLevel + 1;
   end;
 
-  nodes := TList<T>.Create;
-  try
-    for node in fNodes do
+  i := 0;
+  for node in fNodes do
+  begin
+    nodePath := node.GetNodePath;
+    if not StartsStr(prefix, nodePath) then
+      Continue;
+
+    words := SplitString(nodePath);
+    if Length(words) = 0 then
+      Continue;
+
+    if Length(words) <= nextLevel then
+      Continue;
+    if i = index then
     begin
-      nodePath := node.GetNodePath;
-      if not StartsStr(prefix, nodePath) then
-        Continue;
-
-      words := SplitString(nodePath);
-      if Length(words) = 0 then
-        Continue;
-
-      if Length(words) <= nextLevel then
-        Continue;
-
-      nodes.Add(node);
+      immediateChild := Length(words) = nextLevel + 1;
+      if immediateChild then
+        Result := node
+      else begin
+        Result := T.Create;
+        if prefix <> '' then
+          Result.SetNodeInfo(words[nextLevel], prefix + '\' + words[nextLevel])
+        else
+          Result.SetNodeInfo(words[nextLevel], words[nextLevel])
+      end;
+      Break;
     end;
-  finally
-    if nodes.Count > index then
-      Result := nodes[index];
-    nodes.Free;
+    Inc(i);
   end;
-
 end;
 
 function TBasicTreeModel<T>.GetChildCount(const parent: T): integer;

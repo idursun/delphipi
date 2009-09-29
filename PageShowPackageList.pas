@@ -346,8 +346,10 @@ var
 begin
   inherited;
   data := Sender.GetNodeData(Node);
-//  if data.Info then
-
+  if data.Info <> nil then
+  begin
+    ChildCount := fModel.GetChildCount(data.Info);
+  end;
 end;
 
 procedure TShowPackageListPage.fPackageTreeInitNode(Sender: TBaseVirtualTree;
@@ -365,6 +367,7 @@ begin
     parentPackageInfo := parentData.Info;
 
   data.Info := fModel.GetChild(parentPackageInfo, Node.Index);
+  data.Name := data.Info.PackageName;
   if fModel.GetChildCount(data.Info) > 0 then
     InitialStates := [ivsHasChildren];
 end;
