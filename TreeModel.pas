@@ -17,7 +17,7 @@ type
     function GetChildCount(const parent: T): integer; virtual; abstract;
   end;
 
-  TBasicTreeModel<T : INode> = class(TTreeView<T>)
+  TBasicTreeModel<T : INode, class> = class(TTreeView<T>)
   private
     fNodes : TList<T>;
     function SplitString(const str:string; delimiter:string='\'):TDynStrArray;
@@ -52,14 +52,56 @@ begin
 end;
 
 function TBasicTreeModel<T>.GetChild(const parent: T; index: Integer): T;
+var
+  prefix: string;
+  node: T;
+  nodePath: string;
+  words: TDynStrArray;
+  I: Integer;
+  currentLevel, nextLevel : integer;
+  nodes: TList<T>;
 begin
   Result := default(T);
+
+  prefix := '';
+  currentLevel := 0;
+  nextLevel := 0;
+  if parent <> nil then
+  begin
+    prefix := parent.GetNodePath;
+    currentLevel := StrCharCount(prefix, '\');
+    nextLevel := currentLevel + 1;
+  end;
+
+  nodes := TList<T>.Create;
+  try
+    for node in fNodes do
+    begin
+      nodePath := node.GetNodePath;
+      if not StartsStr(prefix, nodePath) then
+        Continue;
+
+      words := SplitString(nodePath);
+      if Length(words) = 0 then
+        Continue;
+
+      if Length(words) <= nextLevel then
+        Continue;
+
+      nodes.Add(node);
+    end;
+  finally
+    if nodes.Count > index then
+      Result := nodes[index];
+    nodes.Free;
+  end;
+
 end;
 
 function TBasicTreeModel<T>.GetChildCount(const parent: T): integer;
 var
   prefix: string;
-  node: INode;
+  node: T;
   nodePath: string;
   words: TDynStrArray;
   I: Integer;

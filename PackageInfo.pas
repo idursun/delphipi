@@ -69,10 +69,10 @@ function TPackageInfo.GetNodePath: string;
 var
   i: integer;
 begin
-  Result := Self.GetNodePath;
-  i := StrIndex(Result, [':']);
+  Result := self.FileName;
+  i := Pos(':', Result);
   if i <> -1 then
-    Result := StrRestOf(Result, i);
+    Result := StrRestOf(Result, i+2);
 end;
 
 constructor TPackageInfo.Create(const packageName: string);

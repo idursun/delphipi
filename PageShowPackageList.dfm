@@ -70,6 +70,7 @@ object ShowPackageListPage: TShowPackageListPage
     OnGetImageIndex = packageTreeGetImageIndex
     OnGetHint = fPackageTreeGetHint
     OnGetNodeDataSize = packageTreeGetNodeDataSize
+    OnInitNode = fPackageTreeInitNode
     OnKeyAction = fPackageTreeKeyAction
     Columns = <
       item

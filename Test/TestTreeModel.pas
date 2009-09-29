@@ -28,6 +28,8 @@ type
   published
     procedure Should_return_root_nodes_if_parent_is_nil;
     procedure Should_return_child_nodes_of_specified_parent;
+    procedure Should_return_child_node_at_index_0;
+    procedure Should_return_child_node_at_index_1;
   end;
 
 implementation
@@ -87,6 +89,24 @@ begin
   CheckEquals(3, childCount, 'child counf of node a was wrong');
 end;
 
+
+procedure TestTTreeModel.Should_return_child_node_at_index_0;
+var
+  actual: TBasicNode;
+begin
+  actual := FTreeModel.GetChild(TBasicNode.Create('a'), 0);
+  CheckNotNull(actual, 'returned should not be null');
+  CheckEquals('a\1', actual.GetNodePath, 'returned node is wrong');
+end;
+
+procedure TestTTreeModel.Should_return_child_node_at_index_1;
+var
+  actual: TBasicNode;
+begin
+  actual := FTreeModel.GetChild(TBasicNode.Create('a'), 1);
+  CheckNotNull(actual, 'returned should not be null');
+  CheckEquals('a\2', actual.GetNodePath, 'returned node is wrong');
+end;
 
 initialization
 

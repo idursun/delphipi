@@ -57,6 +57,8 @@ type
     procedure actRemoveExecute(Sender: TObject);
     procedure actRemoveUpdate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure fPackageTreeInitNode(Sender: TBaseVirtualTree; ParentNode,
+      Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -159,11 +161,11 @@ end;
 
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
 begin
-
   threadWorking := false;
   if TPackageLoadThread(packageLoadThread).Active then
   begin
     lblWait.Visible := false;
+    fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
     fPackageTree.Visible := true;
     fPackageTree.FullExpand;
 
@@ -323,20 +325,35 @@ begin
   data := Sender.GetNodeData(Node);
 
   case Column of
-    0:
-      begin
-        CellText := data.Name;
-      end;
-    1:
-      if data.Info <> nil then
+    0:CellText := data.Name;
+    1:if data.Info <> nil then
         CellText := data.Info.Description;
-    2:
-      if data.Info <> nil then
+    2:if data.Info <> nil then
         if data.Info.RunOnly then
           CellText := _('runtime')
         else
           CellText := _('design');
   end;
+
+end;
+
+procedure TShowPackageListPage.fPackageTreeInitNode(Sender: TBaseVirtualTree;
+  ParentNode, Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
+var
+  data: PNodeData;
+  parentData: PNodeData;
+  parentPackageInfo : TPackageInfo;
+begin
+  inherited;
+  data := Sender.GetNodeData(Node);
+  parentData := Sender.GetNodeData(ParentNode);
+  parentPackageInfo := nil;
+  if parentData <> nil then
+    parentPackageInfo := parentData.Info;
+
+  data.Info := fModel.GetChild(parentPackageInfo, Node.Index);
+  if fModel.GetChildCount(data.Info) > 0 then
+    InitialStates := [ivsHasChildren];
 end;
 
 procedure TShowPackageListPage.fPackageTreeKeyAction(Sender: TBaseVirtualTree; var CharCode: Word; var Shift: TShiftState; var DoDefault: Boolean);
@@ -470,7 +487,6 @@ begin
   try
     try
       Search(fCompilationData.BaseFolder);
-      //RemoveEmptyFolderNodes(fTree.RootNode);
     except
       on e: Exception do
         ShowMessage(e.Message);
@@ -488,9 +504,7 @@ begin
     try
       repeat
         if ExtractFileExt(sr.Name) = '.dpk' then
-        begin
           fCompilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name)));
-        end;
       until FindNext(sr) <> 0;
     finally
       FindClose(sr);
