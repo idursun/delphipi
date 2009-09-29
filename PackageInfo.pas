@@ -5,11 +5,11 @@
 **}
 unit PackageInfo;
 interface
-uses  Classes, StrUtils;
+uses  Classes, StrUtils, TreeModel;
 
 type
   TPackageStatus = (psNone, psCompiling, psInstalling, psSuccess, psError);
-  TPackageInfo = class
+  TPackageInfo = class(TInterfacedObject, INode)
   private
     fRequiredPackageList: TStringList;
     fContainedFileList : TStringList;
@@ -24,6 +24,10 @@ type
     constructor Create(const packageName:string);overload;
     destructor Destroy; override;
     function DependsOn(const package: TPackageInfo): Boolean; overload;
+    function GetData: TObject;
+    function GetNodePath: string;
+    function GetDisplayName: string;
+
     
     property Description: string read FDescription write FDescription;
     property PackageName: string read FPackageName write FPackageName;
@@ -49,6 +53,26 @@ begin
   FreeAndNil(fRequiredPackageList);
   FreeAndNil(fContainedFileList);
   inherited;
+end;
+
+function TPackageInfo.GetData: TObject;
+begin
+  Result := nil;
+end;
+
+function TPackageInfo.GetDisplayName: string;
+begin
+  Result := Self.PackageName;
+end;
+
+function TPackageInfo.GetNodePath: string;
+var
+  i: integer;
+begin
+  Result := Self.GetNodePath;
+  i := StrIndex(Result, [':']);
+  if i <> -1 then
+    Result := StrRestOf(Result, i);
 end;
 
 constructor TPackageInfo.Create(const packageName: string);

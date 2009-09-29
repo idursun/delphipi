@@ -10,7 +10,7 @@ interface
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
   Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier,
-  ActnList, InstalledPackageResolver;
+  ActnList, InstalledPackageResolver, TreeModel;
 
 type
 
@@ -62,6 +62,7 @@ type
     fSelectMask: string;
     fDependencyVerifier: TPackageDependencyVerifier;
     fInstalledPackageResolver: TInstalledPackageResolver;
+    fModel : TBasicTreeModel<TPackageInfo>;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(Node: PVirtualNode; checkState: TCheckState);
 
@@ -85,15 +86,13 @@ type
   private
     fCompilationData: TCompilationData;
     fPackageInfoFactory: TPackageInfoFactory;
-    fTree: TBaseVirtualTree;
     fActive: Boolean;
-    procedure BuildFileNodes(parent: PVirtualNode; directory: string);
+    procedure BuildFileNodes(const directory: string);
   protected
     procedure Execute; override;
-    procedure Search(parent: PVirtualNode; folder: String);
-    procedure RemoveEmptyFolderNodes(Node: PVirtualNode);
+    procedure Search(const folder: String);
   public
-    constructor Create(data: TCompilationData; tree: TBaseVirtualTree);
+    constructor Create(data: TCompilationData);
     destructor Destroy; override;
     property Active: Boolean read fActive write fActive;
   end;
@@ -112,8 +111,9 @@ begin
   fInstalledPackageResolver.AddDefaultPackageList;
   fInstalledPackageResolver.AddIDEPackageList(CompilationData);
   fDependencyVerifier := TPackageDependencyVerifier.Create;
+  fModel := TBasicTreeModel<TPackageInfo>.Create(fCompilationData.PackageList);
 
-  packageLoadThread := TPackageLoadThread.Create(fCompilationData, fPackageTree);
+  packageLoadThread := TPackageLoadThread.Create(fCompilationData);
   with packageLoadThread do
   begin
     OnTerminate := PackageLoadCompleted;
@@ -450,11 +450,10 @@ end;
 
 { TPackageLoadThread }
 
-constructor TPackageLoadThread.Create(data: TCompilationData; tree: TBaseVirtualTree);
+constructor TPackageLoadThread.Create(data: TCompilationData);
 begin
   inherited Create(true);
   fCompilationData := data;
-  fTree := tree;
   fPackageInfoFactory := TPackageInfoFactory.Create;
 end;
 
@@ -464,52 +463,25 @@ begin
   inherited;
 end;
 
-procedure TPackageLoadThread.RemoveEmptyFolderNodes(Node: PVirtualNode);
-var
-  c: PVirtualNode;
-  data: PNodeData;
-begin
-  if not fActive then
-    exit;
-  if Node = nil then
-    exit;
-
-  c := fTree.GetFirstChild(Node);
-  while c <> nil do
-  begin
-    data := fTree.GetNodeData(c);
-    if data.Info = nil then
-      RemoveEmptyFolderNodes(c);
-    c := fTree.GetNextSibling(c);
-  end;
-  if Node.FirstChild = nil then
-    fTree.DeleteNode(Node);
-end;
-
 procedure TPackageLoadThread.Execute;
 begin
   inherited;
   fActive := true;
-
-  fTree.BeginUpdate;
   try
     try
-      Search(fTree.RootNode, fCompilationData.BaseFolder);
-      RemoveEmptyFolderNodes(fTree.RootNode);
+      Search(fCompilationData.BaseFolder);
+      //RemoveEmptyFolderNodes(fTree.RootNode);
     except
       on e: Exception do
         ShowMessage(e.Message);
     end;
   finally
-    fTree.EndUpdate;
   end;
 end;
 
-procedure TPackageLoadThread.BuildFileNodes(parent: PVirtualNode; directory: string);
+procedure TPackageLoadThread.BuildFileNodes(const directory: string);
 var
   sr: TSearchRec;
-  child: PVirtualNode;
-  data: PNodeData;
 begin
   if FindFirst(PathAppend(directory,fCompilationData.Pattern), faAnyFile, sr) = 0 then
   begin
@@ -517,12 +489,7 @@ begin
       repeat
         if ExtractFileExt(sr.Name) = '.dpk' then
         begin
-          child := fTree.AddChild(parent);
-          child.checkState := csCheckedNormal;
-          child.CheckType := ctCheckBox;
-          data := fTree.GetNodeData(child);
-          data.Name := sr.Name;
-          data.Info := fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name));
+          fCompilationData.PackageList.Add(fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name)));
         end;
       until FindNext(sr) <> 0;
     finally
@@ -531,29 +498,22 @@ begin
   end;
 end;
 
-procedure TPackageLoadThread.Search(parent: PVirtualNode; folder: String);
+procedure TPackageLoadThread.Search(const folder: String);
 var
-  child: PVirtualNode;
-  data: PNodeData;
   directoryList: TStringList;
   directory: string;
 begin
   if not fActive then
     exit;
+
   directoryList := TStringList.Create;
   try
     BuildFileList(PathAppend(folder,'*.*'), faDirectory, directoryList);
     for directory in directoryList do
     begin
-      child := fTree.AddChild(parent);
-      child.checkState := csCheckedNormal;
-      child.CheckType := ctCheckBox;
-      child.States := child.States + [vsHasChildren];
-      data := fTree.GetNodeData(child);
-      data.Name := directory;
-      Search(child, PathAppend(folder, directory));
+      Search(PathAppend(folder, directory));
     end;
-    BuildFileNodes(parent, folder);
+    BuildFileNodes(folder);
   finally
     directoryList.Free;
   end;

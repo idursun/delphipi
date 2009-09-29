@@ -1,6 +1,6 @@
 object ShowPackageListPage: TShowPackageListPage
-  Left = 441
-  Top = 310
+  Left = 246
+  Top = 192
   Caption = 'ShowPackageListPage'
   ClientHeight = 313
   ClientWidth = 568
