@@ -361,6 +361,7 @@ var
 begin
   inherited;
   Node.CheckType := ctCheckBox;
+  Node.CheckState := csCheckedNormal;
   data := Sender.GetNodeData(Node);
   parentData := Sender.GetNodeData(ParentNode);
   parentPackageInfo := nil;
