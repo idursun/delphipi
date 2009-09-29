@@ -132,7 +132,7 @@ begin
       words := SplitString(nodePath);
       if Length(words) = 0 then
         Continue;
-      if Length(words) < nextLevel then
+      if Length(words) <= nextLevel then
         Continue;
 
       list.Add(words[nextLevel]);

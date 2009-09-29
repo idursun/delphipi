@@ -30,6 +30,7 @@ type
     procedure Should_return_child_nodes_of_specified_parent;
     procedure Should_return_child_node_at_index_0;
     procedure Should_return_child_node_at_index_1;
+    procedure Should_return_count_of_logical_children;
   end;
 
 implementation
@@ -63,7 +64,9 @@ begin
   FItems.Add(TBasicNode.Create('a\2'));
   FItems.Add(TBasicNode.Create('a\2\3'));
   FItems.Add(TBasicNode.Create('b'));
-  FItems.Add(TBasicNode.Create('b\1'));
+  FItems.Add(TBasicNode.Create('b\1\1'));
+  FItems.Add(TBasicNode.Create('b\1\2'));
+  FItems.Add(TBasicNode.Create('b\1\3'));
   FTreeModel := TBasicTreeModel<TBasicNode>.Create(fItems);
 end;
 
@@ -86,7 +89,7 @@ var
   childCount:integer;
 begin
   childCount := FTreeModel.GetChildCount(TBasicNode.Create('a'));
-  CheckEquals(3, childCount, 'child counf of node a was wrong');
+  CheckEquals(2, childCount, 'child count of node a was wrong');
 end;
 
 
@@ -106,6 +109,14 @@ begin
   actual := FTreeModel.GetChild(TBasicNode.Create('a'), 1);
   CheckNotNull(actual, 'returned should not be null');
   CheckEquals('a\2', actual.GetNodePath, 'returned node is wrong');
+end;
+
+procedure TestTTreeModel.Should_return_count_of_logical_children;
+var
+  count : integer;
+begin
+  count := FTreeModel.GetChildCount(TBasicNode.Create('b'));
+  CheckEquals(1,count, 'logical children count was wrong');
 end;
 
 initialization

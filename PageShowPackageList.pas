@@ -59,6 +59,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure fPackageTreeInitNode(Sender: TBaseVirtualTree; ParentNode,
       Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
+    procedure fPackageTreeInitChildren(Sender: TBaseVirtualTree;
+      Node: PVirtualNode; var ChildCount: Cardinal);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -334,6 +336,17 @@ begin
         else
           CellText := _('design');
   end;
+
+end;
+
+procedure TShowPackageListPage.fPackageTreeInitChildren(
+  Sender: TBaseVirtualTree; Node: PVirtualNode; var ChildCount: Cardinal);
+var
+  data: PNodeData;
+begin
+  inherited;
+  data := Sender.GetNodeData(Node);
+//  if data.Info then
 
 end;
 
