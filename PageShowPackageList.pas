@@ -189,7 +189,6 @@ begin
     ChangeState(child, checkState);
     child := child.NextSibling;
   end;
-  VerifyDependencies;
 end;
 
 procedure TShowPackageListPage.UpdateWizardState;
@@ -246,6 +245,7 @@ end;
 procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
 begin
   ChangeState(Node, Node.checkState);
+  VerifyDependencies;
   fPackageTree.InvalidateChildren(Node, true);
   UpdateWizardState;
 end;
@@ -360,6 +360,7 @@ var
   parentPackageInfo : TPackageInfo;
 begin
   inherited;
+  Node.CheckType := ctCheckBox;
   data := Sender.GetNodeData(Node);
   parentData := Sender.GetNodeData(ParentNode);
   parentPackageInfo := nil;

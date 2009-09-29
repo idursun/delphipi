@@ -37,8 +37,6 @@ object ShowPackageListPage: TShowPackageListPage
     ParentFont = False
     Transparent = False
     Layout = tlCenter
-    ExplicitWidth = 484
-    ExplicitHeight = 234
   end
   object fPackageTree: TVirtualStringTree
     Left = 8
