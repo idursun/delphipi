@@ -1,0 +1,10 @@
+syntax: glob
+*.dcu
+*.exe
+__history
+*.orig
+*.local
+*.identcache
+*.todo
+*.tvsconfig
+ModelSupport*
