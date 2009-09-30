@@ -22,6 +22,7 @@ type
   strict private
     FItems: TObjectList<TBasicNode>;
     FTreeModel: TBasicTreeModel<TBasicNode>;
+  private
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -32,6 +33,8 @@ type
     procedure Should_return_child_node_at_index_1;
     procedure Should_return_count_of_logical_children;
     procedure Should_return_logical_node_if_there_are_not_immediate_children;
+    procedure Should_return_count_of_logical_nodes_under_a_parent;
+    procedure Should_return_child_at_index_1_under_a_parent;
   end;
 
 implementation
@@ -72,7 +75,9 @@ begin
   FItems.Add(TBasicNode.Create('b'));
   FItems.Add(TBasicNode.Create('b\1\1'));
   FItems.Add(TBasicNode.Create('b\1\2'));
-  FItems.Add(TBasicNode.Create('b\1\3'));
+  FItems.Add(TBasicNode.Create('c\1\1'));
+  FItems.Add(TBasicNode.Create('c\1\2'));
+  FItems.Add(TBasicNode.Create('c\2\1'));
   FTreeModel := TBasicTreeModel<TBasicNode>.Create(fItems);
 end;
 
@@ -87,7 +92,7 @@ var
   childCount:integer;
 begin
   childCount := FTreeModel.GetChildCount(nil);
-  CheckEquals(2, childCount, 'node count at level 0 was wrong');
+  CheckEquals(3, childCount, 'node count at level 0 was wrong');
 end;
 
 procedure TestTTreeModel.Should_return_child_nodes_of_specified_parent;
@@ -132,6 +137,22 @@ begin
   node := FTreeModel.GetChild(TBasicNode.Create('b'), 0);
   CheckNotNull(node, 'logical node should not be null');
   CheckEquals('b\1',node.GetNodePath, 'logical node path was wrong');
+end;
+
+procedure TestTTreeModel.Should_return_count_of_logical_nodes_under_a_parent;
+var
+  count: integer;
+begin
+  count := FTreeModel.GetChildCount(TBasicNode.Create('c'));
+  CheckEquals(2, count, 'logical node count was wrong');
+end;
+
+procedure TestTTreeModel.Should_return_child_at_index_1_under_a_parent;
+var
+  node: TBasicNode;
+begin
+  node := FTreeModel.GetChild(TBasicNode.Create('c'),1);
+  CheckEquals('c\2', node.GetNodePath, 'logical child was wrong');
 end;
 
 initialization

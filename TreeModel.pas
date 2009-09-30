@@ -62,6 +62,7 @@ var
   currentLevel, nextLevel : integer;
   nodes: TList<T>;
   immediateChild: boolean;
+  list : TStringList;
 begin
   Result := default(T);
 
@@ -76,33 +77,41 @@ begin
   end;
 
   i := 0;
-  for node in fNodes do
-  begin
-    nodePath := node.GetNodePath;
-    if not StartsStr(prefix, nodePath) then
-      Continue;
-
-    words := SplitString(nodePath);
-    if Length(words) = 0 then
-      Continue;
-
-    if Length(words) <= nextLevel then
-      Continue;
-    if i = index then
+  list := TStringList.Create;
+  list.Sorted := true;
+  list.Duplicates := dupIgnore;
+  try
+    for node in fNodes do
     begin
-      immediateChild := Length(words) = nextLevel + 1;
-      if immediateChild then
-        Result := node
-      else begin
-        Result := T.Create;
-        if prefix <> '' then
-          Result.SetNodeInfo(words[nextLevel], prefix + '\' + words[nextLevel])
-        else
-          Result.SetNodeInfo(words[nextLevel], words[nextLevel])
+      nodePath := node.GetNodePath;
+      if not StartsStr(prefix, nodePath) then
+        Continue;
+
+      words := SplitString(nodePath);
+      if Length(words) = 0 then
+        Continue;
+
+      if Length(words) <= nextLevel then
+        Continue;
+
+      list.Add(words[nextLevel]);
+      if (List.Count = index+1) then
+      begin
+        immediateChild := Length(words) = nextLevel + 1;
+        if immediateChild then
+          Result := node
+        else begin
+          Result := T.Create;
+          if prefix <> '' then
+            Result.SetNodeInfo(words[nextLevel], prefix + '\' + words[nextLevel])
+          else
+            Result.SetNodeInfo(words[nextLevel], words[nextLevel])
+        end;
+        Break;
       end;
-      Break;
     end;
-    Inc(i);
+  finally
+    list.Free;
   end;
 end;
 
