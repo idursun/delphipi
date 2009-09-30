@@ -473,8 +473,16 @@ end;
 
 procedure TShowPackageListPage.miUnselectAllClick(Sender: TObject);
 begin
-  fPackageTree.Traverse( procedure(Node: PVirtualNode)begin Node.checkState := csUncheckedNormal; end);
-  fPackageTree.Invalidate;
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.Traverse( procedure(Node: PVirtualNode)
+    begin
+      Node.checkState := csUncheckedNormal;
+    end);
+    VerifyDependencies;
+  finally
+    fPackageTree.EndUpdate;
+  end;
   UpdateWizardState;
 end;
 
