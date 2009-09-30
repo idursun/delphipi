@@ -217,7 +217,6 @@ var
 begin
   selectedPackages := TList<TPackageInfo>.Create;
   try
-
     fPackageTree.Traverse(procedure(Node: PVirtualNode)
     var
       data: PNodeData;
@@ -235,11 +234,15 @@ begin
     selectedPackages.Free;
   end;
 
-  fPackageTree.TraverseData( procedure(data: PNodeData)
-  begin
-    data.MissingPackageName := fDependencyVerifier.MissingPackages[data.Info.PackageName];
-  end);
-  fPackageTree.Invalidate;
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.TraverseData( procedure(data: PNodeData)
+    begin
+      data.MissingPackageName := fDependencyVerifier.MissingPackages[data.Info.PackageName];
+    end);
+  finally
+    fPackageTree.EndUpdate;
+  end;
 end;
 
 procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
@@ -432,11 +435,16 @@ end;
 
 procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
 begin
-  fPackageTree.Traverse( procedure(Node: PVirtualNode)
-  begin
-    Node.checkState := csCheckedNormal;
-  end);
-  fPackageTree.Invalidate;
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.Traverse( procedure(Node: PVirtualNode)
+    begin
+      Node.checkState := csCheckedNormal;
+    end);
+    VerifyDependencies;
+  finally
+    fPackageTree.EndUpdate;
+  end;
   UpdateWizardState;
 end;
 
@@ -444,16 +452,21 @@ procedure TShowPackageListPage.miSelectMatchingClick(Sender: TObject);
 var
   value: string;
 begin
-  value := fCompilationData.Pattern;
-  if InputQuery(_('Select Matching...'), _('File Mask'), value) then
-  begin
-    fSelectMask := value;
-    fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
+  fPackageTree.BeginUpdate;
+  try
+    value := fCompilationData.Pattern;
+    if InputQuery(_('Select Matching...'), _('File Mask'), value) then
     begin
-      if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
-         Node.checkState := csCheckedNormal;
-    end);
-    fPackageTree.Invalidate;
+      fSelectMask := value;
+      fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
+      begin
+        if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
+           Node.checkState := csCheckedNormal;
+      end);
+      VerifyDependencies;
+    end;
+  finally
+    fPackageTree.EndUpdate;
   end;
   UpdateWizardState;
 end;
@@ -469,16 +482,21 @@ procedure TShowPackageListPage.miUnselectMatchingClick(Sender: TObject);
 var
   value: string;
 begin
-  value := fCompilationData.Pattern;
-  if InputQuery(_('UnSelect Matching...'), _('File Mask'), value) then
-  begin
-    fSelectMask := value;
-    fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
+  fPackageTree.BeginUpdate;
+  try
+    value := fCompilationData.Pattern;
+    if InputQuery(_('UnSelect Matching...'), _('File Mask'), value) then
     begin
-      if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
-          Node.checkState := csUncheckedNormal;
-    end);
-    fPackageTree.Invalidate;
+      fSelectMask := value;
+      fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
+      begin
+        if IsFileNameMatch(data.Info.PackageName + '.dpk', fSelectMask) then
+            Node.checkState := csUncheckedNormal;
+      end);
+      VerifyDependencies;
+    end;
+  finally
+    fPackageTree.EndUpdate;
   end;
   UpdateWizardState;
 end;

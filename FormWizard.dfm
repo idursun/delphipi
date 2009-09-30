@@ -1,6 +1,6 @@
 object frmWizard: TfrmWizard
-  Left = 0
-  Top = 0
+  Left = 222
+  Top = 117
   Caption = 'Delphi PI'
   ClientHeight = 416
   ClientWidth = 592
@@ -366,9 +366,6 @@ object frmWizard: TfrmWizard
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = -8
-    ExplicitTop = 51
-    ExplicitHeight = 323
   end
   object pBottom: TPanel
     Left = 0
