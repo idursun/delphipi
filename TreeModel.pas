@@ -9,7 +9,6 @@ type
      function GetDisplayName: string;
      function GetData: TObject;
      function GetNodePath: string;
-     procedure SetNodeInfo(const name: string; const path: string);
   end;
 
   TTreeView<T: INode > = class
@@ -18,14 +17,21 @@ type
     function GetChildCount(const parent: T): integer; virtual; abstract;
   end;
 
-  TBasicTreeModel<T : INode, class, constructor> = class(TTreeView<T>)
+  TCreateLogicalNodeHandler<T> = reference to function(name, path:string):T;
+  TBasicTreeModel<T : INode> = class(TTreeView<T>)
   private
     fNodes : TList<T>;
+    fOnCreateLogicalNode: TCreateLogicalNodeHandler<T>;
     function SplitString(const str:string):TDynStrArray;
+  protected
+    function DoCreateLogicalNode(name, path:string):T; virtual;
   public
     constructor Create(const nodes: TList<T>);
     function GetChild(const parent: T; index: Integer): T; override;
     function GetChildCount(const parent: T): integer; override;
+
+    property OnCreateLogicalNode: TCreateLogicalNodeHandler<T> read fOnCreateLogicalNode write fOnCreateLogicalNode;
+
   end;
 
 implementation
@@ -50,6 +56,14 @@ end;
 constructor TBasicTreeModel<T>.Create(const nodes: TList<T>);
 begin
   fNodes := nodes;
+end;
+
+function TBasicTreeModel<T>.DoCreateLogicalNode(name, path: string): T;
+begin
+  if Assigned(fOnCreateLogicalNode) then
+    Result := fOnCreateLogicalNode(name,path)
+  else
+    Result := default(T);
 end;
 
 function TBasicTreeModel<T>.GetChild(const parent: T; index: Integer): T;
@@ -101,11 +115,10 @@ begin
         if immediateChild then
           Result := node
         else begin
-          Result := T.Create;
           if prefix <> '' then
-            Result.SetNodeInfo(words[nextLevel], prefix + '\' + words[nextLevel])
+            Result := DoCreateLogicalNode(words[nextLevel], prefix + '\' + words[nextLevel])
           else
-            Result.SetNodeInfo(words[nextLevel], words[nextLevel])
+            Result := DoCreateLogicalNode(words[nextLevel], words[nextLevel]);
         end;
         Break;
       end;

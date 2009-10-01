@@ -71,6 +71,7 @@ type
     procedure ChangeState(Node: PVirtualNode; checkState: TCheckState);
 
     procedure VerifyDependencies;
+    function CreateLogicalNode(name, path: string):TPackageInfo;
   public
     constructor Create(Owner: TComponent; const CompilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -85,7 +86,6 @@ var
   threadWorking: Boolean;
 
 type
-
   TPackageLoadThread = class(TThread)
   private
     fCompilationData: TCompilationData;
@@ -116,6 +116,7 @@ begin
   fInstalledPackageResolver.AddIDEPackageList(CompilationData);
   fDependencyVerifier := TPackageDependencyVerifier.Create;
   fModel := TBasicTreeModel<TPackageInfo>.Create(fCompilationData.PackageList);
+  fModel.OnCreateLogicalNode := CreateLogicalNode;
 
   packageLoadThread := TPackageLoadThread.Create(fCompilationData);
   with packageLoadThread do
@@ -126,6 +127,14 @@ begin
     fPackageTree.Visible := false;
     Resume;
   end;
+end;
+
+function TShowPackageListPage.CreateLogicalNode(name,
+  path: string): TPackageInfo;
+begin
+  Result := TPackageInfo.Create;
+  Result.FileName := path;
+  Result.PackageName := name;
 end;
 
 procedure TShowPackageListPage.FormClose(Sender: TObject; var Action: TCloseAction);

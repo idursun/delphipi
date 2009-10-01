@@ -27,7 +27,6 @@ type
     function GetData: TObject;
     function GetNodePath: string;
     function GetDisplayName: string;
-    procedure SetNodeInfo(const name: string; const path: string);
     
     property Description: string read FDescription write FDescription;
     property PackageName: string read FPackageName write FPackageName;
@@ -73,12 +72,6 @@ begin
   i := Pos(':', Result);
   if i <> 0 then
     Result := StrRestOf(Result, i+2);
-end;
-
-procedure TPackageInfo.SetNodeInfo(const name, path: string);
-begin
-  FPackageName := name;
-  FFileName := path;
 end;
 
 constructor TPackageInfo.Create(const packageName: string);

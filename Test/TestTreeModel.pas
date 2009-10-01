@@ -15,7 +15,6 @@ type
     function GetData: TObject;
     function GetDisplayName: string;
     function GetNodePath: string;
-    procedure SetNodeInfo(const name: string; const path: string);
   end;
 
   TestTTreeModel = class(TTestCase)
@@ -23,6 +22,7 @@ type
     FItems: TObjectList<TBasicNode>;
     FTreeModel: TBasicTreeModel<TBasicNode>;
   private
+    function CreateLogicalNode(name, path:string):TBasicNode;
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -60,9 +60,9 @@ begin
   Result := fName;
 end;
 
-procedure TBasicNode.SetNodeInfo(const name, path: string);
+function TestTTreeModel.CreateLogicalNode(name, path: string): TBasicNode;
 begin
-  fName := path;
+  Result := TBasicNode.Create(path);
 end;
 
 procedure TestTTreeModel.SetUp;
@@ -79,6 +79,7 @@ begin
   FItems.Add(TBasicNode.Create('c\1\2'));
   FItems.Add(TBasicNode.Create('c\2\1'));
   FTreeModel := TBasicTreeModel<TBasicNode>.Create(fItems);
+  FTreeModel.OnCreateLogicalNode := CreateLogicalNode;
 end;
 
 procedure TestTTreeModel.TearDown;
