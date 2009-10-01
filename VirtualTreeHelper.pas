@@ -6,10 +6,11 @@ uses VirtualTrees, Classes, SysUtils, PackageInfo;
 
 type
   PNodeData = ^TNodeData;
-
+  TNodeType = (ntNode, ntFolder, ntPackage);
   TNodeData = record
     Name: string;
     Info: TPackageInfo;
+    NodeType: TNodeType;
     MissingPackageName: string;
   end;
 

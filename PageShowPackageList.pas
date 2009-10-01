@@ -274,11 +274,12 @@ var
 begin
   if Column <> 0 then
     exit;
+
   data := Sender.GetNodeData(Node);
-  if data.Info = nil then
-    ImageIndex := 0
-  else
-    ImageIndex := 1;
+  case data.NodeType of
+     ntFolder: ImageIndex := 0;
+     ntPackage: ImageIndex := 1;
+  end;
 end;
 
 procedure TShowPackageListPage.actRemoveExecute(Sender: TObject);
@@ -307,26 +308,26 @@ var
   builder: TStringBuilder;
 begin
   data := Sender.GetNodeData(Node);
-  if data.Info <> nil then
-  begin
-    info := data.Info;
-    _type := _('Designtime Package');
-    if (info.RunOnly) then
-      _type := _('Runtime Package');
+  if data.NodeType <> ntPackage then
+    Exit;
 
-    builder := TStringBuilder.Create;
-    try
-      builder.Append(_('FullPath:') + info.FileName).AppendLine;
-      builder.Append(_('Description:') + info.Description).AppendLine;
-      builder.Append(_('Type:') + _type).AppendLine;
-      builder.Append(_('Requires:')).AppendLine;
-      builder.Append(info.RequiredPackageList.Text).AppendLine;
-      if data.MissingPackageName <> '' then
-        builder.Append(_('Missing Package:') + data.MissingPackageName);
-      HintText := builder.ToString;
-    finally
-      builder.Free;
-    end;
+  info := data.Info;
+  _type := _('Designtime Package');
+  if (info.RunOnly) then
+    _type := _('Runtime Package');
+
+  builder := TStringBuilder.Create;
+  try
+    builder.Append(_('FullPath:') + info.FileName).AppendLine;
+    builder.Append(_('Description:') + info.Description).AppendLine;
+    builder.Append(_('Type:') + _type).AppendLine;
+    builder.Append(_('Requires:')).AppendLine;
+    builder.Append(info.RequiredPackageList.Text).AppendLine;
+    if data.MissingPackageName <> '' then
+      builder.Append(_('Missing Package:') + data.MissingPackageName);
+    HintText := builder.ToString;
+  finally
+    builder.Free;
   end;
 end;
 
@@ -340,13 +341,15 @@ begin
 
   case Column of
     0:CellText := data.Name;
-    1:if data.Info <> nil then
+    1:if data.NodeType = ntPackage then
         CellText := data.Info.Description;
-    2:if data.Info <> nil then
+    2:if data.NodeType = ntPackage then
+      begin
         if data.Info.RunOnly then
           CellText := _('runtime')
         else
           CellText := _('design');
+      end;
   end;
 
 end;
@@ -358,7 +361,7 @@ var
 begin
   inherited;
   data := Sender.GetNodeData(Node);
-  if data.Info <> nil then
+  if data.NodeType = ntFolder then
   begin
     ChildCount := fModel.GetChildCount(data.Info);
   end;
@@ -382,6 +385,12 @@ begin
 
   data.Info := fModel.GetChild(parentPackageInfo, Node.Index);
   data.Name := data.Info.PackageName;
+
+  if ExtractFileExt(data.Info.FileName) = '' then //TODO: this is very ugly, change this asap
+    data.NodeType := ntFolder
+  else
+    data.NodeType := ntPackage;
+
   if fModel.GetChildCount(data.Info) > 0 then
     InitialStates := [ivsHasChildren];
 end;
