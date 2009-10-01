@@ -10,7 +10,7 @@ interface
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
   Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier,
-  ActnList, InstalledPackageResolver, TreeModel;
+  ActnList, InstalledPackageResolver, TreeModel, ToolWin;
 
 type
 
@@ -35,6 +35,15 @@ type
     actRemove: TAction;
     Remove1: TMenuItem;
     N3: TMenuItem;
+    toolbar: TToolBar;
+    btnFolderView: TToolButton;
+    sepearator1: TToolButton;
+    ilActionImages: TImageList;
+    pmViewStyles: TPopupMenu;
+    FolderTree1: TMenuItem;
+    List1: TMenuItem;
+    actChangeViewToTree: TAction;
+    actChangeViewToList: TAction;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure packageTreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
