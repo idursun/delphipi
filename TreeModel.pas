@@ -31,11 +31,12 @@ type
     function GetChildCount(const parent: T): integer; override;
 
     property OnCreateLogicalNode: TCreateLogicalNodeHandler<T> read fOnCreateLogicalNode write fOnCreateLogicalNode;
-
   end;
 
 implementation
+
 uses JclStrings;
+
 function TBasicTreeModel<T>.SplitString(const str:string):TDynStrArray;
 var
   I, lastIndex: Integer;
@@ -68,15 +69,13 @@ end;
 
 function TBasicTreeModel<T>.GetChild(const parent: T; index: Integer): T;
 var
-  prefix: string;
+  prefix, nodePath: string;
   node: T;
-  nodePath: string;
   words: TDynStrArray;
-  I: Integer;
-  currentLevel, nextLevel : integer;
-  nodes: TList<T>;
+  I, currentLevel, nextLevel : integer;
   immediateChild: boolean;
   list : TStringList;
+  nodes: TList<T>;
 begin
   Result := default(T);
 

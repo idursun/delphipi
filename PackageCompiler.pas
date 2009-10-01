@@ -116,7 +116,7 @@ end;
 
 procedure TPackageCompiler.PrepareExtraOptions;
 var
-  shortPaths, path: string;
+  shortPaths: string;
   I: Integer;
 begin
   fAllPaths.Clear;

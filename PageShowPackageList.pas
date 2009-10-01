@@ -91,7 +91,7 @@ type
     fCompilationData: TCompilationData;
     fPackageInfoFactory: TPackageInfoFactory;
     fActive: Boolean;
-    procedure BuildFileNodes(const directory: string);
+    procedure LoadPackageInformations(const directory: string);
   protected
     procedure Execute; override;
     procedure Search(const folder: String);
@@ -548,7 +548,7 @@ begin
   end;
 end;
 
-procedure TPackageLoadThread.BuildFileNodes(const directory: string);
+procedure TPackageLoadThread.LoadPackageInformations(const directory: string);
 var
   sr: TSearchRec;
 begin
@@ -580,7 +580,7 @@ begin
     begin
       Search(PathAppend(folder, directory));
     end;
-    BuildFileNodes(folder);
+    LoadPackageInformations(folder);
   finally
     directoryList.Free;
   end;
