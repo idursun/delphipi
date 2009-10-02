@@ -72,8 +72,6 @@ object ShowPackageListPage: TShowPackageListPage
     OnInitChildren = fPackageTreeInitChildren
     OnInitNode = fPackageTreeInitNode
     OnKeyAction = fPackageTreeKeyAction
-    ExplicitWidth = 530
-    ExplicitHeight = 307
     Columns = <
       item
         Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
@@ -101,7 +99,6 @@ object ShowPackageListPage: TShowPackageListPage
     Caption = 'toolbar'
     Images = ilActionImages
     TabOrder = 1
-    ExplicitWidth = 631
     object btnFolderView: TToolButton
       Left = 0
       Top = 0

@@ -203,13 +203,17 @@ begin
   threadWorking := false;
   if TPackageLoadThread(packageLoadThread).Active then
   begin
-    lblWait.Visible := false;
-    fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
-    fPackageTree.Visible := true;
-    fPackageTree.FullExpand;
-
-    VerifyDependencies;
-    UpdateWizardState;
+    fPackageTree.BeginUpdate;
+    try
+      fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
+      fPackageTree.FullExpand;
+      VerifyDependencies;
+    finally
+      fPackageTree.EndUpdate;
+      lblWait.Visible := false;
+      fPackageTree.Visible := true;
+    end;
+  UpdateWizardState;
   end;
 end;
 
