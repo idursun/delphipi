@@ -7,7 +7,7 @@ uses
 
 type
 
-  TBasicNode = class(TInterfacedObject, INode)
+  TDumbNode = class(TInterfacedObject, INode)
   private
    fName: string;
   public
@@ -19,10 +19,10 @@ type
 
   TestTTreeModel = class(TTestCase)
   strict private
-    FItems: TObjectList<TBasicNode>;
-    FTreeModel: TBasicTreeModel<TBasicNode>;
+    FItems: TObjectList<TDumbNode>;
+    FTreeModel: TTreeViewModel<TDumbNode>;
   private
-    function CreateLogicalNode(name, path:string):TBasicNode;
+    function CreateLogicalNode(name, path:string):TDumbNode;
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -40,45 +40,45 @@ type
 implementation
 { TBasicNode }
 
-constructor TBasicNode.Create(name: string);
+constructor TDumbNode.Create(name: string);
 begin
   fName := name;
 end;
 
-function TBasicNode.GetData: TObject;
+function TDumbNode.GetData: TObject;
 begin
    Result := nil;
 end;
 
-function TBasicNode.getDisplayName: string;
+function TDumbNode.getDisplayName: string;
 begin
   Result := fName;
 end;
 
-function TBasicNode.GetNodePath: string;
+function TDumbNode.GetNodePath: string;
 begin
   Result := fName;
 end;
 
-function TestTTreeModel.CreateLogicalNode(name, path: string): TBasicNode;
+function TestTTreeModel.CreateLogicalNode(name, path: string): TDumbNode;
 begin
-  Result := TBasicNode.Create(path);
+  Result := TDumbNode.Create(path);
 end;
 
 procedure TestTTreeModel.SetUp;
 begin
-  FItems := TObjectList<TBasicNode>.Create;
-  FItems.Add(TBasicNode.Create('a'));
-  FItems.Add(TBasicNode.Create('a\1'));
-  FItems.Add(TBasicNode.Create('a\2'));
-  FItems.Add(TBasicNode.Create('a\2\3'));
-  FItems.Add(TBasicNode.Create('b'));
-  FItems.Add(TBasicNode.Create('b\1\1'));
-  FItems.Add(TBasicNode.Create('b\1\2'));
-  FItems.Add(TBasicNode.Create('c\1\1'));
-  FItems.Add(TBasicNode.Create('c\1\2'));
-  FItems.Add(TBasicNode.Create('c\2\1'));
-  FTreeModel := TBasicTreeModel<TBasicNode>.Create(fItems);
+  FItems := TObjectList<TDumbNode>.Create;
+  FItems.Add(TDumbNode.Create('a'));
+  FItems.Add(TDumbNode.Create('a\1'));
+  FItems.Add(TDumbNode.Create('a\2'));
+  FItems.Add(TDumbNode.Create('a\2\3'));
+  FItems.Add(TDumbNode.Create('b'));
+  FItems.Add(TDumbNode.Create('b\1\1'));
+  FItems.Add(TDumbNode.Create('b\1\2'));
+  FItems.Add(TDumbNode.Create('c\1\1'));
+  FItems.Add(TDumbNode.Create('c\1\2'));
+  FItems.Add(TDumbNode.Create('c\2\1'));
+  FTreeModel := TTreeViewModel<TDumbNode>.Create(fItems);
   FTreeModel.OnCreateLogicalNode := CreateLogicalNode;
 end;
 
@@ -100,25 +100,25 @@ procedure TestTTreeModel.Should_return_child_nodes_of_specified_parent;
 var
   childCount:integer;
 begin
-  childCount := FTreeModel.GetChildCount(TBasicNode.Create('a'));
+  childCount := FTreeModel.GetChildCount(TDumbNode.Create('a'));
   CheckEquals(2, childCount, 'child count of node a was wrong');
 end;
 
 
 procedure TestTTreeModel.Should_return_child_node_at_index_0;
 var
-  actual: TBasicNode;
+  actual: TDumbNode;
 begin
-  actual := FTreeModel.GetChild(TBasicNode.Create('a'), 0);
+  actual := FTreeModel.GetChild(TDumbNode.Create('a'), 0);
   CheckNotNull(actual, 'returned should not be null');
   CheckEquals('a\1', actual.GetNodePath, 'returned node is wrong');
 end;
 
 procedure TestTTreeModel.Should_return_child_node_at_index_1;
 var
-  actual: TBasicNode;
+  actual: TDumbNode;
 begin
-  actual := FTreeModel.GetChild(TBasicNode.Create('a'), 1);
+  actual := FTreeModel.GetChild(TDumbNode.Create('a'), 1);
   CheckNotNull(actual, 'returned should not be null');
   CheckEquals('a\2', actual.GetNodePath, 'returned node is wrong');
 end;
@@ -127,15 +127,15 @@ procedure TestTTreeModel.Should_return_count_of_logical_children;
 var
   count : integer;
 begin
-  count := FTreeModel.GetChildCount(TBasicNode.Create('b'));
+  count := FTreeModel.GetChildCount(TDumbNode.Create('b'));
   CheckEquals(1,count, 'logical children count was wrong');
 end;
 
 procedure TestTTreeModel.Should_return_logical_node_if_there_are_not_immediate_children;
 var
-  node : TBasicNode;
+  node : TDumbNode;
 begin
-  node := FTreeModel.GetChild(TBasicNode.Create('b'), 0);
+  node := FTreeModel.GetChild(TDumbNode.Create('b'), 0);
   CheckNotNull(node, 'logical node should not be null');
   CheckEquals('b\1',node.GetNodePath, 'logical node path was wrong');
 end;
@@ -144,15 +144,15 @@ procedure TestTTreeModel.Should_return_count_of_logical_nodes_under_a_parent;
 var
   count: integer;
 begin
-  count := FTreeModel.GetChildCount(TBasicNode.Create('c'));
+  count := FTreeModel.GetChildCount(TDumbNode.Create('c'));
   CheckEquals(2, count, 'logical node count was wrong');
 end;
 
 procedure TestTTreeModel.Should_return_child_at_index_1_under_a_parent;
 var
-  node: TBasicNode;
+  node: TDumbNode;
 begin
-  node := FTreeModel.GetChild(TBasicNode.Create('c'),1);
+  node := FTreeModel.GetChild(TDumbNode.Create('c'),1);
   CheckEquals('c\2', node.GetNodePath, 'logical child was wrong');
 end;
 

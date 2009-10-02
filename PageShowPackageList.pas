@@ -78,7 +78,7 @@ type
     fSelectMask: string;
     fDependencyVerifier: TPackageDependencyVerifier;
     fInstalledPackageResolver: TInstalledPackageResolver;
-    fModel : TTreeView<TPackageInfo>;
+    fModel : TTreeModelBase<TPackageInfo>;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(Node: PVirtualNode; checkState: TCheckState);
 
@@ -303,7 +303,7 @@ begin
       fModel.Free;
 
     case viewType of
-      pvtTree: fModel := TBasicTreeModel<TPackageInfo>.Create(fCompilationData.PackageList);
+      pvtTree: fModel := TTreeViewModel<TPackageInfo>.Create(fCompilationData.PackageList);
       pvtList: fModel := TListViewModel<TPackageInfo>.Create(fCompilationData.PackageList);
     else
         raise Exception.Create('Invalid View');

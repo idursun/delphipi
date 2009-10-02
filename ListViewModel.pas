@@ -8,7 +8,7 @@ unit ListViewModel;
 interface
 uses Classes, Generics.Collections, TreeModel, PackageInfo;
 type
-  TListViewModel<T:INode> = class(TTreeView<T>)
+  TListViewModel<T:INode> = class(TTreeModelBase<T>)
   private
     fList: TList<T>;
   public

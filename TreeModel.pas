@@ -17,7 +17,7 @@ type
   end;
 
   TCreateLogicalNodeHandler<T> = reference to function(name, path:string):T;
-  TTreeView<T: INode > = class
+  TTreeModelBase<T: INode > = class
   private
     fOnCreateLogicalNode: TCreateLogicalNodeHandler<T>;
   protected
@@ -28,7 +28,7 @@ type
     property OnCreateLogicalNode: TCreateLogicalNodeHandler<T> read fOnCreateLogicalNode write fOnCreateLogicalNode;
   end;
 
-  TBasicTreeModel<T : INode> = class(TTreeView<T>)
+  TTreeViewModel<T : INode> = class(TTreeModelBase<T>)
   private
     fNodes : TList<T>;
     function SplitString(const str:string):TDynStrArray;
@@ -42,7 +42,7 @@ implementation
 
 uses JclStrings;
 
-function TTreeView<T>.DoCreateLogicalNode(name, path: string): T;
+function TTreeModelBase<T>.DoCreateLogicalNode(name, path: string): T;
 begin
   if Assigned(fOnCreateLogicalNode) then
     Result := fOnCreateLogicalNode(name,path)
@@ -51,7 +51,7 @@ begin
 end;
 
 
-function TBasicTreeModel<T>.SplitString(const str:string):TDynStrArray;
+function TTreeViewModel<T>.SplitString(const str:string):TDynStrArray;
 var
   I, lastIndex: Integer;
   words : TStringList;
@@ -68,12 +68,12 @@ begin
 end;
 
 { TBasicTreeModel }
-constructor TBasicTreeModel<T>.Create(const nodes: TList<T>);
+constructor TTreeViewModel<T>.Create(const nodes: TList<T>);
 begin
   fNodes := nodes;
 end;
 
-function TBasicTreeModel<T>.GetChild(const parent: T; index: Integer): T;
+function TTreeViewModel<T>.GetChild(const parent: T; index: Integer): T;
 var
   prefix, nodePath: string;
   node: T;
@@ -133,7 +133,7 @@ begin
   end;
 end;
 
-function TBasicTreeModel<T>.GetChildCount(const parent: T): integer;
+function TTreeViewModel<T>.GetChildCount(const parent: T): integer;
 var
   prefix: string;
   node: T;
