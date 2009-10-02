@@ -465,10 +465,10 @@ begin
   data.Info := fModel.GetChild(parentPackageInfo, Node.Index);
   data.Name := data.Info.PackageName;
 
-  if ExtractFileExt(data.Info.FileName) = '' then //TODO: this is very ugly, change this asap
-    data.NodeType := ntFolder
+  if ExtractFileExt(data.Info.FileName) = '.dpk' then //TODO: this is very ugly, change this asap
+    data.NodeType := ntPackage
   else
-    data.NodeType := ntPackage;
+    data.NodeType := ntFolder;
 
   if fModel.GetChildCount(data.Info) > 0 then
     InitialStates := [ivsHasChildren];
