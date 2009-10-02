@@ -351,6 +351,7 @@ begin
     fPackageTree.Clear;
     SetView(pvtTree);
     fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
+    fPackageTree.FullExpand;
   finally
    fPackageTree.EndUpdate;
   end;
