@@ -189,6 +189,7 @@ begin
 
   FreeAndNil(fDependencyVerifier);
   FreeAndNil(fInstalledPackageResolver);
+  FreeAndNil(fModel);
 end;
 
 procedure TShowPackageListPage.FormCreate(Sender: TObject);
