@@ -75,7 +75,7 @@ object ShowPackageListPage: TShowPackageListPage
       item
         Options = [coAllowClick, coDraggable, coEnabled, coParentBidiMode, coParentColor, coResizable, coShowDropMark, coVisible, coAutoSpring, coSmartResize, coAllowFocus]
         Position = 0
-        Width = 309
+        Width = 259
         WideText = 'Package'
       end
       item
