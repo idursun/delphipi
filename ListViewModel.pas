@@ -1,3 +1,8 @@
+{ **
+  DelphiPI (Delphi Package Installer)
+  Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+  License : GNU General Public License 2.0
+  ** }
 unit ListViewModel;
 
 interface
@@ -8,7 +13,6 @@ type
     fList: TList<T>;
   public
     constructor Create(list: TList<T>); virtual;
-    destructor Destroy; override;
     function GetChild(const parent: T; index: Integer): T; override;
     function GetChildCount(const parent: T): Integer; override;
   end;
@@ -20,12 +24,6 @@ implementation
 constructor TListViewModel<T>.Create(list: TList<T>);
 begin
   fList := list;
-end;
-
-destructor TListViewModel<T>.Destroy;
-begin
-
-  inherited;
 end;
 
 function TListViewModel<T>.GetChild(const parent: T; index: Integer): T;
