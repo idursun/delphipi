@@ -10,10 +10,11 @@ interface
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
   Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier,
-  ActnList, InstalledPackageResolver, TreeModel, ToolWin;
+  ActnList, InstalledPackageResolver, TreeModel, ListViewModel, ToolWin;
 
 type
 
+  TPackageViewType = (pvtTree, pvtList);
   TShowPackageListPage = class(TWizardPage)
     pmSelectPopupMenu: TPopupMenu;
     miSelectAll: TMenuItem;
@@ -70,17 +71,24 @@ type
       Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
     procedure fPackageTreeInitChildren(Sender: TBaseVirtualTree;
       Node: PVirtualNode; var ChildCount: Cardinal);
+    procedure actChangeViewToTreeExecute(Sender: TObject);
+    procedure actChangeViewToListExecute(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
     fDependencyVerifier: TPackageDependencyVerifier;
     fInstalledPackageResolver: TInstalledPackageResolver;
-    fModel : TBasicTreeModel<TPackageInfo>;
+    fModel : TTreeView<TPackageInfo>;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(Node: PVirtualNode; checkState: TCheckState);
 
     procedure VerifyDependencies;
     function CreateLogicalNode(name, path: string):TPackageInfo;
+    procedure SetView(const viewType:TPackageViewType);
+  private
+    class var criticalSection: TRTLCriticalSection;
+    class constructor Create;
+    class destructor Destroy;
   public
     constructor Create(Owner: TComponent; const CompilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -124,8 +132,8 @@ begin
   fInstalledPackageResolver.AddDefaultPackageList;
   fInstalledPackageResolver.AddIDEPackageList(CompilationData);
   fDependencyVerifier := TPackageDependencyVerifier.Create;
-  fModel := TBasicTreeModel<TPackageInfo>.Create(fCompilationData.PackageList);
-  fModel.OnCreateLogicalNode := CreateLogicalNode;
+
+  SetView(pvtTree);
 
   packageLoadThread := TPackageLoadThread.Create(fCompilationData);
   with packageLoadThread do
@@ -138,12 +146,22 @@ begin
   end;
 end;
 
+class constructor TShowPackageListPage.Create;
+begin
+  InitializeCriticalSection(criticalSection);
+end;
+
 function TShowPackageListPage.CreateLogicalNode(name,
   path: string): TPackageInfo;
 begin
   Result := TPackageInfo.Create;
   Result.FileName := path;
   Result.PackageName := name;
+end;
+
+class destructor TShowPackageListPage.Destroy;
+begin
+  DeleteCriticalSection(criticalSection);
 end;
 
 procedure TShowPackageListPage.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -276,6 +294,26 @@ begin
   NodeDataSize := sizeof(TNodeData);
 end;
 
+procedure TShowPackageListPage.SetView(const viewType: TPackageViewType);
+begin
+  EnterCriticalSection(criticalSection);
+  try
+    if assigned(fModel) then
+      fModel.Free;
+
+    case viewType of
+      pvtTree: fModel := TBasicTreeModel<TPackageInfo>.Create(fCompilationData.PackageList);
+      pvtList: fModel := TListViewModel<TPackageInfo>.Create(fCompilationData.PackageList);
+    else
+        raise Exception.Create('Invalid View');
+    end;
+
+    fModel.OnCreateLogicalNode := CreateLogicalNode;
+  finally
+    LeaveCriticalSection(criticalSection);
+  end;
+end;
+
 procedure TShowPackageListPage.packageTreeGetImageIndex(Sender: TBaseVirtualTree; Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex;
   var Ghosted: Boolean; var ImageIndex: Integer);
 var
@@ -288,6 +326,32 @@ begin
   case data.NodeType of
      ntFolder: ImageIndex := 0;
      ntPackage: ImageIndex := 1;
+  end;
+end;
+
+procedure TShowPackageListPage.actChangeViewToListExecute(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.Clear;
+    SetView(pvtList);
+    fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
+  finally
+    fPackageTree.EndUpdate;
+  end;
+end;
+
+procedure TShowPackageListPage.actChangeViewToTreeExecute(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.Clear;
+    SetView(pvtTree);
+    fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
+  finally
+   fPackageTree.EndUpdate;
   end;
 end;
 
@@ -603,5 +667,4 @@ begin
     directoryList.Free;
   end;
 end;
-
 end.
