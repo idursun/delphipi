@@ -37,7 +37,9 @@ end;
 
 function TListViewModel<T>.GetChildCount(const parent: T): Integer;
 begin
-  Result := fList.Count;
+  Result := 0;
+  if parent = nil then
+    Result := fList.Count
 end;
 
 end.
