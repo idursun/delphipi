@@ -27,7 +27,8 @@ uses
   VirtualTreeHelper in 'VirtualTreeHelper.pas',
   InstalledPackageResolver in 'InstalledPackageResolver.pas',
   TreeModel in 'TreeModel.pas',
-  ListViewModel in 'ListViewModel.pas';
+  ListViewModel in 'ListViewModel.pas',
+  TreeViewModel in 'TreeViewModel.pas';
 
 {$R *.res}
 

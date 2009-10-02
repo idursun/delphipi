@@ -95,8 +95,8 @@ type
   end;
 
 implementation
+uses JclFileUtils, gnugettext, Utils, PackageInfoFactory, VirtualTreeHelper, Generics.Collections, TreeViewModel;
 
-uses JclFileUtils, gnugettext, Utils, PackageInfoFactory, VirtualTreeHelper, Generics.Collections;
 {$R *.dfm}
 
 var

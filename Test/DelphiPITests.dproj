@@ -57,6 +57,7 @@
 			<DCCReference Include="..\InstalledPackageResolver.pas"/>
 			<DCCReference Include="TestTreeModel.pas"/>
 			<DCCReference Include="..\TreeModel.pas"/>
+			<DCCReference Include="..\TreeViewModel.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>

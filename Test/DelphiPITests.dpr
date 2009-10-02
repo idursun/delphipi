@@ -29,7 +29,8 @@ uses
   gnugettext in '..\libs\gnugettext.pas',
   InstalledPackageResolver in '..\InstalledPackageResolver.pas',
   TestTreeModel in 'TestTreeModel.pas',
-  TreeModel in '..\TreeModel.pas';
+  TreeModel in '..\TreeModel.pas',
+  TreeViewModel in '..\TreeViewModel.pas';
 
 {$R *.RES}
 

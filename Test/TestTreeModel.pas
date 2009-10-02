@@ -3,7 +3,7 @@ unit TestTreeModel;
 interface
 
 uses
-  TestFramework, TreeModel, Classes, Generics.Collections;
+  TestFramework, TreeModel, Classes, Generics.Collections, TreeViewModel;
 
 type
 
