@@ -24,11 +24,11 @@ uses
   ProgressMonitor in 'ProgressMonitor.pas',
   MonitoredPackageCompiler in 'MonitoredPackageCompiler.pas',
   PageCompilerOptions in 'PageCompilerOptions.pas' {SelectCompilerOptions},
-  VirtualTreeHelper in 'VirtualTreeHelper.pas',
   InstalledPackageResolver in 'InstalledPackageResolver.pas',
   TreeModel in 'TreeModel.pas',
   ListViewModel in 'ListViewModel.pas',
-  TreeViewModel in 'TreeViewModel.pas';
+  TreeViewModel in 'TreeViewModel.pas',
+  TreeNodes in 'TreeNodes.pas';
 
 {$R *.res}
 

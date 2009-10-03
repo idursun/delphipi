@@ -94,11 +94,11 @@
 			<DCCReference Include="PageCompilerOptions.pas">
 				<Form>SelectCompilerOptions</Form>
 			</DCCReference>
-			<DCCReference Include="VirtualTreeHelper.pas"/>
 			<DCCReference Include="InstalledPackageResolver.pas"/>
 			<DCCReference Include="TreeModel.pas"/>
 			<DCCReference Include="ListViewModel.pas"/>
 			<DCCReference Include="TreeViewModel.pas"/>
+			<DCCReference Include="TreeNodes.pas"/>
 			<None Include="DelphiPI.todo"/>
 			<None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
 			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>
@@ -172,6 +172,8 @@
 			<None Include="ModelSupport_DelphiPI\InstalledPackageResolver\default.txaPackage"/>
 			<None Include="ModelSupport_DelphiPI\VirtualTreeHelper\default.txaPackage"/>
 			<None Include="ModelSupport_DelphiPI\PageCompilerOptions\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\TreeModel\default.txaPackage"/>
+			<None Include="ModelSupport_DelphiPI\TreeNodes\default.txaPackage"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
