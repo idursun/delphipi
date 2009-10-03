@@ -73,18 +73,23 @@ type
     btnFolderView: TToolButton;
     sepearator1: TToolButton;
     ilActionImages: TImageList;
-    pmViewStyles: TPopupMenu;
-    FolderTree1: TMenuItem;
-    List1: TMenuItem;
     actChangeViewToTree: TAction;
     actChangeViewToList: TAction;
+    actSelectAll: TAction;
+    actUnselectAll: TAction;
+    actSelectMatching: TAction;
+    actUnselectMatching: TAction;
+    actExpand: TAction;
+    actCollapse: TAction;
+    btnChangeToListView: TToolButton;
+    btnAddFolder: TToolButton;
+    actAddPackagesFromFolder: TAction;
+    actAddPackage: TAction;
+    btnAddPackage: TToolButton;
+    seperator2: TToolButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
     procedure packageTreeGetNodeDataSize(Sender: TBaseVirtualTree; var NodeDataSize: Integer);
-    procedure miSelectAllClick(Sender: TObject);
-    procedure miUnselectAllClick(Sender: TObject);
-    procedure miSelectMatchingClick(Sender: TObject);
-    procedure miUnselectMatchingClick(Sender: TObject);
     procedure packageTreeGetImageIndex(Sender: TBaseVirtualTree; Node: PVirtualNode; Kind: TVTImageKind; Column: TColumnIndex; var Ghosted: Boolean;
       var ImageIndex: Integer);
     procedure fPackageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex; var LineBreakStyle: TVTTooltipLineBreakStyle;
@@ -92,10 +97,6 @@ type
     procedure fPackageTreeGetText(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType; var CellText: string);
     procedure fPackageTreePaintText(Sender: TBaseVirtualTree; const TargetCanvas: TCanvas; Node: PVirtualNode; Column: TColumnIndex;
       TextType: TVSTTextType);
-    procedure miCollapseAllClick(Sender: TObject);
-    procedure miCollapseChildrenClick(Sender: TObject);
-    procedure miExpandChildrenClick(Sender: TObject);
-    procedure miExpandAllClick(Sender: TObject);
     procedure fPackageTreeKeyAction(Sender: TBaseVirtualTree; var CharCode: Word; var Shift: TShiftState; var DoDefault: Boolean);
     procedure actRemoveExecute(Sender: TObject);
     procedure actRemoveUpdate(Sender: TObject);
@@ -106,6 +107,12 @@ type
       Node: PVirtualNode; var ChildCount: Cardinal);
     procedure actChangeViewToTreeExecute(Sender: TObject);
     procedure actChangeViewToListExecute(Sender: TObject);
+    procedure actSelectAllExecute(Sender: TObject);
+    procedure actUnselectAllExecute(Sender: TObject);
+    procedure actSelectMatchingExecute(Sender: TObject);
+    procedure actUnselectMatchingExecute(Sender: TObject);
+    procedure actCollapseExecute(Sender: TObject);
+    procedure actExpandExecute(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -427,6 +434,18 @@ begin
   end;
 end;
 
+procedure TShowPackageListPage.actCollapseExecute(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.FullCollapse(fPackageTree.FocusedNode);
+end;
+
+procedure TShowPackageListPage.actExpandExecute(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.FullExpand(fPackageTree.FocusedNode);
+end;
+
 procedure TShowPackageListPage.actRemoveExecute(Sender: TObject);
 begin
   inherited;
@@ -441,6 +460,88 @@ procedure TShowPackageListPage.actRemoveUpdate(Sender: TObject);
 begin
   inherited;
   TAction(Sender).Enabled := fPackageTree.SelectedCount > 0;
+end;
+
+procedure TShowPackageListPage.actSelectAllExecute(Sender: TObject);
+begin
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.Traverse( procedure(Node: PVirtualNode)
+    begin
+      Node.checkState := csCheckedNormal;
+    end);
+    VerifyDependencies;
+  finally
+    fPackageTree.EndUpdate;
+  end;
+  UpdateWizardState;
+end;
+
+procedure TShowPackageListPage.actSelectMatchingExecute(Sender: TObject);
+var
+  value: string;
+begin
+  fPackageTree.BeginUpdate;
+  try
+    value := fCompilationData.Pattern;
+    if InputQuery(_('Select Matching...'), _('File Mask'), value) then
+    begin
+      fSelectMask := value;
+      fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
+      var
+        info:TPackageInfo;
+      begin
+        info := data.Node.GetData as TPackageInfo;
+        if IsFileNameMatch(info.PackageName + '.dpk', fSelectMask) then
+           Node.checkState := csCheckedNormal;
+      end);
+      VerifyDependencies;
+    end;
+  finally
+    fPackageTree.EndUpdate;
+  end;
+  UpdateWizardState;
+end;
+
+procedure TShowPackageListPage.actUnselectAllExecute(Sender: TObject);
+begin
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.Traverse( procedure(Node: PVirtualNode)
+    begin
+      Node.checkState := csUncheckedNormal;
+    end);
+    VerifyDependencies;
+  finally
+    fPackageTree.EndUpdate;
+  end;
+  UpdateWizardState;
+end;
+
+procedure TShowPackageListPage.actUnselectMatchingExecute(Sender: TObject);
+var
+  value: string;
+begin
+  fPackageTree.BeginUpdate;
+  try
+    value := fCompilationData.Pattern;
+    if InputQuery(_('UnSelect Matching...'), _('File Mask'), value) then
+    begin
+      fSelectMask := value;
+      fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
+      var
+        info: TPackageInfo;
+      begin
+        info := data.Node.GetData as TPackageInfo;
+        if IsFileNameMatch(info.PackageName + '.dpk', fSelectMask) then
+            Node.checkState := csUncheckedNormal;
+      end);
+      VerifyDependencies;
+    end;
+  finally
+    fPackageTree.EndUpdate;
+  end;
+  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.fPackageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
@@ -568,112 +669,6 @@ begin
     else
       TargetCanvas.Font.Color := clBlack;
   end;
-end;
-
-procedure TShowPackageListPage.miCollapseAllClick(Sender: TObject);
-begin
-  inherited;
-  fPackageTree.FullCollapse;
-end;
-
-procedure TShowPackageListPage.miCollapseChildrenClick(Sender: TObject);
-begin
-  inherited;
-  fPackageTree.FullCollapse(fPackageTree.FocusedNode);
-end;
-
-procedure TShowPackageListPage.miExpandAllClick(Sender: TObject);
-begin
-  inherited;
-  fPackageTree.FullExpand;
-end;
-
-procedure TShowPackageListPage.miExpandChildrenClick(Sender: TObject);
-begin
-  inherited;
-  fPackageTree.FullExpand(fPackageTree.FocusedNode);
-end;
-
-procedure TShowPackageListPage.miSelectAllClick(Sender: TObject);
-begin
-  fPackageTree.BeginUpdate;
-  try
-    fPackageTree.Traverse( procedure(Node: PVirtualNode)
-    begin
-      Node.checkState := csCheckedNormal;
-    end);
-    VerifyDependencies;
-  finally
-    fPackageTree.EndUpdate;
-  end;
-  UpdateWizardState;
-end;
-
-procedure TShowPackageListPage.miSelectMatchingClick(Sender: TObject);
-var
-  value: string;
-begin
-  fPackageTree.BeginUpdate;
-  try
-    value := fCompilationData.Pattern;
-    if InputQuery(_('Select Matching...'), _('File Mask'), value) then
-    begin
-      fSelectMask := value;
-      fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
-      var
-        info:TPackageInfo;
-      begin
-        info := data.Node.GetData as TPackageInfo;
-        if IsFileNameMatch(info.PackageName + '.dpk', fSelectMask) then
-           Node.checkState := csCheckedNormal;
-      end);
-      VerifyDependencies;
-    end;
-  finally
-    fPackageTree.EndUpdate;
-  end;
-  UpdateWizardState;
-end;
-
-procedure TShowPackageListPage.miUnselectAllClick(Sender: TObject);
-begin
-  fPackageTree.BeginUpdate;
-  try
-    fPackageTree.Traverse( procedure(Node: PVirtualNode)
-    begin
-      Node.checkState := csUncheckedNormal;
-    end);
-    VerifyDependencies;
-  finally
-    fPackageTree.EndUpdate;
-  end;
-  UpdateWizardState;
-end;
-
-procedure TShowPackageListPage.miUnselectMatchingClick(Sender: TObject);
-var
-  value: string;
-begin
-  fPackageTree.BeginUpdate;
-  try
-    value := fCompilationData.Pattern;
-    if InputQuery(_('UnSelect Matching...'), _('File Mask'), value) then
-    begin
-      fSelectMask := value;
-      fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
-      var
-        info: TPackageInfo;
-      begin
-        info := data.Node.GetData as TPackageInfo;
-        if IsFileNameMatch(info.PackageName + '.dpk', fSelectMask) then
-            Node.checkState := csUncheckedNormal;
-      end);
-      VerifyDependencies;
-    end;
-  finally
-    fPackageTree.EndUpdate;
-  end;
-  UpdateWizardState;
 end;
 
 { TPackageLoadThread }
