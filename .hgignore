@@ -8,3 +8,5 @@ __history
 *.todo
 *.tvsconfig
 ModelSupport*
+*.cbk
+LibrarySupport

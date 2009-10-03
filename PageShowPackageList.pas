@@ -10,37 +10,9 @@ interface
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
   Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier,
-  ActnList, InstalledPackageResolver, TreeModel, ListViewModel, ToolWin, Generics.Collections;
+  ActnList, InstalledPackageResolver, TreeModel, ListViewModel, ToolWin, Generics.Collections, TreeNodes;
 
 type
-
-  TNodeType = (ntNode, ntFolder, ntPackage);
-  TTreeNode = class(TInterfacedObject, INode)
-  private
-    fName: string;
-    fPath: string;
-    fSelected: Boolean;
-    fNodeType: TNodeType;
-  public
-    constructor Create(const name, path: string);
-    function GetData: TObject; virtual;
-    function GetDisplayName: string;  virtual;
-    function GetNodePath: string; virtual;
-    property NodeType: TNodeType read fNodeType;
-    property Selected: Boolean read fSelected write fSelected;
-  end;
-
-  TPackageTreeNode = class(TTreeNode)
-  private
-    fInfo: TPackageInfo;
-  public
-    constructor Create(const info: TPackageInfo); virtual;
-
-    function GetData: TObject; override;
-    function GetDisplayName: string; override;
-    function GetNodePath: string; override;
-  end;
-
   PNodeData = ^TNodeData;
   TNodeData = record
     Node: TTreeNode;
@@ -48,6 +20,7 @@ type
   end;
 
   TPackageViewType = (pvtTree, pvtList);
+
   TShowPackageListPage = class(TWizardPage)
     pmSelectPopupMenu: TPopupMenu;
     miSelectAll: TMenuItem;
@@ -101,10 +74,8 @@ type
     procedure actRemoveExecute(Sender: TObject);
     procedure actRemoveUpdate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure fPackageTreeInitNode(Sender: TBaseVirtualTree; ParentNode,
-      Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
-    procedure fPackageTreeInitChildren(Sender: TBaseVirtualTree;
-      Node: PVirtualNode; var ChildCount: Cardinal);
+    procedure fPackageTreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
+    procedure fPackageTreeInitChildren(Sender: TBaseVirtualTree; Node: PVirtualNode; var ChildCount: Cardinal);
     procedure actChangeViewToTreeExecute(Sender: TObject);
     procedure actChangeViewToListExecute(Sender: TObject);
     procedure actSelectAllExecute(Sender: TObject);
@@ -118,12 +89,12 @@ type
     fSelectMask: string;
     fDependencyVerifier: TPackageDependencyVerifier;
     fInstalledPackageResolver: TInstalledPackageResolver;
-    fModel : TTreeModelBase<TTreeNode>;
-    fNodes : TList<TTreeNode>;
+    fModel: TTreeModelBase<TTreeNode>;
+    fNodes: TList<TTreeNode>;
     procedure PackageLoadCompleted(Sender: TObject);
     procedure ChangeState(Node: PVirtualNode; checkState: TCheckState);
     procedure VerifyDependencies;
-    procedure SetView(const viewType:TPackageViewType);
+    procedure SetView(const viewType: TPackageViewType);
   private
     class var criticalSection: TRTLCriticalSection;
     class constructor Create;
@@ -134,8 +105,8 @@ type
   end;
 
 implementation
-uses JclFileUtils, JclStrings, gnugettext, Utils, PackageInfoFactory, VirtualTreeHelper, TreeViewModel;
 
+uses JclFileUtils, JclStrings, gnugettext, Utils, PackageInfoFactory, TreeViewModel;
 {$R *.dfm}
 
 var
@@ -160,17 +131,15 @@ type
 
   TVirtualTreeHelper = class helper for TBaseVirtualTree
   private
-    procedure InternalTraverse(node: PVirtualNode; handler: TProc<PVirtualNode>);
+    procedure InternalTraverse(Node: PVirtualNode; handler: TProc<PVirtualNode>);
   public
-    procedure Traverse(node: PVirtualNode; handler: TProc<PVirtualNode>); overload;
+    procedure Traverse(Node: PVirtualNode; handler: TProc<PVirtualNode>); overload;
     procedure Traverse(handler: TProc<PVirtualNode>); overload;
     procedure TraverseData(handler: TProc<PNodeData>);
     procedure TraverseWithData(handler: TProc<PVirtualNode, PNodeData>);
   end;
 
-
   { TShowPackageListPage }
-
 constructor TShowPackageListPage.Create(Owner: TComponent; const CompilationData: TCompilationData);
 begin
   inherited;
@@ -258,7 +227,7 @@ begin
       lblWait.Visible := false;
       fPackageTree.Visible := true;
     end;
-  UpdateWizardState;
+    UpdateWizardState;
   end;
 end;
 
@@ -297,11 +266,7 @@ begin
     button := wizard.GetButton(wbtNext);
     button.Caption := _('Compile');
     selectedPackageCount := 0;
-    fPackageTree.Traverse( procedure(Node: PVirtualNode)
-    begin
-      if Node.checkState = csCheckedNormal then
-        inc(selectedPackageCount);
-    end);
+    fPackageTree.Traverse( procedure(Node: PVirtualNode)begin if Node.checkState = csCheckedNormal then inc(selectedPackageCount); end);
     button.Enabled := selectedPackageCount > 0;
   end;
 end;
@@ -312,17 +277,16 @@ var
 begin
   selectedPackages := TList<TPackageInfo>.Create;
   try
-    fPackageTree.Traverse(procedure(Node: PVirtualNode)
+    fPackageTree.Traverse( procedure(Node: PVirtualNode)
     var
-      data: PNodeData;
+     data: PNodeData;
     begin
-      data := fPackageTree.GetNodeData(Node);
-      
       if Node.checkState <> csCheckedNormal then
         exit;
 
+      data := fPackageTree.GetNodeData(Node);
       if (data <> nil) and (data.Node.NodeType = ntPackage) then
-         selectedPackages.Add(data.Node.GetData as TPackageInfo);
+        selectedPackages.Add(data.Node.GetData as TPackageInfo);
     end);
 
     fDependencyVerifier.Verify(selectedPackages, fInstalledPackageResolver);
@@ -332,16 +296,10 @@ begin
 
   fPackageTree.BeginUpdate;
   try
-    fPackageTree.TraverseData( procedure(data: PNodeData)
-    var
-      info: TPackageInfo;
-    begin
-      info := data.Node.GetData as TPackageInfo;
-      if info = nil then
-        exit;
+    fPackageTree.TraverseData( procedure(data: PNodeData)var info: TPackageInfo; begin info := data.Node.GetData as TPackageInfo;
+      if info = nil then exit;
 
-      data.MissingPackageName := fDependencyVerifier.MissingPackages[info.PackageName];
-    end);
+      data.MissingPackageName := fDependencyVerifier.MissingPackages[info.PackageName]; end);
   finally
     fPackageTree.EndUpdate;
   end;
@@ -373,13 +331,15 @@ begin
       FreeAndNil(fModel);
 
     case viewType of
-      pvtTree: fModel := TTreeViewModel<TTreeNode>.Create(fNodes);
-      pvtList: fModel := TListViewModel<TTreeNode>.Create(fNodes);
+      pvtTree:
+        fModel := TTreeViewModel<TTreeNode>.Create(fNodes);
+      pvtList:
+        fModel := TListViewModel<TTreeNode>.Create(fNodes);
     else
-        raise Exception.Create('Invalid View');
+      raise Exception.Create('Invalid View');
     end;
 
-    fModel.OnCreateLogicalNode := function (name, path:string) : TTreeNode
+    fModel.OnCreateLogicalNode := function(name, path: string): TTreeNode
     begin
       Result := TTreeNode.Create(name, path);
     end;
@@ -399,8 +359,10 @@ begin
 
   data := Sender.GetNodeData(Node);
   case data.Node.NodeType of
-     ntFolder: ImageIndex := 0;
-     ntPackage: ImageIndex := 1;
+    ntFolder:
+      ImageIndex := 0;
+    ntPackage:
+      ImageIndex := 1;
   end;
 end;
 
@@ -413,9 +375,9 @@ begin
     SetView(pvtList);
     fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
     fPackageTree.FullExpand;
+    VerifyDependencies;
   finally
     fPackageTree.EndUpdate;
-    VerifyDependencies;
   end;
 end;
 
@@ -428,27 +390,24 @@ begin
     SetView(pvtTree);
     fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
     fPackageTree.FullExpand;
-  finally
-   fPackageTree.EndUpdate;
     VerifyDependencies;
+  finally
+    fPackageTree.EndUpdate;
   end;
 end;
 
 procedure TShowPackageListPage.actCollapseExecute(Sender: TObject);
 begin
-  inherited;
   fPackageTree.FullCollapse(fPackageTree.FocusedNode);
 end;
 
 procedure TShowPackageListPage.actExpandExecute(Sender: TObject);
 begin
-  inherited;
   fPackageTree.FullExpand(fPackageTree.FocusedNode);
 end;
 
 procedure TShowPackageListPage.actRemoveExecute(Sender: TObject);
 begin
-  inherited;
   if fPackageTree.SelectedCount > 0 then
   begin
     fPackageTree.DeleteSelectedNodes;
@@ -458,7 +417,6 @@ end;
 
 procedure TShowPackageListPage.actRemoveUpdate(Sender: TObject);
 begin
-  inherited;
   TAction(Sender).Enabled := fPackageTree.SelectedCount > 0;
 end;
 
@@ -466,10 +424,7 @@ procedure TShowPackageListPage.actSelectAllExecute(Sender: TObject);
 begin
   fPackageTree.BeginUpdate;
   try
-    fPackageTree.Traverse( procedure(Node: PVirtualNode)
-    begin
-      Node.checkState := csCheckedNormal;
-    end);
+    fPackageTree.Traverse( procedure(Node: PVirtualNode)begin Node.checkState := csCheckedNormal; end);
     VerifyDependencies;
   finally
     fPackageTree.EndUpdate;
@@ -489,11 +444,10 @@ begin
       fSelectMask := value;
       fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
       var
-        info:TPackageInfo;
-      begin
-        info := data.Node.GetData as TPackageInfo;
+        info: TPackageInfo;
+      begin info := data.Node.GetData as TPackageInfo;
         if IsFileNameMatch(info.PackageName + '.dpk', fSelectMask) then
-           Node.checkState := csCheckedNormal;
+          Node.checkState := csCheckedNormal;
       end);
       VerifyDependencies;
     end;
@@ -507,10 +461,7 @@ procedure TShowPackageListPage.actUnselectAllExecute(Sender: TObject);
 begin
   fPackageTree.BeginUpdate;
   try
-    fPackageTree.Traverse( procedure(Node: PVirtualNode)
-    begin
-      Node.checkState := csUncheckedNormal;
-    end);
+    fPackageTree.Traverse( procedure(Node: PVirtualNode)begin Node.checkState := csUncheckedNormal; end);
     VerifyDependencies;
   finally
     fPackageTree.EndUpdate;
@@ -528,13 +479,12 @@ begin
     if InputQuery(_('UnSelect Matching...'), _('File Mask'), value) then
     begin
       fSelectMask := value;
-      fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
-      var
-        info: TPackageInfo;
+      fPackageTree.TraverseWithData(procedure(Node: PVirtualNode; data: PNodeData)
+      var info: TPackageInfo;
       begin
         info := data.Node.GetData as TPackageInfo;
         if IsFileNameMatch(info.PackageName + '.dpk', fSelectMask) then
-            Node.checkState := csUncheckedNormal;
+          Node.checkState := csUncheckedNormal;
       end);
       VerifyDependencies;
     end;
@@ -555,7 +505,7 @@ var
 begin
   data := Sender.GetNodeData(Node);
   if data.Node.NodeType <> ntPackage then
-    Exit;
+    exit;
 
   info := data.Node.GetData as TPackageInfo;
   _type := _('Designtime Package');
@@ -564,13 +514,13 @@ begin
 
   builder := TStringBuilder.Create;
   try
-    builder.Append(_('FullPath:') + info.FileName).AppendLine;
-    builder.Append(_('Description:') + info.Description).AppendLine;
-    builder.Append(_('Type:') + _type).AppendLine;
-    builder.Append(_('Requires:')).AppendLine;
+    builder.Append(_('FullPath: ') + info.FileName).AppendLine;
+    builder.Append(_('Description: ') + info.Description).AppendLine;
+    builder.Append(_('Type: ') + _type).AppendLine;
+    builder.Append(_('Requires: ')).AppendLine;
     builder.Append(info.RequiredPackageList.Text).AppendLine;
     if data.MissingPackageName <> '' then
-      builder.Append(_('Missing Package:') + data.MissingPackageName);
+      builder.Append(_('Missing Package: ') + data.MissingPackageName);
     HintText := builder.ToString;
   finally
     builder.Free;
@@ -588,10 +538,13 @@ begin
   info := data.Node.GetData as TPackageInfo;
 
   case Column of
-    0:CellText := data.Node.GetDisplayName;
-    1:if data.Node.NodeType = ntPackage then
+    0:
+      CellText := data.Node.GetDisplayName;
+    1:
+      if data.Node.NodeType = ntPackage then
         CellText := info.Description;
-    2:if data.Node.NodeType = ntPackage then
+    2:
+      if data.Node.NodeType = ntPackage then
       begin
         if info.RunOnly then
           CellText := _('runtime')
@@ -599,15 +552,12 @@ begin
           CellText := _('design');
       end;
   end;
-
 end;
 
-procedure TShowPackageListPage.fPackageTreeInitChildren(
-  Sender: TBaseVirtualTree; Node: PVirtualNode; var ChildCount: Cardinal);
+procedure TShowPackageListPage.fPackageTreeInitChildren(Sender: TBaseVirtualTree; Node: PVirtualNode; var ChildCount: Cardinal);
 var
   data: PNodeData;
 begin
-  inherited;
   data := Sender.GetNodeData(Node);
   if data.Node.NodeType = ntFolder then
   begin
@@ -615,14 +565,13 @@ begin
   end;
 end;
 
-procedure TShowPackageListPage.fPackageTreeInitNode(Sender: TBaseVirtualTree;
-  ParentNode, Node: PVirtualNode; var InitialStates: TVirtualNodeInitStates);
+procedure TShowPackageListPage.fPackageTreeInitNode(Sender: TBaseVirtualTree; ParentNode, Node: PVirtualNode;
+  var InitialStates: TVirtualNodeInitStates);
 var
   data: PNodeData;
   parentData: PNodeData;
   parentNodeData: TTreeNode;
 begin
-  inherited;
   Node.CheckType := ctCheckBox;
 
   parentData := Sender.GetNodeData(ParentNode);
@@ -633,7 +582,7 @@ begin
   data := Sender.GetNodeData(Node);
   data.Node := fModel.GetChild(parentNodeData, Node.Index);
   if data.Node.Selected then
-    Node.CheckState := csCheckedNormal;
+    Node.checkState := csCheckedNormal;
 
   if fModel.GetChildCount(data.Node) > 0 then
     InitialStates := [ivsHasChildren];
@@ -641,7 +590,6 @@ end;
 
 procedure TShowPackageListPage.fPackageTreeKeyAction(Sender: TBaseVirtualTree; var CharCode: Word; var Shift: TShiftState; var DoDefault: Boolean);
 begin
-  inherited;
   if CharCode = VK_DELETE then
   begin
     actRemove.Execute;
@@ -706,12 +654,12 @@ procedure TPackageLoadThread.LoadPackageInformations(const directory: string);
 var
   sr: TSearchRec;
 begin
-  if FindFirst(PathAppend(directory,fCompilationData.Pattern), faAnyFile, sr) = 0 then
+  if FindFirst(PathAppend(directory, fCompilationData.Pattern), faAnyFile, sr) = 0 then
   begin
     try
       repeat
         if ExtractFileExt(sr.Name) = '.dpk' then
-          fList.Add( TPackageTreeNode.Create(fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name))));
+          fList.Add(TPackageTreeNode.Create(fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name))));
       until FindNext(sr) <> 0;
     finally
       FindClose(sr);
@@ -729,7 +677,7 @@ begin
 
   directoryList := TStringList.Create;
   try
-    BuildFileList(PathAppend(folder,'*.*'), faDirectory, directoryList);
+    BuildFileList(PathAppend(folder, '*.*'), faDirectory, directoryList);
     for directory in directoryList do
     begin
       Search(PathAppend(folder, directory));
@@ -741,68 +689,18 @@ begin
 end;
 { TTreeNode }
 
-constructor TTreeNode.Create(const name, path: string);
-begin
-  fName := name;
-  fPath := path;
-  fNodeType := ntFolder;
-  fSelected := true;
-end;
-
-function TTreeNode.GetData: TObject;
-begin
-  Result := nil;
-end;
-
-function TTreeNode.GetDisplayName: string;
-begin
-  Result := fName;
-end;
-
-function TTreeNode.GetNodePath: string;
-begin
-  Result := fPath;
-end;
-
 { TPackageTreeNode }
-
-constructor TPackageTreeNode.Create(const info: TPackageInfo);
-begin
-  fInfo := info;
-  fNodeType := ntPackage;
-  fSelected := true;
-end;
-
-function TPackageTreeNode.GetData: TObject;
-begin
-  Result:= fInfo;
-end;
-
-function TPackageTreeNode.GetDisplayName: string;
-begin
-  Result := fInfo.PackageName;
-end;
-
-function TPackageTreeNode.GetNodePath: string;
-var
-  i: integer;
-begin
-  Result := fInfo.FileName;
-  i := Pos(':', Result);
-  if i <> 0 then
-    Result := StrRestOf(Result, i+2);
-end;
 
 { TVirtualTreeHelper }
 
-procedure TVirtualTreeHelper.InternalTraverse(node: PVirtualNode; handler: TProc<PVirtualNode>);
+procedure TVirtualTreeHelper.InternalTraverse(Node: PVirtualNode; handler: TProc<PVirtualNode>);
 var
-  queue : TQueue<PVirtualNode>;
-  current, child : PVirtualNode;
+  queue: TQueue<PVirtualNode>;
+  current, child: PVirtualNode;
 begin
   queue := TQueue<PVirtualNode>.Create;
-  queue.Enqueue(node);
-  try  
+  queue.Enqueue(Node);
+  try
     while queue.Count > 0 do
     begin
       current := queue.Dequeue;
@@ -815,16 +713,16 @@ begin
         until child = nil;
       end;
 
-      handler(current);  
+      handler(current);
     end;
-  finally    
+  finally
     queue.Free;
-  end;      
+  end;
 end;
 
-procedure TVirtualTreeHelper.Traverse(node: PVirtualNode; handler: TProc<PVirtualNode>);
+procedure TVirtualTreeHelper.Traverse(Node: PVirtualNode; handler: TProc<PVirtualNode>);
 begin
-  InternalTraverse(node, handler)
+  InternalTraverse(Node, handler)
 end;
 
 procedure TVirtualTreeHelper.Traverse(handler: TProc<PVirtualNode>);
@@ -832,30 +730,28 @@ begin
   Traverse(RootNode, handler);
 end;
 
-
 procedure TVirtualTreeHelper.TraverseWithData(handler: TProc<PVirtualNode, PNodeData>);
 begin
-  InternalTraverse(Self.RootNode, procedure(node: PVirtualNode)
+  InternalTraverse(Self.RootNode, procedure(Node: PVirtualNode)
   var
     data: PNodeData;
   begin
-    data := Self.GetNodeData(node);
+    data := Self.GetNodeData(Node);
     if (data <> nil) and (data.Node <> nil) and (data.Node.GetData <> nil) then
-      handler(node, data);
+      handler(Node, data);
   end);
 end;
 
 procedure TVirtualTreeHelper.TraverseData(handler: TProc<PNodeData>);
 begin
-  Traverse( procedure(node: PVirtualNode)
+  Traverse( procedure(Node: PVirtualNode)
   var
     data: PNodeData;
-  begin
-    data := Self.GetNodeData(node);
-    //Assert(data.Node <> nil, 'there should not be any node without model node');
+  begin data := Self.GetNodeData(Node);
     if (data <> nil) and (data.Node.GetData <> nil) then
       handler(data);
   end);
 end;
 
 end.
+
