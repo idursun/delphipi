@@ -1,6 +1,6 @@
 object frmWizard: TfrmWizard
-  Left = 222
-  Top = 117
+  Left = 453
+  Top = 290
   Caption = 'Delphi PI'
   ClientHeight = 416
   ClientWidth = 592
@@ -385,7 +385,6 @@ object frmWizard: TfrmWizard
       Margins.Bottom = 0
       Align = alTop
       Shape = bsTopLine
-      ExplicitTop = 3
     end
     object btnBack: TButton
       AlignWithMargins = True
