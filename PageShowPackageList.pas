@@ -94,7 +94,7 @@ type
     fModel: TTreeModelBase<TTreeNode>;
     fNodes: TList<TTreeNode>;
     procedure PackageLoadCompleted(Sender: TObject);
-    procedure ChangeState(Node: PVirtualNode; checkState: TCheckState; recursive:Boolean = false);
+    procedure ChangeState(Node: PVirtualNode; checkState: TCheckState; recursive:Boolean = true);
     procedure VerifyDependencies;
     procedure SetView(const viewType: TPackageViewType);
   private
@@ -180,6 +180,8 @@ begin
 end;
 
 procedure TShowPackageListPage.FormClose(Sender: TObject; var Action: TCloseAction);
+var
+  node: TTreeNode;
 begin
   inherited;
   if threadWorking then
@@ -190,17 +192,11 @@ begin
     exit;
   end;
 
-  fPackageTree.Traverse(fPackageTree.RootNode, procedure(Node: PVirtualNode)
-  var
-    data: PNodeData;
+  for node in fNodes do
   begin
-    if Node.checkState <> csCheckedNormal then
-      exit;
-
-    data := fPackageTree.GetNodeData(Node);
-    if (data.Node.NodeType = ntPackage) then
-      fCompilationData.PackageList.Add(data.Node.GetData as TPackageInfo);
-  end);
+    if node.Selected then
+      fCompilationData.PackageList.Add(node.GetData as TPackageInfo);
+  end;
 
   FreeAndNil(fDependencyVerifier);
   FreeAndNil(fInstalledPackageResolver);
@@ -233,7 +229,7 @@ begin
   end;
 end;
 
-procedure TShowPackageListPage.ChangeState(Node: PVirtualNode; checkState: TCheckState; recursive:Boolean = false);
+procedure TShowPackageListPage.ChangeState(Node: PVirtualNode; checkState: TCheckState; recursive:Boolean = true);
 var
   data: PNodeData;
   child: PVirtualNode;
@@ -246,10 +242,13 @@ begin
   if data <> nil then
     data.Node.Selected := checkState = csCheckedNormal;
 
+  if not recursive then
+    exit;
+
   child := Node.FirstChild;
   while child <> nil do
   begin
-    ChangeState(child, checkState);
+    ChangeState(child, checkState, true);
     child := child.NextSibling;
   end;
 end;
@@ -258,6 +257,7 @@ procedure TShowPackageListPage.UpdateWizardState;
 var
   button: TButton;
   selectedPackageCount: integer;
+  modelNode: TTreeNode;
 begin
   inherited;
   wizard.SetHeader(_('Select Packages'));
@@ -269,11 +269,11 @@ begin
     button := wizard.GetButton(wbtNext);
     button.Caption := _('Compile');
     selectedPackageCount := 0;
-    fPackageTree.Traverse(procedure(Node: PVirtualNode)
+    for modelNode in fNodes do
     begin
-      if Node.checkState = csCheckedNormal then
+      if modelNode.Selected then
         inc(selectedPackageCount);
-    end);
+    end;
     button.Enabled := selectedPackageCount > 0;
   end;
 end;
@@ -281,21 +281,15 @@ end;
 procedure TShowPackageListPage.VerifyDependencies;
 var
   selectedPackages: TList<TPackageInfo>;
+  modelNode: TTreeNode;
 begin
   selectedPackages := TList<TPackageInfo>.Create;
   try
-    fPackageTree.Traverse( procedure(Node: PVirtualNode)
-    var
-     data: PNodeData;
+    for modelNode in fNodes do
     begin
-      if Node.checkState <> csCheckedNormal then
-        exit;
-
-      data := fPackageTree.GetNodeData(Node);
-      if (data <> nil) and (data.Node.NodeType = ntPackage) then
-        selectedPackages.Add(data.Node.GetData as TPackageInfo);
-    end);
-
+      if modelNode.Selected then
+        selectedPackages.Add(modelNode.GetData as TPackageInfo);
+    end;
     fDependencyVerifier.Verify(selectedPackages, fInstalledPackageResolver);
   finally
     selectedPackages.Free;
@@ -303,7 +297,9 @@ begin
 
   fPackageTree.BeginUpdate;
   try
-    fPackageTree.TraverseData( procedure(data: PNodeData)var info: TPackageInfo;
+    fPackageTree.TraverseData( procedure(data: PNodeData)
+    var
+      info: TPackageInfo;
     begin
       info := data.Node.GetData as TPackageInfo;
       if info = nil then exit;
@@ -321,7 +317,7 @@ var
 begin
   fPackageTree.BeginUpdate;
   try
-    ChangeState(Node, Node.checkState);
+    ChangeState(Node, Node.checkState, true);
     VerifyDependencies;
     fPackageTree.InvalidateChildren(Node, true);
   finally
@@ -436,7 +432,7 @@ procedure TShowPackageListPage.actSelectAllExecute(Sender: TObject);
 begin
   fPackageTree.BeginUpdate;
   try
-    ChangeState(fPackageTree.RootNode, csCheckedNormal);
+    ChangeState(fPackageTree.RootNode, csCheckedNormal, true);
     VerifyDependencies;
   finally
     fPackageTree.EndUpdate;
@@ -457,7 +453,8 @@ begin
       fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
       var
         info: TPackageInfo;
-      begin info := data.Node.GetData as TPackageInfo;
+      begin
+        info := data.Node.GetData as TPackageInfo;
         if IsFileNameMatch(info.PackageName + '.dpk', fSelectMask) then
           ChangeState(Node, csCheckedNormal, false);
       end);
@@ -473,7 +470,7 @@ procedure TShowPackageListPage.actUnselectAllExecute(Sender: TObject);
 begin
   fPackageTree.BeginUpdate;
   try
-    ChangeState(fPackageTree.RootNode, csUncheckedNormal);
+    ChangeState(fPackageTree.RootNode, csUncheckedNormal, true);
     VerifyDependencies;
   finally
     fPackageTree.EndUpdate;
@@ -488,7 +485,7 @@ begin
   fPackageTree.BeginUpdate;
   try
     value := fCompilationData.Pattern;
-    if InputQuery(_('UnSelect Matching...'), _('File Mask'), value) then
+    if InputQuery(_('Unselect Matching...'), _('File Mask'), value) then
     begin
       fSelectMask := value;
       fPackageTree.TraverseWithData(procedure(Node: PVirtualNode; data: PNodeData)
