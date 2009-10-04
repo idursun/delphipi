@@ -26,12 +26,15 @@ type
   TPackageTreeNode = class(TTreeNode)
   private
     fInfo: TPackageInfo;
+    fMissingPackageName: string;
   public
     constructor Create(const info: TPackageInfo); virtual;
 
     function GetData: TObject; override;
     function GetDisplayName: string; override;
     function GetNodePath: string; override;
+
+    property MissingPackageName: string read fMissingPackageName write fMissingPackageName;
   end;
 
 implementation

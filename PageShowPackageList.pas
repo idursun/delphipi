@@ -16,7 +16,7 @@ type
   PNodeData = ^TNodeData;
   TNodeData = record
     Node: TTreeNode;
-    MissingPackageName: string;
+    //MissingPackageName: string;
   end;
 
   TPackageViewType = (pvtTree, pvtList);
@@ -137,7 +137,6 @@ type
   public
     procedure Traverse(Node: PVirtualNode; handler: TProc<PVirtualNode>); overload;
     procedure Traverse(handler: TProc<PVirtualNode>); overload;
-    procedure TraverseData(handler: TProc<PNodeData>);
     procedure TraverseWithData(handler: TProc<PVirtualNode, PNodeData>);
   end;
 
@@ -281,6 +280,7 @@ end;
 procedure TShowPackageListPage.VerifyDependencies;
 var
   selectedPackages: TList<TPackageInfo>;
+  info: TPackageInfo;
   modelNode: TTreeNode;
 begin
   selectedPackages := TList<TPackageInfo>.Create;
@@ -297,23 +297,19 @@ begin
 
   fPackageTree.BeginUpdate;
   try
-    fPackageTree.TraverseData( procedure(data: PNodeData)
-    var
-      info: TPackageInfo;
+    for modelNode in fNodes do
     begin
-      info := data.Node.GetData as TPackageInfo;
-      if info = nil then exit;
-
-      data.MissingPackageName := fDependencyVerifier.MissingPackages[info.PackageName];
-    end);
+      if modelNode.NodeType <> ntPackage then
+        continue;
+      info := modelNode.GetData as TPackageInfo;
+      TPackageTreeNode(modelNode).MissingPackageName := fDependencyVerifier.MissingPackages[info.PackageName];
+    end;
   finally
     fPackageTree.EndUpdate;
   end;
 end;
 
 procedure TShowPackageListPage.packageTreeChecked(Sender: TBaseVirtualTree; Node: PVirtualNode);
-var
-  child: PVirtualNode;
 begin
   fPackageTree.BeginUpdate;
   try
@@ -511,12 +507,14 @@ var
   _type: string;
   info: TPackageInfo;
   builder: TStringBuilder;
+  modelNode: TPackageTreeNode;
 begin
   data := Sender.GetNodeData(Node);
   if data.Node.NodeType <> ntPackage then
     exit;
 
-  info := data.Node.GetData as TPackageInfo;
+  modelNode := TPackageTreeNode(data.Node);
+  info := modelNode.GetData as TPackageInfo;
   _type := _('Designtime Package');
   if (info.RunOnly) then
     _type := _('Runtime Package');
@@ -528,8 +526,8 @@ begin
     builder.Append(_('Type: ') + _type).AppendLine;
     builder.Append(_('Requires: ')).AppendLine;
     builder.Append(info.RequiredPackageList.Text).AppendLine;
-    if data.MissingPackageName <> '' then
-      builder.Append(_('Missing Package: ') + data.MissingPackageName);
+    if modelNode.MissingPackageName <> '' then
+      builder.Append(_('Missing Package: ') + modelNode.MissingPackageName);
     HintText := builder.ToString;
   finally
     builder.Free;
@@ -594,7 +592,7 @@ begin
     Node.checkState := csCheckedNormal;
 
   if fModel.GetChildCount(data.Node) > 0 then
-    InitialStates := [ivsHasChildren];
+    Include(InitialStates, ivsHasChildren);
 end;
 
 procedure TShowPackageListPage.fPackageTreeKeyAction(Sender: TBaseVirtualTree; var CharCode: Word; var Shift: TShiftState; var DoDefault: Boolean);
@@ -621,7 +619,7 @@ begin
   data := Sender.GetNodeData(Node);
   if Column = 0 then
   begin
-    if (data.Node.NodeType = ntPackage) and (data.MissingPackageName <> '') then
+    if (data.Node.NodeType = ntPackage) and (TPackageTreeNode(data.Node).MissingPackageName <> '') then
       TargetCanvas.Font.Color := clRed
     else
       TargetCanvas.Font.Color := clBlack;
@@ -745,17 +743,6 @@ begin
     data := Self.GetNodeData(Node);
     if (data <> nil) and (data.Node <> nil) and (data.Node.GetData <> nil) then
       handler(Node, data);
-  end);
-end;
-
-procedure TVirtualTreeHelper.TraverseData(handler: TProc<PNodeData>);
-begin
-  Traverse( procedure(Node: PVirtualNode)
-  var
-    data: PNodeData;
-  begin data := Self.GetNodeData(Node);
-    if (data <> nil) and (data.Node.GetData <> nil) then
-      handler(data);
   end);
 end;
 
