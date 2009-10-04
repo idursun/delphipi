@@ -147,7 +147,7 @@ begin
     lblWait.Visible := true;
     threadWorking := true;
     fPackageTree.Visible := false;
-    Resume;
+    Start;
   end;
 end;
 

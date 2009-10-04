@@ -43,13 +43,10 @@ begin
   inherited;
   fActive := true;
   try
-    try
-      Search(fCompilationData.BaseFolder);
-    except
-      on e: Exception do
-        ShowMessage(e.Message);
-    end;
-  finally
+    Search(fCompilationData.BaseFolder);
+  except
+    on e: Exception do
+      ShowMessage(e.Message);
   end;
 end;
 
@@ -63,7 +60,7 @@ begin
       repeat
         if UpperCase(ExtractFileExt(sr.Name)) = '.DPK' then
           fList.Add(TPackageTreeNode.Create(fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name))));
-      until FindNext(sr) <> 0;
+      until (FindNext(sr) <> 0) and Active;
     finally
       FindClose(sr);
     end;
