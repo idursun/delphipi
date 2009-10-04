@@ -89,7 +89,6 @@ begin
     begin
       if not Active then
         Break;
-
       Search(PathAppend(folder, directory));
     end;
     LoadPackageInformations(folder);

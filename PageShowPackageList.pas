@@ -33,10 +33,6 @@ type
     N2: TMenuItem;
     miCollapse: TMenuItem;
     miExpand: TMenuItem;
-    miCollapseChildren: TMenuItem;
-    miCollapseAll: TMenuItem;
-    miExpandChildren: TMenuItem;
-    miExpandAll: TMenuItem;
     ActionList: TActionList;
     actRemove: TAction;
     Remove1: TMenuItem;
@@ -59,6 +55,8 @@ type
     actAddPackage: TAction;
     btnAddPackage: TToolButton;
     seperator2: TToolButton;
+    btnSelectMatching: TToolButton;
+    btnUnselectMatching: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
@@ -85,6 +83,7 @@ type
     procedure actUnselectMatchingExecute(Sender: TObject);
     procedure actCollapseExecute(Sender: TObject);
     procedure actExpandExecute(Sender: TObject);
+    procedure PackageListActionsUpdate(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -169,6 +168,7 @@ begin
   if threadWorking then
   begin
     TPackageLoadThread(packageLoadThread).Active := false;
+    packageLoadThread.Terminate;
     packageLoadThread.WaitFor;
     packageLoadThread.Free;
     exit;
@@ -190,6 +190,12 @@ procedure TShowPackageListPage.FormCreate(Sender: TObject);
 begin
   inherited;
   TranslateComponent(Self);
+end;
+
+procedure TShowPackageListPage.PackageListActionsUpdate(Sender: TObject);
+begin
+  inherited;
+  TAction(Sender).Enabled := not threadWorking;
 end;
 
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
@@ -416,6 +422,18 @@ begin
   UpdateWizardState;
 end;
 
+procedure TShowPackageListPage.actUnselectAllExecute(Sender: TObject);
+begin
+  fPackageTree.BeginUpdate;
+  try
+    ChangeState(fPackageTree.RootNode, csUncheckedNormal, true);
+    VerifyDependencies;
+  finally
+    fPackageTree.EndUpdate;
+  end;
+  UpdateWizardState;
+end;
+
 procedure TShowPackageListPage.actSelectMatchingExecute(Sender: TObject);
 var
   value: string;
@@ -436,18 +454,6 @@ begin
       end);
       VerifyDependencies;
     end;
-  finally
-    fPackageTree.EndUpdate;
-  end;
-  UpdateWizardState;
-end;
-
-procedure TShowPackageListPage.actUnselectAllExecute(Sender: TObject);
-begin
-  fPackageTree.BeginUpdate;
-  try
-    ChangeState(fPackageTree.RootNode, csUncheckedNormal, true);
-    VerifyDependencies;
   finally
     fPackageTree.EndUpdate;
   end;
