@@ -16,7 +16,6 @@ type
   PNodeData = ^TNodeData;
   TNodeData = record
     Node: TTreeNode;
-    //MissingPackageName: string;
   end;
 
   TPackageViewType = (pvtTree, pvtList);
@@ -108,29 +107,13 @@ type
 
 implementation
 
-uses JclFileUtils, gnugettext, Utils, PackageInfoFactory, TreeViewModel;
+uses JclFileUtils, gnugettext, Utils, TreeViewModel, PackageLoadThread;
 {$R *.dfm}
 
 var
   threadWorking: Boolean;
 
 type
-  TPackageLoadThread = class(TThread)
-  private
-    fCompilationData: TCompilationData;
-    fPackageInfoFactory: TPackageInfoFactory;
-    fActive: Boolean;
-    fList: TList<TTreeNode>;
-    procedure LoadPackageInformations(const directory: string);
-  protected
-    procedure Execute; override;
-    procedure Search(const folder: String);
-  public
-    constructor Create(data: TCompilationData; list: TList<TTreeNode>);
-    destructor Destroy; override;
-    property Active: Boolean read fActive write fActive;
-  end;
-
   TVirtualTreeHelper = class helper for TBaseVirtualTree
   private
     procedure InternalTraverse(Node: PVirtualNode; handler: TProc<PVirtualNode>);
@@ -446,7 +429,7 @@ begin
     if InputQuery(_('Select Matching...'), _('File Mask'), value) then
     begin
       fSelectMask := value;
-      fPackageTree.TraverseWithData( procedure(Node: PVirtualNode; data: PNodeData)
+      fPackageTree.TraverseWithData(procedure(Node: PVirtualNode; data: PNodeData)
       var
         info: TPackageInfo;
       begin
@@ -623,75 +606,6 @@ begin
       TargetCanvas.Font.Color := clRed
     else
       TargetCanvas.Font.Color := clBlack;
-  end;
-end;
-
-{ TPackageLoadThread }
-
-constructor TPackageLoadThread.Create(data: TCompilationData; list: TList<TTreeNode>);
-begin
-  inherited Create(true);
-  fCompilationData := data;
-  fList := list;
-  fPackageInfoFactory := TPackageInfoFactory.Create;
-end;
-
-destructor TPackageLoadThread.Destroy;
-begin
-  fPackageInfoFactory.Free;
-  inherited;
-end;
-
-procedure TPackageLoadThread.Execute;
-begin
-  inherited;
-  fActive := true;
-  try
-    try
-      Search(fCompilationData.BaseFolder);
-    except
-      on e: Exception do
-        ShowMessage(e.Message);
-    end;
-  finally
-  end;
-end;
-
-procedure TPackageLoadThread.LoadPackageInformations(const directory: string);
-var
-  sr: TSearchRec;
-begin
-  if FindFirst(PathAppend(directory, fCompilationData.Pattern), faAnyFile, sr) = 0 then
-  begin
-    try
-      repeat
-        if ExtractFileExt(sr.Name) = '.dpk' then
-          fList.Add(TPackageTreeNode.Create(fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name))));
-      until FindNext(sr) <> 0;
-    finally
-      FindClose(sr);
-    end;
-  end;
-end;
-
-procedure TPackageLoadThread.Search(const folder: String);
-var
-  directoryList: TStringList;
-  directory: string;
-begin
-  if not fActive then
-    exit;
-
-  directoryList := TStringList.Create;
-  try
-    BuildFileList(PathAppend(folder, '*.*'), faDirectory, directoryList);
-    for directory in directoryList do
-    begin
-      Search(PathAppend(folder, directory));
-    end;
-    LoadPackageInformations(folder);
-  finally
-    directoryList.Free;
   end;
 end;
 
