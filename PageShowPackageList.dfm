@@ -13,18 +13,15 @@ object ShowPackageListPage: TShowPackageListPage
   OldCreateOrder = True
   OnClose = FormClose
   OnCreate = FormCreate
-  DesignSize = (
-    588
-    337)
   PixelsPerInch = 96
   TextHeight = 13
   object lblWait: TLabel
-    Left = 8
-    Top = 8
-    Width = 572
-    Height = 321
+    Left = 0
+    Top = 22
+    Width = 588
+    Height = 315
+    Align = alClient
     Alignment = taCenter
-    Anchors = [akLeft, akTop, akRight, akBottom]
     AutoSize = False
     Caption = 'Please wait while searching folders '
     Color = clWhite

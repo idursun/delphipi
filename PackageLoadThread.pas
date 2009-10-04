@@ -1,35 +1,41 @@
+{ **
+  DelphiPI (Delphi Package Installer)
+  Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+  License : GNU General Public License 2.0
+  ** }
 unit PackageLoadThread;
 
 interface
-uses Classes, SysUtils, Generics.Collections, PackageInfo, TreeNodes, CompilationData, PackageInfoFactory;
+uses Classes, SysUtils, Generics.Collections, PackageInfo, TreeNodes, PackageInfoFactory;
 type
   TPackageLoadThread = class(TThread)
   private
-    fCompilationData: TCompilationData;
     fPackageInfoFactory: TPackageInfoFactory;
     fActive: Boolean;
     fList: TList<TTreeNode>;
+    fDirectory: string;
+    fPattern: string;
     procedure LoadPackageInformations(const directory: string);
   protected
     procedure Execute; override;
     procedure Search(const folder: String);
   public
-    constructor Create(data: TCompilationData; list: TList<TTreeNode>);
+    constructor Create(directory: string; pattern: string; list: TList<TTreeNode>);
     destructor Destroy; override;
     property Active: Boolean read fActive write fActive;
   end;
-
 
 implementation
 uses Dialogs, JclFileUtils;
 { TPackageLoadThread }
 
-constructor TPackageLoadThread.Create(data: TCompilationData; list: TList<TTreeNode>);
+constructor TPackageLoadThread.Create(directory: string; pattern: string; list: TList<TTreeNode>);
 begin
   inherited Create(true);
-  fCompilationData := data;
   fList := list;
   fPackageInfoFactory := TPackageInfoFactory.Create;
+  fDirectory := directory;
+  fPattern := pattern;
 end;
 
 destructor TPackageLoadThread.Destroy;
@@ -43,7 +49,7 @@ begin
   inherited;
   fActive := true;
   try
-    Search(fCompilationData.BaseFolder);
+    Search(fDirectory);
   except
     on e: Exception do
       ShowMessage(e.Message);
@@ -54,7 +60,7 @@ procedure TPackageLoadThread.LoadPackageInformations(const directory: string);
 var
   sr: TSearchRec;
 begin
-  if FindFirst(PathAppend(directory, fCompilationData.Pattern), faAnyFile, sr) = 0 then
+  if FindFirst(PathAppend(directory, fPattern), faAnyFile, sr) = 0 then
   begin
     try
       repeat

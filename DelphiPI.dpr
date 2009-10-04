@@ -28,7 +28,8 @@ uses
   TreeModel in 'TreeModel.pas',
   ListViewModel in 'ListViewModel.pas',
   TreeViewModel in 'TreeViewModel.pas',
-  TreeNodes in 'TreeNodes.pas';
+  TreeNodes in 'TreeNodes.pas',
+  PackageLoadThread in 'PackageLoadThread.pas';
 
 {$R *.res}
 

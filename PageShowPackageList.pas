@@ -140,7 +140,7 @@ begin
 
   SetView(pvtTree);
 
-  packageLoadThread := TPackageLoadThread.Create(fCompilationData, fNodes);
+  packageLoadThread := TPackageLoadThread.Create(fCompilationData.BaseFolder, fCompilationData.Pattern, fNodes);
   with packageLoadThread do
   begin
     OnTerminate := PackageLoadCompleted;
