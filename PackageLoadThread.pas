@@ -49,10 +49,14 @@ begin
   inherited;
   fActive := true;
   try
-    Search(fDirectory);
-  except
-    on e: Exception do
-      ShowMessage(e.Message);
+    try
+      Search(fDirectory);
+    except
+      on e: Exception do
+        ShowMessage(e.Message);
+    end;
+  finally
+    fActive := false;
   end;
 end;
 
@@ -78,14 +82,14 @@ var
   directoryList: TStringList;
   directory: string;
 begin
-  if not fActive then
-    exit;
-
   directoryList := TStringList.Create;
   try
     BuildFileList(PathAppend(folder, '*.*'), faDirectory, directoryList);
     for directory in directoryList do
     begin
+      if not Active then
+        Break;
+
       Search(PathAppend(folder, directory));
     end;
     LoadPackageInformations(folder);

@@ -29,9 +29,7 @@ type
 constructor TPackageList.Create;
 begin
   inherited Create(TPackageInfoComparer.Create);
-  { TODO -oidursun -c : It is not needed for now since TPackageInfo is implementing INode interface,
-    but when I implement INode interface in another class, I must set OwnsObjects property. }
-  OwnsObjects := False;
+  OwnsObjects := true;
 end;
 
 function TPackageList.IndexOf(const PackageName: String): Integer;
@@ -46,7 +44,6 @@ begin
   end;
 end;
 
-//TODO: encapsulate in another class, sorting list by considering dependencies
 procedure TPackageList.SortList;
 var
   tmp : TPackageInfo;

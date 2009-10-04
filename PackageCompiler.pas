@@ -156,7 +156,6 @@ begin
   Result := Installation.RegisterPackage(BPLFileName, packageInfo.Description);
 end;
 
-//TODO: refactor -- finds paths of files have .pas extension and then matches pas files in packages, removes remaining paths 
 procedure TPackageCompiler.ResolveSourcePaths;
 var
   i,j: integer;

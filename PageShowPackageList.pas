@@ -195,20 +195,17 @@ end;
 procedure TShowPackageListPage.PackageLoadCompleted(Sender: TObject);
 begin
   threadWorking := false;
-  if TPackageLoadThread(packageLoadThread).Active then
-  begin
-    fPackageTree.BeginUpdate;
-    try
-      fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
-      fPackageTree.FullExpand;
-      VerifyDependencies;
-    finally
-      fPackageTree.EndUpdate;
-      lblWait.Visible := false;
-      fPackageTree.Visible := true;
-    end;
-    UpdateWizardState;
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
+    fPackageTree.FullExpand;
+    VerifyDependencies;
+  finally
+    fPackageTree.EndUpdate;
+    lblWait.Visible := false;
+    fPackageTree.Visible := true;
   end;
+  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.ChangeState(Node: PVirtualNode; checkState: TCheckState; recursive:Boolean = true);
