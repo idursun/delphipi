@@ -3,17 +3,17 @@ unit DelphiVersionTreeViewModel;
 interface
 uses Classes, SysUtils, TreeModel, Utils, Generics.Collections;
 
-    const
-      DELPHI_VERSION_UNKNOWN = -1;
-      DELPHI_VERSION_5 = 0;
-      DELPHI_VERSION_6 = 1;
-      DELPHI_VERSION_7 = 2;
-      DELPHI_VERSION_8 = 3;
-      DELPHI_VERSION_2006 = 4;
-      DELPHI_VERSION_2007 = 5;
-      DELPHI_VERSION_2009 = 6;
-      DELPHI_VERSION_2010 = 7;
-      VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_VERSION_2010] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010');
+const
+  DELPHI_VERSION_UNKNOWN = -1;
+  DELPHI_VERSION_5 = 0;
+  DELPHI_VERSION_6 = 1;
+  DELPHI_VERSION_7 = 2;
+  DELPHI_VERSION_8 = 3;
+  DELPHI_VERSION_2006 = 4;
+  DELPHI_VERSION_2007 = 5;
+  DELPHI_VERSION_2009 = 6;
+  DELPHI_VERSION_2010 = 7;
+  VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_VERSION_2010] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010');
 
 type
 
@@ -22,7 +22,6 @@ type
     fNodes: TList<T>;
     type
       TDelphiVersionArray = array[DELPHI_VERSION_5..DELPHI_VERSION_2010] of TStringList;
-
     function GuessDelphiVersion(name: string;  patterns: TDelphiVersionArray): integer;
     function FindDelphiVersionIndexByName(const delphiVersionName: string):Integer;
     class var patterns : TDelphiVersionArray;
@@ -40,8 +39,7 @@ type
   private
     fLastNodeCount: Integer;
     fCache: array[DELPHI_VERSION_5..DELPHI_VERSION_2010] of TList<T>;
-    procedure FillCache;
-    procedure EmptyCache;
+    procedure RefillCache;
   public
     function GetChild(const parent: T; index: Integer): T; override;
     function GetChildCount(const parent: T): Integer; override;
@@ -144,7 +142,7 @@ begin
       if ver <> -1 then
         Inc(matches[ver]);
     end;
-    for I := DELPHI_VERSION_5 to DELPHI_VERSION_2010 - 1 do
+    for I := DELPHI_VERSION_5 to DELPHI_VERSION_2010 do
       if matches[i] > 0 then
         Result.Add(DoCreateLogicalNode(VersionNames[i],VersionNames[i]));
   end else begin
@@ -216,43 +214,32 @@ begin
   patterns[DELPHI_VERSION_2010].Add('_140');
 end;
 
-procedure TCachedDelphiVersionTreeViewModel<T>.EmptyCache;
+procedure TCachedDelphiVersionTreeViewModel<T>.RefillCache;
 var
   I: Integer;
+  versionCount, versionIndex: Integer;
+  parentNode: T;
+  children : TList<T>;
 begin
-  for I := DELPHI_VERSION_5 to DELPHI_VERSION_2010 do
-    fCache[i].Free;
-end;
-
-procedure TCachedDelphiVersionTreeViewModel<T>.FillCache;
-var
-  I: Integer;
-  versionCount: Integer;
-  cacheNodes, children : TList<T>;
-begin
-  EmptyCache;
   for I := DELPHI_VERSION_5 to DELPHI_VERSION_2010 do
   begin
+    if Assigned(fCache[i]) then
+      FreeAndNil(fCache[i]);
     fCache[i] := TList<T>.Create;
   end;
 
   versionCount := inherited GetChildCount(default(T));
 
-  cacheNodes := TList<T>.Create;
   for I := 0 to versionCount - 1 do
-    cacheNodes.Add(inherited GetChild(default(T),i));
-
-  try
-    for I := 0 to cacheNodes.Count - 1 do begin
-      children := inherited GetChildren(cacheNodes[i]);
-      try
-        fCache[i].AddRange(children);
-      finally
-        children.Free;
-      end;
+  begin
+    parentNode := inherited GetChild(default(T),i);
+    children := inherited GetChildren(parentNode);
+    try
+      versionIndex := FindDelphiVersionIndexByName(parentNode.GetNodePath);
+      fCache[versionIndex].AddRange(children);
+    finally
+      children.Free;
     end;
-  finally
-    cacheNodes.Free;
   end;
   fLastNodeCount := fNodes.Count;
 end;
@@ -263,7 +250,7 @@ var
   versionIndex: Integer;
 begin
   if fLastNodeCount <> fNodes.Count then
-    FillCache;
+    RefillCache;
 
   Result := default(T);
   if parent = nil then begin
@@ -282,7 +269,7 @@ var
   versionIndex : Integer;
 begin
   if fLastNodeCount <> fNodes.Count then
-    FillCache;
+    RefillCache;
 
   if parent <> nil then begin
     versionIndex := FindDelphiVersionIndexByName(parent.GetNodePath);

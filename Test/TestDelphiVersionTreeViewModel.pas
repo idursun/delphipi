@@ -21,6 +21,7 @@ type
   strict private
     fModel: TDelphiVersionTreeViewModel<TBasicNode>;
     fNodes: TObjectList<TBasicNode>;
+  private
   public
     procedure SetUp; override;
     procedure TearDown; override;
@@ -28,6 +29,7 @@ type
     procedure Should_return_only_recognized_delphi_version_count;
     procedure Should_return_nodes_under_specified_delphi_version;
     procedure Should_return_node_at_1_for_Delphi_7;
+    procedure Should_return_node_at_1_for_Delphi_2009;
   end;
 
 implementation
@@ -79,6 +81,19 @@ begin
   fNodes.Add(TBasicNode.Create('p60'));
   actual := fModel.GetChild(TBasicNode.Create('Delphi 7'), 1);
   CheckEquals('D70',actual.GetDisplayName, 'returned package was wrong');
+end;
+
+procedure TestTDelphiVersionTreeViewModel.Should_return_node_at_1_for_Delphi_2009;
+var
+  actual : TBasicNode;
+begin
+  fNodes.Add(TBasicNode.Create('p70'));
+  fNodes.Add(TBasicNode.Create('D70'));
+  fNodes.Add(TBasicNode.Create('pd12'));
+  fNodes.Add(TBasicNode.Create('p12'));
+  fNodes.Add(TBasicNode.Create('p_12'));
+  actual := fModel.GetChild(TBasicNode.Create('Delphi 2009'), 2);
+  CheckEquals('p12',actual.GetDisplayName, 'returned package was wrong');
 end;
 
 

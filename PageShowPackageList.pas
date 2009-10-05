@@ -507,7 +507,6 @@ end;
 
 procedure TShowPackageListPage.fPackageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;
   var LineBreakStyle: TVTTooltipLineBreakStyle; var HintText: string);
-
 var
   data: PNodeData;
   _type: string;

@@ -1,6 +1,6 @@
 object ShowPackageListPage: TShowPackageListPage
-  Left = 254
-  Top = 190
+  Left = 352
+  Top = 188
   Caption = 'ShowPackageListPage'
   ClientHeight = 337
   ClientWidth = 588
@@ -57,7 +57,7 @@ object ShowPackageListPage: TShowPackageListPage
     TabOrder = 0
     TreeOptions.AutoOptions = [toAutoDropExpand, toAutoScrollOnExpand, toAutoSpanColumns, toAutoTristateTracking, toAutoDeleteMovedNodes]
     TreeOptions.MiscOptions = [toAcceptOLEDrop, toCheckSupport, toFullRepaintOnResize, toInitOnSave, toToggleOnDblClick, toWheelPanning]
-    TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect, toMultiSelect, toRightClickSelect]
+    TreeOptions.SelectionOptions = [toDisableDrawSelection, toFullRowSelect, toMultiSelect]
     TreeOptions.StringOptions = [toSaveCaptions]
     OnChecked = packageTreeChecked
     OnGetText = fPackageTreeGetText
