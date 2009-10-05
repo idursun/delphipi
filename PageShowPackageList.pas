@@ -18,7 +18,7 @@ type
     Node: TTreeNode;
   end;
 
-  TPackageViewType = (pvtTree, pvtList);
+  TPackageViewType = (pvtTree, pvtList, pvtDelphiVersion);
 
   TShowPackageListPage = class(TWizardPage)
     pmSelectPopupMenu: TPopupMenu;
@@ -57,6 +57,8 @@ type
     seperator2: TToolButton;
     btnSelectMatching: TToolButton;
     btnUnselectMatching: TToolButton;
+    btnViewDelphiVersion: TToolButton;
+    actChangeViewToDelphiVersion: TAction;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
@@ -84,6 +86,7 @@ type
     procedure actCollapseExecute(Sender: TObject);
     procedure actExpandExecute(Sender: TObject);
     procedure PackageListActionsUpdate(Sender: TObject);
+    procedure actChangeViewToDelphiVersionExecute(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -106,7 +109,7 @@ type
 
 implementation
 
-uses JclFileUtils, gnugettext, Utils, TreeViewModel, PackageLoadThread;
+uses JclFileUtils, gnugettext, Utils, TreeViewModel, PackageLoadThread, DelphiVersionTreeViewModel;
 {$R *.dfm}
 
 var
@@ -325,6 +328,8 @@ begin
         fModel := TTreeViewModel<TTreeNode>.Create(fNodes);
       pvtList:
         fModel := TListViewModel<TTreeNode>.Create(fNodes);
+      pvtDelphiVersion:
+        fModel := TCachedDelphiVersionTreeViewModel<TTreeNode>.Create(fNodes);
     else
       raise Exception.Create('Invalid View');
     end;
@@ -353,6 +358,21 @@ begin
       ImageIndex := 0;
     ntPackage:
       ImageIndex := 1;
+  end;
+end;
+
+procedure TShowPackageListPage.actChangeViewToDelphiVersionExecute(
+  Sender: TObject);
+begin
+  fPackageTree.BeginUpdate;
+  try
+    fPackageTree.Clear;
+    SetView(pvtDelphiVersion);
+    fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
+    fPackageTree.FullExpand;
+    VerifyDependencies;
+  finally
+    fPackageTree.EndUpdate;
   end;
 end;
 

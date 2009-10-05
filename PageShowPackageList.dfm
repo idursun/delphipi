@@ -107,8 +107,13 @@ object ShowPackageListPage: TShowPackageListPage
       Top = 0
       Action = actChangeViewToList
     end
-    object sepearator1: TToolButton
+    object btnViewDelphiVersion: TToolButton
       Left = 46
+      Top = 0
+      Action = actChangeViewToDelphiVersion
+    end
+    object sepearator1: TToolButton
+      Left = 69
       Top = 0
       Width = 8
       Caption = 'sepearator1'
@@ -116,17 +121,17 @@ object ShowPackageListPage: TShowPackageListPage
       Style = tbsSeparator
     end
     object btnAddFolder: TToolButton
-      Left = 54
+      Left = 77
       Top = 0
       Action = actAddPackagesFromFolder
     end
     object btnAddPackage: TToolButton
-      Left = 77
+      Left = 100
       Top = 0
       Action = actAddPackage
     end
     object seperator2: TToolButton
-      Left = 100
+      Left = 123
       Top = 0
       Width = 8
       Caption = 'seperator2'
@@ -134,12 +139,12 @@ object ShowPackageListPage: TShowPackageListPage
       Style = tbsSeparator
     end
     object btnSelectMatching: TToolButton
-      Left = 108
+      Left = 131
       Top = 0
       Action = actSelectMatching
     end
     object btnUnselectMatching: TToolButton
-      Left = 131
+      Left = 154
       Top = 0
       Action = actUnselectMatching
     end
@@ -403,6 +408,14 @@ object ShowPackageListPage: TShowPackageListPage
       Caption = 'actAddPackage'
       Hint = 'Add a package'
       ImageIndex = 3
+    end
+    object actChangeViewToDelphiVersion: TAction
+      Category = 'View'
+      AutoCheck = True
+      Caption = 'Delphi Version View'
+      GroupIndex = 1
+      Hint = 'Switch to Delphi Version View'
+      OnExecute = actChangeViewToDelphiVersionExecute
     end
   end
   object ilActionImages: TImageList

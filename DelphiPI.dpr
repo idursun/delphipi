@@ -29,7 +29,8 @@ uses
   ListViewModel in 'ListViewModel.pas',
   TreeViewModel in 'TreeViewModel.pas',
   TreeNodes in 'TreeNodes.pas',
-  PackageLoadThread in 'PackageLoadThread.pas';
+  PackageLoadThread in 'PackageLoadThread.pas',
+  DelphiVersionTreeViewModel in 'DelphiVersionTreeViewModel.pas';
 
 {$R *.res}
 

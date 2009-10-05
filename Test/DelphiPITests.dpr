@@ -30,7 +30,10 @@ uses
   InstalledPackageResolver in '..\InstalledPackageResolver.pas',
   TestTreeModel in 'TestTreeModel.pas',
   TreeModel in '..\TreeModel.pas',
-  TreeViewModel in '..\TreeViewModel.pas';
+  TreeViewModel in '..\TreeViewModel.pas',
+  DelphiVersionTreeViewModel in '..\DelphiVersionTreeViewModel.pas',
+  TestDelphiVersionTreeViewModel in 'TestDelphiVersionTreeViewModel.pas',
+  Utils in '..\Utils.pas';
 
 {$R *.RES}
 

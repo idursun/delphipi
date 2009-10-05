@@ -58,6 +58,9 @@
 			<DCCReference Include="TestTreeModel.pas"/>
 			<DCCReference Include="..\TreeModel.pas"/>
 			<DCCReference Include="..\TreeViewModel.pas"/>
+			<DCCReference Include="..\DelphiVersionTreeViewModel.pas"/>
+			<DCCReference Include="TestDelphiVersionTreeViewModel.pas"/>
+			<DCCReference Include="..\Utils.pas"/>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
 			</BuildConfiguration>
