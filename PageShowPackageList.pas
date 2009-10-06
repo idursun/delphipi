@@ -59,6 +59,8 @@ type
     btnUnselectMatching: TToolButton;
     btnViewDelphiVersion: TToolButton;
     actChangeViewToDelphiVersion: TAction;
+    actRefresh: TAction;
+    btnRefresh: TToolButton;
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
 
@@ -88,6 +90,7 @@ type
     procedure PackageListActionsUpdate(Sender: TObject);
     procedure actChangeViewToDelphiVersionExecute(Sender: TObject);
     procedure actAddPackagesFromFolderExecute(Sender: TObject);
+    procedure actRefreshExecute(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -103,6 +106,8 @@ type
     class var criticalSection: TRTLCriticalSection;
     class constructor Create;
     class destructor Destroy;
+
+    procedure LoadPackages(const directory, pattern: string; nodes: TList<TTreeNode>);
   public
     constructor Create(Owner: TComponent; const CompilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -146,17 +151,9 @@ begin
 
   SetView(pvtTree);
 
-  if fNodes.Count = 0then
+  if fNodes.Count = 0 then
   begin
-    packageLoadThread := TPackageLoadThread.Create(fCompilationData.BaseFolder, fCompilationData.Pattern, fNodes);
-    with packageLoadThread do
-    begin
-      OnTerminate := PackageLoadCompleted;
-      lblWait.Visible := true;
-      threadWorking := true;
-      fPackageTree.Visible := false;
-      Start;
-    end;
+    LoadPackages(fCompilationData.BaseFolder, fCompilationData.Pattern, fNodes);
   end else begin
     actChangeViewToTree.Execute;
   end;
@@ -445,6 +442,14 @@ begin
   fPackageTree.FullExpand(fPackageTree.FocusedNode);
 end;
 
+procedure TShowPackageListPage.actRefreshExecute(Sender: TObject);
+begin
+  inherited;
+  fPackageTree.Clear;
+  fNodes.Clear;
+  LoadPackages(fCompilationData.BaseFolder, fCompilationData.Pattern, fNodes);
+end;
+
 procedure TShowPackageListPage.actRemoveExecute(Sender: TObject);
 var
   nodes: TNodeArray;
@@ -673,6 +678,20 @@ begin
       TargetCanvas.Font.Color := clRed
     else
       TargetCanvas.Font.Color := clBlack;
+  end;
+end;
+
+procedure TShowPackageListPage.LoadPackages(const directory, pattern: string;
+  nodes: TList<TTreeNode>);
+begin
+  packageLoadThread := TPackageLoadThread.Create(directory, pattern, nodes);
+  with packageLoadThread do
+  begin
+    OnTerminate := PackageLoadCompleted;
+    lblWait.Visible := true;
+    threadWorking := true;
+    fPackageTree.Visible := false;
+    Start;
   end;
 end;
 
