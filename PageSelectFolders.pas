@@ -9,7 +9,7 @@ interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs, JclBorlandTools;
+  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs, JclBorlandTools, ActnList;
 
 type
   TSelectFoldersPage = class(TWizardPage)
@@ -115,14 +115,14 @@ end;
 
 procedure TSelectFoldersPage.UpdateWizardState;
 var
-  button: TButton;
+  action: TAction;
 begin
   inherited;
   wizard.SetHeader(_('Select Folders'));
   wizard.SetDescription(_('Please select folders which contains the packages that you want to install'));
 
-  button := wizard.GetButton(wbtNext);
-  button.Enabled := edtBaseFolder.Text <> '';
+  action := wizard.GetAction(wbtNext);
+  action.Enabled := edtBaseFolder.Text <> '';
 end;
 
 procedure TSelectFoldersPage.btnSelectFolderClick(Sender: TObject);

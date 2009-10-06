@@ -1,6 +1,6 @@
 object frmWizard: TfrmWizard
-  Left = 453
-  Top = 290
+  Left = 289
+  Top = 176
   Caption = 'Delphi PI'
   ClientHeight = 416
   ClientWidth = 592
@@ -393,10 +393,9 @@ object frmWizard: TfrmWizard
       Width = 80
       Height = 29
       Margins.Top = 6
+      Action = actBack
       Align = alRight
-      Caption = '<< &Back'
       TabOrder = 0
-      OnClick = btnBackClick
     end
     object btnNext: TButton
       AlignWithMargins = True
@@ -405,11 +404,10 @@ object frmWizard: TfrmWizard
       Width = 80
       Height = 29
       Margins.Top = 6
+      Action = actNext
       Align = alRight
-      Caption = '&Next >>'
       Default = True
       TabOrder = 1
-      OnClick = btnNextClick
     end
     object btnAbout: TButton
       AlignWithMargins = True
@@ -418,10 +416,25 @@ object frmWizard: TfrmWizard
       Width = 80
       Height = 29
       Margins.Top = 6
+      Action = actAbout
       Align = alLeft
-      Caption = 'About...'
       TabOrder = 2
-      OnClick = btnAboutClick
+    end
+  end
+  object actionList: TActionList
+    Left = 424
+    Top = 92
+    object actNext: TAction
+      Caption = 'Next >>'
+      OnExecute = actNextExecute
+    end
+    object actBack: TAction
+      Caption = '<< Back'
+      OnExecute = actBackExecute
+    end
+    object actAbout: TAction
+      Caption = 'About...'
+      OnExecute = actAboutExecute
     end
   end
 end

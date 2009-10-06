@@ -81,10 +81,10 @@ begin
   inherited;
   wizard.SetHeader(_('Compile and Install Packages'));
   wizard.SetDescription(_('Compiling packages that you have selected. Design time packages are going to be installed.'));
-  with wizard.GetButton(wbtNext) do
+  with wizard.GetAction(wbtNext) do
     Enabled := not compileThreadWorking;
 
-  with wizard.GetButton(wbtBack) do
+  with wizard.GetAction(wbtBack) do
     Enabled := not compileThreadWorking;
   btnCancel.Enabled := compileThreadWorking;
   chkShowFullLog.Enabled := not compileThreadWorking;    

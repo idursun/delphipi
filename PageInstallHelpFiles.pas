@@ -67,7 +67,7 @@ begin
   inherited;
   wizard.SetHeader(_('Help Files'));
   wizard.SetDescription(_('Select the help files that you want to register, if there are any.'));
-  with wizard.GetButton(wbtBack) do
+  with wizard.GetAction(wbtBack) do
     Visible := False;
 end;
 

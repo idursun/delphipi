@@ -243,26 +243,27 @@ end;
 
 procedure TShowPackageListPage.UpdateWizardState;
 var
-  button: TButton;
+  action: TAction;
   selectedPackageCount: integer;
   modelNode: TTreeNode;
 begin
   inherited;
   wizard.SetHeader(_('Select Packages'));
   wizard.SetDescription(_('Select packages that you want to compile.'));
-  button := wizard.GetButton(wbtNext);
-  button.Enabled := (not threadWorking);
+  action := wizard.GetAction(wbtNext);
+  action.Enabled := (not threadWorking);
   if not threadWorking then
   begin
-    button := wizard.GetButton(wbtNext);
-    button.Caption := _('Compile');
+    action := wizard.GetAction(wbtNext);
+    action.Caption := _('Compile');
     selectedPackageCount := 0;
     for modelNode in fNodes do
     begin
       if modelNode.Selected then
         inc(selectedPackageCount);
     end;
-    button.Enabled := selectedPackageCount > 0;
+    action.Enabled := selectedPackageCount > 0;
+    action.Update;
   end;
 end;
 

@@ -9,7 +9,7 @@ interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, WizardIntfs;
+  Dialogs, StdCtrls, ExtCtrls, WizardIntfs, ActnList;
 
 type
   TFrmWizard = class(TForm, IWizard)
@@ -23,11 +23,15 @@ type
     btnNext: TButton;
     btnAbout: TButton;
     Bevel1: TBevel;
+    actionList: TActionList;
+    actNext: TAction;
+    actBack: TAction;
+    actAbout: TAction;
 
     procedure FormCreate(Sender: TObject);
-    procedure btnNextClick(Sender: TObject);
-    procedure btnBackClick(Sender: TObject);
-    procedure btnAboutClick(Sender: TObject);
+    procedure actNextExecute(Sender: TObject);
+    procedure actAboutExecute(Sender: TObject);
+    procedure actBackExecute(Sender: TObject);
   private
     FCompilationData : TCompilationData;
     FBaseFolder: String;
@@ -37,7 +41,7 @@ type
   public
     class var Wizard: IWizard;  
     procedure UpdateInterface;
-    function GetButton(buttonType: TWizardButtonType): TButton;
+    function GetAction(buttonType: TWizardButtonType): TAction;
     procedure SetDescription(const desc: string);
     procedure SetHeader(const header: string);
     property BaseFolder: String read FBaseFolder write SetBaseFolder;
@@ -68,14 +72,19 @@ begin
   TranslateComponent(self);
 end;
 
-procedure TFrmWizard.btnAboutClick(Sender: TObject);
+procedure TFrmWizard.actAboutExecute(Sender: TObject);
 begin
   Application.CreateForm(TfrmAbout,frmAbout);
   frmAbout.ShowModal;
   frmAbout.Free;
 end;
 
-procedure TFrmWizard.btnNextClick(Sender: TObject);
+procedure TFrmWizard.actBackExecute(Sender: TObject);
+begin
+  SelectPage(CurPage-1);
+end;
+
+procedure TFrmWizard.actNextExecute(Sender: TObject);
 begin
   if CurPage + 1 = Length(Pages) then
     Close
@@ -83,17 +92,12 @@ begin
     SelectPage(CurPage+1);
 end;
 
-procedure TFrmWizard.btnBackClick(Sender: TObject);
-begin
-  SelectPage(CurPage-1);
-end;
-
-function TFrmWizard.GetButton(buttonType: TWizardButtonType): TButton;
+function TFrmWizard.GetAction(buttonType: TWizardButtonType): TAction;
 begin
   Result := nil;
   case buttonType of
-    wbtNext: Result := btnNext;
-    wbtBack: Result := btnBack;
+    wbtNext: Result := actNext;
+    wbtBack: Result := actBack;
   end;
 end;
 
@@ -145,11 +149,9 @@ begin
      exit;
   btnNext.Enabled := true;
   btnNext.Visible := true;
-  btnNext.Caption := _('&Next >>');
 
   btnBack.Enabled := true;
   btnBack.Visible := true;
-  btnBack.Caption := _('<< &Back');
 
   ActivePage.UpdateWizardState;
 

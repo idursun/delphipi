@@ -148,10 +148,10 @@ begin
   inherited;
   fWizardController.SetHeader(_('Finished'));
   fWizardController.SetDescription(_('Installation Summary'));
-  with fWizardController.GetButton(wbtNext) do
+  with fWizardController.GetAction(wbtNext) do
     Caption := _('&Exit');
 
-  with fWizardController.GetButton(wbtBack) do
+  with fWizardController.GetAction(wbtBack) do
     Visible := false;
 end;
 
