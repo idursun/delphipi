@@ -139,18 +139,26 @@ begin
   fInstalledPackageResolver.AddDefaultPackageList;
   fInstalledPackageResolver.AddIDEPackageList(CompilationData);
   fDependencyVerifier := TPackageDependencyVerifier.Create;
-  fNodes := TList<TTreeNode>.Create;
+
+  fNodes := Wizard.GetState('nodes') as TList<TTreeNode>;
+  if fNodes = nil then
+    fNodes := TList<TTreeNode>.Create;
 
   SetView(pvtTree);
 
-  packageLoadThread := TPackageLoadThread.Create(fCompilationData.BaseFolder, fCompilationData.Pattern, fNodes);
-  with packageLoadThread do
+  if fNodes.Count = 0then
   begin
-    OnTerminate := PackageLoadCompleted;
-    lblWait.Visible := true;
-    threadWorking := true;
-    fPackageTree.Visible := false;
-    Start;
+    packageLoadThread := TPackageLoadThread.Create(fCompilationData.BaseFolder, fCompilationData.Pattern, fNodes);
+    with packageLoadThread do
+    begin
+      OnTerminate := PackageLoadCompleted;
+      lblWait.Visible := true;
+      threadWorking := true;
+      fPackageTree.Visible := false;
+      Start;
+    end;
+  end else begin
+    actChangeViewToTree.Execute;
   end;
 end;
 
@@ -184,10 +192,12 @@ begin
       fCompilationData.PackageList.Add(node.GetData as TPackageInfo);
   end;
 
+  Wizard.SetState('nodes', fNodes);
+
   FreeAndNil(fDependencyVerifier);
   FreeAndNil(fInstalledPackageResolver);
   FreeAndNil(fModel);
-  FreeAndNil(fNodes);
+
 end;
 
 procedure TShowPackageListPage.FormCreate(Sender: TObject);

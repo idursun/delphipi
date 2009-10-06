@@ -32,18 +32,23 @@ type
     procedure actNextExecute(Sender: TObject);
     procedure actAboutExecute(Sender: TObject);
     procedure actBackExecute(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FCompilationData : TCompilationData;
     FBaseFolder: String;
+    FStates : TStringList;
     procedure SetBaseFolder(const Value: String);
   protected
     procedure SelectPage(const pageNo: Integer);
   public
-    class var Wizard: IWizard;  
+    class var Wizard: IWizard;
     procedure UpdateInterface;
     function GetAction(buttonType: TWizardButtonType): TAction;
     procedure SetDescription(const desc: string);
     procedure SetHeader(const header: string);
+    function GetState(const key: string): TObject;
+    procedure SetState(const key: string; const value:TObject);
+
     property BaseFolder: String read FBaseFolder write SetBaseFolder;
   end;
 var
@@ -61,15 +66,24 @@ var
 {$R *.dfm}
 { TfrmWizard }
 
+
 procedure TfrmWizard.FormCreate(Sender: TObject);
 begin
   FCompilationData := TCompilationData.Create;
+  FStates := TStringList.Create;
+
   TFrmWizard.Wizard := self as IWizard;
   self.Caption := Application.Title;
   if (ParamCount > 0) then
     FCompilationData.BaseFolder := ParamStr(1);
   SelectPage(0);
   TranslateComponent(self);
+end;
+
+procedure TFrmWizard.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  FCompilationData.Free;
+  FStates.Free;
 end;
 
 procedure TFrmWizard.actAboutExecute(Sender: TObject);
@@ -99,6 +113,16 @@ begin
     wbtNext: Result := actNext;
     wbtBack: Result := actBack;
   end;
+end;
+
+function TFrmWizard.GetState(const key: string): TObject;
+var
+  index: Integer;
+begin
+  Result := nil;
+  index := FStates.IndexOf(key);
+  if index <> -1 then
+    Result := FStates.Objects[index];
 end;
 
 procedure TFrmWizard.SelectPage(const pageNo: Integer);
@@ -141,6 +165,17 @@ end;
 procedure TFrmWizard.SetHeader(const header: string);
 begin
   lblHeader.Caption := header;
+end;
+
+procedure TFrmWizard.SetState(const key: string; const value:TObject);
+var
+  index: Integer;
+begin
+  index := FStates.IndexOf(key);
+  if index <> -1 then
+    FStates.Objects[index] := value
+  else
+    FStates.AddObject(key, value);
 end;
 
 procedure TFrmWizard.UpdateInterface;

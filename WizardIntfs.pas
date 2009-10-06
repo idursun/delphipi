@@ -16,6 +16,8 @@ type
 //     function GetData: TInterfacedObject;
      procedure SetHeader(const header:String);
      procedure SetDescription(const desc: String);
+     function GetState(const key:string):TObject;
+    procedure SetState(const key: string; const value:TObject);
    end;
 
 implementation
