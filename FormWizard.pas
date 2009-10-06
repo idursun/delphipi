@@ -147,15 +147,17 @@ procedure TFrmWizard.UpdateInterface;
 begin
   if not assigned(ActivePage) then
      exit;
-  btnNext.Enabled := true;
-  btnNext.Visible := true;
+  actNext.Enabled := true;
+  actNext.Visible := true;
+  actNext.Caption := _('&Next >>');
 
-  btnBack.Enabled := true;
-  btnBack.Visible := true;
+  actBack.Enabled := true;
+  actBack.Visible := true;
+  actBack.Caption := _('<< &Back');
 
   ActivePage.UpdateWizardState;
 
-  btnBack.Enabled := btnBack.Enabled and (CurPage > 0);
+  actBack.Enabled := actBack.Enabled and (CurPage > 0);
 //  btnNext.Enabled := btnNext.Enabled; //and (CurPage < length(Pages)-1);
 end;
 
