@@ -403,6 +403,7 @@ object ShowPackageListPage: TShowPackageListPage
       Caption = 'actAddPackagesFromFolder'
       Hint = 'Add packages from a folder'
       ImageIndex = 2
+      OnExecute = actAddPackagesFromFolderExecute
     end
     object actAddPackage: TAction
       Caption = 'actAddPackage'

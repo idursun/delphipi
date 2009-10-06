@@ -87,6 +87,7 @@ type
     procedure actExpandExecute(Sender: TObject);
     procedure PackageListActionsUpdate(Sender: TObject);
     procedure actChangeViewToDelphiVersionExecute(Sender: TObject);
+    procedure actAddPackagesFromFolderExecute(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -109,7 +110,7 @@ type
 
 implementation
 
-uses JclFileUtils, gnugettext, Utils, TreeViewModel, PackageLoadThread, DelphiVersionTreeViewModel;
+uses JclFileUtils, gnugettext, Utils, TreeViewModel, PackageLoadThread, DelphiVersionTreeViewModel, FileCtrl;
 {$R *.dfm}
 
 var
@@ -206,6 +207,7 @@ begin
   threadWorking := false;
   fPackageTree.BeginUpdate;
   try
+    fPackageTree.Clear;
     fPackageTree.RootNodeCount := fModel.GetChildCount(nil);
     fPackageTree.FullExpand;
     VerifyDependencies;
@@ -362,6 +364,22 @@ begin
   end;
 end;
 
+procedure TShowPackageListPage.actAddPackagesFromFolderExecute(Sender: TObject);
+var
+  directory: string;
+begin
+  directory := '';
+  if SelectDirectory(_('Select folder where packages are'),'',directory) then
+  begin
+    with TPackageLoadThread.Create(directory, '*.dpk',fNodes) do
+    begin
+      FreeOnTerminate := true;
+      OnTerminate := PackageLoadCompleted;
+      Start;
+    end;
+    //UpdateWizardState;
+  end;
+end;
 procedure TShowPackageListPage.actChangeViewToDelphiVersionExecute(
   Sender: TObject);
 begin

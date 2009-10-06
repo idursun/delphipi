@@ -6,7 +6,7 @@
 unit WizardIntfs;
 
 interface
-uses Classes, StdCtrls;
+uses Classes, StdCtrls, ActnList;
 type
    TWizardButtonType = (wbtNone, wbtNext, wbtBack, wbtHelp);
    IWizard = interface
