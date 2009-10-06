@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: DelphiPI 0.32\n"
-"POT-Creation-Date: 2009-10-06 13:35\n"
+"POT-Creation-Date: 2009-10-06 20:58\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -46,7 +46,7 @@ msgstr "DelphiPI Hakkında"
 #: FormAbout.dfm:641
 #: FormAbout.dfm:656
 #: FormWizard.dfm:13
-#: FormWizard.dfm:349
+#: FormWizard.dfm:350
 #: PageBase.dfm:13
 #: PageProgress.dfm:41
 #: PageShowPackageList.dfm:11
@@ -153,31 +153,31 @@ msgstr "Delphi PI"
 
 #. frmWizard..HeaderPanel..lblHeader..Caption
 #. frmWizard..HeaderPanel..lblHeader..Caption
-#: FormWizard.dfm:345
+#: FormWizard.dfm:346
 msgid "lblHeader"
 msgstr "lblHeader"
 
 #. frmWizard..HeaderPanel..lblDescription..Caption
 #. frmWizard..HeaderPanel..lblDescription..Caption
-#: FormWizard.dfm:358
+#: FormWizard.dfm:359
 msgid "lblDescription"
 msgstr "lblDescription"
 
 #. frmWizard..actionList..actNext..Caption
 #. frmWizard..actionList..actNext..Caption
-#: FormWizard.dfm:428
+#: FormWizard.dfm:429
 msgid "Next >>"
 msgstr "&Sonraki >>"
 
 #. frmWizard..actionList..actBack..Caption
 #. frmWizard..actionList..actBack..Caption
-#: FormWizard.dfm:432
+#: FormWizard.dfm:433
 msgid "<< Back"
 msgstr "<< Ö&nceki"
 
 #. frmWizard..actionList..actAbout..Caption
 #. frmWizard..actionList..actAbout..Caption
-#: FormWizard.dfm:436
+#: FormWizard.dfm:437
 msgid "About..."
 msgstr "Hakkında..."
 
@@ -414,7 +414,7 @@ msgstr "Paket ekle"
 
 #. ShowPackageListPage..toolbar..seperator2..Caption
 #. ShowPackageListPage..toolbar..seperator2..Caption
-#: PageShowPackageList.dfm:139
+#: PageShowPackageList.dfm:144
 msgid "seperator2"
 msgstr "seperator2"
 
@@ -424,9 +424,9 @@ msgstr "seperator2"
 #. ShowPackageListPage..pmSelectPopupMenu..N1..Caption
 #. ShowPackageListPage..pmSelectPopupMenu..N3..Caption
 #. ShowPackageListPage..pmSelectPopupMenu..N2..Caption
-#: PageShowPackageList.dfm:165
-#: PageShowPackageList.dfm:171
-#: PageShowPackageList.dfm:180
+#: PageShowPackageList.dfm:170
+#: PageShowPackageList.dfm:176
+#: PageShowPackageList.dfm:185
 msgid "-"
 msgstr "-"
 
@@ -444,19 +444,19 @@ msgstr "-"
 #. ShowPackageListPage..ActionList..actUnselectMatching..Category
 #. ShowPackageListPage..ActionList..actExpand..Category
 #. ShowPackageListPage..ActionList..actCollapse..Category
-#: PageShowPackageList.dfm:337
-#: PageShowPackageList.dfm:363
-#: PageShowPackageList.dfm:370
-#: PageShowPackageList.dfm:377
-#: PageShowPackageList.dfm:385
-#: PageShowPackageList.dfm:393
-#: PageShowPackageList.dfm:399
+#: PageShowPackageList.dfm:342
+#: PageShowPackageList.dfm:368
+#: PageShowPackageList.dfm:375
+#: PageShowPackageList.dfm:382
+#: PageShowPackageList.dfm:390
+#: PageShowPackageList.dfm:398
+#: PageShowPackageList.dfm:404
 msgid "Package List"
 msgstr "Paket Listesi"
 
 #. ShowPackageListPage..ActionList..actRemove..Caption
 #. ShowPackageListPage..ActionList..actRemove..Caption
-#: PageShowPackageList.dfm:338
+#: PageShowPackageList.dfm:343
 msgid "Remove"
 msgstr "Sil"
 
@@ -466,33 +466,33 @@ msgstr "Sil"
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Category
 #. ShowPackageListPage..ActionList..actChangeViewToList..Category
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Category
-#: PageShowPackageList.dfm:344
-#: PageShowPackageList.dfm:354
-#: PageShowPackageList.dfm:416
+#: PageShowPackageList.dfm:349
+#: PageShowPackageList.dfm:359
+#: PageShowPackageList.dfm:421
 msgid "View"
 msgstr "Görünüm"
 
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Caption
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Caption
-#: PageShowPackageList.dfm:346
+#: PageShowPackageList.dfm:351
 msgid "Tree View"
 msgstr "Ağaç Görünümü"
 
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Hint
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Hint
-#: PageShowPackageList.dfm:349
+#: PageShowPackageList.dfm:354
 msgid "Switch to Tree View "
 msgstr "Ağaç görünümüne geç"
 
 #. ShowPackageListPage..ActionList..actChangeViewToList..Caption
 #. ShowPackageListPage..ActionList..actChangeViewToList..Caption
-#: PageShowPackageList.dfm:356
+#: PageShowPackageList.dfm:361
 msgid "List View"
 msgstr "Liste Görünümü"
 
 #. ShowPackageListPage..ActionList..actChangeViewToList..Hint
 #. ShowPackageListPage..ActionList..actChangeViewToList..Hint
-#: PageShowPackageList.dfm:358
+#: PageShowPackageList.dfm:363
 msgid "Switch to List View "
 msgstr "Liste görünümüne geç"
 
@@ -500,8 +500,8 @@ msgstr "Liste görünümüne geç"
 #. ShowPackageListPage..ActionList..actSelectAll..Hint
 #. ShowPackageListPage..ActionList..actSelectAll..Caption
 #. ShowPackageListPage..ActionList..actSelectAll..Hint
-#: PageShowPackageList.dfm:364
-#: PageShowPackageList.dfm:365
+#: PageShowPackageList.dfm:369
+#: PageShowPackageList.dfm:370
 msgid "Select All"
 msgstr "Hepsini Seç"
 
@@ -509,84 +509,93 @@ msgstr "Hepsini Seç"
 #. ShowPackageListPage..ActionList..actUnselectAll..Hint
 #. ShowPackageListPage..ActionList..actUnselectAll..Caption
 #. ShowPackageListPage..ActionList..actUnselectAll..Hint
-#: PageShowPackageList.dfm:371
-#: PageShowPackageList.dfm:372
+#: PageShowPackageList.dfm:376
+#: PageShowPackageList.dfm:377
 msgid "Unselect All"
 msgstr "Hiçbirini Seçme"
 
 #. ShowPackageListPage..ActionList..actSelectMatching..Caption
 #. ShowPackageListPage..ActionList..actSelectMatching..Caption
-#: PageShowPackageList.dfm:378
-#: PageShowPackageList.pas:499
+#: PageShowPackageList.dfm:383
+#: PageShowPackageList.pas:514
 msgid "Select Matching..."
 msgstr "Eşleşenleri Seç..."
 
 #. ShowPackageListPage..ActionList..actSelectMatching..Hint
 #. ShowPackageListPage..ActionList..actSelectMatching..Hint
-#: PageShowPackageList.dfm:379
+#: PageShowPackageList.dfm:384
 msgid "Select matching..."
 msgstr "Eşleşenleri Seç..."
 
 #. ShowPackageListPage..ActionList..actUnselectMatching..Caption
 #. ShowPackageListPage..ActionList..actUnselectMatching..Caption
-#: PageShowPackageList.dfm:386
-#: PageShowPackageList.pas:525
+#: PageShowPackageList.dfm:391
+#: PageShowPackageList.pas:540
 msgid "Unselect Matching..."
 msgstr "Eşleşenleri Seçme..."
 
 #. ShowPackageListPage..ActionList..actUnselectMatching..Hint
 #. ShowPackageListPage..ActionList..actUnselectMatching..Hint
-#: PageShowPackageList.dfm:387
+#: PageShowPackageList.dfm:392
 msgid "Unselect matching..."
 msgstr "Eşleşmeyenleri Seçme..."
 
 #. ShowPackageListPage..ActionList..actExpand..Caption
 #. ShowPackageListPage..ActionList..actExpand..Caption
-#: PageShowPackageList.dfm:394
+#: PageShowPackageList.dfm:399
 msgid "Expand"
 msgstr "Genişlet"
 
 #. ShowPackageListPage..ActionList..actCollapse..Caption
 #. ShowPackageListPage..ActionList..actCollapse..Caption
-#: PageShowPackageList.dfm:400
+#: PageShowPackageList.dfm:405
 msgid "Collapse"
 msgstr "Daralt"
 
 #. ShowPackageListPage..ActionList..actAddPackagesFromFolder..Caption
 #. ShowPackageListPage..ActionList..actAddPackagesFromFolder..Caption
-#: PageShowPackageList.dfm:405
+#: PageShowPackageList.dfm:410
 msgid "actAddPackagesFromFolder"
 msgstr "Klasörden paket ekle"
 
 #. ShowPackageListPage..ActionList..actAddPackagesFromFolder..Hint
 #. ShowPackageListPage..ActionList..actAddPackagesFromFolder..Hint
-#: PageShowPackageList.dfm:406
+#: PageShowPackageList.dfm:411
 msgid "Add packages from a folder"
 msgstr "Klasörden paket ekle"
 
 #. ShowPackageListPage..ActionList..actAddPackage..Caption
 #. ShowPackageListPage..ActionList..actAddPackage..Caption
-#: PageShowPackageList.dfm:411
+#: PageShowPackageList.dfm:416
 msgid "actAddPackage"
 msgstr "Paket ekle"
 
 #. ShowPackageListPage..ActionList..actAddPackage..Hint
 #. ShowPackageListPage..ActionList..actAddPackage..Hint
-#: PageShowPackageList.dfm:412
+#: PageShowPackageList.dfm:417
 msgid "Add a package"
 msgstr "Bir paket ekle"
 
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Caption
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Caption
-#: PageShowPackageList.dfm:418
+#: PageShowPackageList.dfm:423
 msgid "Delphi Version View"
 msgstr "Delphi Sürümü Görünümü"
 
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Hint
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Hint
-#: PageShowPackageList.dfm:420
+#: PageShowPackageList.dfm:425
 msgid "Switch to Delphi Version View"
 msgstr "Delphi sürümü görünümüne geç"
+
+#. ShowPackageListPage..ActionList..actRefresh..Caption
+#. ShowPackageListPage..ActionList..actRefresh..Hint
+#. ShowPackageListPage..ActionList..actRefresh..Caption
+#. ShowPackageListPage..ActionList..actRefresh..Hint
+#: PageShowPackageList.dfm:430
+#: PageShowPackageList.dfm:431
+msgid "Refresh"
+msgstr "Tazele"
 
 #. SummaryPage..Caption
 #. SummaryPage..Caption
@@ -612,11 +621,11 @@ msgstr "Özet:"
 msgid "Save"
 msgstr "Kaydet"
 
-#: FormWizard.pas:152
+#: FormWizard.pas:187
 msgid "&Next >>"
 msgstr "&Sonraki >>"
 
-#: FormWizard.pas:156
+#: FormWizard.pas:191
 msgid "<< &Back"
 msgstr "<< Ö&nceki"
 
@@ -728,60 +737,60 @@ msgstr "Yüklemek istediğiniz paketleri içeren klasörü seçiniz."
 msgid "Select the folder where packages are"
 msgstr "Paketlerin olduğu klasörü seçin"
 
-#: PageShowPackageList.pas:253
+#: PageShowPackageList.pas:260
 msgid "Select Packages"
 msgstr "Paketleri seçiniz"
 
-#: PageShowPackageList.pas:254
+#: PageShowPackageList.pas:261
 msgid "Select packages that you want to compile."
 msgstr "Derlemek istediğiniz paketleri seçin."
 
-#: PageShowPackageList.pas:260
+#: PageShowPackageList.pas:267
 msgid "Compile"
 msgstr "Derle"
 
-#: PageShowPackageList.pas:372
+#: PageShowPackageList.pas:379
 msgid "Select folder where packages are"
 msgstr "Paketlerin olduğu klasörü seçin"
 
-#: PageShowPackageList.pas:499
-#: PageShowPackageList.pas:525
+#: PageShowPackageList.pas:514
+#: PageShowPackageList.pas:540
 msgid "File Mask"
 msgstr "Dosya maskesi"
 
-#: PageShowPackageList.pas:558
+#: PageShowPackageList.pas:573
 msgid "Designtime Package"
 msgstr "Tasarım Anı Paketi"
 
-#: PageShowPackageList.pas:560
+#: PageShowPackageList.pas:575
 msgid "Runtime Package"
 msgstr "Çalışma Anı Paketi"
 
-#: PageShowPackageList.pas:564
+#: PageShowPackageList.pas:579
 msgid "FullPath: "
 msgstr "Tam Yol:"
 
-#: PageShowPackageList.pas:565
+#: PageShowPackageList.pas:580
 msgid "Description: "
 msgstr "Açıklama:"
 
-#: PageShowPackageList.pas:566
+#: PageShowPackageList.pas:581
 msgid "Type: "
 msgstr "Tip:"
 
-#: PageShowPackageList.pas:567
+#: PageShowPackageList.pas:582
 msgid "Requires: "
 msgstr "Gerekliler:"
 
-#: PageShowPackageList.pas:570
+#: PageShowPackageList.pas:585
 msgid "Missing Package: "
 msgstr "Bulunamayan Paket:"
 
-#: PageShowPackageList.pas:597
+#: PageShowPackageList.pas:612
 msgid "runtime"
 msgstr "çalışma anı"
 
-#: PageShowPackageList.pas:599
+#: PageShowPackageList.pas:614
 msgid "design"
 msgstr "tasarım anı"
 
