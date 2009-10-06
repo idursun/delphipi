@@ -417,9 +417,25 @@ begin
 end;
 
 procedure TShowPackageListPage.actRemoveExecute(Sender: TObject);
+var
+  nodes: TNodeArray;
+  I: Integer;
 begin
   if fPackageTree.SelectedCount > 0 then
   begin
+    nodes := fPackageTree.GetSortedSelection(true);
+    for I := 0 to Length(nodes) - 1 do
+    begin
+      fPackageTree.Traverse(nodes[i], procedure(node: PVirtualNode)
+      var
+        nodeData: TTreeNode;
+      begin
+         nodeData := PNodeData(fPackageTree.GetNodeData(node)).Node;
+         nodeData.Selected := false; // because it is being deleted;
+         fNodes.Remove(nodeData); //remove from collection
+      end);
+    end;
+
     fPackageTree.DeleteSelectedNodes;
     VerifyDependencies;
   end;

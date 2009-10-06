@@ -92,7 +92,7 @@ begin
   fNodes.Add(TBasicNode.Create('pd12'));
   fNodes.Add(TBasicNode.Create('p12'));
   fNodes.Add(TBasicNode.Create('p_12'));
-  actual := fModel.GetChild(TBasicNode.Create('Delphi 2009'), 2);
+  actual := fModel.GetChild(TBasicNode.Create('Delphi 2009'), 1);
   CheckEquals('p12',actual.GetDisplayName, 'returned package was wrong');
 end;
 
