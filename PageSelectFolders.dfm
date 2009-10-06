@@ -1,14 +1,14 @@
 inherited SelectFoldersPage: TSelectFoldersPage
-  Left = 565
-  Top = 222
+  Left = 346
+  Top = 221
   ActiveControl = edtBaseFolder
   Caption = 'SelectFoldersPage'
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitLeft = 565
-  ExplicitTop = 222
-  ExplicitWidth = 516
-  ExplicitHeight = 286
+  ExplicitLeft = 346
+  ExplicitTop = 221
+  ExplicitWidth = 508
+  ExplicitHeight = 284
   PixelsPerInch = 96
   TextHeight = 13
   object grpPackagePattern: TGroupBox

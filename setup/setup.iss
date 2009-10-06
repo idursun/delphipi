@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "DelphiPI"
-#define MyAppVerName "DelphiPI 0.52"
+#define MyAppVerName "DelphiPI 0.55"
 #define MyAppPublisher "http://www.thexpot.net"
 #define MyAppURL "http://delphipi.googlecode.com"
 #define MyAppExeName "DelphiPI.exe"
@@ -18,7 +18,7 @@ DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=LICENSE.txt
-OutputBaseFilename=delphipi.0.52.setup
+OutputBaseFilename=delphipi.0.55.setup
 Compression=lzma/ultra
 SolidCompression=true
 
@@ -42,5 +42,3 @@ Name: {userdesktop}\{#MyAppName}; Filename: {app}\{#MyAppExeName}; Tasks: deskto
 
 [Run]
 Filename: {app}\{#MyAppExeName}; Description: {cm:LaunchProgram,{#MyAppName}}; Flags: nowait postinstall skipifsilent
-
-

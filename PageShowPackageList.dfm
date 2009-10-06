@@ -128,7 +128,9 @@ object ShowPackageListPage: TShowPackageListPage
     object btnAddPackage: TToolButton
       Left = 100
       Top = 0
+      Hint = 'Add package'
       Action = actAddPackage
+      Caption = 'Add Package'
     end
     object seperator2: TToolButton
       Left = 123
