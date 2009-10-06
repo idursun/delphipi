@@ -9,11 +9,12 @@ const
   DELPHI_VERSION_6 = 1;
   DELPHI_VERSION_7 = 2;
   DELPHI_VERSION_8 = 3;
-  DELPHI_VERSION_2006 = 4;
-  DELPHI_VERSION_2007 = 5;
-  DELPHI_VERSION_2009 = 6;
-  DELPHI_VERSION_2010 = 7;
-  VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_VERSION_2010] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010');
+  DELPHI_VERSION_2005 = 4;
+  DELPHI_VERSION_2006 = 5;
+  DELPHI_VERSION_2007 = 6;
+  DELPHI_VERSION_2009 = 7;
+  DELPHI_VERSION_2010 = 8;
+  VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_VERSION_2010] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2005', 'Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010');
 
 type
 
@@ -46,7 +47,7 @@ type
   end;
 
 implementation
-uses JclStrings;
+uses JclStrings, JclFileUtils;
 
 { TDelphiVersionTreeViewModel<T> }
 function TDelphiVersionTreeViewModel<T>.GuessDelphiVersion(name: string;  patterns: TDelphiVersionArray): integer;
@@ -59,6 +60,7 @@ var
 begin
   Result := -1;
   FillChar(matches, Length(matches)*sizeof(Integer),0 );
+  name := JclFileUtils.PathExtractFileNameNoExt(name);
   for i := DELPHI_VERSION_5 to DELPHI_VERSION_2010 do
   begin
     for pattern in  patterns[i] do
@@ -163,54 +165,66 @@ begin
    for I := DELPHI_VERSION_5 to DELPHI_VERSION_2010 do
     patterns[I] := TStringList.Create;
 
+  patterns[DELPHI_VERSION_5].Add('5');
   patterns[DELPHI_VERSION_5].Add('50');
   patterns[DELPHI_VERSION_5].Add('d5');
   patterns[DELPHI_VERSION_5].Add('d50');
   patterns[DELPHI_VERSION_5].Add('delphi5');
   patterns[DELPHI_VERSION_5].Add('_5');
 
+  patterns[DELPHI_VERSION_6].Add('6');
   patterns[DELPHI_VERSION_6].Add('60');
   patterns[DELPHI_VERSION_6].Add('d6');
   patterns[DELPHI_VERSION_6].Add('d60');
   patterns[DELPHI_VERSION_6].Add('delphi6');
   patterns[DELPHI_VERSION_6].Add('_6');
 
+  patterns[DELPHI_VERSION_7].Add('7');
   patterns[DELPHI_VERSION_7].Add('70');
   patterns[DELPHI_VERSION_7].Add('d7');
   patterns[DELPHI_VERSION_7].Add('d70');
   patterns[DELPHI_VERSION_7].Add('delphi7');
   patterns[DELPHI_VERSION_7].Add('_7');
 
-  patterns[DELPHI_VERSION_2006].Add('90');
-  patterns[DELPHI_VERSION_2006].Add('d9');
-  patterns[DELPHI_VERSION_2006].Add('d900');
-  patterns[DELPHI_VERSION_2006].Add('delphi2006');
-  patterns[DELPHI_VERSION_2006].Add('_90');
+  patterns[DELPHI_VERSION_2005].Add('90');
+  patterns[DELPHI_VERSION_2005].Add('d9');
+  patterns[DELPHI_VERSION_2005].Add('delphi2005');
+  patterns[DELPHI_VERSION_2005].Add('d2005');
+  patterns[DELPHI_VERSION_2005].Add('2005');
+  patterns[DELPHI_VERSION_2005].Add('2005'); // added twice on purpose
+  patterns[DELPHI_VERSION_2005].Add('_90');
 
-  patterns[DELPHI_VERSION_2007].Add('10');
-  patterns[DELPHI_VERSION_2007].Add('d10');
-  patterns[DELPHI_VERSION_2007].Add('d100');
-  patterns[DELPHI_VERSION_2007].Add('delphi2007');
-  patterns[DELPHI_VERSION_2007].Add('_100');
+  patterns[DELPHI_VERSION_2006].Add('10');
+  patterns[DELPHI_VERSION_2006].Add('d10');
+  patterns[DELPHI_VERSION_2006].Add('2006');
+  patterns[DELPHI_VERSION_2006].Add('2006'); // added twice on purpose
+  patterns[DELPHI_VERSION_2006].Add('d2006');
+  patterns[DELPHI_VERSION_2006].Add('delphi2006');
+  patterns[DELPHI_VERSION_2006].Add('_10');
+
   patterns[DELPHI_VERSION_2007].Add('11');
   patterns[DELPHI_VERSION_2007].Add('d11');
-  patterns[DELPHI_VERSION_2007].Add('d110');
-  patterns[DELPHI_VERSION_2007].Add('_110');
+  patterns[DELPHI_VERSION_2007].Add('2007');
+  patterns[DELPHI_VERSION_2007].Add('2007'); // added twice on purpose
+  patterns[DELPHI_VERSION_2007].Add('d2007');
+  patterns[DELPHI_VERSION_2007].Add('delphi2007');
+  patterns[DELPHI_VERSION_2007].Add('_11');
 
   patterns[DELPHI_VERSION_2009].Add('12');
   patterns[DELPHI_VERSION_2009].Add('d12');
-  patterns[DELPHI_VERSION_2009].Add('d120');
+  patterns[DELPHI_VERSION_2009].Add('d2009');
+  patterns[DELPHI_VERSION_2009].Add('2009');
   patterns[DELPHI_VERSION_2009].Add('delphi2009');
-  patterns[DELPHI_VERSION_2009].Add('_120');
+  patterns[DELPHI_VERSION_2009].Add('_12');
 
   patterns[DELPHI_VERSION_2010].Add('13');
   patterns[DELPHI_VERSION_2010].Add('14');
-  patterns[DELPHI_VERSION_2010].Add('d130');
-  patterns[DELPHI_VERSION_2010].Add('delphi2010');
-  patterns[DELPHI_VERSION_2010].Add('_130');
-  patterns[DELPHI_VERSION_2010].Add('d14');
-  patterns[DELPHI_VERSION_2010].Add('d140');
   patterns[DELPHI_VERSION_2010].Add('2010');
+  patterns[DELPHI_VERSION_2010].Add('d2010');
+  patterns[DELPHI_VERSION_2010].Add('delphi2010');
+  patterns[DELPHI_VERSION_2010].Add('d13');
+  patterns[DELPHI_VERSION_2010].Add('d14');
+  patterns[DELPHI_VERSION_2010].Add('_130');
   patterns[DELPHI_VERSION_2010].Add('_140');
 end;
 
