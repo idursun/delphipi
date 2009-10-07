@@ -19,7 +19,7 @@ type
     function CreatePackageInfo(const packageFileContent: TStrings): TPackageInfo; overload;
   end;
 implementation
-
+uses JclFileUtils;
 resourcestring
   StrRUNONLY = '{$RUNONLY';
   StrDESCRIPTION = '{$DESCRIPTION ';
@@ -27,7 +27,7 @@ resourcestring
   StrPackage = 'package';
   StrRequires = 'requires';
   StrContains = 'contains';
-  
+
 { TPackageInfoFactory }
 
 function TPackageInfoFactory.ClearStr(Str: string): string;
@@ -40,13 +40,14 @@ end;
 function TPackageInfoFactory.CreatePackageInfo(
   const packageFileName: string): TPackageInfo;
 var
-  lines: TStrings;  
+  lines: TStrings;
 begin
   lines := TStringList.Create;
   try
     lines.LoadFromFile(packageFileName);
     result := CreatePackageInfo(lines);
     Result.FileName := packageFileName;
+    Result.PackageName := PathExtractFileNameNoExt(packageFileName);
   finally
     lines.Free;
   end;

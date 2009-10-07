@@ -10,3 +10,6 @@ __history
 ModelSupport*
 *.cbk
 LibrarySupport
+*.mo
+*.drc
+*.map

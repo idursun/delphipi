@@ -192,7 +192,7 @@ begin
   patterns[DELPHI_VERSION_2005].Add('d2005');
   patterns[DELPHI_VERSION_2005].Add('2005');
   patterns[DELPHI_VERSION_2005].Add('2005'); // added twice on purpose
-  patterns[DELPHI_VERSION_2005].Add('_90');
+  patterns[DELPHI_VERSION_2005].Add('_9');
 
   patterns[DELPHI_VERSION_2006].Add('10');
   patterns[DELPHI_VERSION_2006].Add('d10');
@@ -214,6 +214,7 @@ begin
   patterns[DELPHI_VERSION_2009].Add('d12');
   patterns[DELPHI_VERSION_2009].Add('d2009');
   patterns[DELPHI_VERSION_2009].Add('2009');
+  patterns[DELPHI_VERSION_2009].Add('2009');
   patterns[DELPHI_VERSION_2009].Add('delphi2009');
   patterns[DELPHI_VERSION_2009].Add('_12');
 
@@ -224,16 +225,16 @@ begin
   patterns[DELPHI_VERSION_2010].Add('delphi2010');
   patterns[DELPHI_VERSION_2010].Add('d13');
   patterns[DELPHI_VERSION_2010].Add('d14');
-  patterns[DELPHI_VERSION_2010].Add('_130');
-  patterns[DELPHI_VERSION_2010].Add('_140');
+  patterns[DELPHI_VERSION_2010].Add('_13');
+  patterns[DELPHI_VERSION_2010].Add('_14');
 end;
 
 procedure TCachedDelphiVersionTreeViewModel<T>.RefillCache;
 var
   I: Integer;
-  versionCount, versionIndex: Integer;
+  versionIndex: Integer;
+  parents, children: TList<T>;
   parentNode: T;
-  children : TList<T>;
 begin
   for I := DELPHI_VERSION_5 to DELPHI_VERSION_2010 do
   begin
@@ -242,19 +243,22 @@ begin
     fCache[i] := TList<T>.Create;
   end;
 
-  versionCount := inherited GetChildCount(default(T));
-
-  for I := 0 to versionCount - 1 do
-  begin
-    parentNode := inherited GetChild(default(T),i);
-    children := inherited GetChildren(parentNode);
-    try
-      versionIndex := FindDelphiVersionIndexByName(parentNode.GetNodePath);
-      fCache[versionIndex].AddRange(children);
-    finally
-      children.Free;
+  parents := inherited GetChildren(default(T));
+  try
+    for parentNode in parents do
+    begin
+      children := inherited GetChildren(parentNode);
+      try
+        versionIndex := FindDelphiVersionIndexByName(parentNode.GetNodePath);
+        fCache[versionIndex].AddRange(children);
+      finally
+        children.Free;
+      end;
     end;
+  finally
+    parents.Free;
   end;
+
   fLastNodeCount := fNodes.Count;
 end;
 
