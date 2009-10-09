@@ -56,7 +56,7 @@ var
   matches: array[DELPHI_VERSION_5..DELPHI_VERSION_2010] of Integer;
   suffices : TStringList;
   pattern : string;
-  max, maxi, i : integer;
+  max, maxi, i, index : integer;
 begin
   Result := -1;
   FillChar(matches, Length(matches)*sizeof(Integer),0 );
@@ -65,8 +65,9 @@ begin
   begin
     for pattern in  patterns[i] do
     begin
-       if Pos(UpperCase(pattern), UpperCase(name)) <> 0 then
-         Inc(matches[i]);
+       index := Pos(UpperCase(pattern), UpperCase(name));
+       if index <> 0 then
+         matches[i] := matches[i] + index;
     end;
   end;
 
