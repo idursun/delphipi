@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: DelphiPI 0.32\n"
-"POT-Creation-Date: 2009-10-06 20:58\n"
+"POT-Creation-Date: 2009-10-09 09:01\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"

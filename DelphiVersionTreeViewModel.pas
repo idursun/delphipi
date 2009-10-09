@@ -166,6 +166,8 @@ begin
     patterns[I] := TStringList.Create;
 
   patterns[DELPHI_VERSION_5].Add('5');
+  patterns[DELPHI_VERSION_5].Add('r5');
+  patterns[DELPHI_VERSION_5].Add('d5');
   patterns[DELPHI_VERSION_5].Add('50');
   patterns[DELPHI_VERSION_5].Add('d5');
   patterns[DELPHI_VERSION_5].Add('d50');
@@ -173,6 +175,8 @@ begin
   patterns[DELPHI_VERSION_5].Add('_5');
 
   patterns[DELPHI_VERSION_6].Add('6');
+  patterns[DELPHI_VERSION_6].Add('r6');
+  patterns[DELPHI_VERSION_6].Add('d6');
   patterns[DELPHI_VERSION_6].Add('60');
   patterns[DELPHI_VERSION_6].Add('d6');
   patterns[DELPHI_VERSION_6].Add('d60');
@@ -180,12 +184,17 @@ begin
   patterns[DELPHI_VERSION_6].Add('_6');
 
   patterns[DELPHI_VERSION_7].Add('7');
+  patterns[DELPHI_VERSION_7].Add('r7');
+  patterns[DELPHI_VERSION_7].Add('d7');
   patterns[DELPHI_VERSION_7].Add('70');
   patterns[DELPHI_VERSION_7].Add('d7');
   patterns[DELPHI_VERSION_7].Add('d70');
   patterns[DELPHI_VERSION_7].Add('delphi7');
   patterns[DELPHI_VERSION_7].Add('_7');
 
+  patterns[DELPHI_VERSION_2005].Add('9');
+  patterns[DELPHI_VERSION_2005].Add('r9');
+  patterns[DELPHI_VERSION_2005].Add('d9');
   patterns[DELPHI_VERSION_2005].Add('90');
   patterns[DELPHI_VERSION_2005].Add('d9');
   patterns[DELPHI_VERSION_2005].Add('delphi2005');
@@ -195,6 +204,9 @@ begin
   patterns[DELPHI_VERSION_2005].Add('_9');
 
   patterns[DELPHI_VERSION_2006].Add('10');
+  patterns[DELPHI_VERSION_2006].Add('r10');
+  patterns[DELPHI_VERSION_2006].Add('d10');
+  patterns[DELPHI_VERSION_2006].Add('100');
   patterns[DELPHI_VERSION_2006].Add('d10');
   patterns[DELPHI_VERSION_2006].Add('2006');
   patterns[DELPHI_VERSION_2006].Add('2006'); // added twice on purpose
@@ -203,6 +215,9 @@ begin
   patterns[DELPHI_VERSION_2006].Add('_10');
 
   patterns[DELPHI_VERSION_2007].Add('11');
+  patterns[DELPHI_VERSION_2007].Add('r11');
+  patterns[DELPHI_VERSION_2007].Add('d11');
+  patterns[DELPHI_VERSION_2007].Add('110');
   patterns[DELPHI_VERSION_2007].Add('d11');
   patterns[DELPHI_VERSION_2007].Add('2007');
   patterns[DELPHI_VERSION_2007].Add('2007'); // added twice on purpose
@@ -211,7 +226,9 @@ begin
   patterns[DELPHI_VERSION_2007].Add('_11');
 
   patterns[DELPHI_VERSION_2009].Add('12');
+  patterns[DELPHI_VERSION_2009].Add('r12');
   patterns[DELPHI_VERSION_2009].Add('d12');
+  patterns[DELPHI_VERSION_2009].Add('120');
   patterns[DELPHI_VERSION_2009].Add('d2009');
   patterns[DELPHI_VERSION_2009].Add('2009');
   patterns[DELPHI_VERSION_2009].Add('2009');
@@ -220,6 +237,12 @@ begin
 
   patterns[DELPHI_VERSION_2010].Add('13');
   patterns[DELPHI_VERSION_2010].Add('14');
+  patterns[DELPHI_VERSION_2010].Add('d13');
+  patterns[DELPHI_VERSION_2010].Add('d14');
+  patterns[DELPHI_VERSION_2010].Add('r13');
+  patterns[DELPHI_VERSION_2010].Add('d14');
+  patterns[DELPHI_VERSION_2010].Add('130');
+  patterns[DELPHI_VERSION_2010].Add('140');
   patterns[DELPHI_VERSION_2010].Add('2010');
   patterns[DELPHI_VERSION_2010].Add('d2010');
   patterns[DELPHI_VERSION_2010].Add('delphi2010');
