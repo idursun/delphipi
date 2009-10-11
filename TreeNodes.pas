@@ -5,7 +5,7 @@
 ** }
 unit TreeNodes;
 interface
-uses treemodel, packageinfo;
+uses treemodel, packageinfo, Generics.Defaults;
 type
   TNodeType = (ntNode, ntFolder, ntPackage);
   TTreeNode = class(TInterfacedObject, INode)
@@ -36,6 +36,11 @@ type
 
     property MissingPackageName: string read fMissingPackageName write fMissingPackageName;
   end;
+
+  TTreeNodeComparer = class(TInterfacedObject, IComparer<TTreeNode>)
+    function Compare(const Left, Right: TTreeNode): Integer;
+  end;
+
 
 implementation
 uses JclStrings;
@@ -87,6 +92,13 @@ begin
   i := Pos(':', Result);
   if i <> 0 then
     Result := StrRestOf(Result, i + 2);
+end;
+
+{ TTreeNodeComparer }
+
+function TTreeNodeComparer.Compare(const Left, Right: TTreeNode): Integer;
+begin
+  Result := StrCompare(Left.GetNodePath, Right.GetNodePath, true);
 end;
 
 end.

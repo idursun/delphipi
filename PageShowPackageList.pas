@@ -91,6 +91,7 @@ type
     procedure actChangeViewToDelphiVersionExecute(Sender: TObject);
     procedure actAddPackagesFromFolderExecute(Sender: TObject);
     procedure actRefreshExecute(Sender: TObject);
+    procedure actAddPackageExecute(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -147,7 +148,7 @@ begin
 
   fNodes := Wizard.GetState('nodes') as TList<TTreeNode>;
   if fNodes = nil then
-    fNodes := TList<TTreeNode>.Create;
+    fNodes := TList<TTreeNode>.Create(TTreeNodeComparer.Create);
 
   SetView(pvtTree);
 
@@ -194,7 +195,6 @@ begin
   FreeAndNil(fDependencyVerifier);
   FreeAndNil(fInstalledPackageResolver);
   FreeAndNil(fModel);
-
 end;
 
 procedure TShowPackageListPage.FormCreate(Sender: TObject);
@@ -368,6 +368,24 @@ begin
       ImageIndex := 0;
     ntPackage:
       ImageIndex := 1;
+  end;
+end;
+
+procedure TShowPackageListPage.actAddPackageExecute(Sender: TObject);
+var
+  dialog: TFileOpenDialog;
+begin
+  dialog := TFileOpenDialog.Create(self);
+  try
+    dialog.DefaultExtension := '.dpk';
+    dialog.DefaultFolder := fCompilationData.BaseFolder;
+    if (dialog.Execute) and (ExtractFileExt(dialog.FileName) = '.dpk') then
+    begin
+      if not fNodes.Contains(TTreeNode.Create(dialog.FileName, dialog.FileName)) then
+        LoadPackages(ExtractFilePath(dialog.FileName), ExtractFileName(dialog.FileName),fNodes);
+    end;
+  finally
+    dialog.Free;
   end;
 end;
 

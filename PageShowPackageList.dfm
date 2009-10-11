@@ -416,6 +416,7 @@ object ShowPackageListPage: TShowPackageListPage
       Caption = 'actAddPackage'
       Hint = 'Add a package'
       ImageIndex = 3
+      OnExecute = actAddPackageExecute
     end
     object actChangeViewToDelphiVersion: TAction
       Category = 'View'
