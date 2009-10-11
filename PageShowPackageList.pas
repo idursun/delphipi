@@ -52,7 +52,7 @@ type
     btnChangeToListView: TToolButton;
     btnAddFolder: TToolButton;
     actAddPackagesFromFolder: TAction;
-    actAddPackage: TAction;
+    actAddPackages: TAction;
     btnAddPackage: TToolButton;
     seperator2: TToolButton;
     btnSelectMatching: TToolButton;
@@ -91,7 +91,7 @@ type
     procedure actChangeViewToDelphiVersionExecute(Sender: TObject);
     procedure actAddPackagesFromFolderExecute(Sender: TObject);
     procedure actRefreshExecute(Sender: TObject);
-    procedure actAddPackageExecute(Sender: TObject);
+    procedure actAddPackagesExecute(Sender: TObject);
   private
     packageLoadThread: TThread;
     fSelectMask: string;
@@ -108,7 +108,8 @@ type
     class constructor Create;
     class destructor Destroy;
 
-    procedure LoadPackages(const directory, pattern: string; nodes: TList<TTreeNode>);
+    procedure LoadPackages(const directory, pattern: string; nodes: TList<TTreeNode>); overload;
+    procedure LoadPackages(const fileList: TStrings; nodes: TList<TTreeNode>); overload;
   public
     constructor Create(Owner: TComponent; const CompilationData: TCompilationData); override;
     procedure UpdateWizardState; override;
@@ -116,7 +117,7 @@ type
 
 implementation
 
-uses JclFileUtils, gnugettext, Utils, TreeViewModel, PackageLoadThread, DelphiVersionTreeViewModel, FileCtrl;
+uses JclFileUtils, JclStrings, gnugettext, Utils, TreeViewModel, PackageLoadThread, DelphiVersionTreeViewModel, FileCtrl, PackageInfoFactory;
 {$R *.dfm}
 
 var
@@ -371,18 +372,25 @@ begin
   end;
 end;
 
-procedure TShowPackageListPage.actAddPackageExecute(Sender: TObject);
+procedure TShowPackageListPage.actAddPackagesExecute(Sender: TObject);
 var
   dialog: TFileOpenDialog;
+  fileName: string;
 begin
   dialog := TFileOpenDialog.Create(self);
   try
-    dialog.DefaultExtension := '.dpk';
-    dialog.DefaultFolder := fCompilationData.BaseFolder;
-    if (dialog.Execute) and (ExtractFileExt(dialog.FileName) = '.dpk') then
+    dialog.DefaultExtension := 'dpk';
+    dialog.Options := [TFileDialogOption.fdoAllowMultiSelect];
+    with dialog.FileTypes.Add do
     begin
-      if not fNodes.Contains(TTreeNode.Create(dialog.FileName, dialog.FileName)) then
-        LoadPackages(ExtractFilePath(dialog.FileName), ExtractFileName(dialog.FileName),fNodes);
+      DisplayName := _('Delphi Package (*.dpk)');
+      FileMask := '*.dpk';
+    end;
+
+    dialog.DefaultFolder := fCompilationData.BaseFolder;
+    if (dialog.Execute) and (dialog.Files.Count > 0) then
+    begin
+      LoadPackages(dialog.Files, fNodes);
     end;
   finally
     dialog.Free;
@@ -697,6 +705,32 @@ begin
     else
       TargetCanvas.Font.Color := clBlack;
   end;
+end;
+
+procedure TShowPackageListPage.LoadPackages(const fileList: TStrings;
+  nodes: TList<TTreeNode>);
+var
+  fileName: string;
+  node: TPackageTreeNode;
+  packageInfoFactory: TPackageInfoFactory;
+begin
+  packageInfoFactory := TPackageInfoFactory.Create;
+  try
+    for fileName in fileList do
+    begin
+      if StrCompare(ExtractFileExt(fileName), '.dpk', True) <> 0 then
+        Continue;
+
+      node := TPackageTreeNode.Create(packageInfoFactory.CreatePackageInfo(fileName));
+      if nodes.Contains(node) then
+        Continue;
+
+      nodes.Add(node);
+    end;
+  finally
+    packageInfoFactory.Free;
+  end;
+  PackageLoadCompleted(nil);
 end;
 
 procedure TShowPackageListPage.LoadPackages(const directory, pattern: string;

@@ -63,13 +63,18 @@ end;
 procedure TPackageLoadThread.LoadPackageInformations(const directory: string);
 var
   sr: TSearchRec;
+  packageNode: TPackageTreeNode;
 begin
   if FindFirst(PathAppend(directory, fPattern), faAnyFile, sr) = 0 then
   begin
     try
       repeat
         if UpperCase(ExtractFileExt(sr.Name)) = '.DPK' then
-          fList.Add(TPackageTreeNode.Create(fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name))));
+        begin
+          packageNode := TPackageTreeNode.Create(fPackageInfoFactory.CreatePackageInfo(PathAppend(directory, sr.Name)));
+          if not fList.Contains(packageNode) then
+            fList.Add(packageNode);
+        end;
       until (FindNext(sr) <> 0) and Active;
     finally
       FindClose(sr);

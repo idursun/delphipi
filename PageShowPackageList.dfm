@@ -129,7 +129,7 @@ object ShowPackageListPage: TShowPackageListPage
       Left = 100
       Top = 0
       Hint = 'Add package'
-      Action = actAddPackage
+      Action = actAddPackages
       Caption = 'Add Package'
     end
     object btnRefresh: TToolButton
@@ -412,11 +412,11 @@ object ShowPackageListPage: TShowPackageListPage
       ImageIndex = 2
       OnExecute = actAddPackagesFromFolderExecute
     end
-    object actAddPackage: TAction
-      Caption = 'actAddPackage'
-      Hint = 'Add a package'
+    object actAddPackages: TAction
+      Caption = 'Add Packages'
+      Hint = 'Add Packages'
       ImageIndex = 3
-      OnExecute = actAddPackageExecute
+      OnExecute = actAddPackagesExecute
     end
     object actChangeViewToDelphiVersion: TAction
       Category = 'View'

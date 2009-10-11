@@ -33,8 +33,8 @@ type
     function GetData: TObject; override;
     function GetDisplayName: string; override;
     function GetNodePath: string; override;
-
-    property MissingPackageName: string read fMissingPackageName write fMissingPackageName;
+    function ToString: string; override;
+property MissingPackageName: string read fMissingPackageName write fMissingPackageName;
   end;
 
   TTreeNodeComparer = class(TInterfacedObject, IComparer<TTreeNode>)
@@ -92,6 +92,11 @@ begin
   i := Pos(':', Result);
   if i <> 0 then
     Result := StrRestOf(Result, i + 2);
+end;
+
+function TPackageTreeNode.ToString: string;
+begin
+  Result := fInfo.FileName;
 end;
 
 { TTreeNodeComparer }
