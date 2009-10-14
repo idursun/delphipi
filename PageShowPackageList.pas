@@ -103,6 +103,7 @@ type
     procedure ChangeState(Node: PVirtualNode; checkState: TCheckState; recursive:Boolean = true);
     procedure VerifyDependencies;
     procedure SetView(const viewType: TPackageViewType);
+    procedure actNextUpdate(sender: TObject);
   private
     class var criticalSection: TRTLCriticalSection;
     class constructor Create;
@@ -224,7 +225,6 @@ begin
     lblWait.Visible := false;
     fPackageTree.Visible := true;
   end;
-  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.ChangeState(Node: PVirtualNode; checkState: TCheckState; recursive:Boolean = true);
@@ -262,19 +262,9 @@ begin
   wizard.SetDescription(_('Select packages that you want to compile.'));
   action := wizard.GetAction(wbtNext);
   action.Enabled := (not threadWorking);
-  if not threadWorking then
-  begin
-    action := wizard.GetAction(wbtNext);
-    action.Caption := _('Compile');
-    selectedPackageCount := 0;
-    for modelNode in fNodes do
-    begin
-      if modelNode.Selected then
-        inc(selectedPackageCount);
-    end;
-    action.Enabled := selectedPackageCount > 0;
-    action.Update;
-  end;
+  action := wizard.GetAction(wbtNext);
+  action.Caption := _('Compile');
+  action.OnUpdate := actNextUpdate;
 end;
 
 procedure TShowPackageListPage.VerifyDependencies;
@@ -410,7 +400,6 @@ begin
       OnTerminate := PackageLoadCompleted;
       Start;
     end;
-    //UpdateWizardState;
   end;
 end;
 procedure TShowPackageListPage.actChangeViewToDelphiVersionExecute(
@@ -468,6 +457,21 @@ begin
   fPackageTree.FullExpand(fPackageTree.FocusedNode);
 end;
 
+procedure TShowPackageListPage.actNextUpdate(sender: TObject);
+var
+  i, selectedPackageCount:Integer;
+  action: TAction;
+begin
+  action := TAction(sender);
+  selectedPackageCount := 0;
+  for i := 0 to fNodes.Count-1 do
+  begin
+    if TPackageTreeNode(FNodes[i]).Selected then
+      inc(selectedPackageCount);
+  end;
+  action.Enabled := selectedPackageCount > 0;
+end;
+
 procedure TShowPackageListPage.actRefreshExecute(Sender: TObject);
 begin
   inherited;
@@ -515,7 +519,6 @@ begin
   finally
     fPackageTree.EndUpdate;
   end;
-  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.actUnselectAllExecute(Sender: TObject);
@@ -527,7 +530,6 @@ begin
   finally
     fPackageTree.EndUpdate;
   end;
-  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.actSelectMatchingExecute(Sender: TObject);
@@ -553,7 +555,6 @@ begin
   finally
     fPackageTree.EndUpdate;
   end;
-  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.actUnselectMatchingExecute(Sender: TObject);
@@ -578,7 +579,6 @@ begin
   finally
     fPackageTree.EndUpdate;
   end;
-  UpdateWizardState;
 end;
 
 procedure TShowPackageListPage.fPackageTreeGetHint(Sender: TBaseVirtualTree; Node: PVirtualNode; Column: TColumnIndex;

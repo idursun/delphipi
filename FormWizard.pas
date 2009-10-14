@@ -185,10 +185,12 @@ begin
   actNext.Enabled := true;
   actNext.Visible := true;
   actNext.Caption := _('&Next >>');
+  actNext.OnUpdate := nil;
 
   actBack.Enabled := true;
   actBack.Visible := true;
   actBack.Caption := _('<< &Back');
+  actBack.OnUpdate := nil;
 
   ActivePage.UpdateWizardState;
 
