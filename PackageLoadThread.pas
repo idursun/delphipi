@@ -85,16 +85,18 @@ end;
 procedure TPackageLoadThread.Search(const folder: String);
 var
   directoryList: TStringList;
-  directory: string;
+  directory, dir: string;
 begin
   directoryList := TStringList.Create;
   try
-    BuildFileList(PathAppend(folder, '*.*'), faDirectory, directoryList);
+    BuildFileList(PathAppend(folder, '*.*'), faAnyFile, directoryList);
     for directory in directoryList do
     begin
       if not Active then
         Break;
-      Search(PathAppend(folder, directory));
+      dir := PathAppend(folder, directory);
+      if IsDirectory(dir) then
+        Search(dir);
     end;
     LoadPackageInformations(folder);
   finally

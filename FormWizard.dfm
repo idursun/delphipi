@@ -1,6 +1,6 @@
 object frmWizard: TfrmWizard
-  Left = 289
-  Top = 176
+  Left = 468
+  Top = 288
   Caption = 'Delphi PI'
   ClientHeight = 416
   ClientWidth = 592
