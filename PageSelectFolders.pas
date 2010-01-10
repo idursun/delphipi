@@ -76,12 +76,15 @@ begin
   if (FileExists(FPatternsFileName)) then
     cbPattern.Items.LoadFromFile(FPatternsFileName);
 
-  for i := 0 to installations.Count - 1 do
-  begin
-    AddDelphiInstallation(installations.Installations[i]);
-  end;
+  for i := 0 to Installations.Count - 1 do
+    AddDelphiInstallation(Installations.Installations[i]);
 
-  cbDelphiVersionsChange(cbDelphiVersions);
+  if cbDelphiVersions.Items.Count > 0 then
+    cbDelphiVersionsChange(cbDelphiVersions)
+  else begin
+    cbDelphiVersions.AddItem('[No Delphi Version Installed]', nil);
+    cbDelphiVersions.ItemIndex := 0;
+  end;
 end;
 
 procedure TSelectFoldersPage.FormClose(Sender: TObject;
@@ -97,6 +100,7 @@ begin
 
   if FileExists(FPatternsFileName) then
      JclFileUtils.CreateEmptyFile(FPatternsFileName);
+
   cbPattern.Items.SaveToFile(FPatternsFileName);
 end;
 
@@ -122,7 +126,7 @@ begin
   wizard.SetDescription(_('Please select folders which contains the packages that you want to install'));
 
   action := wizard.GetAction(wbtNext);
-  action.Enabled := edtBaseFolder.Text <> '';
+  action.Enabled := (edtBaseFolder.Text <> '') and (Installations.Count > 0) ;
 end;
 
 procedure TSelectFoldersPage.btnSelectFolderClick(Sender: TObject);
@@ -146,10 +150,11 @@ end;
 procedure TSelectFoldersPage.cbDelphiVersionsChange(Sender: TObject);
 begin
   inherited;
-  if (cbDelphiVersions.ItemIndex = -1) and (cbDelphiVersions.Items.Count > 0) then
+  if (cbDelphiVersions.ItemIndex = -1) then
     cbDelphiVersions.ItemIndex := 0;
 
-  fCompilationData.Installation := cbDelphiVersions.Items.Objects[cbDelphiVersions.ItemIndex] as TJclBorRADToolInstallation;
+  if cbDelphiVersions.Items.Count > 0 then
+    fCompilationData.Installation := cbDelphiVersions.Items.Objects[cbDelphiVersions.ItemIndex] as TJclBorRADToolInstallation;
 end;
 
 function TSelectFoldersPage.GetInstallations: TJclBorRADToolInstallations;

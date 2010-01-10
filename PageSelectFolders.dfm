@@ -7,8 +7,8 @@ inherited SelectFoldersPage: TSelectFoldersPage
   OnCreate = FormCreate
   ExplicitLeft = 346
   ExplicitTop = 221
-  ExplicitWidth = 508
-  ExplicitHeight = 284
+  ExplicitWidth = 516
+  ExplicitHeight = 286
   PixelsPerInch = 96
   TextHeight = 13
   object grpPackagePattern: TGroupBox
