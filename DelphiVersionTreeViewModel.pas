@@ -2,20 +2,6 @@ unit DelphiVersionTreeViewModel;
 
 interface
 uses Classes, SysUtils, TreeModel, Utils, Generics.Collections;
-
-const
-  DELPHI_VERSION_UNKNOWN = -1;
-  DELPHI_VERSION_5 = 0;
-  DELPHI_VERSION_6 = 1;
-  DELPHI_VERSION_7 = 2;
-  DELPHI_VERSION_8 = 3;
-  DELPHI_VERSION_2005 = 4;
-  DELPHI_VERSION_2006 = 5;
-  DELPHI_VERSION_2007 = 6;
-  DELPHI_VERSION_2009 = 7;
-  DELPHI_VERSION_2010 = 8;
-  VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_VERSION_2010] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2005', 'Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010');
-
 type
 
   TDelphiVersionTreeViewModel<T: INode> = class(TTreeModelBase<T>)
@@ -192,6 +178,12 @@ begin
   patterns[DELPHI_VERSION_7].Add('d70');
   patterns[DELPHI_VERSION_7].Add('delphi7');
   patterns[DELPHI_VERSION_7].Add('_7');
+
+  patterns[DELPHI_VERSION_8].Add('D8');
+  patterns[DELPHI_VERSION_8].Add('D80');
+  patterns[DELPHI_VERSION_8].Add('NET');
+  patterns[DELPHI_VERSION_8].Add('80');
+  patterns[DELPHI_VERSION_8].Add('8');
 
   patterns[DELPHI_VERSION_2005].Add('9');
   patterns[DELPHI_VERSION_2005].Add('r9');
