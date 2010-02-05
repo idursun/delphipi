@@ -717,7 +717,7 @@ begin
   try
     for fileName in fileList do
     begin
-      if StrCompare(ExtractFileExt(fileName), '.dpk', True) <> 0 then
+      if StrCompare(ExtractFileExt(fileName), '.dpk') <> 0 then
         Continue;
 
       node := TPackageTreeNode.Create(packageInfoFactory.CreatePackageInfo(fileName));
