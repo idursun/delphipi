@@ -9,7 +9,7 @@ interface
 uses SysUtils, Classes, PackageInfo, Generics.Collections;
 type
 
-  TPackageList = class(TObjectList<TPackageInfo>)
+  TPackageList = class(TList<TPackageInfo>)
   private
   public
     constructor Create;
@@ -29,7 +29,7 @@ type
 constructor TPackageList.Create;
 begin
   inherited Create(TPackageInfoComparer.Create);
-  OwnsObjects := true;
+  //OwnsObjects := true;
 end;
 
 function TPackageList.IndexOf(const PackageName: String): Integer;

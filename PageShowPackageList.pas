@@ -175,7 +175,6 @@ end;
 procedure TShowPackageListPage.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   node: TTreeNode;
-  info: TPackageInfo;
 begin
   inherited;
   if threadWorking then
@@ -187,11 +186,11 @@ begin
     exit;
   end;
 
+  fCompilationData.PackageList.Clear;
   for node in fNodes do
   begin
-    info := node.GetData as TPackageInfo;
-    if (node.Selected) and (not fCompilationData.PackageList.Contains(info)) then
-      fCompilationData.PackageList.Add(info);
+    if node.Selected then
+      fCompilationData.PackageList.Add(node.GetData as TPackageInfo);
   end;
 
   Wizard.SetState('nodes', fNodes);

@@ -9,7 +9,7 @@ uses  Classes, StrUtils, TreeModel;
 
 type
   TPackageStatus = (psNone, psCompiling, psInstalling, psSuccess, psError);
-  TPackageInfo = class(TInterfacedObject)
+  TPackageInfo = class
   private
     fRequiredPackageList: TStringList;
     fContainedFileList : TStringList;
