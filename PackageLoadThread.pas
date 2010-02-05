@@ -32,6 +32,8 @@ uses Dialogs, JclFileUtils;
 constructor TPackageLoadThread.Create(directory: string; pattern: string; list: TList<TTreeNode>);
 begin
   inherited Create(true);
+  Assert(Assigned(list), 'List cannot be null');
+
   fList := list;
   fPackageInfoFactory := TPackageInfoFactory.Create;
   fDirectory := directory;

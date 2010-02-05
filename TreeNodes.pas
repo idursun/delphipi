@@ -34,7 +34,7 @@ type
     function GetDisplayName: string; override;
     function GetNodePath: string; override;
     function ToString: string; override;
-property MissingPackageName: string read fMissingPackageName write fMissingPackageName;
+    property MissingPackageName: string read fMissingPackageName write fMissingPackageName;
   end;
 
   TTreeNodeComparer = class(TInterfacedObject, IComparer<TTreeNode>)

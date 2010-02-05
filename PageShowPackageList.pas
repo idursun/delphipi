@@ -175,6 +175,7 @@ end;
 procedure TShowPackageListPage.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   node: TTreeNode;
+  info: TPackageInfo;
 begin
   inherited;
   if threadWorking then
@@ -188,8 +189,9 @@ begin
 
   for node in fNodes do
   begin
-    if node.Selected then
-      fCompilationData.PackageList.Add(node.GetData as TPackageInfo);
+    info := node.GetData as TPackageInfo;
+    if (node.Selected) and (not fCompilationData.PackageList.Contains(info)) then
+      fCompilationData.PackageList.Add(info);
   end;
 
   Wizard.SetState('nodes', fNodes);
@@ -254,8 +256,6 @@ end;
 procedure TShowPackageListPage.UpdateWizardState;
 var
   action: TAction;
-  selectedPackageCount: integer;
-  modelNode: TTreeNode;
 begin
   inherited;
   wizard.SetHeader(_('Select Packages'));
@@ -365,7 +365,6 @@ end;
 procedure TShowPackageListPage.actAddPackagesExecute(Sender: TObject);
 var
   dialog: TFileOpenDialog;
-  fileName: string;
 begin
   dialog := TFileOpenDialog.Create(self);
   try
