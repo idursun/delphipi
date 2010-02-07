@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2009-10-09 09:03\n"
-"PO-Revision-Date: 2009-10-09 09:03\n"
+"POT-Creation-Date: 2010-02-07 13:27\n"
+"PO-Revision-Date: 2010-02-07 13:27\n"
 "Last-Translator: Somebody <your.email@address.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -561,13 +561,13 @@ msgstr ""
 #. ShowPackageListPage..ActionList..actChangeViewToList..Category
 #: PageShowPackageList.dfm:359
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Category
-#: PageShowPackageList.dfm:421
+#: PageShowPackageList.dfm:422
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Category
 #: PageShowPackageList.dfm:349
 #. ShowPackageListPage..ActionList..actChangeViewToList..Category
 #: PageShowPackageList.dfm:359
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Category
-#: PageShowPackageList.dfm:421
+#: PageShowPackageList.dfm:422
 msgid "View"
 msgstr ""
 
@@ -623,10 +623,10 @@ msgstr ""
 
 #. ShowPackageListPage..ActionList..actSelectMatching..Caption
 #: PageShowPackageList.dfm:383
-#: PageShowPackageList.pas:514
+#: PageShowPackageList.pas:540
 #. ShowPackageListPage..ActionList..actSelectMatching..Caption
 #: PageShowPackageList.dfm:383
-#: PageShowPackageList.pas:514
+#: PageShowPackageList.pas:540
 msgid "Select Matching..."
 msgstr ""
 
@@ -639,10 +639,10 @@ msgstr ""
 
 #. ShowPackageListPage..ActionList..actUnselectMatching..Caption
 #: PageShowPackageList.dfm:391
-#: PageShowPackageList.pas:540
+#: PageShowPackageList.pas:565
 #. ShowPackageListPage..ActionList..actUnselectMatching..Caption
 #: PageShowPackageList.dfm:391
-#: PageShowPackageList.pas:540
+#: PageShowPackageList.pas:565
 msgid "Unselect Matching..."
 msgstr ""
 
@@ -681,42 +681,39 @@ msgstr ""
 msgid "Add packages from a folder"
 msgstr ""
 
-#. ShowPackageListPage..ActionList..actAddPackage..Caption
+#. ShowPackageListPage..ActionList..actAddPackages..Caption
 #: PageShowPackageList.dfm:416
-#. ShowPackageListPage..ActionList..actAddPackage..Caption
+#. ShowPackageListPage..ActionList..actAddPackages..Hint
+#: PageShowPackageList.dfm:417
+#. ShowPackageListPage..ActionList..actAddPackages..Caption
 #: PageShowPackageList.dfm:416
-msgid "actAddPackage"
-msgstr ""
-
-#. ShowPackageListPage..ActionList..actAddPackage..Hint
+#. ShowPackageListPage..ActionList..actAddPackages..Hint
 #: PageShowPackageList.dfm:417
-#. ShowPackageListPage..ActionList..actAddPackage..Hint
-#: PageShowPackageList.dfm:417
-msgid "Add a package"
+msgid "Add Packages"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Caption
-#: PageShowPackageList.dfm:423
+#: PageShowPackageList.dfm:424
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Caption
-#: PageShowPackageList.dfm:423
+#: PageShowPackageList.dfm:424
 msgid "Delphi Version View"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Hint
-#: PageShowPackageList.dfm:425
+#: PageShowPackageList.dfm:426
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Hint
-#: PageShowPackageList.dfm:425
+#: PageShowPackageList.dfm:426
 msgid "Switch to Delphi Version View"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actRefresh..Caption
-#: PageShowPackageList.dfm:430
-#. ShowPackageListPage..ActionList..actRefresh..Hint
 #: PageShowPackageList.dfm:431
+#. ShowPackageListPage..ActionList..actRefresh..Hint
+#: PageShowPackageList.dfm:432
 #. ShowPackageListPage..ActionList..actRefresh..Caption
-#: PageShowPackageList.dfm:430
-#. ShowPackageListPage..ActionList..actRefresh..Hint
 #: PageShowPackageList.dfm:431
+#. ShowPackageListPage..ActionList..actRefresh..Hint
+#: PageShowPackageList.dfm:432
 msgid "Refresh"
 msgstr ""
 
@@ -754,8 +751,8 @@ msgstr ""
 msgid "&Next >>"
 msgstr ""
 
-#: FormWizard.pas:191
-#: FormWizard.pas:191
+#: FormWizard.pas:192
+#: FormWizard.pas:192
 msgid "<< &Back"
 msgstr ""
 
@@ -879,19 +876,19 @@ msgstr ""
 msgid "*** Completed"
 msgstr ""
 
-#: PageSelectFolders.pas:121
-#: PageSelectFolders.pas:121
+#: PageSelectFolders.pas:125
+#: PageSelectFolders.pas:125
 msgid "Select Folders"
 msgstr ""
 
-#: PageSelectFolders.pas:122
-#: PageSelectFolders.pas:122
+#: PageSelectFolders.pas:126
+#: PageSelectFolders.pas:126
 msgid "Please select folders which contains the packages that you want to "
 "install"
 msgstr ""
 
-#: PageSelectFolders.pas:134
-#: PageSelectFolders.pas:134
+#: PageSelectFolders.pas:138
+#: PageSelectFolders.pas:138
 msgid "Select the folder where packages are"
 msgstr ""
 
@@ -905,65 +902,70 @@ msgstr ""
 msgid "Select packages that you want to compile."
 msgstr ""
 
-#: PageShowPackageList.pas:267
-#: PageShowPackageList.pas:267
+#: PageShowPackageList.pas:265
+#: PageShowPackageList.pas:265
 msgid "Compile"
 msgstr ""
 
-#: PageShowPackageList.pas:379
-#: PageShowPackageList.pas:379
+#: PageShowPackageList.pas:374
+#: PageShowPackageList.pas:374
+msgid "Delphi Package (*.dpk)"
+msgstr ""
+
+#: PageShowPackageList.pas:393
+#: PageShowPackageList.pas:393
 msgid "Select folder where packages are"
 msgstr ""
 
-#: PageShowPackageList.pas:514
 #: PageShowPackageList.pas:540
-#: PageShowPackageList.pas:514
+#: PageShowPackageList.pas:565
 #: PageShowPackageList.pas:540
+#: PageShowPackageList.pas:565
 msgid "File Mask"
 msgstr ""
 
-#: PageShowPackageList.pas:573
-#: PageShowPackageList.pas:573
+#: PageShowPackageList.pas:597
+#: PageShowPackageList.pas:597
 msgid "Designtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:575
-#: PageShowPackageList.pas:575
+#: PageShowPackageList.pas:599
+#: PageShowPackageList.pas:599
 msgid "Runtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:579
-#: PageShowPackageList.pas:579
+#: PageShowPackageList.pas:603
+#: PageShowPackageList.pas:603
 msgid "FullPath: "
 msgstr ""
 
-#: PageShowPackageList.pas:580
-#: PageShowPackageList.pas:580
+#: PageShowPackageList.pas:604
+#: PageShowPackageList.pas:604
 msgid "Description: "
 msgstr ""
 
-#: PageShowPackageList.pas:581
-#: PageShowPackageList.pas:581
+#: PageShowPackageList.pas:605
+#: PageShowPackageList.pas:605
 msgid "Type: "
 msgstr ""
 
-#: PageShowPackageList.pas:582
-#: PageShowPackageList.pas:582
+#: PageShowPackageList.pas:606
+#: PageShowPackageList.pas:606
 msgid "Requires: "
 msgstr ""
 
-#: PageShowPackageList.pas:585
-#: PageShowPackageList.pas:585
+#: PageShowPackageList.pas:609
+#: PageShowPackageList.pas:609
 msgid "Missing Package: "
 msgstr ""
 
-#: PageShowPackageList.pas:612
-#: PageShowPackageList.pas:612
+#: PageShowPackageList.pas:636
+#: PageShowPackageList.pas:636
 msgid "runtime"
 msgstr ""
 
-#: PageShowPackageList.pas:614
-#: PageShowPackageList.pas:614
+#: PageShowPackageList.pas:638
+#: PageShowPackageList.pas:638
 msgid "design"
 msgstr ""
 
