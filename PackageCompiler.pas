@@ -6,7 +6,7 @@
 unit PackageCompiler;
 
 interface
-uses JclBorlandTools, PackageInfo, PackageList, SysUtils, Classes, CompilationData, ProgressMonitor;
+uses JclIDEUtils, PackageInfo, PackageList, SysUtils, Classes, CompilationData, ProgressMonitor;
 
 type
 

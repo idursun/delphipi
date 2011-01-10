@@ -1,6 +1,6 @@
 unit CompileThread;
 interface
-uses ProgressMonitor, PackageInfo, MonitoredPackageCompiler, Classes, JclBorlandTools, CompilationData;
+uses ProgressMonitor, PackageInfo, MonitoredPackageCompiler, Classes, JclIDEUtils, CompilationData;
 
 type
   TCompileThread = class(TThread, IProgressMonitor)

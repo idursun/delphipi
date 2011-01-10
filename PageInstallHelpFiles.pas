@@ -30,7 +30,7 @@ var
 implementation
 {$R *.dfm}
 
-uses JclFileUtils, JclBorlandTools, gnugettext;
+uses JclFileUtils, JclIDEUtils, gnugettext;
 
 { TInstallHelpFilesPage }
 
@@ -72,21 +72,21 @@ begin
 end;
 
 procedure TInstallHelpFilesPage.btnInstallHelpFilesClick(Sender: TObject);
-var
-  openHelp : TJclBorlandOpenHelp;
-  helpFileName: string;
-  successCount: integer;
+//var
+//  openHelp : TJclBorlandOpenHelp;
+//  helpFileName: string;
+//  successCount: integer;
 begin
   inherited;
-  successCount := 0;
-  if fCompilationData.Installation is TJclBorRADToolInstallation then begin
-    openHelp := fCompilationData.Installation.OpenHelp;
-    for helpFileName in fCompilationData.HelpFiles do begin
-      if openHelp.AddHelpFile(helpFileName,PathExtractFileNameNoExt(helpFileName)) then
-        inc(successCount);
-    end;
-  end;
-  ShowMessage(Format(_('%d help file(s) are registered successfully'),[successCount]));
+//  successCount := 0;
+//  if fCompilationData.Installation is TJclBorRADToolInstallation then begin
+//    openHelp := fCompilationData.Installation.OpenHelp;
+//    for helpFileName in fCompilationData.HelpFiles do begin
+//      if openHelp.AddHelpFile(helpFileName,PathExtractFileNameNoExt(helpFileName)) then
+//        inc(successCount);
+//    end;
+//  end;
+//  ShowMessage(Format(_('%d help file(s) are registered successfully'),[successCount]));
 end;
 
 end.

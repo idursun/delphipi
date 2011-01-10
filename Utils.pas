@@ -1,7 +1,7 @@
 unit Utils;
 
 interface
-uses classes, JclBorlandTools,Windows;
+uses classes, JclIDEUtils, Windows;
 const
   VERSION = '0.57';
   CODE = 'Josephine';
@@ -17,9 +17,11 @@ const
   DELPHI_VERSION_2007 = 6;
   DELPHI_VERSION_2009 = 7;
   DELPHI_VERSION_2010 = 8;
-  VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_VERSION_2010] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2005', 'Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010');
+  DELPHI_XE = 9;
+  DELPHI_LAST_VERSION = DELPHI_XE;
+  VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_LAST_VERSION] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2005', 'Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010', 'Delphi XE');
 type
-  TDelphiVersionArray = array[DELPHI_VERSION_5..DELPHI_VERSION_2010] of TStringList;
+  TDelphiVersionArray = array[DELPHI_VERSION_5..DELPHI_LAST_VERSION] of TStringList;
 
 implementation
 

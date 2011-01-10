@@ -43,7 +43,7 @@ type
   end;
 
 implementation
-uses JclStrings, JclFileUtils, JclBorlandTools, PackageInfo;
+uses JclStrings, JclFileUtils, JclIDEUtils, PackageInfo;
 type
 
   TScriptWriter = class(TStringList)

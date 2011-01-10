@@ -9,7 +9,7 @@ interface
 
 uses
   CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs, JclBorlandTools, ActnList;
+  Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs, JclIDEUtils, ActnList;
 
 type
   TSelectFoldersPage = class(TWizardPage)

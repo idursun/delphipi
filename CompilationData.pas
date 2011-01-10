@@ -5,7 +5,7 @@
 **}
 unit CompilationData;
 interface
-uses Classes, PackageInfo, PackageList, JclBorlandTools;
+uses Classes, PackageInfo, PackageList, JclIDEUtils;
 
 type
   TCompilationData = class
