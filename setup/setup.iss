@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "DelphiPI"
-#define MyAppVerName "DelphiPI 0.57"
+#define MyAppVerName "DelphiPI 0.60"
 #define MyAppPublisher "http://www.thexpot.net"
 #define MyAppURL "http://delphipi.googlecode.com"
 #define MyAppExeName "DelphiPI.exe"
@@ -18,13 +18,13 @@ DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 AllowNoIcons=yes
 LicenseFile=LICENSE.txt
-OutputBaseFilename=delphipi.0.57.setup
+OutputBaseFilename=delphipi.0.60.setup
 Compression=lzma/ultra
 SolidCompression=true
 
 [Languages]
 Name: eng; MessagesFile: compiler:Default.isl
-Name: tr; MessagesFile: compiler:Languages\Turkish.isl
+;Name: tr; MessagesFile: compiler:Languages\Turkish.isl
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: unchecked
@@ -33,7 +33,7 @@ Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:Ad
 Source: ..\DelphiPI.exe; DestDir: {app}; Flags: ignoreversion
 Source: LICENSE.txt; DestDir: {app}; Flags: ignoreversion
 Source: README.TXT; DestDir: {app}; Flags: ignoreversion
-Source: ..\locale\tr\LC_MESSAGES\default.mo; DestDir: {app}\locale\tr\LC_MESSAGES; DestName: default.mo; Flags: ignoreversion; Languages: tr
+;Source: ..\locale\tr\LC_MESSAGES\default.mo; DestDir: {app}\locale\tr\LC_MESSAGES; DestName: default.mo; Flags: ignoreversion; Languages: tr
 
 [Icons]
 Name: {group}\{#MyAppName}; Filename: {app}\{#MyAppExeName}
