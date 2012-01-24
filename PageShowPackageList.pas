@@ -467,7 +467,7 @@ begin
     if TPackageTreeNode(FNodes[i]).Selected then
       inc(selectedPackageCount);
   end;
-  action.Enabled := selectedPackageCount > 0;
+  action.Enabled := (selectedPackageCount > 0) and (not threadWorking);
 end;
 
 procedure TShowPackageListPage.actRefreshExecute(Sender: TObject);

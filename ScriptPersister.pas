@@ -179,7 +179,7 @@ begin
   begin
     slPaths := TStringList.Create;
     try
-      SemiColonTextToStringList(compilationData.Installation.LibrarySearchPath,
+      SemiColonTextToStringList(compilationData.Installation.LibrarySearchPath[bpWin32],
                                 slPaths);
 
       while HasNextLine do
@@ -192,7 +192,7 @@ begin
 
         if (slPaths.IndexOf(line) = -1 ) then
         begin
-          compilationData.Installation.AddToLibrarySearchPath(line);
+          compilationData.Installation.AddToLibrarySearchPath(line, bpWin32);
         end;
       end;
     finally

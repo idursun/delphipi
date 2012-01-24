@@ -199,11 +199,11 @@ begin
 end;
 
 initialization
-   SetLength(Pages,6);
+   SetLength(Pages,5);
    Pages[0] := TSelectFoldersPage;
    Pages[1] := TSelectCompilerOptions;
    Pages[2] := TShowPackageListPage;
    Pages[3] := TProgressPage;
-   Pages[4] := TInstallHelpFilesPage;
-   Pages[5] := TSummaryPage;
+  // Pages[4] := TInstallHelpFilesPage;
+   Pages[4] := TSummaryPage;
 end.

@@ -35,7 +35,7 @@ type
   end;
 implementation
 
-uses SysUtils, JclFileUtils;
+uses SysUtils, JclFileUtils, JclIDEUtils;
 constructor TInstalledPackageResolver.Create;
 begin
   inherited Create;
@@ -47,7 +47,6 @@ constructor TInstalledPackageResolver.Create(const CompilationData: TCompilation
 var
   systemPath, versionPattern: string;
   filePattern: string;
-
 begin
   Assert(CompilationData <> nil, 'Compilation Data cannot be null');
   Assert(CompilationData.Installation <> nil, 'Installation cannot be null');
@@ -60,7 +59,7 @@ begin
 
   systemPath := GetEnvironmentVariable('WINDIR') + '\System32\';
   fSearchFolders.Add(PathAppend(systemPath, filePattern));
-  fSearchFolders.Add(PathAppend(CompilationData.Installation.LibFolderName, '*.bpl'));
+  fSearchFolders.Add(PathAppend(CompilationData.Installation.LibFolderName[bpWin32], '*.bpl'));
   fSearchFolders.Add(PathAppend(CompilationData.Installation.BinFolderName, '*.bpl'));
 end;
 

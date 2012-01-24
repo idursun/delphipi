@@ -24,28 +24,28 @@
 			<MSBuild Projects="DelphiPI.dproj"/>
 		</Target>
 		<Target Name="DelphiPI:Clean">
-			<MSBuild Targets="Clean" Projects="DelphiPI.dproj"/>
+			<MSBuild Projects="DelphiPI.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="DelphiPI:Make">
-			<MSBuild Targets="Make" Projects="DelphiPI.dproj"/>
+			<MSBuild Projects="DelphiPI.dproj" Targets="Make"/>
 		</Target>
-		<Target DependsOnTargets="DelphiPI" Name="DelphiPITests">
+		<Target Name="DelphiPITests" DependsOnTargets="DelphiPI">
 			<MSBuild Projects="Test\DelphiPITests.dproj"/>
 		</Target>
-		<Target DependsOnTargets="DelphiPI:Clean" Name="DelphiPITests:Clean">
-			<MSBuild Targets="Clean" Projects="Test\DelphiPITests.dproj"/>
+		<Target Name="DelphiPITests:Clean" DependsOnTargets="DelphiPI:Clean">
+			<MSBuild Projects="Test\DelphiPITests.dproj" Targets="Clean"/>
 		</Target>
-		<Target DependsOnTargets="DelphiPI:Make" Name="DelphiPITests:Make">
-			<MSBuild Targets="Make" Projects="Test\DelphiPITests.dproj"/>
+		<Target Name="DelphiPITests:Make" DependsOnTargets="DelphiPI:Make">
+			<MSBuild Projects="Test\DelphiPITests.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="DelphiPIConsole">
 			<MSBuild Projects="DelphiPIConsole.dproj"/>
 		</Target>
 		<Target Name="DelphiPIConsole:Clean">
-			<MSBuild Targets="Clean" Projects="DelphiPIConsole.dproj"/>
+			<MSBuild Projects="DelphiPIConsole.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="DelphiPIConsole:Make">
-			<MSBuild Targets="Make" Projects="DelphiPIConsole.dproj"/>
+			<MSBuild Projects="DelphiPIConsole.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Build">
 			<CallTarget Targets="DelphiPI;DelphiPITests;DelphiPIConsole"/>
@@ -56,5 +56,5 @@
 		<Target Name="Make">
 			<CallTarget Targets="DelphiPI:Make;DelphiPITests:Make;DelphiPIConsole:Make"/>
 		</Target>
-		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>

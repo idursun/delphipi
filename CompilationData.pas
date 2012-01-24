@@ -57,8 +57,6 @@ begin
   fPackageList := TPackageList.Create;
   fHelpFiles := TStringList.Create;
   fScripting := False;
-
- 
 end;
 
 destructor TCompilationData.Destroy;
@@ -113,8 +111,8 @@ begin
     
   fInstallation := Value;
 
-  BPLOutputFolder := fInstallation.BPLOutputPath;
-  DCPOutputFolder := fInstallation.DCPOutputPath;
+  BPLOutputFolder := fInstallation.BPLOutputPath[bpWin32];
+  DCPOutputFolder := fInstallation.DCPOutputPath[bpWin32];
 end;
 
 procedure TCompilationData.SetPackageList(const aPackageList: TPackageList);

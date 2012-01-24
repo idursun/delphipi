@@ -15,13 +15,13 @@ type
      fCompilationData: TCompilationData;
      fCancel: boolean;
      fSourceFilePaths: TStringList;
-     fExtraOptions: String;
-     fAllPaths: TStringList;
 
      function ConvertToShortPaths(const paths : TStringList): string;
      function GetInstallation: TJclBorRADToolInstallation;
      function GetPackageList: TPackageList;
    protected
+     fExtraOptions: String;
+     fAllPaths: TStringList;
      procedure PrepareExtraOptions; virtual;
      procedure ResolveHelpFiles(const compilationData: TCompilationData);
      procedure AddSourcePathsToIDE(const sourceFilePaths: TStrings; const installation: TJclBorRADToolInstallation);
@@ -120,15 +120,16 @@ var
   I: Integer;
 begin
   fAllPaths.Clear;
-  ExtractStrings([';'],[' '],PWideChar(Installation.LibrarySearchPath),fAllPaths);
-  fAllPaths.Add(Installation.BPLOutputPath);
+  ExtractStrings([';'],[' '],PWideChar(Installation.LibrarySearchPath[bpWin32]),fAllPaths);
+  fAllPaths.Add(Installation.BPLOutputPath[bpWin32]);
   fAllPaths.AddStrings(SourceFilePaths);
 
   for I := 0 to fAllPaths.Count - 1 do
     fAllPaths[i] := Installation.SubstitutePath(StrTrimQuotes(fAllPaths[i]));
-
+  fAllPaths.Add('c:\Program Files (x86)\Embarcadero\RAD Studio\9.0\source\rtl\common');
   shortPaths := ConvertToShortPaths(fAllPaths);
-  fExtraOptions := '-B -Q -CC';
+  fExtraOptions := '-B -Q -CC --no-config';
+  fExtraOptions := fExtraOptions + ' -NSSystem;System.Win;WinAPI;Vcl;Vcl.Imaging;Data';
   fExtraOptions := fExtraOptions + ' -I'+shortPaths;
   fExtraOptions := fExtraOptions + ' -U'+shortPaths;
   fExtraOptions := fExtraOptions + ' -O'+shortPaths;
@@ -152,7 +153,7 @@ function TPackageCompiler.InstallPackage(
 var
   BPLFileName : String;  
 begin
-  BPLFileName := PathAddSeparator(Installation.BPLOutputPath) + PathExtractFileNameNoExt(packageInfo.FileName) + packageInfo.Suffix + '.bpl';
+  BPLFileName := PathAddSeparator(Installation.BPLOutputPath[bpWin32]) + PathExtractFileNameNoExt(packageInfo.FileName) + packageInfo.Suffix + '.bpl';
   Result := Installation.RegisterPackage(BPLFileName, packageInfo.Description);
 end;
 
@@ -238,7 +239,7 @@ begin
   Assert(assigned(installation));
   for path in sourceFilePaths do
   begin
-    installation.AddToLibrarySearchPath(path);
+    installation.AddToLibrarySearchPath(path, bpWin32);
   end;
 end;
 

@@ -45,7 +45,6 @@ var
   item: TListItem;
 begin
   inherited;
-  TranslateComponent(self);
   if fCompilationData.HelpFiles.Count = 0 then begin
     label1.Caption := _('No help files are found.');
     helpFileList.Enabled := false;
@@ -59,7 +58,6 @@ begin
       item.Caption := fCompilationData.HelpFiles[i];
       item.Checked := true;
     end;
-    TranslateComponent(self);
 end;
 
 procedure TInstallHelpFilesPage.UpdateWizardState;

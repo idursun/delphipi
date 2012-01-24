@@ -3,7 +3,7 @@ object frmAbout: TfrmAbout
   Top = 317
   BorderStyle = bsDialog
   Caption = 'About DelphiPI'
-  ClientHeight = 249
+  ClientHeight = 183
   ClientWidth = 325
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -676,7 +676,7 @@ object frmAbout: TfrmAbout
   object pnlBottom: TPanel
     AlignWithMargins = True
     Left = 3
-    Top = 207
+    Top = 141
     Width = 319
     Height = 42
     Margins.Bottom = 0
@@ -685,8 +685,7 @@ object frmAbout: TfrmAbout
     BevelOuter = bvNone
     BorderWidth = 1
     TabOrder = 1
-    ExplicitLeft = -2
-    ExplicitTop = 202
+    ExplicitTop = 207
     object Bevel1: TBevel
       AlignWithMargins = True
       Left = 1
@@ -721,30 +720,6 @@ object frmAbout: TfrmAbout
       Caption = 'Close'
       TabOrder = 1
       OnClick = btnCloseClick
-    end
-  end
-  object grpContributors: TGroupBox
-    AlignWithMargins = True
-    Left = 3
-    Top = 143
-    Width = 319
-    Height = 58
-    Align = alTop
-    Caption = 'Thanks to contributors'
-    TabOrder = 2
-    object Label3: TLabel
-      Left = 12
-      Top = 19
-      Width = 188
-      Height = 13
-      Caption = 'Caleb Hattingh for UI Resizability patch'
-    end
-    object Label4: TLabel
-      Left = 12
-      Top = 38
-      Width = 208
-      Height = 13
-      Caption = 'Ronald Siekman for scripting enhancements'
     end
   end
 end

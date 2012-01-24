@@ -80,6 +80,9 @@ begin
   fMonitor.Log('-=All Path:');
   for line in AllPaths do
     fMonitor.Log(line);
+
+  fMonitor.Log('-=Compiler Options:');
+  fMonitor.Log(fExtraOptions);
 end;
 
 procedure TMonitoredPackageCompiler.RaiseEvent(const packageInfo: TPackageInfo;

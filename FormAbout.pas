@@ -28,9 +28,6 @@ type
     btnDonate: TButton;
     btnClose: TButton;
     Bevel1: TBevel;
-    grpContributors: TGroupBox;
-    Label3: TLabel;
-    Label4: TLabel;
     procedure btnCloseClick(Sender: TObject);
     procedure lblAuthorsWebsiteClick(Sender: TObject);
     procedure lblProjectWebsiteClick(Sender: TObject);
