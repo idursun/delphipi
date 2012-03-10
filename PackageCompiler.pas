@@ -128,7 +128,7 @@ begin
     fAllPaths[i] := Installation.SubstitutePath(StrTrimQuotes(fAllPaths[i]));
   fAllPaths.Add('c:\Program Files (x86)\Embarcadero\RAD Studio\9.0\source\rtl\common');
   shortPaths := ConvertToShortPaths(fAllPaths);
-  fExtraOptions := '-B -Q -CC --no-config';
+  fExtraOptions := '-B -Q -CC';
   fExtraOptions := fExtraOptions + ' -NSSystem;System.Win;WinAPI;Vcl;Vcl.Imaging;Data';
   fExtraOptions := fExtraOptions + ' -I'+shortPaths;
   fExtraOptions := fExtraOptions + ' -U'+shortPaths;
