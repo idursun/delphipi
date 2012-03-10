@@ -118,7 +118,7 @@ type
 
 implementation
 
-uses JclFileUtils, JclStrings, gnugettext, Utils, TreeViewModel, PackageLoadThread, DelphiVersionTreeViewModel, FileCtrl, PackageInfoFactory;
+uses JclFileUtils, JclStrings, gnugettext, Utils, TreeViewModel, PackageLoadThread, DelphiVersionTreeViewModel, FileCtrl, PackageInfoFactory, CustomTypes;
 {$R *.dfm}
 
 var
@@ -136,6 +136,8 @@ type
 
   { TShowPackageListPage }
 constructor TShowPackageListPage.Create(Owner: TComponent; const CompilationData: TCompilationData);
+var
+  previousBaseFolder: TString;
 begin
   inherited;
   fCompilationData := CompilationData;
@@ -147,8 +149,12 @@ begin
   fInstalledPackageResolver.AddDefaultPackageList;
   fInstalledPackageResolver.AddIDEPackageList(CompilationData);
   fDependencyVerifier := TPackageDependencyVerifier.Create;
+  previousBaseFolder := Wizard.GetState('base-folder') as TString;
 
-  fNodes := Wizard.GetState('nodes') as TList<TTreeNode>;
+  if (previousBaseFolder <> nil) and (previousBaseFolder.Value = fCompilationData.BaseFolder) then
+  begin
+    fNodes := Wizard.GetState('nodes') as TList<TTreeNode>;
+  end;
   if fNodes = nil then
     fNodes := TList<TTreeNode>.Create(TTreeNodeComparer.Create);
 
@@ -194,6 +200,7 @@ begin
   end;
 
   Wizard.SetState('nodes', fNodes);
+  Wizard.SetState('base-folder',  TString.Create(fCompilationData.BaseFolder));
 
   FreeAndNil(fDependencyVerifier);
   FreeAndNil(fInstalledPackageResolver);
