@@ -8,7 +8,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
   ExplicitLeft = 346
   ExplicitTop = 221
   ExplicitWidth = 516
-  ExplicitHeight = 286
+  ExplicitHeight = 288
   PixelsPerInch = 96
   TextHeight = 13
   object grpPackagePattern: TGroupBox
@@ -88,6 +88,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
+      OnChange = edtBaseFolderChange
     end
   end
   object grpDelphiVersion: TGroupBox

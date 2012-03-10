@@ -27,6 +27,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure cbDelphiVersionsChange(Sender: TObject);
+    procedure edtBaseFolderChange(Sender: TObject);
   private
     FPatternsFileName: string;
     fInstallations : TJclBorRADToolInstallations;
@@ -54,6 +55,12 @@ constructor TSelectFoldersPage.Create(Owner: TComponent;
 begin
   inherited;
   fCompilationData := compilationData;
+end;
+
+procedure TSelectFoldersPage.edtBaseFolderChange(Sender: TObject);
+begin
+  inherited;
+  UpdateWizardState;
 end;
 
 procedure TSelectFoldersPage.FormCreate(Sender: TObject);
