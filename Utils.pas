@@ -8,7 +8,7 @@ unit Utils;
 interface
 uses classes, JclIDEUtils, Windows;
 const
-  VERSION = '0.61';
+  VERSION = '0.62';
   CODE = 'Cindy';
   AUTHOR = 'Ýbrahim DURSUN';
 
