@@ -33,7 +33,8 @@ uses
   TreeViewModel in '..\TreeViewModel.pas',
   DelphiVersionTreeViewModel in '..\DelphiVersionTreeViewModel.pas',
   TestDelphiVersionTreeViewModel in 'TestDelphiVersionTreeViewModel.pas',
-  Utils in '..\Utils.pas';
+  Utils in '..\Utils.pas',
+  TestDelphiVersionGuess in 'TestDelphiVersionGuess.pas';
 
 {$R *.RES}
 

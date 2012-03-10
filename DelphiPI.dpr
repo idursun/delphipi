@@ -30,7 +30,8 @@ uses
   TreeViewModel in 'TreeViewModel.pas',
   TreeNodes in 'TreeNodes.pas',
   PackageLoadThread in 'PackageLoadThread.pas',
-  DelphiVersionTreeViewModel in 'DelphiVersionTreeViewModel.pas';
+  DelphiVersionTreeViewModel in 'DelphiVersionTreeViewModel.pas',
+  CustomTypes in 'CustomTypes.pas';
 
 {$R *.res}
 

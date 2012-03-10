@@ -6,7 +6,7 @@
 			<DCC_DependencyCheckOutputName>DelphiPI.exe</DCC_DependencyCheckOutputName>
 			<MainSource>DelphiPI.dpr</MainSource>
 			<ProjectVersion>13.4</ProjectVersion>
-			<Config Condition="'$(Config)'==''">Release</Config>
+			<Config Condition="'$(Config)'==''">Debug</Config>
 			<FrameworkType>VCL</FrameworkType>
 			<Base>True</Base>
 			<Platform Condition="'$(Platform)'==''">Win32</Platform>
@@ -29,6 +29,12 @@
 		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
 			<Cfg_1>true</Cfg_1>
 			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+			<Cfg_1_Win32>true</Cfg_1_Win32>
+			<CfgParent>Cfg_1</CfgParent>
+			<Cfg_1>true</Cfg_1>
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
@@ -78,6 +84,10 @@
 			<DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
 			<DCC_DebugInformation>False</DCC_DebugInformation>
 			<DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+			<VerInfo_MinorVer>61</VerInfo_MinorVer>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=0.61.0.535;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
 			<Version>7.0</Version>
@@ -139,6 +149,7 @@
 			<DCCReference Include="TreeNodes.pas"/>
 			<DCCReference Include="PackageLoadThread.pas"/>
 			<DCCReference Include="DelphiVersionTreeViewModel.pas"/>
+			<DCCReference Include="CustomTypes.pas"/>
 			<None Include="DelphiPI.todo"/>
 			<None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
 			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>
@@ -244,7 +255,7 @@
 						<VersionInfo Name="MajorVer">0</VersionInfo>
 						<VersionInfo Name="MinorVer">57</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">536</VersionInfo>
+						<VersionInfo Name="Build">538</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -256,7 +267,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
 						<VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.57.0.536</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">0.57.0.538</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName">Josephine</VersionInfoKeys>
 						<VersionInfoKeys Name="LegalCopyright"/>
 						<VersionInfoKeys Name="LegalTrademarks"/>
@@ -269,8 +280,8 @@
 						<Source Name="MainSource">DelphiPI.dpr</Source>
 					</Source>
 					<Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k140.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dclofficexp140.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
 					</Excluded_Packages>
 				</Delphi.Personality>
 				<ModelSupport>True</ModelSupport>

@@ -142,7 +142,7 @@ begin
   inherited;
   fCompilationData := CompilationData;
 
-  if not DirectoryExists(fCompilationData.BaseFolder) then
+  if not SysUtils.DirectoryExists(fCompilationData.BaseFolder) then
     exit;
 
   fInstalledPackageResolver := TInstalledPackageResolver.Create(CompilationData);
