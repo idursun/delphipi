@@ -370,19 +370,17 @@ end;
 
 procedure TShowPackageListPage.actAddPackagesExecute(Sender: TObject);
 var
-  dialog: TFileOpenDialog;
+  dialog: TOpenDialog;
 begin
-  dialog := TFileOpenDialog.Create(self);
+  dialog := TOpenDialog.Create(self);
   try
-    dialog.DefaultExtension := 'dpk';
-    dialog.Options := [TFileDialogOption.fdoAllowMultiSelect];
-    with dialog.FileTypes.Add do
-    begin
-      DisplayName := _('Delphi Package (*.dpk)');
-      FileMask := '*.dpk';
-    end;
+    dialog.DefaultExt := 'dpk';
+    dialog.Options := dialog.Options + [ofAllowMultiSelect];
 
-    dialog.DefaultFolder := fCompilationData.BaseFolder;
+    //dialog.Options := [TOpenDialog.fdoAllowMultiSelect];
+    dialog.Filter := 'Delphi Package (*.dpk)|*.dpk';
+
+    dialog.InitialDir := fCompilationData.BaseFolder;
     if (dialog.Execute) and (dialog.Files.Count > 0) then
     begin
       LoadPackages(dialog.Files, fNodes);
