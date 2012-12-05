@@ -1,6 +1,6 @@
 {**
  DelphiPI (Delphi Package Installer)
- Author  : ibrahim dursun (t-hex) thex [at] thexpot ((dot)) net
+ Author  : ibrahim dursun (ibrahimdursun gmail)
  License : GNU General Public License 2.0
 **}
 unit InstalledPackageResolver;
