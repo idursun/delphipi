@@ -8,8 +8,8 @@ unit FormWizard;
 interface
 
 uses
-  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls, WizardIntfs, ActnList;
+  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Vcl.Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, WizardIntfs, ActnList, System.Actions;
 
 type
   TFrmWizard = class(TForm, IWizard)

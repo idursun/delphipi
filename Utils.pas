@@ -8,7 +8,7 @@ unit Utils;
 interface
 uses classes, JclIDEUtils, Windows;
 const
-  VERSION = '0.62';
+  VERSION = '0.7';
   CODE = 'Cindy';
   AUTHOR = 'Ýbrahim DURSUN';
 
@@ -24,8 +24,10 @@ const
   DELPHI_VERSION_2010 = 8;
   DELPHI_XE = 9;
   DELPHI_XE2 = 10;
-  DELPHI_LAST_VERSION = DELPHI_XE2;
-  VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_LAST_VERSION] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2005', 'Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010', 'Delphi XE', 'Delphi XE2');
+  DELPHI_XE3 = 11;
+  DELPHI_XE4 = 12;
+  DELPHI_LAST_VERSION = DELPHI_XE4;
+  VersionNames: array[DELPHI_VERSION_UNKNOWN..DELPHI_LAST_VERSION] of string = ('Unknown', 'Delphi 5','Delphi 6','Delphi 7','Delphi 8','Delphi 2005', 'Delphi 2006', 'Delphi 2007','Delphi 2009','Delphi 2010', 'Delphi XE', 'Delphi XE2', 'Delphi XE3', 'Delphi XE4');
 type
   TDelphiVersionArray = array[DELPHI_VERSION_5..DELPHI_LAST_VERSION] of TStringList;
 function GuessDelphiVersion(name: string): integer;
@@ -180,4 +182,17 @@ initialization
   AddDelphiPattern(DELPHI_XE2,'160',3);
   AddDelphiPattern(DELPHI_XE2,'d16',3);
   AddDelphiPattern(DELPHI_XE2,'_16',3);
+
+  AddDelphiPattern(DELPHI_XE3,'17',3);
+  AddDelphiPattern(DELPHI_XE3,'d17',3);
+  AddDelphiPattern(DELPHI_XE3,'170',3);
+  AddDelphiPattern(DELPHI_XE3,'d17',3);
+  AddDelphiPattern(DELPHI_XE3,'_17',3);
+
+  AddDelphiPattern(DELPHI_XE4,'18',3);
+  AddDelphiPattern(DELPHI_XE4,'d18',3);
+  AddDelphiPattern(DELPHI_XE4,'180',3);
+  AddDelphiPattern(DELPHI_XE4,'d18',3);
+  AddDelphiPattern(DELPHI_XE4,'_18',3);
+
 end.

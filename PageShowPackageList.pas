@@ -8,9 +8,10 @@ unit PageShowPackageList;
 interface
 
 uses
-  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Controls, Forms,
+  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, StdCtrls, Vcl.Controls, Forms,
   Dialogs, PageBase, ComCtrls, PackageInfo, ImgList, WizardIntfs, Menus, VirtualTrees, PackageDependencyVerifier,
-  ActnList, InstalledPackageResolver, TreeModel, ListViewModel, ToolWin, Generics.Collections, TreeNodes;
+  ActnList, InstalledPackageResolver, TreeModel, ListViewModel, ToolWin, Generics.Collections, TreeNodes,
+  System.Actions;
 
 type
   PNodeData = ^TNodeData;

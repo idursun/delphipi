@@ -1,306 +1,306 @@
-﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-		<PropertyGroup>
-			<ProjectGuid>{d1430758-21c2-4f6a-aefc-57742979bbbe}</ProjectGuid>
-			<Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
-			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-			<DCC_DependencyCheckOutputName>DelphiPI.exe</DCC_DependencyCheckOutputName>
-			<MainSource>DelphiPI.dpr</MainSource>
-			<ProjectVersion>13.4</ProjectVersion>
-			<Config Condition="'$(Config)'==''">Release</Config>
-			<FrameworkType>VCL</FrameworkType>
-			<Base>True</Base>
-			<Platform Condition="'$(Platform)'==''">Win32</Platform>
-			<TargetedPlatforms>1</TargetedPlatforms>
-			<AppType>Application</AppType>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
-			<Base_Win64>true</Base_Win64>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
-			<Base_Win32>true</Base_Win32>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
-			<Cfg_1>true</Cfg_1>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
-			<Cfg_1_Win32>true</Cfg_1_Win32>
-			<CfgParent>Cfg_1</CfgParent>
-			<Cfg_1>true</Cfg_1>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
-			<Cfg_2>true</Cfg_2>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
-			<Cfg_2_Win32>true</Cfg_2_Win32>
-			<CfgParent>Cfg_2</CfgParent>
-			<Cfg_2>true</Cfg_2>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base)'!=''">
-			<VerInfo_MinorVer>57</VerInfo_MinorVer>
-			<VerInfo_Build>535</VerInfo_Build>
-			<VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
-			<VerInfo_MajorVer>0</VerInfo_MajorVer>
-			<VerInfo_Keys>CompanyName=thexpot.net;FileDescription=Delphi Package Installer;FileVersion=0.57.0.535;InternalName=Josephine;LegalCopyright=;LegalTrademarks=;OriginalFilename=delphipi.exe;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<DCC_SYMBOL_PLATFORM>false</DCC_SYMBOL_PLATFORM>
-			<DCC_StringChecks>off</DCC_StringChecks>
-			<DCC_UNIT_PLATFORM>false</DCC_UNIT_PLATFORM>
-			<DCC_UsePackage>vcl;rtl;vclx;vclimg;vclactnband;dbrtl;vcldb;vcldbx;bdertl;vcltouch;xmlrtl;dsnap;dsnapcon;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;VclSmp;vclie;websnap;webdsnap;inetdb;inetdbbde;inetdbxpress;soaprtl;vclribbon;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DbxClientDriver;DataSnapServer;DBXInterBaseDriver;DBXMySQLDriver;dbxcds;DBXFirebirdDriver;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;Jcl;VirtualTreesD12;$(DCC_UsePackage)</DCC_UsePackage>
-			<BRCC_Defines>UNICODE;$(BRCC_Defines)</BRCC_Defines>
-			<DCC_DebugDCUs>true</DCC_DebugDCUs>
-			<DCC_DependencyCheckOutputName>DelphiPI.exe</DCC_DependencyCheckOutputName>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base_Win64)'!=''">
-			<Icon_MainIcon>DelphiPI_Icon.ico</Icon_MainIcon>
-			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base_Win32)'!=''">
-			<Icon_MainIcon>DelphiPI_Icon.ico</Icon_MainIcon>
-			<Debugger_RunParams>C:\Components\DevExpress</Debugger_RunParams>
-			<DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_1)'!=''">
-			<Version>7.0</Version>
-			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
-			<DCC_UnitSearchPath>$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-			<DCC_ResourcePath>$(BDS)\Source\DUnit\src;$(DCC_ResourcePath)</DCC_ResourcePath>
-			<DCC_ObjPath>$(BDS)\Source\DUnit\src;$(DCC_ObjPath)</DCC_ObjPath>
-			<DCC_IncludePath>$(BDS)\Source\DUnit\src;$(DCC_IncludePath)</DCC_IncludePath>
-			<DCC_Optimize>False</DCC_Optimize>
-			<DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
-			<DCC_DebugInformation>False</DCC_DebugInformation>
-			<DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-			<VerInfo_MinorVer>61</VerInfo_MinorVer>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=0.61.0.535;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<Version>7.0</Version>
-			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
-			<DCC_UnitSearchPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\COMPON~1\Src\jcl\lib\d10\debug;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-			<DCC_ResourcePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\COMPON~1\Src\jcl\lib\d10\debug;$(DCC_ResourcePath)</DCC_ResourcePath>
-			<DCC_ObjPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\COMPON~1\Src\jcl\lib\d10\debug;$(DCC_ObjPath)</DCC_ObjPath>
-			<DCC_IncludePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\COMPON~1\Src\jcl\lib\d10\debug;$(DCC_IncludePath)</DCC_IncludePath>
-			<DCC_Optimize>False</DCC_Optimize>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-			<VerInfo_MinorVer>62</VerInfo_MinorVer>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=0.62.0.535;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-		</PropertyGroup>
-		<ItemGroup>
-			<DelphiCompile Include="$(MainSource)">
-				<MainSource>MainSource</MainSource>
-			</DelphiCompile>
-			<DCCReference Include="PackageInfo.pas"/>
-			<DCCReference Include="FormAbout.pas">
-				<Form>frmAbout</Form>
-			</DCCReference>
-			<DCCReference Include="PackageCompiler.pas"/>
-			<DCCReference Include="FormWizard.pas">
-				<Form>frmWizard</Form>
-			</DCCReference>
-			<DCCReference Include="PageBase.pas">
-				<Form>WizardPage</Form>
-			</DCCReference>
-			<DCCReference Include="PageSelectFolders.pas">
-				<Form>SelectFoldersPage</Form>
-			</DCCReference>
-			<DCCReference Include="PageProgress.pas">
-				<Form>ProgressPage</Form>
-			</DCCReference>
-			<DCCReference Include="WizardIntfs.pas"/>
-			<DCCReference Include="PageShowPackageList.pas">
-				<Form>ShowPackageListPage</Form>
-			</DCCReference>
-			<DCCReference Include="PageInstallHelpFiles.pas">
-				<Form>InstallHelpFilesPage</Form>
-			</DCCReference>
-			<DCCReference Include="PageSummary.pas">
-				<Form>SummaryPage</Form>
-			</DCCReference>
-			<DCCReference Include="CompileThread.pas"/>
-			<DCCReference Include="CompilationData.pas"/>
-			<DCCReference Include="ScriptPersister.pas"/>
-			<DCCReference Include="libs\gnugettext.pas"/>
-			<DCCReference Include="Utils.pas"/>
-			<DCCReference Include="PackageInfoFactory.pas"/>
-			<DCCReference Include="PackageList.pas"/>
-			<DCCReference Include="PackageDependencyVerifier.pas"/>
-			<DCCReference Include="ProgressMonitor.pas"/>
-			<DCCReference Include="MonitoredPackageCompiler.pas"/>
-			<DCCReference Include="PageCompilerOptions.pas">
-				<Form>SelectCompilerOptions</Form>
-			</DCCReference>
-			<DCCReference Include="InstalledPackageResolver.pas"/>
-			<DCCReference Include="TreeModel.pas"/>
-			<DCCReference Include="ListViewModel.pas"/>
-			<DCCReference Include="TreeViewModel.pas"/>
-			<DCCReference Include="TreeNodes.pas"/>
-			<DCCReference Include="PackageLoadThread.pas"/>
-			<DCCReference Include="DelphiVersionTreeViewModel.pas"/>
-			<DCCReference Include="CustomTypes.pas"/>
-			<None Include="DelphiPI.todo"/>
-			<None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
-			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>
-			<None Include="ModelSupport_AutoInstaller\PackageDependency\default.txvpck"/>
-			<None Include="ModelSupport_AutoInstaller\PackageInfo\default.txaPackage"/>
-			<None Include="ModelSupport_AutoInstaller\PackageInfo\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\CompilationData\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\CompilationData\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\CompileInfo\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\CompileThread\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\CompileThread\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\ConsoleRunner\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\FormAbout\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\FormAbout\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\FormMain\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\FormMain\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\FormOptions\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\FormWizard\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\FormWizard\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\gnugettext\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\IWizard\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\IWizard\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PackageCompiler\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PackageInfo\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PackageInfo\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageBase\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PageBase\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageFinished\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PageInstallHelpFiles\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PageInstallHelpFiles\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageProgress\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PageProgress\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageSelectDelphiInstallation\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PageSelectDelphiInstallation\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageSelectFolders\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PageSelectFolders\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageShowPackageList\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PageShowPackageList\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\RegExpr\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\ScriptPersister\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\Unit1\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\Unit1\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\WizardData\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\WizardData\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\WizardIntfs\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\WizardIntfs\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\ScriptPersister\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PackageCompiler\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageSummary\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\Utils\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\Command\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PackageList\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PackageInfoFactory\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\CommandResolveSourcePaths\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\Command\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PackageDependencyVerifier\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageSummary\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\Utils\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PackageDependencyVerifier\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\ProgressMonitor\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\ProgressMonitor\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\MonitoredPackageCompiler\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\MonitoredPackageCompiler\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\ConsoleRunner\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\gnugettext\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PackageList\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\PageCompilerOptions\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\VirtualTreeHelper\default.txvpck"/>
-			<None Include="ModelSupport_DelphiPI\InstalledPackageResolver\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\VirtualTreeHelper\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\PageCompilerOptions\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\TreeModel\default.txaPackage"/>
-			<None Include="ModelSupport_DelphiPI\TreeNodes\default.txaPackage"/>
-			<BuildConfiguration Include="Debug">
-				<Key>Cfg_2</Key>
-				<CfgParent>Base</CfgParent>
-			</BuildConfiguration>
-			<BuildConfiguration Include="Base">
-				<Key>Base</Key>
-			</BuildConfiguration>
-			<BuildConfiguration Include="Release">
-				<Key>Cfg_1</Key>
-				<CfgParent>Base</CfgParent>
-			</BuildConfiguration>
-		</ItemGroup>
-		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
-		<ProjectExtensions>
-			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
-			<Borland.ProjectType/>
-			<BorlandProject>
-				<Delphi.Personality>
-					<Parameters>
-						<Parameters Name="UseLauncher">False</Parameters>
-						<Parameters Name="LoadAllSymbols">True</Parameters>
-						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
-						<Parameters Name="RunParams">C:\Components\DevExpress</Parameters>
-					</Parameters>
-					<VersionInfo>
-						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
-						<VersionInfo Name="AutoIncBuild">True</VersionInfo>
-						<VersionInfo Name="MajorVer">0</VersionInfo>
-						<VersionInfo Name="MinorVer">57</VersionInfo>
-						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">539</VersionInfo>
-						<VersionInfo Name="Debug">False</VersionInfo>
-						<VersionInfo Name="PreRelease">False</VersionInfo>
-						<VersionInfo Name="Special">False</VersionInfo>
-						<VersionInfo Name="Private">False</VersionInfo>
-						<VersionInfo Name="DLL">False</VersionInfo>
-						<VersionInfo Name="Locale">1033</VersionInfo>
-						<VersionInfo Name="CodePage">1252</VersionInfo>
-					</VersionInfo>
-					<VersionInfoKeys>
-						<VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
-						<VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-						<VersionInfoKeys Name="FileVersion">0.57.0.539</VersionInfoKeys>
-						<VersionInfoKeys Name="InternalName">Josephine</VersionInfoKeys>
-						<VersionInfoKeys Name="LegalCopyright"/>
-						<VersionInfoKeys Name="LegalTrademarks"/>
-						<VersionInfoKeys Name="OriginalFilename">delphipi.exe</VersionInfoKeys>
-						<VersionInfoKeys Name="ProductName"/>
-						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
-						<VersionInfoKeys Name="Comments"/>
-					</VersionInfoKeys>
-					<Source>
-						<Source Name="MainSource">DelphiPI.dpr</Source>
-					</Source>
-					<Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-					</Excluded_Packages>
-				</Delphi.Personality>
-				<ModelSupport>True</ModelSupport>
-				<Platforms>
-					<Platform value="Win64">False</Platform>
-					<Platform value="Win32">True</Platform>
-				</Platforms>
-			</BorlandProject>
-			<ProjectFileVersion>12</ProjectFileVersion>
-		</ProjectExtensions>
-		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
-	</Project>
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{d1430758-21c2-4f6a-aefc-57742979bbbe}</ProjectGuid>
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+        <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+        <DCC_DependencyCheckOutputName>DelphiPI.exe</DCC_DependencyCheckOutputName>
+        <MainSource>DelphiPI.dpr</MainSource>
+        <ProjectVersion>14.6</ProjectVersion>
+        <Config Condition="'$(Config)'==''">Release</Config>
+        <FrameworkType>VCL</FrameworkType>
+        <Base>True</Base>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <TargetedPlatforms>1</TargetedPlatforms>
+        <AppType>Application</AppType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+        <Base_Win64>true</Base_Win64>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <VerInfo_MinorVer>57</VerInfo_MinorVer>
+        <VerInfo_Build>535</VerInfo_Build>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_MajorVer>0</VerInfo_MajorVer>
+        <VerInfo_Keys>CompanyName=thexpot.net;FileDescription=Delphi Package Installer;FileVersion=0.57.0.535;InternalName=Josephine;LegalCopyright=;LegalTrademarks=;OriginalFilename=delphipi.exe;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <DCC_SYMBOL_PLATFORM>false</DCC_SYMBOL_PLATFORM>
+        <DCC_StringChecks>off</DCC_StringChecks>
+        <DCC_UNIT_PLATFORM>false</DCC_UNIT_PLATFORM>
+        <DCC_UsePackage>vcl;rtl;vclx;vclimg;vclactnband;dbrtl;vcldb;vcldbx;bdertl;vcltouch;xmlrtl;dsnap;dsnapcon;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;VclSmp;vclie;websnap;webdsnap;inetdb;inetdbbde;inetdbxpress;soaprtl;vclribbon;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DbxClientDriver;DataSnapServer;DBXInterBaseDriver;DBXMySQLDriver;dbxcds;DBXFirebirdDriver;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;Jcl;VirtualTreesD12;$(DCC_UsePackage)</DCC_UsePackage>
+        <BRCC_Defines>UNICODE;$(BRCC_Defines)</BRCC_Defines>
+        <DCC_DebugDCUs>true</DCC_DebugDCUs>
+        <DCC_DependencyCheckOutputName>DelphiPI.exe</DCC_DependencyCheckOutputName>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <Icon_MainIcon>DelphiPI_Icon.ico</Icon_MainIcon>
+        <Debugger_RunParams>C:\Components\DevExpress</Debugger_RunParams>
+        <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win64)'!=''">
+        <Icon_MainIcon>DelphiPI_Icon.ico</Icon_MainIcon>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <Version>7.0</Version>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+        <DCC_UnitSearchPath>$(BDS)\Source\DUnit\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_ResourcePath>$(BDS)\Source\DUnit\src;$(DCC_ResourcePath)</DCC_ResourcePath>
+        <DCC_ObjPath>$(BDS)\Source\DUnit\src;$(DCC_ObjPath)</DCC_ObjPath>
+        <DCC_IncludePath>$(BDS)\Source\DUnit\src;$(DCC_IncludePath)</DCC_IncludePath>
+        <DCC_Optimize>False</DCC_Optimize>
+        <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
+        <DCC_DebugInformation>False</DCC_DebugInformation>
+        <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <VerInfo_MinorVer>61</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=0.61.0.535;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <Version>7.0</Version>
+        <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+        <DCC_UnitSearchPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\COMPON~1\Src\jcl\lib\d10\debug;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_ResourcePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\COMPON~1\Src\jcl\lib\d10\debug;$(DCC_ResourcePath)</DCC_ResourcePath>
+        <DCC_ObjPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\COMPON~1\Src\jcl\lib\d10\debug;$(DCC_ObjPath)</DCC_ObjPath>
+        <DCC_IncludePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;C:\COMPON~1\Src\jcl\lib\d10\debug;$(DCC_IncludePath)</DCC_IncludePath>
+        <DCC_Optimize>False</DCC_Optimize>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_MinorVer>62</VerInfo_MinorVer>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=0.62.0.535;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="PackageInfo.pas"/>
+        <DCCReference Include="FormAbout.pas">
+            <Form>frmAbout</Form>
+        </DCCReference>
+        <DCCReference Include="PackageCompiler.pas"/>
+        <DCCReference Include="FormWizard.pas">
+            <Form>frmWizard</Form>
+        </DCCReference>
+        <DCCReference Include="PageBase.pas">
+            <Form>WizardPage</Form>
+        </DCCReference>
+        <DCCReference Include="PageSelectFolders.pas">
+            <Form>SelectFoldersPage</Form>
+        </DCCReference>
+        <DCCReference Include="PageProgress.pas">
+            <Form>ProgressPage</Form>
+        </DCCReference>
+        <DCCReference Include="WizardIntfs.pas"/>
+        <DCCReference Include="PageShowPackageList.pas">
+            <Form>ShowPackageListPage</Form>
+        </DCCReference>
+        <DCCReference Include="PageInstallHelpFiles.pas">
+            <Form>InstallHelpFilesPage</Form>
+        </DCCReference>
+        <DCCReference Include="PageSummary.pas">
+            <Form>SummaryPage</Form>
+        </DCCReference>
+        <DCCReference Include="CompileThread.pas"/>
+        <DCCReference Include="CompilationData.pas"/>
+        <DCCReference Include="ScriptPersister.pas"/>
+        <DCCReference Include="libs\gnugettext.pas"/>
+        <DCCReference Include="Utils.pas"/>
+        <DCCReference Include="PackageInfoFactory.pas"/>
+        <DCCReference Include="PackageList.pas"/>
+        <DCCReference Include="PackageDependencyVerifier.pas"/>
+        <DCCReference Include="ProgressMonitor.pas"/>
+        <DCCReference Include="MonitoredPackageCompiler.pas"/>
+        <DCCReference Include="PageCompilerOptions.pas">
+            <Form>SelectCompilerOptions</Form>
+        </DCCReference>
+        <DCCReference Include="InstalledPackageResolver.pas"/>
+        <DCCReference Include="TreeModel.pas"/>
+        <DCCReference Include="ListViewModel.pas"/>
+        <DCCReference Include="TreeViewModel.pas"/>
+        <DCCReference Include="TreeNodes.pas"/>
+        <DCCReference Include="PackageLoadThread.pas"/>
+        <DCCReference Include="DelphiVersionTreeViewModel.pas"/>
+        <DCCReference Include="CustomTypes.pas"/>
+        <None Include="DelphiPI.todo"/>
+        <None Include="ModelSupport_AutoInstaller\FormMain\default.txaPackage"/>
+        <None Include="ModelSupport_AutoInstaller\PackageDependency\default.txaPackage"/>
+        <None Include="ModelSupport_AutoInstaller\PackageDependency\default.txvpck"/>
+        <None Include="ModelSupport_AutoInstaller\PackageInfo\default.txaPackage"/>
+        <None Include="ModelSupport_AutoInstaller\PackageInfo\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\CompilationData\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\CompilationData\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\CompileInfo\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\CompileThread\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\CompileThread\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\ConsoleRunner\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\FormAbout\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\FormAbout\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\FormMain\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\FormMain\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\FormOptions\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\FormWizard\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\FormWizard\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\gnugettext\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\IWizard\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\IWizard\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PackageCompiler\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PackageInfo\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PackageInfo\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageBase\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PageBase\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageFinished\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PageInstallHelpFiles\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PageInstallHelpFiles\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageProgress\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PageProgress\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageSelectDelphiInstallation\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PageSelectDelphiInstallation\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageSelectFolders\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PageSelectFolders\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageShowPackageList\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PageShowPackageList\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\RegExpr\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\ScriptPersister\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\Unit1\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\Unit1\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\WizardData\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\WizardData\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\WizardIntfs\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\WizardIntfs\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\ScriptPersister\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PackageCompiler\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageSummary\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\Utils\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\Command\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PackageList\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PackageInfoFactory\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\CommandResolveSourcePaths\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\Command\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PackageDependencyVerifier\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageSummary\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\Utils\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PackageDependencyVerifier\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\ProgressMonitor\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\ProgressMonitor\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\MonitoredPackageCompiler\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\MonitoredPackageCompiler\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\ConsoleRunner\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\gnugettext\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PackageList\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\PageCompilerOptions\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\VirtualTreeHelper\default.txvpck"/>
+        <None Include="ModelSupport_DelphiPI\InstalledPackageResolver\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\VirtualTreeHelper\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\PageCompilerOptions\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\TreeModel\default.txaPackage"/>
+        <None Include="ModelSupport_DelphiPI\TreeNodes\default.txaPackage"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Parameters>
+                    <Parameters Name="UseLauncher">False</Parameters>
+                    <Parameters Name="LoadAllSymbols">True</Parameters>
+                    <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+                    <Parameters Name="RunParams">C:\Components\DevExpress</Parameters>
+                </Parameters>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">True</VersionInfo>
+                    <VersionInfo Name="MajorVer">0</VersionInfo>
+                    <VersionInfo Name="MinorVer">57</VersionInfo>
+                    <VersionInfo Name="Release">0</VersionInfo>
+                    <VersionInfo Name="Build">539</VersionInfo>
+                    <VersionInfo Name="Debug">False</VersionInfo>
+                    <VersionInfo Name="PreRelease">False</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1033</VersionInfo>
+                    <VersionInfo Name="CodePage">1252</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">0.57.0.539</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName">Josephine</VersionInfoKeys>
+                    <VersionInfoKeys Name="LegalCopyright"/>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename">delphipi.exe</VersionInfoKeys>
+                    <VersionInfoKeys Name="ProductName"/>
+                    <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments"/>
+                </VersionInfoKeys>
+                <Source>
+                    <Source Name="MainSource">DelphiPI.dpr</Source>
+                </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <ModelSupport>True</ModelSupport>
+            <Platforms>
+                <Platform value="Win32">True</Platform>
+                <Platform value="Win64">False</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+</Project>

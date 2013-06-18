@@ -8,7 +8,7 @@ unit PageCompilerOptions;
 interface
 
 uses
-  Classes, CompilationData, Windows, Messages, SysUtils, Variants, Graphics, Controls, Forms,
+  Classes, CompilationData, Windows, Messages, SysUtils, Variants, Graphics, Vcl.Controls, Forms,
   Dialogs, PageBase, StdCtrls, ExtCtrls, WizardIntfs;
 
 type

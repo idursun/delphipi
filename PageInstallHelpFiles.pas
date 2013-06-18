@@ -8,7 +8,7 @@ unit PageInstallHelpFiles;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Vcl.Controls, Forms,
   Dialogs, PageBase, StdCtrls, ComCtrls, WizardIntfs;
 
 type

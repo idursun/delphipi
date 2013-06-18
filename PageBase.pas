@@ -8,7 +8,7 @@ unit PageBase;
 interface
 
 uses
-  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  CompilationData, Windows, Messages, SysUtils, Variants, Classes, Graphics, Vcl.Controls, Forms,
   Dialogs, WizardIntfs;
 
 type
