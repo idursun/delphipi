@@ -9,7 +9,7 @@ interface
 uses classes, JclIDEUtils, Windows;
 const
   VERSION = '0.7';
-  CODE = 'Cindy';
+  CODE = 'Marauder';
   AUTHOR = 'Ýbrahim DURSUN';
 
   DELPHI_VERSION_UNKNOWN = -1;
