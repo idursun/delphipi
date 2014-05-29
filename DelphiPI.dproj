@@ -5,7 +5,7 @@
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <DCC_DependencyCheckOutputName>DelphiPI.exe</DCC_DependencyCheckOutputName>
         <MainSource>DelphiPI.dpr</MainSource>
-        <ProjectVersion>14.6</ProjectVersion>
+        <ProjectVersion>15.1</ProjectVersion>
         <Config Condition="'$(Config)'==''">Release</Config>
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
@@ -88,7 +88,7 @@
         <DCC_IncludePath>$(BDS)\Source\DUnit\src;$(DCC_IncludePath)</DCC_IncludePath>
         <DCC_Optimize>False</DCC_Optimize>
         <DCC_AssertionsAtRuntime>False</DCC_AssertionsAtRuntime>
-        <DCC_DebugInformation>False</DCC_DebugInformation>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
         <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
@@ -265,7 +265,7 @@
                     <VersionInfo Name="MajorVer">0</VersionInfo>
                     <VersionInfo Name="MinorVer">57</VersionInfo>
                     <VersionInfo Name="Release">0</VersionInfo>
-                    <VersionInfo Name="Build">542</VersionInfo>
+                    <VersionInfo Name="Build">543</VersionInfo>
                     <VersionInfo Name="Debug">False</VersionInfo>
                     <VersionInfo Name="PreRelease">False</VersionInfo>
                     <VersionInfo Name="Special">False</VersionInfo>
@@ -277,7 +277,7 @@
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName">thexpot.net</VersionInfoKeys>
                     <VersionInfoKeys Name="FileDescription">Delphi Package Installer</VersionInfoKeys>
-                    <VersionInfoKeys Name="FileVersion">0.57.0.542</VersionInfoKeys>
+                    <VersionInfoKeys Name="FileVersion">0.57.0.543</VersionInfoKeys>
                     <VersionInfoKeys Name="InternalName">Josephine</VersionInfoKeys>
                     <VersionInfoKeys Name="LegalCopyright"/>
                     <VersionInfoKeys Name="LegalTrademarks"/>

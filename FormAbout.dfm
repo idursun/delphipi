@@ -634,7 +634,7 @@ object frmAbout: TfrmAbout
       Width = 118
       Height = 13
       Cursor = crHandPoint
-      Caption = 'http://www.thexpot.net'
+      Caption = 'http://www.idursun.com'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -11
@@ -646,10 +646,10 @@ object frmAbout: TfrmAbout
     object lblProjectWebsite: TLabel
       Left = 101
       Top = 75
-      Width = 150
+      Width = 175
       Height = 13
       Cursor = crHandPoint
-      Caption = 'http://delphipi.googlecode.com'
+      Caption = 'http://bitbucket.org/idursun/delphipi'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -11
@@ -685,7 +685,6 @@ object frmAbout: TfrmAbout
     BevelOuter = bvNone
     BorderWidth = 1
     TabOrder = 1
-    ExplicitTop = 207
     object Bevel1: TBevel
       AlignWithMargins = True
       Left = 1
