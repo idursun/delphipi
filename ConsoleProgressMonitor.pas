@@ -30,12 +30,12 @@ uses DateUtils, SysUtils, StrUtils, JclConsole;
 
 procedure WriteLine(color: TJclScreenFontColor; text: string); overload;
 begin
-  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color,bclBlack, color <> fclWhite));  
+  TJclConsole.Default.ActiveScreen.Writeln(text, TJclScreenTextAttribute.Create(color,bclBlack, color <> fclWhite));
 end;
 
 procedure WriteLine(text: string=''); overload;
 begin
-  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(fclWhite, bclBlack, false));  
+  TJclConsole.Default.ActiveScreen.Writeln(text, TJclScreenTextAttribute.Create(fclWhite, bclBlack, false));
 end;
 
 { TConsoleProgressMonitor }
