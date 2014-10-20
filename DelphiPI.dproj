@@ -5,7 +5,7 @@
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
         <DCC_DependencyCheckOutputName>DelphiPI.exe</DCC_DependencyCheckOutputName>
         <MainSource>DelphiPI.dpr</MainSource>
-        <ProjectVersion>15.1</ProjectVersion>
+        <ProjectVersion>15.4</ProjectVersion>
         <Config Condition="'$(Config)'==''">Release</Config>
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
@@ -49,6 +49,7 @@
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <SanitizedProjectName>DelphiPI</SanitizedProjectName>
         <VerInfo_MinorVer>57</VerInfo_MinorVer>
         <VerInfo_Build>535</VerInfo_Build>
         <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
