@@ -26,12 +26,12 @@ type
 
 implementation
 
-uses SysUtils,  gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler,
+uses SysUtils, gnugettext, MonitoredPackageCompiler, ScriptPersister, PackageCompiler,
      Utils, JclConsole, StrUtils;
 
 procedure WriteLine(color: TJclScreenFontColor; text: string);
 begin
-  TJclConsole.Default.Screens[0].Writeln(text, TJclScreenTextAttribute.Create(color));
+  TJclConsole.Default.ActiveScreen.Writeln(text, TJclScreenTextAttribute.Create(color));
 end;
 
 { TConsoleRunner }
