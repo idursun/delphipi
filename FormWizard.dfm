@@ -414,7 +414,7 @@ object frmWizard: TfrmWizard
       AlignWithMargins = True
       Left = 3
       Top = 8
-      Width = 80
+      Width = 94
       Height = 29
       Margins.Top = 6
       Action = actAbout

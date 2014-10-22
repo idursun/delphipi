@@ -2,17 +2,17 @@ inherited SummaryPage: TSummaryPage
   Left = 328
   Top = 271
   Caption = 'SummaryPage'
+  ClientHeight = 232
+  ClientWidth = 412
   OnCreate = FormCreate
-  ExplicitLeft = 328
-  ExplicitTop = 271
-  ExplicitWidth = 516
-  ExplicitHeight = 286
+  ExplicitWidth = 412
+  ExplicitHeight = 232
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 8
-    Top = 208
-    Width = 398
+    Top = 183
+    Width = 312
     Height = 34
     Anchors = [akLeft, akRight, akBottom]
     AutoSize = False
@@ -29,8 +29,8 @@ inherited SummaryPage: TSummaryPage
     Caption = 'Summary:'
   end
   object btnSave: TButton
-    Left = 412
-    Top = 203
+    Left = 324
+    Top = 183
     Width = 80
     Height = 25
     Anchors = [akRight, akBottom]
@@ -40,9 +40,9 @@ inherited SummaryPage: TSummaryPage
   end
   object edtSummary: TMemo
     Left = 8
-    Top = 28
-    Width = 484
-    Height = 214
+    Top = 27
+    Width = 396
+    Height = 150
     Anchors = [akLeft, akTop, akRight, akBottom]
     ReadOnly = True
     ScrollBars = ssBoth

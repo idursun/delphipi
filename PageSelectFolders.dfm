@@ -3,25 +3,23 @@ inherited SelectFoldersPage: TSelectFoldersPage
   Top = 221
   ActiveControl = edtBaseFolder
   Caption = 'SelectFoldersPage'
+  ClientHeight = 232
+  ClientWidth = 412
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitLeft = 346
-  ExplicitTop = 221
-  ExplicitWidth = 516
-  ExplicitHeight = 288
   PixelsPerInch = 96
   TextHeight = 13
   object grpPackagePattern: TGroupBox
     AlignWithMargins = True
     Left = 3
     Top = 134
-    Width = 494
+    Width = 406
     Height = 79
     Align = alTop
     Caption = 'Pattern to select package files '
     TabOrder = 2
     DesignSize = (
-      494
+      406
       79)
     object Label3: TLabel
       Left = 12
@@ -31,9 +29,9 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Caption = 'Package File Pattern'
     end
     object Label2: TLabel
-      Left = 15
+      Left = 12
       Top = 16
-      Width = 466
+      Width = 381
       Height = 26
       Anchors = [akLeft, akTop, akRight]
       Caption = 
@@ -44,7 +42,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
     object cbPattern: TComboBox
       Left = 116
       Top = 48
-      Width = 368
+      Width = 277
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -55,13 +53,13 @@ inherited SelectFoldersPage: TSelectFoldersPage
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 494
+    Width = 406
     Height = 65
     Align = alTop
     Caption = 'Select Base Folder contains both Package and Source files'
     TabOrder = 0
     DesignSize = (
-      494
+      406
       65)
     object Label1: TLabel
       Left = 12
@@ -71,7 +69,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
       Caption = 'Base Folder'
     end
     object btnSelectFolder: TButton
-      Left = 452
+      Left = 560
       Top = 35
       Width = 32
       Height = 21
@@ -84,7 +82,7 @@ inherited SelectFoldersPage: TSelectFoldersPage
     object edtBaseFolder: TEdit
       Left = 12
       Top = 35
-      Width = 434
+      Width = 381
       Height = 21
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 1
@@ -95,18 +93,18 @@ inherited SelectFoldersPage: TSelectFoldersPage
     AlignWithMargins = True
     Left = 3
     Top = 74
-    Width = 494
+    Width = 406
     Height = 54
     Align = alTop
     Caption = 'Installed Delphi Versions'
     TabOrder = 1
     DesignSize = (
-      494
+      406
       54)
     object cbDelphiVersions: TComboBox
-      Left = 15
+      Left = 12
       Top = 20
-      Width = 459
+      Width = 381
       Height = 21
       Style = csDropDownList
       Anchors = [akLeft, akTop, akRight]
