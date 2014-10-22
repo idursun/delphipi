@@ -2,11 +2,10 @@ inherited InstallHelpFilesPage: TInstallHelpFilesPage
   Left = 202
   Top = 166
   Caption = 'InstallHelpFilesPage'
+  ClientHeight = 240
+  ClientWidth = 412
   OnCreate = FormCreate
-  ExplicitLeft = 202
-  ExplicitTop = 166
-  ExplicitWidth = 516
-  ExplicitHeight = 286
+  ExplicitWidth = 412
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -23,8 +22,8 @@ inherited InstallHelpFilesPage: TInstallHelpFilesPage
   object helpFileList: TListView
     Left = 8
     Top = 50
-    Width = 484
-    Height = 161
+    Width = 396
+    Height = 159
     Anchors = [akLeft, akTop, akRight, akBottom]
     Checkboxes = True
     Columns = <
@@ -40,8 +39,8 @@ inherited InstallHelpFilesPage: TInstallHelpFilesPage
     ViewStyle = vsReport
   end
   object btnInstallHelpFiles: TButton
-    Left = 378
-    Top = 217
+    Left = 290
+    Top = 215
     Width = 114
     Height = 25
     Anchors = [akRight, akBottom]

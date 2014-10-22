@@ -1,25 +1,20 @@
-object ShowPackageListPage: TShowPackageListPage
+inherited ShowPackageListPage: TShowPackageListPage
   Left = 352
   Top = 188
   Caption = 'ShowPackageListPage'
-  ClientHeight = 337
-  ClientWidth = 588
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = True
+  ClientHeight = 232
+  ClientWidth = 412
   OnClose = FormClose
   OnCreate = FormCreate
+  ExplicitWidth = 412
+  ExplicitHeight = 232
   PixelsPerInch = 96
   TextHeight = 13
   object lblWait: TLabel
     Left = 0
     Top = 22
-    Width = 588
-    Height = 315
+    Width = 412
+    Height = 210
     Align = alClient
     Alignment = taCenter
     AutoSize = False
@@ -34,12 +29,14 @@ object ShowPackageListPage: TShowPackageListPage
     ParentFont = False
     Transparent = False
     Layout = tlCenter
+    ExplicitWidth = 588
+    ExplicitHeight = 315
   end
   object fPackageTree: TVirtualStringTree
     Left = 0
     Top = 22
-    Width = 588
-    Height = 315
+    Width = 412
+    Height = 210
     Align = alClient
     Header.AutoSizeIndex = 0
     Header.Font.Charset = DEFAULT_CHARSET
@@ -88,7 +85,7 @@ object ShowPackageListPage: TShowPackageListPage
   object toolbar: TToolBar
     Left = 0
     Top = 0
-    Width = 588
+    Width = 412
     Height = 22
     AutoSize = True
     Caption = 'toolbar'
@@ -194,7 +191,7 @@ object ShowPackageListPage: TShowPackageListPage
     Left = 286
     Top = 124
     Bitmap = {
-      494C010102000400100010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010102000500040010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000001000000001002000000000000010
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -335,8 +332,8 @@ object ShowPackageListPage: TShowPackageListPage
   end
   object ActionList: TActionList
     Images = ilActionImages
-    Left = 416
-    Top = 72
+    Left = 192
+    Top = 64
     object actRemove: TAction
       Category = 'Package List'
       Caption = 'Remove'
@@ -436,10 +433,10 @@ object ShowPackageListPage: TShowPackageListPage
   object ilActionImages: TImageList
     ColorDepth = cd32Bit
     DrawingStyle = dsTransparent
-    Left = 424
+    Left = 200
     Top = 128
     Bitmap = {
-      494C010108000C00100010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010108000D00040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000003000000001002000000000000030
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

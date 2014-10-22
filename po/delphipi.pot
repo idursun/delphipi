@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2010-02-07 13:27\n"
-"PO-Revision-Date: 2010-02-07 13:27\n"
+"POT-Creation-Date: 2014-10-22 17:09\n"
+"PO-Revision-Date: 2014-10-22 17:09\n"
 "Last-Translator: Somebody <your.email@address.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,13 +25,13 @@ msgstr ""
 #. frmAbout..Font.Name
 #: FormAbout.dfm:12
 #. frmAbout..grpInformation..Label7..Font.Name
-#: FormAbout.dfm:37
+#: FormAbout.dfm:38
 #. frmAbout..grpInformation..lblVersion..Font.Name
-#: FormAbout.dfm:606
+#: FormAbout.dfm:607
 #. frmAbout..grpInformation..lblAuthorsWebsite..Font.Name
-#: FormAbout.dfm:641
+#: FormAbout.dfm:642
 #. frmAbout..grpInformation..lblProjectWebsite..Font.Name
-#: FormAbout.dfm:656
+#: FormAbout.dfm:657
 #. frmWizard..Font.Name
 #: FormWizard.dfm:13
 #. frmWizard..HeaderPanel..lblHeader..Font.Name
@@ -40,22 +40,20 @@ msgstr ""
 #: PageBase.dfm:13
 #. ProgressPage..GroupBox1..lblPackage..Font.Name
 #: PageProgress.dfm:41
-#. ShowPackageListPage..Font.Name
-#: PageShowPackageList.dfm:11
 #. ShowPackageListPage..lblWait..Font.Name
-#: PageShowPackageList.dfm:31
+#: PageShowPackageList.dfm:26
 #. ShowPackageListPage..fPackageTree..Header.Font.Name
-#: PageShowPackageList.dfm:49
+#: PageShowPackageList.dfm:45
 #. frmAbout..Font.Name
 #: FormAbout.dfm:12
 #. frmAbout..grpInformation..Label7..Font.Name
-#: FormAbout.dfm:37
+#: FormAbout.dfm:38
 #. frmAbout..grpInformation..lblVersion..Font.Name
-#: FormAbout.dfm:606
+#: FormAbout.dfm:607
 #. frmAbout..grpInformation..lblAuthorsWebsite..Font.Name
-#: FormAbout.dfm:641
+#: FormAbout.dfm:642
 #. frmAbout..grpInformation..lblProjectWebsite..Font.Name
-#: FormAbout.dfm:656
+#: FormAbout.dfm:657
 #. frmWizard..Font.Name
 #: FormWizard.dfm:13
 #. frmWizard..HeaderPanel..lblHeader..Font.Name
@@ -64,12 +62,10 @@ msgstr ""
 #: PageBase.dfm:13
 #. ProgressPage..GroupBox1..lblPackage..Font.Name
 #: PageProgress.dfm:41
-#. ShowPackageListPage..Font.Name
-#: PageShowPackageList.dfm:11
 #. ShowPackageListPage..lblWait..Font.Name
-#: PageShowPackageList.dfm:31
+#: PageShowPackageList.dfm:26
 #. ShowPackageListPage..fPackageTree..Header.Font.Name
-#: PageShowPackageList.dfm:49
+#: PageShowPackageList.dfm:45
 msgid "Tahoma"
 msgstr ""
 
@@ -81,101 +77,80 @@ msgid "Information"
 msgstr ""
 
 #. frmAbout..grpInformation..Label7..Caption
-#: FormAbout.dfm:33
+#: FormAbout.dfm:34
 #. frmAbout..grpInformation..Label7..Caption
-#: FormAbout.dfm:33
+#: FormAbout.dfm:34
 msgid "Delphi Package Installer"
 msgstr ""
 
 #. frmAbout..grpInformation..lblVersion..Caption
-#: FormAbout.dfm:602
+#: FormAbout.dfm:603
 #. frmAbout..grpInformation..lblVersion..Caption
-#: FormAbout.dfm:602
+#: FormAbout.dfm:603
 msgid "Utils.Version Utils.CodeName"
 msgstr ""
 
 #. frmAbout..grpInformation..Label9..Caption
-#: FormAbout.dfm:615
+#: FormAbout.dfm:616
 #. frmAbout..grpInformation..Label9..Caption
-#: FormAbout.dfm:615
+#: FormAbout.dfm:616
 msgid "Version:"
 msgstr ""
 
 #. frmAbout..grpInformation..Label10..Caption
-#: FormAbout.dfm:622
+#: FormAbout.dfm:623
 #. frmAbout..grpInformation..Label10..Caption
-#: FormAbout.dfm:622
+#: FormAbout.dfm:623
 msgid "Project Website:"
 msgstr ""
 
 #. frmAbout..grpInformation..Label11..Caption
-#: FormAbout.dfm:629
+#: FormAbout.dfm:630
 #. frmAbout..grpInformation..Label11..Caption
-#: FormAbout.dfm:629
+#: FormAbout.dfm:630
 msgid "Author's name:"
 msgstr ""
 
 #. frmAbout..grpInformation..lblAuthorsWebsite..Caption
-#: FormAbout.dfm:637
+#: FormAbout.dfm:638
 #. frmAbout..grpInformation..lblAuthorsWebsite..Caption
-#: FormAbout.dfm:637
-msgid "http://www.thexpot.net"
+#: FormAbout.dfm:638
+msgid "http://www.idursun.com"
 msgstr ""
 
 #. frmAbout..grpInformation..lblProjectWebsite..Caption
-#: FormAbout.dfm:652
+#: FormAbout.dfm:653
 #. frmAbout..grpInformation..lblProjectWebsite..Caption
-#: FormAbout.dfm:652
-msgid "http://delphipi.googlecode.com"
+#: FormAbout.dfm:653
+msgid "http://bitbucket.org/idursun/delphipi"
 msgstr ""
 
 #. frmAbout..grpInformation..Label2..Caption
-#: FormAbout.dfm:666
+#: FormAbout.dfm:667
 #. frmAbout..grpInformation..Label2..Caption
-#: FormAbout.dfm:666
+#: FormAbout.dfm:667
 msgid "Author's website:"
 msgstr ""
 
 #. frmAbout..grpInformation..lblAuthor..Caption
-#: FormAbout.dfm:673
+#: FormAbout.dfm:674
 #. frmAbout..grpInformation..lblAuthor..Caption
-#: FormAbout.dfm:673
+#: FormAbout.dfm:674
 msgid "Utils.Author"
 msgstr ""
 
 #. frmAbout..pnlBottom..btnDonate..Caption
-#: FormAbout.dfm:709
+#: FormAbout.dfm:710
 #. frmAbout..pnlBottom..btnDonate..Caption
-#: FormAbout.dfm:709
+#: FormAbout.dfm:710
 msgid "Donate"
 msgstr ""
 
 #. frmAbout..pnlBottom..btnClose..Caption
-#: FormAbout.dfm:721
+#: FormAbout.dfm:722
 #. frmAbout..pnlBottom..btnClose..Caption
-#: FormAbout.dfm:721
+#: FormAbout.dfm:722
 msgid "Close"
-msgstr ""
-
-#. frmAbout..grpContributors..Caption
-#: FormAbout.dfm:733
-#. frmAbout..grpContributors..Caption
-#: FormAbout.dfm:733
-msgid "Thanks to contributors"
-msgstr ""
-
-#. frmAbout..grpContributors..Label3..Caption
-#: FormAbout.dfm:740
-#. frmAbout..grpContributors..Label3..Caption
-#: FormAbout.dfm:740
-msgid "Caleb Hattingh for UI Resizability patch"
-msgstr ""
-
-#. frmAbout..grpContributors..Label4..Caption
-#: FormAbout.dfm:747
-#. frmAbout..grpContributors..Label4..Caption
-#: FormAbout.dfm:747
-msgid "Ronald Siekman for scripting enhancements"
 msgstr ""
 
 #. frmWizard..Caption
@@ -276,7 +251,7 @@ msgstr ""
 #. SelectCompilerOptions..grpOutputFolders..btnDCUBrowse..Caption
 #: PageCompilerOptions.dfm:103
 #. SelectFoldersPage..grpBaseFolder..btnSelectFolder..Caption
-#: PageSelectFolders.dfm:79
+#: PageSelectFolders.dfm:77
 #. SelectCompilerOptions..grpOutputFolders..btnBPLBrowse..Caption
 #: PageCompilerOptions.dfm:67
 #. SelectCompilerOptions..grpOutputFolders..btnDCPBrowse..Caption
@@ -284,7 +259,7 @@ msgstr ""
 #. SelectCompilerOptions..grpOutputFolders..btnDCUBrowse..Caption
 #: PageCompilerOptions.dfm:103
 #. SelectFoldersPage..grpBaseFolder..btnSelectFolder..Caption
-#: PageSelectFolders.dfm:79
+#: PageSelectFolders.dfm:77
 msgid "..."
 msgstr ""
 
@@ -296,25 +271,25 @@ msgid "InstallHelpFilesPage"
 msgstr ""
 
 #. InstallHelpFilesPage..Label1....Caption
-#: PageInstallHelpFiles.dfm:20
+#: PageInstallHelpFiles.dfm:19
 #. InstallHelpFilesPage..Label1....Caption
-#: PageInstallHelpFiles.dfm:20
+#: PageInstallHelpFiles.dfm:19
 msgid "DelphiPI has found some help files in the folder that you have "
 "selected. Would you like to install them as "
 "well?"
 msgstr ""
 
 #. InstallHelpFilesPage..helpFileList......Caption
-#: PageInstallHelpFiles.dfm:33
+#: PageInstallHelpFiles.dfm:32
 #. InstallHelpFilesPage..helpFileList......Caption
-#: PageInstallHelpFiles.dfm:33
+#: PageInstallHelpFiles.dfm:32
 msgid "Help File Name"
 msgstr ""
 
 #. InstallHelpFilesPage..btnInstallHelpFiles..Caption
-#: PageInstallHelpFiles.dfm:48
+#: PageInstallHelpFiles.dfm:47
 #. InstallHelpFilesPage..btnInstallHelpFiles..Caption
-#: PageInstallHelpFiles.dfm:48
+#: PageInstallHelpFiles.dfm:47
 msgid "Install Help Files"
 msgstr ""
 
@@ -368,9 +343,9 @@ msgid "Courier New"
 msgstr ""
 
 #. ProgressPage..chkShowFullLog..Caption
-#: PageProgress.dfm:97
+#: PageProgress.dfm:98
 #. ProgressPage..chkShowFullLog..Caption
-#: PageProgress.dfm:97
+#: PageProgress.dfm:98
 msgid "Show Full Log"
 msgstr ""
 
@@ -382,54 +357,54 @@ msgid "SelectFoldersPage"
 msgstr ""
 
 #. SelectFoldersPage..grpPackagePattern..Caption
-#: PageSelectFolders.dfm:21
+#: PageSelectFolders.dfm:19
 #. SelectFoldersPage..grpPackagePattern..Caption
-#: PageSelectFolders.dfm:21
+#: PageSelectFolders.dfm:19
 msgid "Pattern to select package files "
 msgstr ""
 
 #. SelectFoldersPage..grpPackagePattern..Label3..Caption
-#: PageSelectFolders.dfm:31
+#: PageSelectFolders.dfm:29
 #. SelectFoldersPage..grpPackagePattern..Label3..Caption
-#: PageSelectFolders.dfm:31
+#: PageSelectFolders.dfm:29
 msgid "Package File Pattern"
 msgstr ""
 
 #. SelectFoldersPage..grpPackagePattern..Label2....Caption
-#: PageSelectFolders.dfm:41
+#: PageSelectFolders.dfm:39
 #. SelectFoldersPage..grpPackagePattern..Label2....Caption
-#: PageSelectFolders.dfm:41
+#: PageSelectFolders.dfm:39
 msgid "Specify a pattern that matches for the package files that are "
 "suitable for your delphi installation. ie: *d7.dpk for Delphi "
 "7"
 msgstr ""
 
 #. SelectFoldersPage..grpPackagePattern..cbPattern..Text
-#: PageSelectFolders.dfm:51
+#: PageSelectFolders.dfm:49
 #. SelectFoldersPage..grpPackagePattern..cbPattern..Text
-#: PageSelectFolders.dfm:51
+#: PageSelectFolders.dfm:49
 msgid "*.dpk"
 msgstr ""
 
 #. SelectFoldersPage..grpBaseFolder..Caption
-#: PageSelectFolders.dfm:61
+#: PageSelectFolders.dfm:59
 #. SelectFoldersPage..grpBaseFolder..Caption
-#: PageSelectFolders.dfm:61
+#: PageSelectFolders.dfm:59
 msgid "Select Base Folder contains both Package and Source "
 "files"
 msgstr ""
 
 #. SelectFoldersPage..grpBaseFolder..Label1..Caption
-#: PageSelectFolders.dfm:71
+#: PageSelectFolders.dfm:69
 #. SelectFoldersPage..grpBaseFolder..Label1..Caption
-#: PageSelectFolders.dfm:71
+#: PageSelectFolders.dfm:69
 msgid "Base Folder"
 msgstr ""
 
 #. SelectFoldersPage..grpDelphiVersion..Caption
-#: PageSelectFolders.dfm:100
+#: PageSelectFolders.dfm:99
 #. SelectFoldersPage..grpDelphiVersion..Caption
-#: PageSelectFolders.dfm:100
+#: PageSelectFolders.dfm:99
 msgid "Installed Delphi Versions"
 msgstr ""
 
@@ -441,279 +416,279 @@ msgid "ShowPackageListPage"
 msgstr ""
 
 #. ShowPackageListPage..lblWait..Caption
-#: PageShowPackageList.dfm:26
+#: PageShowPackageList.dfm:21
 #. ShowPackageListPage..lblWait..Caption
-#: PageShowPackageList.dfm:26
+#: PageShowPackageList.dfm:21
 msgid "Please wait while searching folders "
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:76
+#: PageShowPackageList.dfm:72
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:76
+#: PageShowPackageList.dfm:72
 msgid "Package"
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:81
+#: PageShowPackageList.dfm:77
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:81
+#: PageShowPackageList.dfm:77
 msgid "Description"
 msgstr ""
 
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:86
+#: PageShowPackageList.dfm:82
 #. ShowPackageListPage..fPackageTree......WideText
-#: PageShowPackageList.dfm:86
+#: PageShowPackageList.dfm:82
 msgid "Type"
 msgstr ""
 
 #. ShowPackageListPage..toolbar..Caption
-#: PageShowPackageList.dfm:95
+#: PageShowPackageList.dfm:91
 #. ShowPackageListPage..toolbar..Caption
-#: PageShowPackageList.dfm:95
+#: PageShowPackageList.dfm:91
 msgid "toolbar"
 msgstr ""
 
 #. ShowPackageListPage..toolbar..sepearator1..Caption
-#: PageShowPackageList.dfm:119
+#: PageShowPackageList.dfm:115
 #. ShowPackageListPage..toolbar..sepearator1..Caption
-#: PageShowPackageList.dfm:119
+#: PageShowPackageList.dfm:115
 msgid "sepearator1"
 msgstr ""
 
 #. ShowPackageListPage..toolbar..btnAddPackage..Hint
-#: PageShowPackageList.dfm:131
+#: PageShowPackageList.dfm:127
 #. ShowPackageListPage..toolbar..btnAddPackage..Hint
-#: PageShowPackageList.dfm:131
+#: PageShowPackageList.dfm:127
 msgid "Add package"
 msgstr ""
 
 #. ShowPackageListPage..toolbar..btnAddPackage..Caption
-#: PageShowPackageList.dfm:133
+#: PageShowPackageList.dfm:129
 #. ShowPackageListPage..toolbar..btnAddPackage..Caption
-#: PageShowPackageList.dfm:133
+#: PageShowPackageList.dfm:129
 msgid "Add Package"
 msgstr ""
 
 #. ShowPackageListPage..toolbar..seperator2..Caption
-#: PageShowPackageList.dfm:144
+#: PageShowPackageList.dfm:140
 #. ShowPackageListPage..toolbar..seperator2..Caption
-#: PageShowPackageList.dfm:144
+#: PageShowPackageList.dfm:140
 msgid "seperator2"
 msgstr ""
 
 #. ShowPackageListPage..pmSelectPopupMenu..N1..Caption
-#: PageShowPackageList.dfm:170
+#: PageShowPackageList.dfm:166
 #. ShowPackageListPage..pmSelectPopupMenu..N3..Caption
-#: PageShowPackageList.dfm:176
+#: PageShowPackageList.dfm:172
 #. ShowPackageListPage..pmSelectPopupMenu..N2..Caption
-#: PageShowPackageList.dfm:185
+#: PageShowPackageList.dfm:181
 #. ShowPackageListPage..pmSelectPopupMenu..N1..Caption
-#: PageShowPackageList.dfm:170
+#: PageShowPackageList.dfm:166
 #. ShowPackageListPage..pmSelectPopupMenu..N3..Caption
-#: PageShowPackageList.dfm:176
+#: PageShowPackageList.dfm:172
 #. ShowPackageListPage..pmSelectPopupMenu..N2..Caption
-#: PageShowPackageList.dfm:185
+#: PageShowPackageList.dfm:181
 msgid "-"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actRemove..Category
-#: PageShowPackageList.dfm:342
+#: PageShowPackageList.dfm:338
 #. ShowPackageListPage..ActionList..actSelectAll..Category
-#: PageShowPackageList.dfm:368
+#: PageShowPackageList.dfm:364
 #. ShowPackageListPage..ActionList..actUnselectAll..Category
-#: PageShowPackageList.dfm:375
+#: PageShowPackageList.dfm:371
 #. ShowPackageListPage..ActionList..actSelectMatching..Category
-#: PageShowPackageList.dfm:382
+#: PageShowPackageList.dfm:378
 #. ShowPackageListPage..ActionList..actUnselectMatching..Category
-#: PageShowPackageList.dfm:390
+#: PageShowPackageList.dfm:386
 #. ShowPackageListPage..ActionList..actExpand..Category
-#: PageShowPackageList.dfm:398
+#: PageShowPackageList.dfm:394
 #. ShowPackageListPage..ActionList..actCollapse..Category
-#: PageShowPackageList.dfm:404
+#: PageShowPackageList.dfm:400
 #. ShowPackageListPage..ActionList..actRemove..Category
-#: PageShowPackageList.dfm:342
+#: PageShowPackageList.dfm:338
 #. ShowPackageListPage..ActionList..actSelectAll..Category
-#: PageShowPackageList.dfm:368
+#: PageShowPackageList.dfm:364
 #. ShowPackageListPage..ActionList..actUnselectAll..Category
-#: PageShowPackageList.dfm:375
+#: PageShowPackageList.dfm:371
 #. ShowPackageListPage..ActionList..actSelectMatching..Category
-#: PageShowPackageList.dfm:382
+#: PageShowPackageList.dfm:378
 #. ShowPackageListPage..ActionList..actUnselectMatching..Category
-#: PageShowPackageList.dfm:390
+#: PageShowPackageList.dfm:386
 #. ShowPackageListPage..ActionList..actExpand..Category
-#: PageShowPackageList.dfm:398
+#: PageShowPackageList.dfm:394
 #. ShowPackageListPage..ActionList..actCollapse..Category
-#: PageShowPackageList.dfm:404
+#: PageShowPackageList.dfm:400
 msgid "Package List"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actRemove..Caption
-#: PageShowPackageList.dfm:343
+#: PageShowPackageList.dfm:339
 #. ShowPackageListPage..ActionList..actRemove..Caption
-#: PageShowPackageList.dfm:343
+#: PageShowPackageList.dfm:339
 msgid "Remove"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Category
-#: PageShowPackageList.dfm:349
+#: PageShowPackageList.dfm:345
 #. ShowPackageListPage..ActionList..actChangeViewToList..Category
-#: PageShowPackageList.dfm:359
+#: PageShowPackageList.dfm:355
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Category
-#: PageShowPackageList.dfm:422
+#: PageShowPackageList.dfm:418
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Category
-#: PageShowPackageList.dfm:349
+#: PageShowPackageList.dfm:345
 #. ShowPackageListPage..ActionList..actChangeViewToList..Category
-#: PageShowPackageList.dfm:359
+#: PageShowPackageList.dfm:355
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Category
-#: PageShowPackageList.dfm:422
+#: PageShowPackageList.dfm:418
 msgid "View"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Caption
-#: PageShowPackageList.dfm:351
+#: PageShowPackageList.dfm:347
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Caption
-#: PageShowPackageList.dfm:351
+#: PageShowPackageList.dfm:347
 msgid "Tree View"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Hint
-#: PageShowPackageList.dfm:354
+#: PageShowPackageList.dfm:350
 #. ShowPackageListPage..ActionList..actChangeViewToTree..Hint
-#: PageShowPackageList.dfm:354
+#: PageShowPackageList.dfm:350
 msgid "Switch to Tree View "
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToList..Caption
-#: PageShowPackageList.dfm:361
+#: PageShowPackageList.dfm:357
 #. ShowPackageListPage..ActionList..actChangeViewToList..Caption
-#: PageShowPackageList.dfm:361
+#: PageShowPackageList.dfm:357
 msgid "List View"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToList..Hint
-#: PageShowPackageList.dfm:363
+#: PageShowPackageList.dfm:359
 #. ShowPackageListPage..ActionList..actChangeViewToList..Hint
-#: PageShowPackageList.dfm:363
+#: PageShowPackageList.dfm:359
 msgid "Switch to List View "
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actSelectAll..Caption
-#: PageShowPackageList.dfm:369
+#: PageShowPackageList.dfm:365
 #. ShowPackageListPage..ActionList..actSelectAll..Hint
-#: PageShowPackageList.dfm:370
+#: PageShowPackageList.dfm:366
 #. ShowPackageListPage..ActionList..actSelectAll..Caption
-#: PageShowPackageList.dfm:369
+#: PageShowPackageList.dfm:365
 #. ShowPackageListPage..ActionList..actSelectAll..Hint
-#: PageShowPackageList.dfm:370
+#: PageShowPackageList.dfm:366
 msgid "Select All"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actUnselectAll..Caption
-#: PageShowPackageList.dfm:376
+#: PageShowPackageList.dfm:372
 #. ShowPackageListPage..ActionList..actUnselectAll..Hint
-#: PageShowPackageList.dfm:377
+#: PageShowPackageList.dfm:373
 #. ShowPackageListPage..ActionList..actUnselectAll..Caption
-#: PageShowPackageList.dfm:376
+#: PageShowPackageList.dfm:372
 #. ShowPackageListPage..ActionList..actUnselectAll..Hint
-#: PageShowPackageList.dfm:377
+#: PageShowPackageList.dfm:373
 msgid "Unselect All"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actSelectMatching..Caption
-#: PageShowPackageList.dfm:383
-#: PageShowPackageList.pas:540
+#: PageShowPackageList.dfm:379
+#: PageShowPackageList.pas:546
 #. ShowPackageListPage..ActionList..actSelectMatching..Caption
-#: PageShowPackageList.dfm:383
-#: PageShowPackageList.pas:540
+#: PageShowPackageList.dfm:379
+#: PageShowPackageList.pas:546
 msgid "Select Matching..."
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actSelectMatching..Hint
-#: PageShowPackageList.dfm:384
+#: PageShowPackageList.dfm:380
 #. ShowPackageListPage..ActionList..actSelectMatching..Hint
-#: PageShowPackageList.dfm:384
+#: PageShowPackageList.dfm:380
 msgid "Select matching..."
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actUnselectMatching..Caption
-#: PageShowPackageList.dfm:391
-#: PageShowPackageList.pas:565
+#: PageShowPackageList.dfm:387
+#: PageShowPackageList.pas:571
 #. ShowPackageListPage..ActionList..actUnselectMatching..Caption
-#: PageShowPackageList.dfm:391
-#: PageShowPackageList.pas:565
+#: PageShowPackageList.dfm:387
+#: PageShowPackageList.pas:571
 msgid "Unselect Matching..."
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actUnselectMatching..Hint
-#: PageShowPackageList.dfm:392
+#: PageShowPackageList.dfm:388
 #. ShowPackageListPage..ActionList..actUnselectMatching..Hint
-#: PageShowPackageList.dfm:392
+#: PageShowPackageList.dfm:388
 msgid "Unselect matching..."
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actExpand..Caption
-#: PageShowPackageList.dfm:399
+#: PageShowPackageList.dfm:395
 #. ShowPackageListPage..ActionList..actExpand..Caption
-#: PageShowPackageList.dfm:399
+#: PageShowPackageList.dfm:395
 msgid "Expand"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actCollapse..Caption
-#: PageShowPackageList.dfm:405
+#: PageShowPackageList.dfm:401
 #. ShowPackageListPage..ActionList..actCollapse..Caption
-#: PageShowPackageList.dfm:405
+#: PageShowPackageList.dfm:401
 msgid "Collapse"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actAddPackagesFromFolder..Caption
-#: PageShowPackageList.dfm:410
+#: PageShowPackageList.dfm:406
 #. ShowPackageListPage..ActionList..actAddPackagesFromFolder..Caption
-#: PageShowPackageList.dfm:410
+#: PageShowPackageList.dfm:406
 msgid "actAddPackagesFromFolder"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actAddPackagesFromFolder..Hint
-#: PageShowPackageList.dfm:411
+#: PageShowPackageList.dfm:407
 #. ShowPackageListPage..ActionList..actAddPackagesFromFolder..Hint
-#: PageShowPackageList.dfm:411
+#: PageShowPackageList.dfm:407
 msgid "Add packages from a folder"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actAddPackages..Caption
-#: PageShowPackageList.dfm:416
+#: PageShowPackageList.dfm:412
 #. ShowPackageListPage..ActionList..actAddPackages..Hint
-#: PageShowPackageList.dfm:417
+#: PageShowPackageList.dfm:413
 #. ShowPackageListPage..ActionList..actAddPackages..Caption
-#: PageShowPackageList.dfm:416
+#: PageShowPackageList.dfm:412
 #. ShowPackageListPage..ActionList..actAddPackages..Hint
-#: PageShowPackageList.dfm:417
+#: PageShowPackageList.dfm:413
 msgid "Add Packages"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Caption
-#: PageShowPackageList.dfm:424
+#: PageShowPackageList.dfm:420
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Caption
-#: PageShowPackageList.dfm:424
+#: PageShowPackageList.dfm:420
 msgid "Delphi Version View"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Hint
-#: PageShowPackageList.dfm:426
+#: PageShowPackageList.dfm:422
 #. ShowPackageListPage..ActionList..actChangeViewToDelphiVersion..Hint
-#: PageShowPackageList.dfm:426
+#: PageShowPackageList.dfm:422
 msgid "Switch to Delphi Version View"
 msgstr ""
 
 #. ShowPackageListPage..ActionList..actRefresh..Caption
-#: PageShowPackageList.dfm:431
+#: PageShowPackageList.dfm:427
 #. ShowPackageListPage..ActionList..actRefresh..Hint
-#: PageShowPackageList.dfm:432
+#: PageShowPackageList.dfm:428
 #. ShowPackageListPage..ActionList..actRefresh..Caption
-#: PageShowPackageList.dfm:431
+#: PageShowPackageList.dfm:427
 #. ShowPackageListPage..ActionList..actRefresh..Hint
-#: PageShowPackageList.dfm:432
+#: PageShowPackageList.dfm:428
 msgid "Refresh"
 msgstr ""
 
@@ -819,25 +794,20 @@ msgid "Please select output folders and compiler conditionals that will "
 "affect the compilation"
 msgstr ""
 
-#: PageInstallHelpFiles.pas:50
-#: PageInstallHelpFiles.pas:50
+#: PageInstallHelpFiles.pas:49
+#: PageInstallHelpFiles.pas:49
 msgid "No help files are found."
 msgstr ""
 
-#: PageInstallHelpFiles.pas:68
-#: PageInstallHelpFiles.pas:68
+#: PageInstallHelpFiles.pas:66
+#: PageInstallHelpFiles.pas:66
 msgid "Help Files"
 msgstr ""
 
-#: PageInstallHelpFiles.pas:69
-#: PageInstallHelpFiles.pas:69
+#: PageInstallHelpFiles.pas:67
+#: PageInstallHelpFiles.pas:67
 msgid "Select the help files that you want to register, if there are "
 "any."
-msgstr ""
-
-#: PageInstallHelpFiles.pas:89
-#: PageInstallHelpFiles.pas:89
-msgid "%d help file(s) are registered successfully"
 msgstr ""
 
 #: PageProgress.pas:82
@@ -876,96 +846,91 @@ msgstr ""
 msgid "*** Completed"
 msgstr ""
 
-#: PageSelectFolders.pas:125
-#: PageSelectFolders.pas:125
+#: PageSelectFolders.pas:132
+#: PageSelectFolders.pas:132
 msgid "Select Folders"
 msgstr ""
 
-#: PageSelectFolders.pas:126
-#: PageSelectFolders.pas:126
+#: PageSelectFolders.pas:133
+#: PageSelectFolders.pas:133
 msgid "Please select folders which contains the packages that you want to "
 "install"
 msgstr ""
 
-#: PageSelectFolders.pas:138
-#: PageSelectFolders.pas:138
+#: PageSelectFolders.pas:145
+#: PageSelectFolders.pas:145
 msgid "Select the folder where packages are"
 msgstr ""
 
-#: PageShowPackageList.pas:260
-#: PageShowPackageList.pas:260
+#: PageShowPackageList.pas:268
+#: PageShowPackageList.pas:268
 msgid "Select Packages"
 msgstr ""
 
-#: PageShowPackageList.pas:261
-#: PageShowPackageList.pas:261
+#: PageShowPackageList.pas:269
+#: PageShowPackageList.pas:269
 msgid "Select packages that you want to compile."
 msgstr ""
 
-#: PageShowPackageList.pas:265
-#: PageShowPackageList.pas:265
+#: PageShowPackageList.pas:273
+#: PageShowPackageList.pas:273
 msgid "Compile"
 msgstr ""
 
-#: PageShowPackageList.pas:374
-#: PageShowPackageList.pas:374
-msgid "Delphi Package (*.dpk)"
-msgstr ""
-
-#: PageShowPackageList.pas:393
-#: PageShowPackageList.pas:393
+#: PageShowPackageList.pas:399
+#: PageShowPackageList.pas:399
 msgid "Select folder where packages are"
 msgstr ""
 
-#: PageShowPackageList.pas:540
-#: PageShowPackageList.pas:565
-#: PageShowPackageList.pas:540
-#: PageShowPackageList.pas:565
+#: PageShowPackageList.pas:546
+#: PageShowPackageList.pas:571
+#: PageShowPackageList.pas:546
+#: PageShowPackageList.pas:571
 msgid "File Mask"
 msgstr ""
 
-#: PageShowPackageList.pas:597
-#: PageShowPackageList.pas:597
+#: PageShowPackageList.pas:603
+#: PageShowPackageList.pas:603
 msgid "Designtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:599
-#: PageShowPackageList.pas:599
+#: PageShowPackageList.pas:605
+#: PageShowPackageList.pas:605
 msgid "Runtime Package"
 msgstr ""
 
-#: PageShowPackageList.pas:603
-#: PageShowPackageList.pas:603
+#: PageShowPackageList.pas:609
+#: PageShowPackageList.pas:609
 msgid "FullPath: "
 msgstr ""
 
-#: PageShowPackageList.pas:604
-#: PageShowPackageList.pas:604
+#: PageShowPackageList.pas:610
+#: PageShowPackageList.pas:610
 msgid "Description: "
 msgstr ""
 
-#: PageShowPackageList.pas:605
-#: PageShowPackageList.pas:605
+#: PageShowPackageList.pas:611
+#: PageShowPackageList.pas:611
 msgid "Type: "
 msgstr ""
 
-#: PageShowPackageList.pas:606
-#: PageShowPackageList.pas:606
+#: PageShowPackageList.pas:612
+#: PageShowPackageList.pas:612
 msgid "Requires: "
 msgstr ""
 
-#: PageShowPackageList.pas:609
-#: PageShowPackageList.pas:609
+#: PageShowPackageList.pas:615
+#: PageShowPackageList.pas:615
 msgid "Missing Package: "
 msgstr ""
 
-#: PageShowPackageList.pas:636
-#: PageShowPackageList.pas:636
+#: PageShowPackageList.pas:642
+#: PageShowPackageList.pas:642
 msgid "runtime"
 msgstr ""
 
-#: PageShowPackageList.pas:638
-#: PageShowPackageList.pas:638
+#: PageShowPackageList.pas:644
+#: PageShowPackageList.pas:644
 msgid "design"
 msgstr ""
 

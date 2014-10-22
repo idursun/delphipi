@@ -2,25 +2,25 @@ inherited ProgressPage: TProgressPage
   Left = 299
   Top = 280
   Caption = 'ProgressPage'
+  ClientHeight = 232
+  ClientWidth = 412
   OnClose = FormClose
   OnCreate = FormCreate
-  ExplicitLeft = 299
-  ExplicitTop = 280
-  ExplicitWidth = 516
-  ExplicitHeight = 286
+  ExplicitWidth = 412
+  ExplicitHeight = 232
   PixelsPerInch = 96
   TextHeight = 13
   object GroupBox1: TGroupBox
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 494
+    Width = 406
     Height = 68
     Align = alTop
     Caption = 'Overall Progress'
     TabOrder = 0
     DesignSize = (
-      494
+      406
       68)
     object Label1: TLabel
       Left = 12
@@ -55,7 +55,7 @@ inherited ProgressPage: TProgressPage
     object ProgressBar: TProgressBar
       Left = 12
       Top = 37
-      Width = 414
+      Width = 381
       Height = 20
       Anchors = [akLeft, akTop, akRight]
       TabOrder = 0
@@ -75,10 +75,10 @@ inherited ProgressPage: TProgressPage
     AlignWithMargins = True
     Left = 3
     Top = 77
-    Width = 494
-    Height = 147
+    Width = 406
+    Height = 129
     Align = alClient
-    Font.Charset = TURKISH_CHARSET
+    Font.Charset = RUSSIAN_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Courier New'
@@ -86,12 +86,13 @@ inherited ProgressPage: TProgressPage
     ParentFont = False
     ScrollBars = ssBoth
     TabOrder = 1
+    Zoom = 100
   end
   object chkShowFullLog: TCheckBox
     AlignWithMargins = True
     Left = 3
-    Top = 230
-    Width = 494
+    Top = 212
+    Width = 406
     Height = 17
     Align = alBottom
     Caption = 'Show Full Log'

@@ -4,7 +4,7 @@ object frmAbout: TfrmAbout
   BorderStyle = bsDialog
   Caption = 'About DelphiPI'
   ClientHeight = 183
-  ClientWidth = 325
+  ClientWidth = 346
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,11 +20,12 @@ object frmAbout: TfrmAbout
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 319
+    Width = 340
     Height = 134
     Align = alTop
     Caption = 'Information'
     TabOrder = 0
+    ExplicitWidth = 319
     object Label7: TLabel
       Left = 52
       Top = 20
@@ -677,7 +678,7 @@ object frmAbout: TfrmAbout
     AlignWithMargins = True
     Left = 3
     Top = 141
-    Width = 319
+    Width = 340
     Height = 42
     Margins.Bottom = 0
     Align = alBottom
@@ -685,23 +686,25 @@ object frmAbout: TfrmAbout
     BevelOuter = bvNone
     BorderWidth = 1
     TabOrder = 1
+    ExplicitWidth = 319
     object Bevel1: TBevel
       AlignWithMargins = True
       Left = 1
       Top = 1
-      Width = 317
+      Width = 338
       Height = 2
       Margins.Left = 0
       Margins.Top = 0
       Margins.Right = 0
       Align = alTop
       Shape = bsTopLine
+      ExplicitWidth = 317
     end
     object btnDonate: TButton
       AlignWithMargins = True
       Left = 4
       Top = 9
-      Width = 70
+      Width = 87
       Height = 29
       Align = alLeft
       Caption = 'Donate'
@@ -710,7 +713,7 @@ object frmAbout: TfrmAbout
     end
     object btnClose: TButton
       AlignWithMargins = True
-      Left = 245
+      Left = 266
       Top = 9
       Width = 70
       Height = 29
@@ -719,6 +722,7 @@ object frmAbout: TfrmAbout
       Caption = 'Close'
       TabOrder = 1
       OnClick = btnCloseClick
+      ExplicitLeft = 245
     end
   end
 end

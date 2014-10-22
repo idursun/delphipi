@@ -316,12 +316,12 @@ msgid "Would you like to save this installation as a script so that you can auto
 msgstr ""
 
 #. SummaryPage..Label2..Caption
-#: PageSummary.dfm:26
+#: PageSummary.dfm:31
 msgid "Summary:"
 msgstr ""
 
 #. SummaryPage..btnSave..Caption
-#: PageSummary.dfm:34
+#: PageSummary.dfm:39
 msgid "Save"
 msgstr ""
 
